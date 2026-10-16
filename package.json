@@ -1,0 +1,16 @@
+{
+  "name": "matchmap",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "packageManager": "pnpm@11.24.0",
+  "scripts": {
+    "web": "pnpm --filter @matchmap/web start",
+    "build:web": "pnpm --filter @matchmap/web build",
+    "mobile": "pnpm --filter @matchmap/mobile start",
+    "ios": "pnpm --filter @matchmap/mobile ios",
+    "android": "pnpm --filter @matchmap/mobile android",
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck"
+  }
+}
