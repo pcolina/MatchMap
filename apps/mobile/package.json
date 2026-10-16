@@ -1,7 +1,7 @@
 {
   "name": "@matchmap/mobile",
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "main": "src/main.ts",
   "dependencies": {
     "@matchmap/shared": "workspace:*",

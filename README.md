@@ -227,12 +227,27 @@ El proyecto usa [Spec Kit](https://github.com/github/spec-kit). Las especificaci
 
 ---
 
+## Decisiones pendientes
+
+Temas que no fija la constitución y que se decidirán en las primeras specs:
+
+- **SEO y vistas previas de enlaces:** compartir un mapa por enlace necesita etiquetas Open Graph servidas desde el servidor. La web no usa SSR todavía.
+- **Navegadores soportados:** matriz de versiones de Chrome, Firefox, Safari y Edge.
+- **Consentimiento de cookies:** solo si se añade analítica o cookies no esenciales.
+- **Estados de interfaz:** carga, vacío, error y sin conexión en cada pantalla.
+- **Design tokens:** colores, tipografía y espaciados compartidos en `packages/` para web y móvil.
+- **Orientación en móvil:** `apps/mobile/app.json` fija `portrait`, que incumple el principio VIII.
+
+---
+
 ## Documentación de referencia
 
 - [Angular](https://angular.dev)
-- [Angular Native](https://ng-native.com): reglas específicas en [`apps/mobile/AGENTS.md`](apps/mobile/AGENTS.md)
+- [Angular Native](https://ng-native.com): reglas específicas en [`apps/mobile/CLAUDE.md`](apps/mobile/CLAUDE.md)
 - [Expo](https://docs.expo.dev)
 
 ## Licencia
 
-[MIT](LICENSE)
+Copyright © 2026 Pablo AC. Todos los derechos reservados.
+
+El código es público para consulta, pero no se concede ninguna licencia de uso, copia, modificación ni distribución.
