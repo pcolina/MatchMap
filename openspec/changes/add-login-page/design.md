@@ -4,6 +4,13 @@
 
 This design covers the platform details of the two specs `client-sign-in` and `client-registration`, for `apps/web` (Angular, DOM) and `apps/mobile` (ng-native). The behaviour is in the specs, not here.
 
+## Contract baseline
+
+- Repository: `C:\workspace\pablo\matchmap-api`, commit `0bb29cb` (last commit that touched `contracts/`).
+- `contracts/openapi/auth.yaml`: `POST /api/auth/login` takes `{ email, password }` and returns `TokenResponse` (`tokenType`, `accessToken`, `expiresIn`, `refreshToken`). Errors `401 invalid_credentials` and `429 too_many_attempts` with `Retry-After`.
+- `contracts/graphql/account.graphqls`: `register(input: RegisterInput!)`. The contract still requires `username` and `displayName`, which `backend-issues/06-register-email-and-password-only.md` removes. This change depends on the result of that issue.
+- Check for changes since the baseline before each API-using task (task 0.2 in `tasks.md`).
+
 ## Decisions
 
 ### Routing
