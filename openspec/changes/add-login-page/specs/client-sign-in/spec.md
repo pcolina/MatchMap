@@ -1,0 +1,169 @@
+# client-sign-in
+
+## ADDED Requirements
+
+### Requirement: Sign-in page layout
+
+The sign-in page SHALL centre its content horizontally and vertically, in portrait and landscape. On mobile, the layout SHALL respect the safe area.
+
+#### Scenario: Centred content on phone
+- **WHEN** the sign-in page is shown on a phone in portrait or landscape
+- **THEN** its content is centred horizontally and vertically
+
+#### Scenario: Centred content on web
+- **WHEN** the sign-in page is shown in a web browser on a phone-sized screen, in portrait or landscape
+- **THEN** its content is centred horizontally and vertically
+
+### Requirement: Language switcher
+
+The sign-in page SHALL show a language switcher in the top-right corner. It is a circle with the Lucide icon `languages` centred inside it, and a small shadow (`elevation.card`). It has no behaviour in this change.
+
+#### Scenario: Switcher is visible
+- **WHEN** the sign-in page is shown
+- **THEN** a circular button with the `languages` icon is visible in the top-right corner
+
+#### Scenario: Switcher has an accessible name
+- **WHEN** the switcher is inspected by an assistive technology
+- **THEN** its accessible name is the text of the key `login.signIn.languageSwitcher`
+
+#### Scenario: Switcher does nothing
+- **WHEN** the user activates the switcher
+- **THEN** the page does not change
+
+### Requirement: Google button
+
+The sign-in page SHALL show a Google sign-in button, disabled, with the text of the key `login.signIn.googleComingSoon`. It has no sign-in behaviour in this change.
+
+#### Scenario: Google button is disabled
+- **WHEN** the sign-in page is shown
+- **THEN** the Google button is visible, disabled, and shows the text of `login.signIn.googleComingSoon`
+
+### Requirement: Sign-in fields and actions
+
+The sign-in page SHALL show an email field (label `login.signIn.emailLabel`), a password field (label `login.signIn.passwordLabel`), one primary sign-in button (text `login.signIn.submit`) and a link to the registration page (text `login.signIn.goToRegister`).
+
+#### Scenario: Fields and actions are shown
+- **WHEN** the sign-in page is shown
+- **THEN** the email field, the password field, the sign-in button and the registration link are visible with their translated labels
+
+#### Scenario: Registration link
+- **WHEN** the user activates the registration link
+- **THEN** the registration page is shown
+
+### Requirement: Email validation
+
+The client SHALL validate the email before sending it, with the same rules as the API: standard email format, at most 254 characters. The client SHALL trim and lower-case the email before sending it.
+
+#### Scenario: Invalid email format
+- **WHEN** the user submits an email that is not in standard email format
+- **THEN** the email field shows an error and no request is sent
+
+#### Scenario: Email longer than 254 characters
+- **WHEN** the user submits an email longer than 254 characters
+- **THEN** the email field shows an error and no request is sent
+
+#### Scenario: Email is normalised before sending
+- **WHEN** the user submits " User@Example.com " with spaces and capitals
+- **THEN** the request sends "user@example.com"
+
+### Requirement: Password validation
+
+The sign-in password SHALL only be checked for being non-empty before sending. The complexity rules (6 to 20 characters, one lowercase letter, one uppercase letter and one special character) apply only to registration.
+
+#### Scenario: Empty password
+- **WHEN** the user submits an empty password
+- **THEN** the password field shows an error and no request is sent
+
+#### Scenario: Any non-empty password is sent
+- **WHEN** the user submits a password that does not meet the registration complexity rules
+- **THEN** the request is sent
+
+The password field shows the text of `login.signIn.errorPasswordRequired`: `en` "Enter your password.", `es` "Introduce tu contraseña."
+
+### Requirement: Field errors
+
+An invalid field SHALL show its border in `danger`, and its error message below the field in `caption` with the `danger` colour.
+
+#### Scenario: Error state on a field
+- **WHEN** a field is invalid
+- **THEN** its border is `danger` and its error message is shown below it in `caption` with the `danger` colour
+
+### Requirement: Sign-in request
+
+Sign-in SHALL call `POST /api/auth/login` through `data/*.api.ts`, and no other part of the app calls the API for sign-in.
+
+#### Scenario: Request is sent once per submit
+- **WHEN** the user submits valid credentials
+- **THEN** exactly one request is sent to `POST /api/auth/login`
+
+#### Scenario: Submit is blocked while the request runs
+- **WHEN** a sign-in request is in progress
+- **THEN** the sign-in button is disabled so the request cannot be sent twice
+
+#### Scenario: Skeleton screen while the request runs
+- **WHEN** a sign-in request is in progress
+- **THEN** the form is shown as a skeleton screen, as defined in `docs/design.md` §7.9, with blocks in the shape of the email field, the password field and the button
+
+#### Scenario: Reduced motion
+- **WHEN** the system «Reduce motion» setting is on and a sign-in request is in progress
+- **THEN** the skeleton blocks are static
+
+### Requirement: Token handling after sign-in
+
+After a successful sign-in, the access token SHALL be kept in memory. On web, the refresh token is stored by the API in an `httpOnly` cookie. On mobile, the refresh token SHALL be stored in `expo-secure-store`.
+
+#### Scenario: Access token is kept in memory
+- **WHEN** sign-in succeeds
+- **THEN** the access token is kept in memory and is not written to any storage
+
+#### Scenario: Mobile refresh token is stored securely
+- **WHEN** sign-in succeeds on mobile
+- **THEN** the refresh token is stored in `expo-secure-store`
+
+#### Scenario: Web refresh token is not readable by scripts
+- **WHEN** sign-in succeeds on web
+- **THEN** the refresh token is set by the API as an `httpOnly` cookie and is not stored by the app
+
+### Requirement: Redirect after sign-in
+
+After a successful sign-in, the user SHALL be taken to the main route at `/`.
+
+#### Scenario: Redirect to the main route
+- **WHEN** sign-in succeeds
+- **THEN** the user is taken to `/`, which is lazy-loaded and uses the main layout
+
+### Requirement: Sign-in errors
+
+The sign-in page SHALL show the translated message for each error case, and keep the values the user typed.
+
+#### Scenario: Wrong credentials
+- **WHEN** the API returns the stable error code for invalid credentials
+- **THEN** the page shows the text of `login.signIn.errorInvalidCredentials`
+
+#### Scenario: Network failure
+- **WHEN** the request fails because there is no network connection
+- **THEN** the page shows the text of `login.common.errorNetwork`
+
+#### Scenario: Values are kept after an error
+- **WHEN** sign-in fails
+- **THEN** the email and password fields keep the values the user typed
+
+### Requirement: Language selection
+
+The web app SHALL start in the browser language when it is `en` or `es`, and in `en` otherwise. The mobile app SHALL work in `en` and `es`.
+
+#### Scenario: Browser language is Spanish
+- **WHEN** the browser language is `es`
+- **THEN** the sign-in page shows the `es` texts
+
+#### Scenario: Browser language is not supported
+- **WHEN** the browser language is `fr`
+- **THEN** the sign-in page shows the `en` texts
+
+### Requirement: Accessibility
+
+Every interactive element on the sign-in page SHALL have a role and an accessible name, and the tests SHALL query elements by role.
+
+#### Scenario: Interactive elements have roles
+- **WHEN** the sign-in page is inspected
+- **THEN** the email field, the password field, the sign-in button, the registration link, the switcher and the Google button each have a role and an accessible name

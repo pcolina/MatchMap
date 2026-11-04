@@ -1,0 +1,128 @@
+/* matchMap design tokens — Atlas nocturno v1.0.0 (generated from tokens.json) */
+
+:root {
+  --mm-color-accent: #0F7C80;
+  --mm-color-onAccent: #FFFFFF;
+  --mm-color-accentSubtle: #D5EFED;
+  --mm-color-bg: #F2F4F8;
+  --mm-color-surface: #FFFFFF;
+  --mm-color-surfaceRaised: #FFFFFF;
+  --mm-color-text: #111827;
+  --mm-color-textSecondary: #4B5563;
+  --mm-color-border: #E1E5EC;
+  --mm-color-borderStrong: #C3CCD9;
+  --mm-color-success: #15803D;
+  --mm-color-warning: #B45309;
+  --mm-color-danger: #B91C1C;
+  --mm-color-onDanger: #FFFFFF;
+  --mm-color-info: #1D4ED8;
+  --mm-map-ocean: #CCD7E6;
+  --mm-map-land: #E8ECF2;
+  --mm-map-countryBorder: #FFFFFF;
+  --mm-map-visited: #0F7C80;
+  --mm-map-lived: #0A5458;
+  --mm-map-wantToGo: #E3F4F2;
+  --mm-map-compareBoth: #0F7C80;
+  --mm-map-compareOnlyMe: #98D5D0;
+  --mm-map-compareOnlyFriend: #A9B3C2;
+  --mm-map-excludedVisited: #CBD2DD;
+  --mm-map-score1: #D5EFED;
+  --mm-map-score2: #A6DCD7;
+  --mm-map-score3: #4FB3AE;
+  --mm-map-score4: #1A8F92;
+  --mm-map-score5: #0F7C80;
+}
+
+:root {
+  --mm-font-display: 'Sora', 'Inter', system-ui, sans-serif;
+  --mm-font-body: 'Inter', system-ui, sans-serif;
+  --mm-space-0: 0px;
+  --mm-space-1: 4px;
+  --mm-space-2: 8px;
+  --mm-space-3: 12px;
+  --mm-space-4: 16px;
+  --mm-space-5: 20px;
+  --mm-space-6: 24px;
+  --mm-space-8: 32px;
+  --mm-space-10: 40px;
+  --mm-space-12: 48px;
+  --mm-space-16: 64px;
+  --mm-radius-sm: 8px;
+  --mm-radius-md: 12px;
+  --mm-radius-lg: 16px;
+  --mm-radius-xl: 20px;
+  --mm-radius-xxl: 32px;
+  --mm-radius-pill: 999px;
+  --mm-motion-fast: 150ms;
+  --mm-motion-base: 250ms;
+  --mm-motion-slow: 400ms;
+  --mm-easing: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --mm-color-accent: #2DD4BF;
+    --mm-color-onAccent: #04201C;
+    --mm-color-accentSubtle: #0E3B3A;
+    --mm-color-bg: #0A0F1C;
+    --mm-color-surface: #121A2B;
+    --mm-color-surfaceRaised: #18223A;
+    --mm-color-text: #EEF2F8;
+    --mm-color-textSecondary: #9AA6BA;
+    --mm-color-border: #222C40;
+    --mm-color-borderStrong: #3B4660;
+    --mm-color-success: #4ADE80;
+    --mm-color-warning: #FBBF24;
+    --mm-color-danger: #F87171;
+    --mm-color-onDanger: #0A0F1C;
+    --mm-color-info: #60A5FA;
+    --mm-map-ocean: #0A1324;
+    --mm-map-land: #1D2638;
+    --mm-map-countryBorder: #0A1324;
+    --mm-map-visited: #2DD4BF;
+    --mm-map-lived: #99F6E4;
+    --mm-map-wantToGo: #0C3432;
+    --mm-map-compareBoth: #2DD4BF;
+    --mm-map-compareOnlyMe: #12665D;
+    --mm-map-compareOnlyFriend: #3B4660;
+    --mm-map-excludedVisited: #2B3448;
+    --mm-map-score1: #0E3B3A;
+    --mm-map-score2: #16776F;
+    --mm-map-score3: #169184;
+    --mm-map-score4: #22B8A6;
+    --mm-map-score5: #2DD4BF;
+  }
+}
+
+:root[data-theme='dark'] {
+  --mm-color-accent: #2DD4BF;
+  --mm-color-onAccent: #04201C;
+  --mm-color-accentSubtle: #0E3B3A;
+  --mm-color-bg: #0A0F1C;
+  --mm-color-surface: #121A2B;
+  --mm-color-surfaceRaised: #18223A;
+  --mm-color-text: #EEF2F8;
+  --mm-color-textSecondary: #9AA6BA;
+  --mm-color-border: #222C40;
+  --mm-color-borderStrong: #3B4660;
+  --mm-color-success: #4ADE80;
+  --mm-color-warning: #FBBF24;
+  --mm-color-danger: #F87171;
+  --mm-color-onDanger: #0A0F1C;
+  --mm-color-info: #60A5FA;
+  --mm-map-ocean: #0A1324;
+  --mm-map-land: #1D2638;
+  --mm-map-countryBorder: #0A1324;
+  --mm-map-visited: #2DD4BF;
+  --mm-map-lived: #99F6E4;
+  --mm-map-wantToGo: #0C3432;
+  --mm-map-compareBoth: #2DD4BF;
+  --mm-map-compareOnlyMe: #12665D;
+  --mm-map-compareOnlyFriend: #3B4660;
+  --mm-map-excludedVisited: #2B3448;
+  --mm-map-score1: #0E3B3A;
+  --mm-map-score2: #16776F;
+  --mm-map-score3: #169184;
+  --mm-map-score4: #22B8A6;
+  --mm-map-score5: #2DD4BF;
+}
