@@ -1,4 +1,4 @@
-# Issue 002: Return stable error codes for sign-in and registration
+# Issue 003: Return stable error codes for sign-in and registration
 
 ## Context
 

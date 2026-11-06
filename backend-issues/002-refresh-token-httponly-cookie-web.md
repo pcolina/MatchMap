@@ -1,4 +1,4 @@
-# Issue 003: Set the refresh token as an httpOnly cookie for web
+# Issue 002: Set the refresh token as an httpOnly cookie for web
 
 ## Context
 
@@ -11,7 +11,12 @@ This change belongs to the API change `add-user-accounts`, as `CLAUDE.md` §7 re
 - The sign-in endpoint `POST /api/auth/login` (`contracts/openapi/auth.yaml`) sets the refresh token as an `httpOnly` cookie for web clients.
 - The cookie has `Secure`, `HttpOnly` and `SameSite` set. The exact `SameSite` value and the cookie path are not decided yet (see Open questions).
 - The access token keeps being returned in the body, as today.
-- The refresh endpoint reads the refresh token from the cookie on web.
+- The refresh endpoint `POST /api/auth/refresh` reads the refresh token from the cookie on web. On web the request has no body, so `RefreshTokenRequest` in `contracts/openapi/auth.yaml` must make `refreshToken` optional. Mobile keeps sending it in the body.
+- The logout endpoint `POST /api/auth/logout` works the same way on web: it reads the cookie, revokes the session and clears the cookie.
+- `TokenResponse` does not include `refreshToken` in web responses. The contract documents this, so the generated types match.
+- The contract change goes in `matchmap-api` as its own change, because `CLAUDE.md` §6 requires a change for every API change.
+
+This issue blocks task 4.7 (session restore) of `add-login-page`, which needs the refresh request without a body on web.
 
 ## Open questions for the backend
 

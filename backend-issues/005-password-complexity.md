@@ -14,7 +14,7 @@ The `add-login-page` proposal (`openspec/changes/add-login-page/proposal.md`) se
 ## What the backend must do
 
 - The register mutation `register(input: RegisterInput!): User!` (`contracts/graphql/account.graphqls`) rejects a password that does not meet the rule.
-- The rejection uses a stable error code. The client maps it to a message (see Issue 002).
+- The rejection uses a stable error code. The client maps it to a message (see Issue 003).
 - The rule is documented in the contract, so the clients can copy it.
 
 ## Open questions for the backend

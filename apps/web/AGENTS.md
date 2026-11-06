@@ -9,7 +9,7 @@ ng-native rules of `apps/mobile` do not apply here.
 
 Angular (zoneless, signals), `@angular/router`, Apollo (`apollo-angular`), `@ngrx/signals`
 (SignalStore) with RxJS for asynchronous streams, Signal Forms (`@angular/forms/signals`), MapLibre
-GL JS, `@ngx-translate/core`, Lucide icons through `@ng-icons/lucide`, Vitest (through `ng test`),
+GL JS, `@ngx-translate/core`, Tabler icons through `@ng-icons/tabler-icons`, Vitest (through `ng test`),
 ESLint + Prettier. GraphQL operations and generated types come from `@matchmap/shared`. Exact versions are
 pinned in the web change that sets up the project. Supported browsers in the MVP: Chrome and Edge. The web app is not
 deployed in the MVP.
@@ -45,7 +45,7 @@ apps/web/src/app/
   validation in the template. Do not use reactive or template-driven forms.
 - Styling: component CSS only. Colours, sizes, radii and spacing come from the `--mm-*` variables
   in `tokens.css`. No Tailwind and no utility-class library.
-- Icons come from `@ng-icons/lucide` (`NgIcon`). Do not use `lucide-react-native` or other React
+- Icons come from `@ng-icons/tabler-icons` (`NgIcon`). Do not use `lucide-react-native` or other React
   packages.
 - Semantic HTML first: native `<button>`, `<a>`, `<label>`, landmarks and headings before ARIA.
 - Responsive from 320 px to wide desktop with flexbox/grid and relative units.

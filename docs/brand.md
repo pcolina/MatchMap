@@ -9,7 +9,7 @@ Copy examples are shown in Spanish, the product's original language, with an Eng
 
 ## Tagline
 
-# «Nuevo para todos. Inolvidable para cada uno.» [New for everyone. Unforgettable for each one.]
+# «Marca más países y compara con tus amigos.» [Mark more countries and compare with your friends.]
 
 **Alternatives for campaigns and onboarding** (more provocative):
 
