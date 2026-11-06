@@ -179,6 +179,26 @@ The web app SHALL start in the browser language when it is `en` or `es`, and in 
 - **WHEN** the browser language is `fr`
 - **THEN** the sign-in page shows the `en` texts
 
+### Requirement: Session restore
+
+When the app starts, the client SHALL ask the API for a new access token through `POST /api/auth/refresh`. On web the browser sends the refresh token from its `httpOnly` cookie. On mobile the client reads the refresh token from `expo-secure-store` and sends it in the request body. If the API accepts the request, the user is signed in with the new access token, which is kept in memory. If the API rejects it, the user is signed out and the sign-in page is shown.
+
+#### Scenario: Session restored on start
+- **WHEN** the app starts and the refresh request succeeds
+- **THEN** the user is signed in, the new access token is kept in memory and the main route `/` is shown
+
+#### Scenario: No session on start
+- **WHEN** the app starts and the refresh request is rejected
+- **THEN** the sign-in page is shown
+
+#### Scenario: Retry once after an expired access token
+- **WHEN** an API request is rejected because the access token has expired
+- **THEN** the client refreshes the access token once and repeats the request
+
+#### Scenario: Signed out when the retry fails
+- **WHEN** the repeated request is rejected again, or the refresh is rejected
+- **THEN** the user is signed out and the sign-in page is shown
+
 ### Requirement: Accessibility
 
 Every interactive element on the sign-in page SHALL have a role and an accessible name, and the tests SHALL query elements by role.

@@ -34,6 +34,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 - [ ] **4.4 Language switcher.** Test first: a component test checks the circle, the `languages` icon, the `elevation.card` shadow, the accessible name `login.signIn.languageSwitcher`, and that it does nothing. Code: the switcher component.
 - [ ] **4.5 Sign-in page.** Test first: one test per scenario in `client-sign-in/spec.md`, including the layout, the Google button, the fields, the validation, the errors, the skeleton, the redirect to `/`, and the language selection. Code: the sign-in page and its form with Signal Forms.
 - [ ] **4.6 Routes and main layout.** Test first: a routing test checks that `/login` renders the sign-in page, that `/` is lazy-loaded with the main layout, and that the browser language selects `es` or `en`. Code: the routes and the main layout.
+- [ ] **4.7 Session restore and token refresh.** Test first: `auth.store.spec.ts` checks that the store calls `POST /api/auth/refresh` once when the app starts, that a successful refresh signs the user in with the new access token, that a rejected refresh shows the sign-in page, and that a request rejected for an expired access token is repeated once after a refresh and then signed out if it fails again. Code: the refresh call in `data/auth.api.ts`, the restore method in the auth store, and the auth interceptor in `core/`. It needs the contract change in `backend-issues/003-refresh-token-httponly-cookie-web.md`.
 
 ## 5. Mobile (`apps/mobile`)
 
@@ -43,6 +44,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 - [ ] **5.4 Sign-in data access.** Test first: the same checks as 4.3. Code: `apps/mobile` `data/auth.api.ts`.
 - [ ] **5.5 Sign-in page.** Test first: the same scenarios as 4.5, on ng-native. Code: the page and its form on mobile.
 - [ ] **5.6 Routes and main layout.** Test first: the same checks as 4.6 for mobile. Code: the routes and the main layout.
+- [ ] **5.7 Session restore and token refresh.** Test first: the same checks as 4.7, with the refresh token read from `expo-secure-store` and sent in the body of `POST /api/auth/refresh`. Code: the restore method in the `apps/mobile` auth store and the auth interceptor in `core/`.
 
 ## 6. Checks and review
 
