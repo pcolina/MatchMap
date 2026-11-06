@@ -36,7 +36,7 @@ The account rules themselves (password storage, token issuing, duplicate emails)
 
 - **Code:** `apps/web` and `apps/mobile` (sign-in page, store, routes and main layout), `packages/shared` (sign-in validators, email normalisation, sign-in keys, catalogues, OpenAPI types), `tokens/` (one border width token).
 - **APIs:** the sign-in operation of the `matchmap-api` contract, consumed and not changed here.
-- **Dependencies:** see Depends on.
+- **Dependencies:** see Depends on. New dev dependencies in `packages/shared`, for `pnpm codegen` (task 1.3): `openapi-typescript`, `@graphql-codegen/cli` and `@graphql-codegen/typescript`.
 - **Systems:** none beyond the API.
 
 ## Out of scope
