@@ -30,7 +30,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 - [x] **4.1 Install dependencies.** Test first: `pnpm check` fails because `@ng-icons/core` and `@ng-icons/lucide` are missing. Code: install them from the repo root with `pnpm install`, as the proposal lists.
 - [x] **4.2 Auth store.** Test first: `auth.store.spec.ts` checks the states `idle`, `loading` and `error`, and that the access token is kept only in memory. Code: `auth` SignalStore with `rxMethod` for the sign-in request.
-- [ ] **4.3 Sign-in data access.** Test first: `auth.api.spec.ts` checks that the sign-in request is sent once, with the normalised email, and with credentials included. Code: `data/auth.api.ts` with the HTTP sign-in call.
+- [x] **4.3 Sign-in data access.** Test first: `auth.api.spec.ts` checks that the sign-in request is sent once, with the normalised email, and with credentials included. Code: `data/auth.api.ts` with the HTTP sign-in call.
 - [ ] **4.4 Language switcher.** Test first: a component test checks the circle, the `languages` icon, the `elevation.card` shadow, the accessible name `login.signIn.languageSwitcher`, and that it does nothing. Code: the switcher component.
 - [ ] **4.5 Sign-in page.** Test first: one test per scenario in `client-sign-in/spec.md`, including the layout, the Google button, the fields, the validation, the errors, the skeleton, the redirect to `/`, and the language selection. Code: the sign-in page and its form with Signal Forms.
 - [ ] **4.6 Routes and main layout.** Test first: a routing test checks that `/login` renders the sign-in page, that `/` is lazy-loaded with the main layout, and that the browser language selects `es` or `en`. Code: the routes and the main layout.
