@@ -58,6 +58,13 @@
   --mm-motion-base: 250ms;
   --mm-motion-slow: 400ms;
   --mm-easing: cubic-bezier(0.2, 0, 0, 1);
+  --mm-size-touch-target-min: 44px;
+  --mm-size-button-height: 52px;
+  --mm-size-input-height: 48px;
+  --mm-size-tab-bar-height: 56px;
+  --mm-size-icon-sm: 16px;
+  --mm-size-icon-md: 20px;
+  --mm-size-icon-lg: 24px;
 }
 
 @media (prefers-color-scheme: dark) {
