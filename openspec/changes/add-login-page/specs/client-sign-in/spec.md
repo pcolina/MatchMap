@@ -208,6 +208,10 @@ When the app starts, the client SHALL ask the API for a new access token through
 - **WHEN** the app starts and the refresh request is rejected
 - **THEN** the sign-in page is shown
 
+#### Scenario: Main route without a session
+- **WHEN** the user opens `/` and there is no session
+- **THEN** the user is redirected to `/login`
+
 #### Scenario: Retry once after an expired access token
 - **WHEN** an API request is rejected because the access token has expired
 - **THEN** the client refreshes the access token once and repeats the request
