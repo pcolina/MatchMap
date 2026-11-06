@@ -183,6 +183,10 @@ export const radius = {
   pill: 999,
 } as const;
 
+export const borderWidth = {
+  focus: 2,
+} as const;
+
 export const motion = {
   fast: 150,
   base: 250,

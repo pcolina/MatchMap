@@ -19,7 +19,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 ## 2. Design tokens (`tokens/`)
 
-- [ ] **2.1 Focus border width.** Test first: `tokens.spec.ts` checks that `borderWidth.focus` is 2 in `tokens.ts` and that `--mm-border-width-focus` is `2px` in `tokens.css`. Code: add `borderWidth.focus` to `tokens/tokens.json`, then regenerate `tokens.ts` and `tokens.css`.
+- [x] **2.1 Focus border width.** Test first: `tokens.spec.ts` checks that `borderWidth.focus` is 2 in `tokens.ts` and that `--mm-border-width-focus` is `2px` in `tokens.css`. Code: add `borderWidth.focus` to `tokens/tokens.json`, then regenerate `tokens.ts` and `tokens.css`.
 
 ## 3. Skeleton screen
 

@@ -53,6 +53,7 @@
   --mm-radius-xl: 20px;
   --mm-radius-xxl: 32px;
   --mm-radius-pill: 999px;
+  --mm-border-width-focus: 2px;
   --mm-motion-fast: 150ms;
   --mm-motion-base: 250ms;
   --mm-motion-slow: 400ms;
