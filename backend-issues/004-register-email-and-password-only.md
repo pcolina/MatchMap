@@ -1,4 +1,4 @@
-# Issue 6: Register with email and password only, and drop displayName
+# Issue 004: Register with email and password only, and drop displayName
 
 ## Context
 
@@ -9,7 +9,7 @@ The current contract (`matchmap-api/contracts/graphql/account.graphqls`) does no
 - `RegisterInput` requires `email`, `username`, `displayName` and `password`.
 - `User` has a `displayName` field.
 
-This issue changes the contract and the backend to match the client. It supersedes `05-generate-username-from-email.md` and the `displayName` parts of `03-username-and-display-name-uniqueness.md`.
+This issue changes the contract and the backend to match the client. It supersedes `007-generate-username-from-email.md` and the `displayName` parts of `006-username-and-display-name-uniqueness.md`.
 
 ## What the backend must do
 
@@ -19,7 +19,7 @@ This issue changes the contract and the backend to match the client. It supersed
 - If the generated `username` is taken, the backend adds a number until it finds a free value. Two accounts never share a `username`.
 - The email is unique. A taken email returns `EMAIL_TAKEN`.
 - The contract documents the error codes that `register` can return: `EMAIL_TAKEN` and `VALIDATION_FAILED` (with the field name for the password). Document the codes in the contract, not only in the code.
-- The password rule (6 to 20 characters, one lowercase, one uppercase, one special character) is enforced by the backend, as `02-password-complexity.md` describes.
+- The password rule (6 to 20 characters, one lowercase, one uppercase, one special character) is enforced by the backend, as `005-password-complexity.md` describes.
 
 ## Open questions for the backend
 

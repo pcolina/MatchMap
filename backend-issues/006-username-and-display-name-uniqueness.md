@@ -1,4 +1,4 @@
-# Issue 3: Make username and display name unique, with a number when the default is taken
+# Issue 006: Make username and display name unique, with a number when the default is taken
 
 ## Context
 

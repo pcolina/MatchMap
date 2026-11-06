@@ -1,4 +1,4 @@
-# Issue 4: Return stable error codes for sign-in and registration
+# Issue 002: Return stable error codes for sign-in and registration
 
 ## Context
 
@@ -14,8 +14,8 @@ The client maps an error code from the API to a translation key. The API does no
 
 - Sign-in with a wrong email or password returns a stable error code for invalid credentials.
 - Registration with an email that already exists returns a stable error code for a taken email.
-- Registration with a `username` or `displayName` that is taken returns its own stable code (see Issue 3).
-- Registration with a password that breaks the complexity rule returns its own stable code (see Issue 2).
+- Registration with a `username` or `displayName` that is taken returns its own stable code (see Issue 006).
+- Registration with a password that breaks the complexity rule returns its own stable code (see Issue 005).
 - The codes are documented in `contracts/openapi/auth.yaml` and `contracts/graphql/account.graphqls`.
 
 ## Open questions for the backend

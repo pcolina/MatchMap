@@ -2,7 +2,7 @@
 
 ## Why
 
-Users cannot reach any feature of the app until they are signed in. This change adds the sign-in page, and the shared pieces that the sign-in page and the registration page both use: the validation rules, the translation catalogues, the skeleton screen, the language switcher, the token handling and the main route. The registration page is in the next change, `add-registration-page`, which depends on this one.
+Users cannot reach any feature of the app until they are signed in. This change adds the sign-in page, and the shared pieces that the sign-in page and the registration page both use: the validation rules of the sign-in form, the translation catalogues, the skeleton screen, the language switcher, the token handling and the main route. The registration page is in the next change, `add-registration-page`, which depends on this one.
 
 ## What Changes
 
@@ -12,7 +12,7 @@ Users cannot reach any feature of the app until they are signed in. This change 
 - **Google button:** visible on the sign-in page, disabled, with the text of `login.signIn.googleComingSoon`: `en` "Coming soon", `es` "Próximamente". It has no sign-in behaviour in this change.
 - **Placeholder route:** after a successful sign-in, the user is taken to the main route at `/`, with no extra path. It is lazy-loaded and uses the main layout, where later changes add their components. The main layout route shows no text in this change.
 - **Account call:** sign-in calls `POST /api/auth/login` (`contracts/openapi/auth.yaml` in `matchmap-api`) through `data/*.api.ts`. It is an HTTP endpoint, not a GraphQL operation.
-- **Shared code:** the email and password validation functions in `packages/shared`, the sign-in translation keys, the skeleton screen, and the focus border token `borderWidth.focus` (2 px) in `tokens/`.
+- **Shared code:** the sign-in validation and email normalisation functions in `packages/shared`, the sign-in translation keys, the skeleton screen, and the focus border token `borderWidth.focus` (2 px) in `tokens/`.
 - **Token handling:**
   - Access token: kept in memory in both apps.
   - Refresh token on mobile: stored in `expo-secure-store`, as `apps/mobile/AGENTS.md` requires.
@@ -34,7 +34,7 @@ The account rules themselves (password storage, token issuing, duplicate emails)
 
 ## Impact
 
-- **Code:** `apps/web` and `apps/mobile` (sign-in page, store, routes and main layout), `packages/shared` (validators, sign-in keys, catalogues, OpenAPI types), `tokens/` (one border width token).
+- **Code:** `apps/web` and `apps/mobile` (sign-in page, store, routes and main layout), `packages/shared` (sign-in validators, email normalisation, sign-in keys, catalogues, OpenAPI types), `tokens/` (one border width token).
 - **APIs:** the sign-in operation of the `matchmap-api` contract, consumed and not changed here.
 - **Dependencies:** see Depends on.
 - **Systems:** none beyond the API.

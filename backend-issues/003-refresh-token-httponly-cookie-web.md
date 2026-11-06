@@ -1,4 +1,4 @@
-# Issue 1: Set the refresh token as an httpOnly cookie for web
+# Issue 003: Set the refresh token as an httpOnly cookie for web
 
 ## Context
 

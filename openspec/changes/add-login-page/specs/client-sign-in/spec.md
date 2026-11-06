@@ -50,35 +50,54 @@ The sign-in page SHALL show an email field (label `login.signIn.emailLabel`), a 
 - **WHEN** the user activates the registration link
 - **THEN** the registration page is shown
 
-### Requirement: Email validation
+### Requirement: Sign-in input validation
 
-The client SHALL validate the email before sending it, with the same rules as the API: standard email format, at most 254 characters. The client SHALL trim and lower-case the email before sending it.
+The sign-in form SHALL validate only these rules, before sending anything, and show the error on the field:
+
+- Email: not empty, standard email format, at most 254 characters.
+- Password: not empty, at least 6 and at most 20 characters.
+
+The sign-in form SHALL NOT apply any other rule, such as the complexity rules of registration. The client SHALL trim the email and lower-case it before validating and sending it.
+
+The API enforces the same limits on `POST /api/auth/login`, as `backend-issues/001-login-email-and-password-limits.md` requires, and `contracts/openapi/auth.yaml` declares them in `LoginRequest`.
+
+The error messages are:
+
+| Key | en | es |
+|---|---|---|
+| `login.signIn.errorEmailRequired` | Enter your email. | Introduce tu email. |
+| `login.signIn.errorEmailFormat` | Enter a valid email address. | Introduce un email válido. |
+| `login.signIn.errorEmailTooLong` | Email must be at most 254 characters. | El email debe tener como máximo 254 caracteres. |
+| `login.signIn.errorPasswordRequired` | Enter your password. | Introduce tu contraseña. |
+| `login.signIn.errorPasswordLength` | Password must be 6 to 20 characters. | La contraseña debe tener entre 6 y 20 caracteres. |
+
+#### Scenario: Empty email
+- **WHEN** the user submits an empty email, or one with only spaces
+- **THEN** the email field shows `login.signIn.errorEmailRequired` and no request is sent
 
 #### Scenario: Invalid email format
 - **WHEN** the user submits an email that is not in standard email format
-- **THEN** the email field shows an error and no request is sent
+- **THEN** the email field shows `login.signIn.errorEmailFormat` and no request is sent
 
 #### Scenario: Email longer than 254 characters
 - **WHEN** the user submits an email longer than 254 characters
-- **THEN** the email field shows an error and no request is sent
+- **THEN** the email field shows `login.signIn.errorEmailTooLong` and no request is sent
+
+#### Scenario: Empty password
+- **WHEN** the user submits an empty password
+- **THEN** the password field shows `login.signIn.errorPasswordRequired` and no request is sent
+
+#### Scenario: Password length out of range
+- **WHEN** the user submits a password shorter than 6 or longer than 20 characters
+- **THEN** the password field shows `login.signIn.errorPasswordLength` and no request is sent
+
+#### Scenario: Password without complexity is sent
+- **WHEN** the user submits a password of 6 to 20 characters that has no uppercase letter or no special character
+- **THEN** the request is sent
 
 #### Scenario: Email is normalised before sending
 - **WHEN** the user submits " User@Example.com " with spaces and capitals
 - **THEN** the request sends "user@example.com"
-
-### Requirement: Password validation
-
-The sign-in password SHALL only be checked for being non-empty before sending. The complexity rules (6 to 20 characters, one lowercase letter, one uppercase letter and one special character) apply only to registration.
-
-#### Scenario: Empty password
-- **WHEN** the user submits an empty password
-- **THEN** the password field shows an error and no request is sent
-
-#### Scenario: Any non-empty password is sent
-- **WHEN** the user submits a password that does not meet the registration complexity rules
-- **THEN** the request is sent
-
-The password field shows the text of `login.signIn.errorPasswordRequired`: `en` "Enter your password.", `es` "Introduce tu contraseña."
 
 ### Requirement: Field errors
 

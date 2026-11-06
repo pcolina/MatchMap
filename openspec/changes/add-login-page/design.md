@@ -8,7 +8,7 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 
 - Repository: `C:\workspace\pablo\matchmap-api`, commit `0bb29cb` (last commit that touched `contracts/`).
 - `contracts/openapi/auth.yaml`: `POST /api/auth/login` takes `{ email, password }` and returns `TokenResponse` (`tokenType`, `accessToken`, `expiresIn`, `refreshToken`). Errors `401 invalid_credentials` and `429 too_many_attempts` with `Retry-After`.
-- `contracts/graphql/account.graphqls`: `register(input: RegisterInput!)`. The contract still requires `username` and `displayName`, which `backend-issues/06-register-email-and-password-only.md` removes. This change depends on the result of that issue.
+- `contracts/graphql/account.graphqls`: `register(input: RegisterInput!)`. The contract still requires `username` and `displayName`, which `backend-issues/004-register-email-and-password-only.md` removes. This change depends on the result of that issue.
 - Check for changes since the baseline before each API-using task (task 0.2 in `tasks.md`).
 
 ## Decisions
@@ -32,13 +32,13 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 
 ### Refresh token
 
-- **Web:** the API sets the refresh token as an `httpOnly` cookie. The sign-in and refresh requests send credentials, so the browser stores and returns the cookie. The app never reads it. This requires the API change in `backend-issues/01-refresh-token-httponly-cookie-web.md`.
+- **Web:** the API sets the refresh token as an `httpOnly` cookie. The sign-in and refresh requests send credentials, so the browser stores and returns the cookie. The app never reads it. This requires the API change in `backend-issues/003-refresh-token-httponly-cookie-web.md`.
 - **Mobile:** the refresh token is stored with `expo-secure-store`, as `apps/mobile/AGENTS.md` requires.
 - The access token is never written to storage on either platform.
 
 ### Validation
 
-- The validation rules (email format and length, password length and character classes) are pure functions in `packages/shared`. Both apps use them, and they copy the rules from the API.
+- The sign-in validation (email required, email format and length up to 254, password required and 6 to 20 characters) and the email normalisation (trim and lower-case) are pure functions in `packages/shared`. Both apps use them. The limits are declared in `LoginRequest` in `contracts/openapi/auth.yaml` (`matchmap-api`), and the backend enforces them as `backend-issues/001-login-email-and-password-limits.md` describes. The sign-in form applies no other rule.
 - The forms use Signal Forms (`@angular/forms/signals`) on web and on mobile.
 
 ### Internationalisation
