@@ -46,13 +46,13 @@ The account rules (password complexity, error codes) belong to the API change `a
 
 - The sign-in page, the language switcher, the main route and the token handling. They are in `add-login-page`.
 - Email confirmation after registration. In a future change, the user is asked to confirm the email, and a page tells them that a confirmation email has been sent.
-- Backend account logic (password complexity on the server, stable error codes). These are specified in the API change `add-user-accounts` and in `backend-issues/02-password-complexity.md`, `backend-issues/04-stable-auth-error-codes.md` and `backend-issues/06-register-email-and-password-only.md`.
+- Backend account logic (password complexity on the server, stable error codes). These are specified in the API change `add-user-accounts` and in `backend-issues/005-password-complexity.md`, `backend-issues/002-stable-auth-error-codes.md` and `backend-issues/004-register-email-and-password-only.md`.
 - The tablet and laptop web layouts. The iPad and laptop specs are separate changes, written later.
 
 ## Depends on
 
 - **Change `add-login-page`**, which must be archived before this change starts. This change reuses its validators, its skeleton, its language switcher, its auth store and its routes.
-- **API change `add-user-accounts`** in the `matchmap-api` repository (status: in review). This change needs its `register` mutation to accept `email` and `password` only, to enforce the password rules, and to return the stable error codes listed in `backend-issues/02-password-complexity.md` and `backend-issues/04-stable-auth-error-codes.md`. The contract change in `backend-issues/06` is required before this change starts.
+- **API change `add-user-accounts`** in the `matchmap-api` repository (status: in review). This change needs its `register` mutation to accept `email` and `password` only, to enforce the password rules, and to return the stable error codes listed in `backend-issues/005-password-complexity.md` and `backend-issues/002-stable-auth-error-codes.md`. The contract change in `backend-issues/004-register-email-and-password-only.md` is required before this change starts.
 
 ## Open questions
 
