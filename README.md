@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo/lockup/png-preview-poppins/horizontal-on-dark@2x.png" alt="MatchMap" width="320">
+</p>
+
 # MatchMap
 
 ![Angular](https://img.shields.io/badge/Angular-22-DD0031)
