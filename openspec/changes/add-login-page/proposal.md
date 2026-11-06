@@ -8,7 +8,7 @@ Users cannot reach any feature of the app until they are signed in. This change 
 
 - **Sign-in page:** email and password fields, one primary button to sign in, and a link to the registration page (`/register`).
 - **Layout:** the sign-in content is centred on the screen, both horizontally and vertically, in portrait and landscape. The language switcher appears in the top-right corner of the screen. On mobile, the corner position respects the safe area.
-- **Language switcher:** a circle with the Lucide icon `languages` centred inside it, with the `elevation.card` shadow. It has no behaviour in this change. Its accessible name is the translation key `login.signIn.languageSwitcher`, with the value `languages` in `en` and `idiomas` in `es`.
+- **Language switcher:** a circle with the Tabler icon `language` centred inside it, with the `elevation.card` shadow. It has no behaviour in this change. Its accessible name is the translation key `login.signIn.languageSwitcher`, with the value `languages` in `en` and `idiomas` in `es`.
 - **Google button:** visible on the sign-in page, disabled, with the text of `login.signIn.googleComingSoon`: `en` "Coming soon", `es` "Próximamente". It has no sign-in behaviour in this change.
 - **Placeholder route:** after a successful sign-in, the user is taken to the main route at `/`, with no extra path. It is lazy-loaded and uses the main layout, where later changes add their components. The main layout route shows no text in this change.
 - **Account call:** sign-in calls `POST /api/auth/login` (`contracts/openapi/auth.yaml` in `matchmap-api`) through `data/*.api.ts`. It is an HTTP endpoint, not a GraphQL operation.
@@ -54,7 +54,7 @@ The account rules themselves (password storage, token issuing, duplicate emails)
 - **Dependencies:**
   - Already added before this change was approved, at the user's request: `@ngrx/signals@^22.0.1` in `apps/web` and `apps/mobile`, and `rxjs@~7.8.0` in `apps/mobile`. `apps/web` already declared `rxjs@~7.8.0`.
   - Installed in both apps for this change, at the user's request: `apollo-angular@^14.2.0`, `@apollo/client@^4.3.5`, `graphql@^16` (peer of Apollo) and `@ngx-translate/core@^18.0.0`.
-  - Approved for this change, to be installed in both apps for the language switcher icon: `@ng-icons/core` and `@ng-icons/lucide`, as `docs/design.md` §5 requires.
+  - Approved for this change, to be installed in both apps for the language switcher icon: `@ng-icons/core` and `@ng-icons/tabler-icons`, as `docs/design.md` §5 requires.
   - Approved for this change, to be installed in `apps/mobile`: `expo-secure-store`, for the refresh token on mobile.
 
 ## Open questions

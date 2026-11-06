@@ -4,7 +4,7 @@
 
 ### Requirement: Sign-in page layout
 
-The sign-in page SHALL centre its content horizontally and vertically, in portrait and landscape. On mobile, the layout SHALL respect the safe area.
+The sign-in page SHALL show a header with the MatchMap logo (the stacked lockup) and the tagline `login.brand.tagline` below it, on a gradient from the `accentSubtle` token to the `bg` token. The header SHALL take the space left over by the content, so it grows or shrinks with the screen height. The content SHALL be centred horizontally and SHALL stay at the bottom of the page, directly above the registration link, with a comfortable margin under the link, in portrait and landscape. The page SHALL NOT scroll vertically at the default text size on a phone-sized screen, unless the content does not fit in the available height. On mobile, the layout SHALL respect the safe area.
 
 #### Scenario: Centred content on phone
 - **WHEN** the sign-in page is shown on a phone in portrait or landscape
@@ -16,7 +16,7 @@ The sign-in page SHALL centre its content horizontally and vertically, in portra
 
 ### Requirement: Language switcher
 
-The sign-in page SHALL show a language switcher in the top-right corner. It is a circle with the Lucide icon `languages` centred inside it, and a small shadow (`elevation.card`). It has no behaviour in this change.
+The sign-in page SHALL show a language switcher floating over the header, in the top-right corner, without taking a row of its own. It is a circle with the Tabler icon `language` centred inside it, and a small shadow (`elevation.card`). It has no behaviour in this change.
 
 #### Scenario: Switcher is visible
 - **WHEN** the sign-in page is shown
@@ -32,15 +32,15 @@ The sign-in page SHALL show a language switcher in the top-right corner. It is a
 
 ### Requirement: Google button
 
-The sign-in page SHALL show a Google sign-in button, disabled, with the text of the key `login.signIn.googleComingSoon`. It has no sign-in behaviour in this change.
+The sign-in page SHALL show, below the sign-in button, three social sign-in buttons (Google, Facebook and Apple) with their brand icons. Each is marked `aria-disabled="true"` and stays focusable with the keyboard, so screen reader users hear that it is unavailable, and it has no behaviour in this change. Its title is the text of the key `login.signIn.googleComingSoon`.
 
 #### Scenario: Google button is disabled
 - **WHEN** the sign-in page is shown
-- **THEN** the Google button is visible, disabled, and shows the text of `login.signIn.googleComingSoon`
+- **THEN** the three social buttons are visible below the sign-in button, reachable with the keyboard, marked as unavailable, and show the text of `login.signIn.googleComingSoon` as their title
 
 ### Requirement: Sign-in fields and actions
 
-The sign-in page SHALL show an email field (label `login.signIn.emailLabel`), a password field (label `login.signIn.passwordLabel`), one primary sign-in button (text `login.signIn.submit`) and a link to the registration page (text `login.signIn.goToRegister`).
+The sign-in page SHALL show an email field (label `login.signIn.emailLabel`) with a user icon (`tablerUser`) inside it, a password field (label `login.signIn.passwordLabel`) with a lock icon (`tablerLock`) inside it, and an eye button on the right of the password field. The eye button shows the eye icon (`tablerEye`) while the password is visible and the eye-off icon (`tablerEyeOff`) while it is hidden; it toggles between hidden and visible text, and its accessible name is `login.signIn.showPassword` or `login.signIn.hidePassword` accordingly. One primary sign-in button (text `login.signIn.submit`) and a link to the registration page (text `login.signIn.goToRegister`) are also shown.
 
 #### Scenario: Fields and actions are shown
 - **WHEN** the sign-in page is shown
@@ -101,7 +101,7 @@ The error messages are:
 
 ### Requirement: Field errors
 
-An invalid field SHALL show its border in `danger`, and its error message below the field in `caption` with the `danger` colour.
+An invalid field SHALL show its border in `danger`, and its error message below the field in `caption` with the `danger` colour. The space for the error message under each field, and for the sign-in failure message, is always reserved, so showing or hiding a message SHALL NOT move any other element on the page.
 
 #### Scenario: Error state on a field
 - **WHEN** a field is invalid

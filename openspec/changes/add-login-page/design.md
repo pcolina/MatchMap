@@ -32,7 +32,7 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 
 ### Refresh token
 
-- **Web:** the API sets the refresh token as an `httpOnly` cookie. The sign-in and refresh requests send credentials, so the browser stores and returns the cookie. The app never reads it. This requires the API change in `backend-issues/003-refresh-token-httponly-cookie-web.md`.
+- **Web:** the API sets the refresh token as an `httpOnly` cookie. The sign-in and refresh requests send credentials, so the browser stores and returns the cookie. The app never reads it. This requires the API change in `backend-issues/002-refresh-token-httponly-cookie-web.md`.
 - **Mobile:** the refresh token is stored with `expo-secure-store`, as `apps/mobile/AGENTS.md` requires.
 - The access token is never written to storage on either platform.
 
@@ -53,8 +53,8 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 
 ### Icons and the language switcher
 
-- The switcher is a circle with the Lucide icon `languages`, the `elevation.card` shadow, and the accessible name from `login.signIn.languageSwitcher`.
-- `@ng-icons/core` and `@ng-icons/lucide` are added to both apps in this change, as `docs/design.md` §5 requires. They are listed in the proposal.
+- The switcher is a circle with the Tabler icon `language`, the `elevation.card` shadow, and the accessible name from `login.signIn.languageSwitcher`.
+- `@ng-icons/core` and `@ng-icons/tabler-icons` are added to both apps in this change, as `docs/design.md` §5 requires. They are listed in the proposal.
 
 ### Dependencies
 
