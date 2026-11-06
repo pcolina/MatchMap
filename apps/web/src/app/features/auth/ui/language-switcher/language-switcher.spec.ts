@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { lucideLanguages } from '@ng-icons/lucide';
+import { tablerLanguage } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
 import { LanguageSwitcherComponent } from './language-switcher';
@@ -14,7 +14,7 @@ const createSwitcher = () => {
 describe('LanguageSwitcherComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideIcons({ lucideLanguages }), provideTranslateService({ fallbackLang: 'en' })],
+      providers: [provideIcons({ tablerLanguage }), provideTranslateService({ fallbackLang: 'en' })],
     });
     const translate = TestBed.inject(TranslateService);
     translate.setTranslation('en', en);
@@ -29,7 +29,7 @@ describe('LanguageSwitcherComponent', () => {
     expect(getComputedStyle(button!).getPropertyValue('border-radius')).toBe('var(--mm-radius-pill)');
     expect(getComputedStyle(button!).getPropertyValue('width')).toBe('var(--mm-size-touch-target-min)');
     expect(getComputedStyle(button!).getPropertyValue('height')).toBe('var(--mm-size-touch-target-min)');
-    expect(fixture.nativeElement.querySelector('ng-icon')?.getAttribute('name')).toBe('lucideLanguages');
+    expect(fixture.nativeElement.querySelector('ng-icon')?.getAttribute('name')).toBe('tablerLanguage');
   });
 
   it('has the card elevation shadow', () => {

@@ -1,6 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideIcons } from '@ng-icons/core';
-import { lucideLanguages } from '@ng-icons/lucide';
+import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(),
-    provideIcons({ lucideLanguages }),
+    provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
     provideRouter(routes),
     provideTranslateService({ fallbackLang: 'en' }),
     provideAppInitializer(() => setupTranslations(inject(TranslateService), navigator.language)),

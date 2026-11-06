@@ -3,6 +3,9 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const requiredKeys = [
+  'login.brand.tagline',
+  'login.signIn.showPassword',
+  'login.signIn.hidePassword',
   'login.signIn.emailLabel',
   'login.signIn.passwordLabel',
   'login.signIn.submit',

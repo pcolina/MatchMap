@@ -1,5 +1,8 @@
 {
   "login": {
+    "brand": {
+      "tagline": "Marca más países y compara con tus amigos."
+    },
     "signIn": {
       "emailLabel": "Email",
       "passwordLabel": "Contraseña",
@@ -13,7 +16,9 @@
       "errorPasswordRequired": "Introduce tu contraseña.",
       "errorPasswordLength": "La contraseña debe tener entre 6 y 20 caracteres.",
       "errorInvalidCredentials": "El email o la contraseña no son correctos.",
-      "errorTooManyAttempts": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo."
+      "errorTooManyAttempts": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo.",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña"
     },
     "common": {
       "errorNetwork": "Sin conexión. Revisa tu red e inténtalo de nuevo.",

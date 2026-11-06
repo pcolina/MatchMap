@@ -8,9 +8,13 @@
   border: none;
   border-radius: var(--mm-radius-pill);
   background-color: var(--mm-color-surface);
-  color: var(--mm-color-text);
+  color: var(--mm-color-textSecondary);
   box-shadow: var(--mm-elevation-card);
   cursor: pointer;
+}
+
+.switcher:focus-visible {
+  box-shadow: var(--mm-focus-halo), var(--mm-elevation-card);
 }
 
 ng-icon {

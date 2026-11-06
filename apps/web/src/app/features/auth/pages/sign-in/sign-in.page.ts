@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { FormField, form, submit, validate } from '@angular/forms/signals';
+import { NgIcon } from '@ng-icons/core';
 import { Router, RouterLink } from '@angular/router';
 import { validateSignInEmail, validateSignInPassword } from '@matchmap/shared';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -11,7 +12,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
 
 @Component({
   selector: 'app-sign-in-page',
-  imports: [FormField, LanguageSwitcherComponent, RouterLink, SkeletonComponent, TranslatePipe],
+  imports: [FormField, LanguageSwitcherComponent, NgIcon, RouterLink, SkeletonComponent, TranslatePipe],
   templateUrl: './sign-in.page.html',
   styleUrl: './sign-in.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +21,7 @@ export class SignInPage {
   private readonly router = inject(Router);
   protected readonly store = inject(AuthStore);
   protected readonly shapes: readonly SkeletonShape[] = ['field', 'field', 'button'];
+  protected readonly showPassword = signal(false);
 
   private readonly credentials = signal({ email: '', password: '' });
   protected readonly form = form(this.credentials, (path) => {
@@ -48,6 +50,10 @@ export class SignInPage {
         this.router.navigateByUrl('/');
       }
     });
+  }
+
+  protected togglePassword(): void {
+    this.showPassword.update((visible) => !visible);
   }
 
   protected onSubmit(event: Event): void {

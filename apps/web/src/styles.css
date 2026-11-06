@@ -12,3 +12,20 @@ body {
   font-family: var(--mm-font-body);
   color-scheme: light;
 }
+
+:root {
+  --mm-focus-halo:
+    0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent),
+    0 0 var(--mm-space-5) var(--mm-space-2) color-mix(in srgb, var(--mm-color-accent) 35%, transparent),
+    0 0 var(--mm-space-10) var(--mm-space-4) color-mix(in srgb, var(--mm-color-accent) 18%, transparent);
+}
+
+:focus-visible {
+  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
+  box-shadow: var(--mm-focus-halo);
+}
+
+app-root {
+  display: block;
+}

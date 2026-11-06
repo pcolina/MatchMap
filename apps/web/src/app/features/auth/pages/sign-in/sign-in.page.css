@@ -1,23 +1,51 @@
 :host {
+  position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .top-bar {
+  position: absolute;
+  top: var(--mm-space-4);
+  right: var(--mm-space-4);
+  z-index: 1;
   display: flex;
   justify-content: flex-end;
-  padding: var(--mm-space-4);
 }
 
-.content {
-  flex: 1;
+.hero {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--mm-space-4);
-  padding: var(--mm-space-4);
+  gap: var(--mm-space-3);
+  padding: var(--mm-space-8) var(--mm-space-4);
+  background-image: linear-gradient(180deg, var(--mm-color-accentSubtle), var(--mm-color-bg));
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--mm-color-text);
+  font-family: var(--mm-font-display);
+  text-align: center;
+}
+
+.content {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--mm-space-3);
+  padding: var(--mm-space-4) var(--mm-space-4) var(--mm-space-6);
 }
 
 form {
@@ -45,11 +73,59 @@ input {
   font-family: var(--mm-font-body);
 }
 
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.field input {
+  padding-left: var(--mm-space-10);
+}
+
+.field:has(.password-toggle) input {
+  padding-right: var(--mm-space-10);
+}
+
+.field-icon,
+.password-toggle {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--mm-size-input-height);
+  color: var(--mm-color-textSecondary);
+}
+
+.field-icon {
+  left: var(--mm-space-3);
+  width: var(--mm-size-icon-md);
+  pointer-events: none;
+}
+
+.field-icon ng-icon,
+.password-toggle ng-icon {
+  width: var(--mm-size-icon-md);
+  height: var(--mm-size-icon-md);
+  color: var(--mm-color-textSecondary);
+}
+
+.password-toggle {
+  right: var(--mm-space-2);
+  width: var(--mm-size-touch-target-min);
+  padding: 0;
+  border: none;
+  border-radius: var(--mm-radius-md);
+  background: none;
+}
+
 .field--invalid {
   border-color: var(--mm-color-danger);
 }
 
 .error {
+  min-height: var(--mm-type-caption-line-height);
   margin: 0;
   color: var(--mm-color-danger);
   font-family: var(--mm-font-body);
@@ -59,7 +135,7 @@ input {
   letter-spacing: var(--mm-type-caption-letter-spacing);
 }
 
-form button {
+button[type='submit'] {
   height: var(--mm-size-button-height);
   margin-top: var(--mm-space-2);
   border: none;
@@ -69,18 +145,38 @@ form button {
   font-family: var(--mm-font-body);
 }
 
-.google {
+.social {
+  display: flex;
+  justify-content: center;
+  gap: var(--mm-space-3);
   width: 100%;
   max-width: 360px;
-  height: var(--mm-size-button-height);
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--mm-size-touch-target-min);
+  height: var(--mm-size-touch-target-min);
+  padding: 0;
   border: 1px solid var(--mm-color-border);
-  border-radius: var(--mm-radius-md);
+  border-radius: var(--mm-radius-pill);
   background-color: var(--mm-color-surface);
   color: var(--mm-color-textSecondary);
-  font-family: var(--mm-font-body);
+}
+
+.social-button ng-icon {
+  width: var(--mm-size-icon-lg);
+  height: var(--mm-size-icon-lg);
 }
 
 .register {
+  display: inline-block;
+  padding: var(--mm-space-2) var(--mm-space-4);
+  border-radius: var(--mm-radius-md);
   color: var(--mm-color-accent);
   font-family: var(--mm-font-body);
 }
+
+

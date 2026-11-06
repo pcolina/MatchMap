@@ -1,7 +1,7 @@
-﻿import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
-import { lucideLanguages } from '@ng-icons/lucide';
+import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
@@ -16,7 +16,7 @@ const setup = (gateway: Gateway) => {
     ({ matches: false, media: query, addEventListener: () => undefined, removeEventListener: () => undefined }) as unknown as MediaQueryList;
   TestBed.configureTestingModule({
     providers: [
-      provideIcons({ lucideLanguages }),
+      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
       provideRouter([]),
       provideTranslateService({ fallbackLang: 'en' }),
       { provide: SIGN_IN_GATEWAY, useValue: gateway as unknown as SignInGateway },
@@ -59,12 +59,59 @@ describe('SignInPage', () => {
     vi.restoreAllMocks();
   });
 
-  it('centres its content horizontally and vertically', () => {
+  it('centres its content horizontally, starting under the header', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const content = element.querySelector<HTMLElement>('.content')!;
 
-    expect(getComputedStyle(content).getPropertyValue('justify-content')).toBe('center');
     expect(getComputedStyle(content).getPropertyValue('align-items')).toBe('center');
+    expect(getComputedStyle(content).getPropertyValue('justify-content')).toBe('flex-start');
+  });
+
+  it('shows the logo on a gradient header built from the accent and background tokens', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const header = element.querySelector<HTMLElement>('header.hero')!;
+
+    expect(header.querySelector<HTMLImageElement>('img')?.getAttribute('alt')).toBe('MatchMap');
+    expect(header.querySelector<HTMLImageElement>('img')?.getAttribute('src')).toBe('brand/matchmap-stacked-light.png');
+    expect(header.querySelector('.tagline')?.textContent?.trim()).toBe('Mark more countries and compare with your friends.');
+    expect(getComputedStyle(header).getPropertyValue('background-image')).toContain('var(--mm-color-accentSubtle)');
+    expect(getComputedStyle(header).getPropertyValue('background-image')).toContain('var(--mm-color-bg)');
+  });
+
+  it('reserves the error space under each field so that errors do not move the layout', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    const emailError = element.querySelector<HTMLElement>('#email-error')!;
+    const passwordError = element.querySelector<HTMLElement>('#password-error')!;
+
+    expect(emailError).not.toBeNull();
+    expect(passwordError).not.toBeNull();
+    expect(emailError.textContent?.trim()).toBe('');
+    expect(passwordError.textContent?.trim()).toBe('');
+    expect(getComputedStyle(emailError).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
+  });
+
+  it('shows a user icon inside the email field and a lock icon inside the password field', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    expect(field(element, 'email').parentElement?.querySelector('ng-icon')?.getAttribute('name')).toBe('tablerUser');
+    expect(field(element, 'password').parentElement?.querySelector('ng-icon')?.getAttribute('name')).toBe('tablerLock');
+  });
+
+  it('toggles the password between hidden and visible with the eye button', () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const toggle = element.querySelector<HTMLButtonElement>('.password-toggle')!;
+
+    expect(field(element, 'password').type).toBe('password');
+    expect(toggle.getAttribute('aria-label')).toBe('Show password');
+    expect(toggle.querySelector('ng-icon')?.getAttribute('name')).toBe('tablerEyeOff');
+
+    toggle.click();
+    fixture.detectChanges();
+
+    expect(field(element, 'password').type).toBe('text');
+    expect(toggle.getAttribute('aria-label')).toBe('Hide password');
+    expect(toggle.querySelector('ng-icon')?.getAttribute('name')).toBe('tablerEye');
   });
 
   it('shows the language switcher in the top-right corner', () => {
@@ -73,14 +120,21 @@ describe('SignInPage', () => {
 
     expect(topBar.querySelector('app-language-switcher')).not.toBeNull();
     expect(getComputedStyle(topBar).getPropertyValue('justify-content')).toBe('flex-end');
+    expect(getComputedStyle(topBar).getPropertyValue('position')).toBe('absolute');
   });
 
-  it('shows the disabled Google button with the coming-soon text', () => {
+  it('shows three social buttons marked as unavailable but still focusable with their brand icons and the coming-soon title', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
-    const google = element.querySelector<HTMLButtonElement>('.google')!;
+    const buttons = Array.from(element.querySelectorAll<HTMLButtonElement>('.social button'));
 
-    expect(google.disabled).toBe(true);
-    expect(google.textContent?.trim()).toBe('Coming soon');
+    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(['Google', 'Facebook', 'Apple']);
+    expect(buttons.every((button) => button.getAttribute('aria-disabled') === 'true' && !button.disabled)).toBe(true);
+    expect(buttons.map((button) => button.querySelector('ng-icon')?.getAttribute('name'))).toEqual([
+      'tablerBrandGoogle',
+      'tablerBrandFacebook',
+      'tablerBrandApple',
+    ]);
+    expect(buttons.every((button) => button.title === 'Coming soon')).toBe(true);
   });
 
   it('shows the email and password fields, the sign-in button and the registration link', () => {
@@ -258,7 +312,7 @@ describe('SignInPage', () => {
     expect(element.querySelector('label[for="email"]')).not.toBeNull();
     expect(element.querySelector('label[for="password"]')).not.toBeNull();
     expect(element.querySelector<HTMLButtonElement>('button[type="submit"]')?.textContent?.trim()).not.toBe('');
-    expect(element.querySelector<HTMLButtonElement>('.google')?.textContent?.trim()).not.toBe('');
+    expect(Array.from(element.querySelectorAll<HTMLButtonElement>('.social button')).every((button) => button.getAttribute('aria-label'))).toBe(true);
     expect(element.querySelector('app-language-switcher button')?.getAttribute('aria-label')).toBe('languages');
     expect(element.querySelector<HTMLAnchorElement>('a.register')?.textContent?.trim()).not.toBe('');
   });

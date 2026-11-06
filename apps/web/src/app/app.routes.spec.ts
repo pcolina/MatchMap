@@ -2,7 +2,7 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { lucideLanguages } from '@ng-icons/lucide';
+import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import en from '../../../../packages/shared/i18n/en.json';
@@ -17,7 +17,7 @@ describe('application routes', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter(routes),
-        provideIcons({ lucideLanguages }),
+        provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
         provideTranslateService({ fallbackLang: 'en' }),
         { provide: SIGN_IN_GATEWAY, useValue: { signIn: () => of({ accessToken: 'token' }) } },
       ],
