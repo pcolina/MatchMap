@@ -2,7 +2,7 @@
   <app-language-switcher />
 </div>
 
-<main class="content">
+<div class="content">
   <button type="button" class="google" disabled>{{ 'login.signIn.googleComingSoon' | translate }}</button>
 
   @if (store.isLoading()) {
@@ -44,4 +44,4 @@
   }
 
   <a class="register" routerLink="/register">{{ 'login.signIn.goToRegister' | translate }}</a>
-</main>
+</div>
