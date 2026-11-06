@@ -24,7 +24,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 ## 3. Skeleton screen
 
 - [x] **3.1 Skeleton in web.** Test first: a component test checks that the skeleton renders blocks in `border` with the given shape, pulses with `base`, and is static under «Reduce motion». Code: `apps/web` skeleton component.
-- [ ] **3.2 Skeleton in mobile.** Test first: the same checks for `apps/mobile`, with ng-native. Code: `apps/mobile` skeleton component.
+- [x] **3.2 Skeleton in mobile.** Test first: the same checks for `apps/mobile`, with ng-native. Code: `apps/mobile` skeleton component.
 
 ## 4. Web (`apps/web`)
 
