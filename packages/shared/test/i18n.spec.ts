@@ -15,7 +15,9 @@ const requiredKeys = [
   'login.signIn.errorPasswordRequired',
   'login.signIn.errorPasswordLength',
   'login.signIn.errorInvalidCredentials',
+  'login.signIn.errorTooManyAttempts',
   'login.common.errorNetwork',
+  'login.common.errorUnknown',
 ];
 
 const loadCatalogue = (locale: 'en' | 'es'): Record<string, unknown> =>

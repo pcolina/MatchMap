@@ -163,6 +163,23 @@ The sign-in page SHALL show the translated message for each error case, and keep
 - **WHEN** the request fails because there is no network connection
 - **THEN** the page shows the text of `login.common.errorNetwork`
 
+#### Scenario: Too many attempts
+- **WHEN** the API returns the stable error code for too many attempts
+- **THEN** the page shows the text of `login.signIn.errorTooManyAttempts`
+
+#### Scenario: Unknown failure
+- **WHEN** the request fails for any other reason
+- **THEN** the page shows the text of `login.common.errorUnknown`
+
+The messages are:
+
+| Key | en | es |
+|---|---|---|
+| `login.signIn.errorInvalidCredentials` | Email or password is incorrect. | El email o la contraseña no son correctos. |
+| `login.signIn.errorTooManyAttempts` | Too many attempts. Wait a few minutes and try again. | Demasiados intentos. Espera unos minutos e inténtalo de nuevo. |
+| `login.common.errorNetwork` | No connection. Check your network and try again. | Sin conexión. Revisa tu red e inténtalo de nuevo. |
+| `login.common.errorUnknown` | Something went wrong. Try again. | Algo ha salido mal. Inténtalo de nuevo. |
+
 #### Scenario: Values are kept after an error
 - **WHEN** sign-in fails
 - **THEN** the email and password fields keep the values the user typed
