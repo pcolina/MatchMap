@@ -30,6 +30,15 @@ The sign-in page SHALL show a language switcher floating over the header, in the
 - **WHEN** the user activates the switcher
 - **THEN** the page does not change
 
+### Requirement: Divider between sign-in and social buttons
+
+The sign-in page SHALL show, between the sign-in button and the social sign-in buttons, a horizontal grey line (the `border` colour of `docs/design.md`) with the word of the key `login.signIn.or` centred on it. The word is decorative, so it is hidden from assistive technologies, and it is written in lower case as the line's label: `or` in English and `o` in Spanish.
+
+#### Scenario: Divider is shown between the two groups
+
+- **WHEN** the sign-in page is shown
+- **THEN** a grey horizontal line with the text of `login.signIn.or` at its centre appears between the sign-in button and the social buttons, and the text is hidden from assistive technologies
+
 ### Requirement: Google button
 
 The sign-in page SHALL show, below the sign-in button, three social sign-in buttons (Google, Facebook and Apple) with their brand icons. Each is marked `aria-disabled="true"` and stays focusable with the keyboard, so screen reader users hear that it is unavailable, and it has no behaviour in this change. Its title is the text of the key `login.signIn.googleComingSoon`.
@@ -59,7 +68,7 @@ The sign-in form SHALL validate only these rules, before sending anything, and s
 
 The sign-in form SHALL NOT apply any other rule, such as the complexity rules of registration. The client SHALL trim the email and lower-case it before validating and sending it.
 
-The API enforces the same limits on `POST /api/auth/login`, as `backend-issues/001-login-email-and-password-limits.md` requires, and `contracts/openapi/auth.yaml` declares them in `LoginRequest`.
+The API enforces the same limits on `POST /api/auth/login`, as GitHub issue `matchMap-api#7` requires, and `contracts/openapi/auth.yaml` declares them in `LoginRequest`.
 
 The error messages are:
 

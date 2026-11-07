@@ -69,6 +69,10 @@
       <button type="submit" [disabled]="store.isLoading()">{{ 'login.signIn.submit' | translate }}</button>
     </form>
 
+    <div class="divider">
+      <span class="divider-label" aria-hidden="true">{{ 'login.signIn.or' | translate }}</span>
+    </div>
+
     <div class="social">
       <button type="button" class="social-button" aria-label="Google" [attr.title]="'login.signIn.googleComingSoon' | translate" aria-disabled="true">
         <ng-icon name="tablerBrandGoogle" />

@@ -23,7 +23,7 @@
 
 ## 1. Brand in one line
 
-**Tagline:** «Marca más países y compara con tus amigos.» [Mark more countries and compare with your friends.]
+**Tagline:** «Compara, planea, descubre.» [Compare, plan, discover.] (sign-in page, set in Caveat 600 and slanted `skewX(-4deg)`)
 **Personality:** companionable but not intrusive · smart but not technical · adventurous but not reckless.
 **Compass:** *fresh* (airy, bright colours that do not shout, humour) + *useful* (the match is understood in 2 seconds, zero tables) + *visible ego* (the counter always in view).
 → Full detail in [`brand.md`](./brand.md).
@@ -87,8 +87,9 @@ Light fills do not reach 3:1 against `map.land`. That is why every state carries
 |---|---|---|---|
 | **Sora** | Display: logotype, titles, counter, destination names | 600 · 700 · 800 | `@expo-google-fonts/sora` |
 | **Inter** | Text: body, UI, buttons, labels | 400 · 500 · 600 · 700 | `@expo-google-fonts/inter` |
+| **Caveat** | Handwritten accent: the sign-in tagline only, slanted `skewX(-4deg)` | 600 | `@expo-google-fonts/caveat` |
 
-Both are Google Fonts under the **SIL Open Font License** (free commercial use). Do not use other families or weights.
+All are Google Fonts under the **SIL Open Font License** (free commercial use). Do not use other families or weights.
 
 ### Scale (sizes in pt/dp; line-height in pt)
 

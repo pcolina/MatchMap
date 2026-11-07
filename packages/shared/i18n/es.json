@@ -1,7 +1,7 @@
 {
   "login": {
     "brand": {
-      "tagline": "Marca más países y compara con tus amigos."
+      "tagline": "Compara, planea, descubre."
     },
     "signIn": {
       "emailLabel": "Email",
@@ -10,6 +10,7 @@
       "goToRegister": "Crear cuenta",
       "languageSwitcher": "idiomas",
       "googleComingSoon": "Próximamente",
+      "or": "o",
       "errorEmailRequired": "Introduce tu email.",
       "errorEmailFormat": "Introduce un email válido.",
       "errorEmailTooLong": "El email debe tener como máximo 254 caracteres.",

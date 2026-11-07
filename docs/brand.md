@@ -9,7 +9,7 @@ Copy examples are shown in Spanish, the product's original language, with an Eng
 
 ## Tagline
 
-# «Marca más países y compara con tus amigos.» [Mark more countries and compare with your friends.]
+# «Compara, planea, descubre.» [Compare, plan, discover.]
 
 **Alternatives for campaigns and onboarding** (more provocative):
 

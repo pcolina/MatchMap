@@ -73,9 +73,17 @@ describe('SignInPage', () => {
 
     expect(header.querySelector<HTMLImageElement>('img')?.getAttribute('alt')).toBe('MatchMap');
     expect(header.querySelector<HTMLImageElement>('img')?.getAttribute('src')).toBe('brand/matchmap-stacked-light.png');
-    expect(header.querySelector('.tagline')?.textContent?.trim()).toBe('Mark more countries and compare with your friends.');
+    expect(header.querySelector('.tagline')?.textContent?.trim()).toBe('Compare, plan, discover.');
     expect(getComputedStyle(header).getPropertyValue('background-image')).toContain('var(--mm-color-accentSubtle)');
     expect(getComputedStyle(header).getPropertyValue('background-image')).toContain('var(--mm-color-bg)');
+  });
+
+  it('sets the tagline in the handwritten font and slants it upwards', () => {
+    setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+
+    expect(rules.some((text) => text.includes('.tagline') && text.includes('font-family: var(--mm-font-handwritten)'))).toBe(true);
+    expect(rules.some((text) => text.includes('.tagline') && text.includes('skewX(var(--mm-skew-tagline))'))).toBe(true);
   });
 
   it('reserves the error space under each field so that errors do not move the layout', () => {
@@ -135,6 +143,32 @@ describe('SignInPage', () => {
       'tablerBrandApple',
     ]);
     expect(buttons.every((button) => button.title === 'Coming soon')).toBe(true);
+  });
+
+  it('shows a grey divider with the "or" text between the sign-in button and the social buttons', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const divider = element.querySelector<HTMLElement>('.divider')!;
+    const submitButton = element.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const social = element.querySelector<HTMLElement>('.social')!;
+    const label = divider.querySelector<HTMLElement>('.divider-label')!;
+
+    expect(submitButton.compareDocumentPosition(divider) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(divider.compareDocumentPosition(social) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(label.textContent?.trim()).toBe('or');
+    expect(label.getAttribute('aria-hidden')).toBe('true');
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+    expect(rules.some((text) => text.includes('.divider') && text.includes('border-top: 1px solid var(--mm-color-border)'))).toBe(true);
+  });
+
+  it('shows the Spanish divider text in Spanish', async () => {
+    const { fixture, element, translate } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    translate.use('es');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(element.querySelector<HTMLElement>('.divider-label')?.textContent?.trim()).toBe('o');
   });
 
   it('shows the email and password fields, the sign-in button and the registration link', () => {
