@@ -124,6 +124,14 @@ Sign-in SHALL call `POST /api/auth/login` through `data/*.api.ts`, and no other 
 - **WHEN** the user submits valid credentials
 - **THEN** exactly one request is sent to `POST /api/auth/login`
 
+#### Scenario: Request identifies the web client
+- **WHEN** the sign-in request is sent from the web app
+- **THEN** it carries the header `X-Client: web`, and the browser sends and stores the cookies of the API response
+
+#### Scenario: Request without a known client is rejected by the API
+- **WHEN** the API answers `400 invalid_client`
+- **THEN** the page shows the text of `login.common.errorUnknown`
+
 #### Scenario: Submit is blocked while the request runs
 - **WHEN** a sign-in request is in progress
 - **THEN** the sign-in button is disabled so the request cannot be sent twice
@@ -151,6 +159,34 @@ After a successful sign-in, the access token SHALL be kept in memory. On web, th
 #### Scenario: Web refresh token is not readable by scripts
 - **WHEN** sign-in succeeds on web
 - **THEN** the refresh token is set by the API as an `httpOnly` cookie and is not stored by the app
+
+### Requirement: Session restore
+
+When the app starts, it SHALL try to restore the session with the refresh token, and a request rejected for an expired access token SHALL be retried once after a refresh.
+
+#### Scenario: Refresh when the app starts
+- **WHEN** the app starts
+- **THEN** exactly one request is sent to `POST /api/auth/refresh`
+
+#### Scenario: Successful refresh signs the user in
+- **WHEN** the refresh request succeeds
+- **THEN** the user is signed in with the new access token, which is kept in memory
+
+#### Scenario: Rejected refresh shows the sign-in page
+- **WHEN** the refresh request is rejected
+- **THEN** the sign-in page is shown and the user is not signed in
+
+#### Scenario: Expired access token is retried once
+- **WHEN** a request is rejected because the access token has expired
+- **THEN** the refresh request is sent once and the rejected request is repeated once with the new access token
+
+#### Scenario: Retry fails again
+- **WHEN** the repeated request is rejected again
+- **THEN** the user is signed out and the sign-in page is shown
+
+#### Scenario: Route guard without a session
+- **WHEN** the user opens `/` without a session
+- **THEN** the user is redirected to `/login`
 
 ### Requirement: Redirect after sign-in
 

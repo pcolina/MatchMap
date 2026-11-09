@@ -1,12 +1,13 @@
 import { computed, inject, InjectionToken } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { catchError, EMPTY, Observable, pipe, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, finalize, Observable, pipe, switchMap, tap } from 'rxjs';
 
-export type SignInFailure = 'invalidCredentials' | 'tooManyAttempts' | 'network' | 'unknown';
+export type SignInFailure = 'invalidCredentials' | 'invalidRefreshToken' | 'tooManyAttempts' | 'network' | 'unknown';
 
 export interface SignInGateway {
   signIn(email: string, password: string): Observable<{ accessToken: string }>;
+  refresh(): Observable<{ accessToken: string }>;
 }
 
 export const SIGN_IN_GATEWAY = new InjectionToken<SignInGateway>('SIGN_IN_GATEWAY');
@@ -15,12 +16,14 @@ export interface AuthState {
   status: 'idle' | 'loading' | 'error';
   accessToken: string | null;
   failure: SignInFailure | null;
+  sessionChecked: boolean;
 }
 
 const initialState: AuthState = {
   status: 'idle',
   accessToken: null,
   failure: null,
+  sessionChecked: false,
 };
 
 export const AuthStore = signalStore(
@@ -44,5 +47,18 @@ export const AuthStore = signalStore(
         ),
       ),
     ),
+    restore: rxMethod<void>(
+      pipe(
+        switchMap(() =>
+          gateway.refresh().pipe(
+            tap(({ accessToken }) => patchState(store, { accessToken })),
+            catchError(() => EMPTY),
+            finalize(() => patchState(store, { sessionChecked: true })),
+          ),
+        ),
+      ),
+    ),
+    setAccessToken: (accessToken: string) => patchState(store, { accessToken }),
+    signOut: () => patchState(store, { status: 'idle', accessToken: null, failure: null }),
   })),
 );

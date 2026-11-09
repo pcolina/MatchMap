@@ -21,6 +21,9 @@ const toFailure = (error: unknown): SignInFailure => {
   if (code === 'too_many_attempts') {
     return 'tooManyAttempts';
   }
+  if (code === 'invalid_refresh_token') {
+    return 'invalidRefreshToken';
+  }
   return 'unknown';
 };
 
@@ -33,8 +36,20 @@ export class AuthApi implements SignInGateway {
       .post<TokenResponse>(
         '/api/auth/login',
         { email: normalizeEmail(email), password },
-        { withCredentials: true },
+        { withCredentials: true, headers: { 'X-Client': 'web' } },
       )
+      .pipe(
+        map(({ accessToken }) => ({ accessToken })),
+        catchError((error: unknown) => throwError(() => toFailure(error))),
+      );
+  }
+
+  refresh(): Observable<{ accessToken: string }> {
+    return this.http
+      .post<TokenResponse>('/api/auth/refresh', null, {
+        withCredentials: true,
+        headers: { 'X-Client': 'web' },
+      })
       .pipe(
         map(({ accessToken }) => ({ accessToken })),
         catchError((error: unknown) => throwError(() => toFailure(error))),

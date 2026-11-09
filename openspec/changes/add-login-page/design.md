@@ -6,8 +6,11 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 
 ## Contract baseline
 
-- Repository: `C:\workspace\pablo\matchmap-api`, commit `0bb29cb` (last commit that touched `contracts/`).
-- `contracts/openapi/auth.yaml`: `POST /api/auth/login` takes `{ email, password }` and returns `TokenResponse` (`tokenType`, `accessToken`, `expiresIn`, `refreshToken`). Errors `401 invalid_credentials` and `429 too_many_attempts` with `Retry-After`.
+- Repository: `C:\workspace\pablo\matchmap-api`, commit `57943e3` (last commit that touched `contracts/`). The previous baseline `0bb29cb` was superseded when the API declared `X-Client` and the web refresh cookie (`a1f9400`).
+- `contracts/openapi/auth.yaml`: `POST /api/auth/login`, `/api/auth/refresh`, `/api/auth/logout` and `/api/auth/google` require the header `X-Client: web | mobile`. A missing or unknown value returns `400 invalid_client`.
+- For `X-Client: web`, the refresh token is only in the `refresh_token` cookie (`HttpOnly; Path=/api/auth; Secure; SameSite`). `TokenResponse` (`tokenType`, `accessToken`, `expiresIn`) omits `refreshToken`. `POST /api/auth/refresh` takes no body. `POST /api/auth/logout` takes no body and expires the cookie.
+- For `X-Client: mobile`, the refresh token travels in the body: `TokenResponse.refreshToken`, and `refreshToken` in the body of refresh and logout.
+- `LoginRequest` declares the limits (email up to 254 characters, password 6 to 20 characters). Errors `401 invalid_credentials`, `429 too_many_attempts` with `Retry-After`, `400 invalid_email` and `400 invalid_password`.
 - `contracts/graphql/account.graphqls`: `register(input: RegisterInput!)`. The contract still requires `username` and `displayName`, which GitHub issue `matchMap-api#13` removes. This change depends on the result of that issue.
 - Check for changes since the baseline before each API-using task (task 0.2 in `tasks.md`).
 
@@ -30,9 +33,14 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 - Registration calls the GraphQL mutation `register` through an operation in `packages/shared`. Apollo is used only in `data/*.api.ts`.
 - After a successful registration, the store calls the same sign-in request with the same email and password (see the spec `client-registration`).
 
+### Client identification
+
+- Every call to `/api/auth/*` sends the header `X-Client`: `web` in `apps/web`, `mobile` in `apps/mobile`. The header is set in `data/auth.api.ts`, not in the store.
+- The value selects where the refresh token travels (cookie on web, body on mobile), so it is not optional.
+
 ### Refresh token
 
-- **Web:** the API sets the refresh token as an `httpOnly` cookie. The sign-in and refresh requests send credentials, so the browser stores and returns the cookie. The app never reads it. This requires the API change in GitHub issue `matchMap-api#8`.
+- **Web:** the API sets the refresh token as an `httpOnly` cookie. The sign-in, refresh and logout requests send credentials (`withCredentials: true`), so the browser stores and returns the cookie. The app never reads it, and the refresh request sends no body. This is declared in `contracts/openapi/auth.yaml` (`matchmap-api` `a1f9400`).
 - **Mobile:** the refresh token is stored with `expo-secure-store`, as `apps/mobile/AGENTS.md` requires.
 - The access token is never written to storage on either platform.
 

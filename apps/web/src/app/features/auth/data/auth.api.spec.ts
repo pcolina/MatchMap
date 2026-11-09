@@ -27,10 +27,37 @@ describe('AuthApi', () => {
     expect(request.request.method).toBe('POST');
     expect(request.request.body).toEqual({ email: 'user@example.com', password: '123456' });
     expect(request.request.withCredentials).toBe(true);
+    expect(request.request.headers.get('X-Client')).toBe('web');
 
     request.flush(tokenBody);
 
     expect(accessToken).toBe('token');
+  });
+
+  it('sends one refresh request with credentials, the web client header and no body', () => {
+    let accessToken: string | undefined;
+    api.refresh().subscribe((result) => (accessToken = result.accessToken));
+
+    const request = http.expectOne('/api/auth/refresh');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toBeNull();
+    expect(request.request.withCredentials).toBe(true);
+    expect(request.request.headers.get('X-Client')).toBe('web');
+
+    request.flush(tokenBody);
+
+    expect(accessToken).toBe('token');
+  });
+
+  it('maps a rejected refresh to the invalid refresh token failure', () => {
+    let failure: unknown;
+    api.refresh().subscribe({ error: (error) => (failure = error) });
+
+    http
+      .expectOne('/api/auth/refresh')
+      .flush({ error: 'invalid_refresh_token' }, { status: 401, statusText: 'Unauthorized' });
+
+    expect(failure).toBe('invalidRefreshToken');
   });
 
   it('maps invalid credentials to its failure', () => {
