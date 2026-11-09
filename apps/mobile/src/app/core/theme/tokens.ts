@@ -16,6 +16,7 @@ export const colors = {
     success: '#15803D',
     warning: '#B45309',
     danger: '#B91C1C',
+    onDanger: '#FFFFFF',
     info: '#1D4ED8',
   },
   dark: {
@@ -32,6 +33,7 @@ export const colors = {
     success: '#4ADE80',
     warning: '#FBBF24',
     danger: '#F87171',
+    onDanger: '#0A0F1C',
     info: '#60A5FA',
   },
 } as const;
@@ -43,13 +45,13 @@ export const mapColors = {
     countryBorder: '#FFFFFF',
     visited: '#0F7C80',
     lived: '#0A5458',
-    wantToGo: '#98D5D0',
+    wantToGo: '#E3F4F2',
     compareBoth: '#0F7C80',
     compareOnlyMe: '#98D5D0',
     compareOnlyFriend: '#A9B3C2',
-    excludedVisited: '#A9B3C2',
+    excludedVisited: '#CBD2DD',
     score1: '#D5EFED',
-    score2: '#98D5D0',
+    score2: '#A6DCD7',
     score3: '#4FB3AE',
     score4: '#1A8F92',
     score5: '#0F7C80',
@@ -60,13 +62,13 @@ export const mapColors = {
     countryBorder: '#0A1324',
     visited: '#2DD4BF',
     lived: '#99F6E4',
-    wantToGo: '#12665D',
+    wantToGo: '#0C3432',
     compareBoth: '#2DD4BF',
     compareOnlyMe: '#12665D',
     compareOnlyFriend: '#3B4660',
-    excludedVisited: '#3B4660',
+    excludedVisited: '#2B3448',
     score1: '#0E3B3A',
-    score2: '#12665D',
+    score2: '#16776F',
     score3: '#169184',
     score4: '#22B8A6',
     score5: '#2DD4BF',
@@ -179,6 +181,22 @@ export const radius = {
   xl: 20,
   xxl: 32,
   pill: 999,
+} as const;
+
+export const borderWidth = {
+  focus: 2,
+} as const;
+
+export const elevation = {
+  none: { light: 'none', dark: 'none' },
+  card: {
+    light: '0 1px 2px rgba(17,24,39,0.06), 0 1px 3px rgba(17,24,39,0.08)',
+    dark: 'none',
+  },
+  sheet: {
+    light: '0 -4px 24px rgba(17,24,39,0.12)',
+    dark: '0 -4px 24px rgba(0,0,0,0.5)',
+  },
 } as const;
 
 export const motion = {
