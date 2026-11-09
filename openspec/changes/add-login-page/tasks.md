@@ -39,7 +39,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 ## 5. Mobile (`apps/mobile`)
 
-- [ ] **5.1 Install dependencies.** Test first: `pnpm check` fails because `@ng-icons/core`, `@ng-icons/tabler-icons` and `expo-secure-store` are missing. Code: install them from the repo root with `pnpm install`.
+- [x] **5.1 Install dependencies.** Test first: `pnpm check` fails because `@ng-icons/core`, `@ng-icons/tabler-icons` and `expo-secure-store` are missing. Code: install them from the repo root with `pnpm install`.
 - [ ] **5.2 Auth store.** Test first: the same store checks as 4.2. Code: `apps/mobile` `auth` SignalStore.
 - [ ] **5.3 Refresh token storage.** Test first: a test checks that the refresh token is stored with `expo-secure-store` and that the access token is never stored. Code: the storage service on mobile.
 - [ ] **5.4 Sign-in data access.** Test first: the same checks as 4.3, with the header `X-Client: mobile` and the refresh token read from the body of the response. Code: `apps/mobile` `data/auth.api.ts`.
