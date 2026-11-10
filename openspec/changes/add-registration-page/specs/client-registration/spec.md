@@ -29,7 +29,6 @@ The registration page SHALL show an email field (label `login.register.emailLabe
 ### Requirement: Email validation
 
 The client SHALL validate the email with the same rules as the API: standard email format, at most 254 characters, and trimmed and lower-cased before sending.
-
 #### Scenario: Invalid email format
 - **WHEN** the user submits an email that is not in standard email format
 - **THEN** the email field shows an error and no request is sent
