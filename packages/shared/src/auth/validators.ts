@@ -25,3 +25,19 @@ export const validateSignInPassword = (password: string): string | null => {
   }
   return null;
 };
+
+const lowercasePattern = /\p{Ll}/u;
+const uppercasePattern = /\p{Lu}/u;
+const specialPattern = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+const whitespacePattern = /\s/u;
+
+export const validateRegisterPassword = (password: string): string | null => {
+  const valid =
+    password.length >= 6 &&
+    password.length <= 20 &&
+    lowercasePattern.test(password) &&
+    uppercasePattern.test(password) &&
+    specialPattern.test(password) &&
+    !whitespacePattern.test(password);
+  return valid ? null : 'login.register.errorPasswordInvalid';
+};
