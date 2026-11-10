@@ -1,0 +1,29 @@
+{
+  "login": {
+    "brand": {
+      "tagline": "Compare, plan, discover."
+    },
+    "signIn": {
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Sign in",
+      "goToRegister": "Create an account",
+      "languageSwitcher": "languages",
+      "googleComingSoon": "Coming soon",
+      "or": "or",
+      "errorEmailRequired": "Enter your email.",
+      "errorEmailFormat": "Enter a valid email address.",
+      "errorEmailTooLong": "Email must be at most 254 characters.",
+      "errorPasswordRequired": "Enter your password.",
+      "errorPasswordLength": "Password must be 6 to 20 characters.",
+      "errorInvalidCredentials": "Email or password is incorrect.",
+      "errorTooManyAttempts": "Too many attempts. Wait a few minutes and try again.",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    },
+    "common": {
+      "errorNetwork": "No connection. Check your network and try again.",
+      "errorUnknown": "Something went wrong. Try again."
+    }
+  }
+}

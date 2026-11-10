@@ -10,7 +10,9 @@
     "mobile": "pnpm --filter @matchmap/mobile start",
     "ios": "pnpm --filter @matchmap/mobile ios",
     "android": "pnpm --filter @matchmap/mobile android",
+    "codegen": "pnpm --filter @matchmap/shared codegen",
     "test": "pnpm -r --if-present test",
-    "typecheck": "pnpm -r --if-present typecheck"
+    "typecheck": "pnpm -r --if-present typecheck",
+    "check": "pnpm typecheck && pnpm test"
   }
 }

@@ -2,7 +2,7 @@
 
 Each task writes its failing test first, runs it and shows it failing, then writes the minimum code to make it pass, then refactors. Each task is one commit, with `Task: <id>` in the body.
 
-Precondition: the change `add-login-page` is archived, and the registration parts of the API change `add-user-accounts` are merged, with the contract change in `backend-issues/06-register-email-and-password-only.md` (`RegisterInput` with `email` and `password` only). Until then, the client tests use mocks of the `register` mutation and of `POST /api/auth/login`, and the integration tests wait for the API.
+Precondition: the change `add-login-page` is archived, and the registration parts of the API change `add-user-accounts` are merged, with the contract change in `backend-issues/004-register-email-and-password-only.md` (`RegisterInput` with `email` and `password` only). Until then, the client tests use mocks of the `register` mutation and of `POST /api/auth/login`, and the integration tests wait for the API.
 
 ## 0. Contracts
 

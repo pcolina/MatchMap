@@ -23,7 +23,7 @@
 
 ## 1. Brand in one line
 
-**Tagline:** «Nuevo para todos. Inolvidable para cada uno.» [New for everyone. Unforgettable for each one.]
+**Tagline:** «Compara, planea, descubre.» [Compare, plan, discover.] (sign-in page, set in Caveat 600 and slanted `skewX(-4deg)`)
 **Personality:** companionable but not intrusive · smart but not technical · adventurous but not reckless.
 **Compass:** *fresh* (airy, bright colours that do not shout, humour) + *useful* (the match is understood in 2 seconds, zero tables) + *visible ego* (the counter always in view).
 → Full detail in [`brand.md`](./brand.md).
@@ -87,8 +87,9 @@ Light fills do not reach 3:1 against `map.land`. That is why every state carries
 |---|---|---|---|
 | **Sora** | Display: logotype, titles, counter, destination names | 600 · 700 · 800 | `@expo-google-fonts/sora` |
 | **Inter** | Text: body, UI, buttons, labels | 400 · 500 · 600 · 700 | `@expo-google-fonts/inter` |
+| **Caveat** | Handwritten accent: the sign-in tagline only, slanted `skewX(-4deg)` | 600 | `@expo-google-fonts/caveat` |
 
-Both are Google Fonts under the **SIL Open Font License** (free commercial use). Do not use other families or weights.
+All are Google Fonts under the **SIL Open Font License** (free commercial use). Do not use other families or weights.
 
 ### Scale (sizes in pt/dp; line-height in pt)
 
@@ -139,11 +140,11 @@ Both are Google Fonts under the **SIL Open Font License** (free commercial use).
 
 ## 5. Iconography
 
-- **Lucide** (`@ng-icons/lucide`, used with `NgIcon` on web and on mobile): 2 px stroke, rounded corners, size 20 by default and 24 in the tab bar.
+- **Tabler** (`@ng-icons/tabler-icons`, used with `NgIcon` on web and on mobile): 2 px stroke, rounded corners, size 20 by default and 24 in the tab bar. It also provides the brand logos for social sign-in (Google, Facebook, Apple).
 - Icons use the `text` or `textSecondary` colour, and `onAccent` inside primary buttons.
 - Never emojis as interface icons (they are allowed in user content).
 - Icons that work as buttons have an `accessibilityLabel`.
-- Adding `@ng-icons/core` and `@ng-icons/lucide` is a new dependency: under `CLAUDE.md`, it must appear in the change that introduces it. On mobile, ng-native only renders icons from ng-icons sets, which is why `lucide-react-native` is not used.
+- Adding `@ng-icons/core` and `@ng-icons/tabler-icons` is a new dependency: under `CLAUDE.md`, it must appear in the change that introduces it. On mobile, ng-native only renders icons from ng-icons sets, which is why `lucide-react-native` is not used.
 
 ---
 
@@ -185,7 +186,7 @@ Height 52, radius `lg`, horizontal padding 20, text in the `button` style. State
 - **Pressed:** opacity 0.85 + scale 0.98.
 - **Disabled:** opacity 0.4.
 - **Loading:** spinner in `onAccent`, same width.
-- **Focus (keyboard or screen reader):** 2 px `accent` ring, offset 2 px.
+- **Focus (keyboard or screen reader):** every interactive element shows the same focus style: a 3 px `accent` ring (the `borderWidth.focus` token of 2 px plus 1 px), offset 2 px, and an outer halo in `accent` that fades out in three layers at 45 %, 35 % and 18 % opacity (spread 4 px, blur 20 px with spread 8 px, blur 40 px with spread 16 px). The halo is defined once as `--mm-focus-halo` in `apps/web/src/styles.css`, and components that set their own `box-shadow` (such as the language switcher) add it back on `:focus-visible`, so the halo is never lost.
 
 ### 7.2 Ego counter (`EgoCounter`)
 

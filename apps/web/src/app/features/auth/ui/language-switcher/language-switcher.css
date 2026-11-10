@@ -1,0 +1,23 @@
+.switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--mm-size-touch-target-min);
+  height: var(--mm-size-touch-target-min);
+  padding: 0;
+  border: none;
+  border-radius: var(--mm-radius-pill);
+  background-color: var(--mm-color-surface);
+  color: var(--mm-color-textSecondary);
+  box-shadow: var(--mm-elevation-card);
+  cursor: pointer;
+}
+
+.switcher:focus-visible {
+  box-shadow: var(--mm-focus-halo), var(--mm-elevation-card);
+}
+
+ng-icon {
+  width: var(--mm-size-icon-md);
+  height: var(--mm-size-icon-md);
+}

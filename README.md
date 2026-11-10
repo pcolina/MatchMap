@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo/lockup/png-preview-poppins/horizontal-on-dark@2x.png" alt="MatchMap" width="320">
+</p>
+
 # MatchMap
 
 ![Angular](https://img.shields.io/badge/Angular-22-DD0031)
@@ -61,7 +65,7 @@ Planned: user accounts and sign-in, profile, pins on the world map, friends, map
 | Routing | `@angular/router` (web), `@ng-native/router` (mobile) |
 | Forms | Signal Forms (web and mobile) |
 | Secure storage | `expo-secure-store` for the refresh token (mobile) |
-| Icons | Lucide through `@ng-icons/lucide` (web and mobile, see [`docs/design.md`](docs/design.md) §5) |
+| Icons | Tabler through `@ng-icons/tabler-icons` (web and mobile, see [`docs/design.md`](docs/design.md) §5) |
 | Lint and format | ESLint and Prettier |
 | GraphQL client | Apollo (`apollo-angular`) |
 | Maps | MapLibre GL JS (web), `@maplibre/maplibre-react-native` (mobile), Natural Earth 1:50m boundaries |

@@ -1,0 +1,238 @@
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.top-bar {
+  position: absolute;
+  top: var(--mm-space-4);
+  right: var(--mm-space-4);
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mm-space-3);
+  padding: var(--mm-space-8) var(--mm-space-4) var(--mm-space-16);
+  background-image: linear-gradient(180deg, var(--mm-color-accentSubtle), var(--mm-color-bg));
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--mm-color-text);
+  font-family: var(--mm-font-handwritten);
+  font-size: var(--mm-type-tagline-size);
+  font-weight: var(--mm-type-tagline-weight);
+  line-height: var(--mm-type-tagline-line-height);
+  text-align: center;
+  transform: skewX(var(--mm-skew-tagline));
+}
+
+.content {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--mm-space-3);
+  padding: var(--mm-space-4) var(--mm-space-4) var(--mm-space-6);
+}
+
+form {
+  position: relative;
+  top: -10px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-4);
+  width: 100%;
+  max-width: 360px;
+}
+
+label {
+  color: var(--mm-color-text);
+  font-family: var(--mm-font-body);
+}
+
+label[for='password'] {
+  margin-top: calc(-1 * var(--mm-space-2) - 5px);
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: var(--mm-size-input-height);
+  padding: 0 var(--mm-space-3);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--mm-color-borderStrong);
+  border-radius: var(--mm-radius-md);
+  background-color: var(--mm-color-surface);
+  color: var(--mm-color-text);
+  font-family: var(--mm-font-body);
+}
+
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.field input {
+  padding-left: var(--mm-space-10);
+}
+
+.field:has(.password-toggle) input {
+  padding-right: var(--mm-space-10);
+}
+
+.field-icon,
+.password-toggle {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--mm-size-input-height);
+  color: var(--mm-color-textSecondary);
+}
+
+.field-icon {
+  left: var(--mm-space-3);
+  width: var(--mm-size-icon-md);
+  pointer-events: none;
+}
+
+.field-icon ng-icon,
+.password-toggle ng-icon {
+  width: var(--mm-size-icon-md);
+  height: var(--mm-size-icon-md);
+  color: var(--mm-color-textSecondary);
+}
+
+.password-toggle {
+  right: var(--mm-space-2);
+  width: var(--mm-size-touch-target-min);
+  padding: 0;
+  border: none;
+  border-radius: var(--mm-radius-md);
+  background: none;
+}
+
+.field--invalid {
+  border-color: var(--mm-color-danger);
+}
+
+.error {
+  min-height: var(--mm-type-caption-line-height);
+  margin: 0;
+  color: var(--mm-color-danger);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-type-caption-size);
+  line-height: var(--mm-type-caption-line-height);
+  font-weight: var(--mm-type-caption-weight);
+  letter-spacing: var(--mm-type-caption-letter-spacing);
+}
+
+button[type='submit'] {
+  position: relative;
+  top: -10px;
+  height: var(--mm-size-button-height);
+  margin-top: calc(var(--mm-space-2) - var(--mm-space-8) + var(--mm-space-2) + 7px);
+  border: none;
+  border-radius: var(--mm-radius-md);
+  background-color: var(--mm-color-accent);
+  color: var(--mm-color-onAccent);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-type-button-size);
+  font-weight: var(--mm-type-button-weight);
+}
+
+.divider {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin-top: var(--mm-space-3);
+  border-top: 1px solid var(--mm-color-border);
+}
+
+.divider-label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 var(--mm-space-3);
+  background-color: var(--mm-color-bg);
+  color: var(--mm-color-textSecondary);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-type-label-size);
+  font-weight: var(--mm-type-label-weight);
+}
+
+.social {
+  position: relative;
+  top: 5px;
+  display: flex;
+  justify-content: center;
+  gap: var(--mm-space-3);
+  width: 100%;
+  max-width: 360px;
+  margin-top: var(--mm-space-4);
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--mm-size-touch-target-min);
+  height: var(--mm-size-touch-target-min);
+  padding: 0;
+  border: 1px solid var(--mm-color-border);
+  border-radius: var(--mm-radius-pill);
+  background-color: var(--mm-color-surface);
+  color: var(--mm-color-textSecondary);
+}
+
+.social-button ng-icon {
+  width: var(--mm-size-icon-lg);
+  height: var(--mm-size-icon-lg);
+}
+
+@media (max-height: 700px) {
+  .hero {
+    padding: var(--mm-space-4);
+  }
+
+  .logo {
+    width: 120px;
+  }
+}
+
+.register {
+  display: inline-block;
+  position: relative;
+  top: -15px;
+  margin-top: var(--mm-space-4);
+  padding: var(--mm-space-2) var(--mm-space-4);
+  border-radius: var(--mm-radius-md);
+  color: var(--mm-color-accent);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-type-body-size);
+  font-weight: var(--mm-type-body-strong-weight);
+}
+
+

@@ -183,6 +183,22 @@ export const radius = {
   pill: 999,
 } as const;
 
+export const borderWidth = {
+  focus: 2,
+} as const;
+
+export const elevation = {
+  none: { light: 'none', dark: 'none' },
+  card: {
+    light: '0 1px 2px rgba(17,24,39,0.06), 0 1px 3px rgba(17,24,39,0.08)',
+    dark: 'none',
+  },
+  sheet: {
+    light: '0 -4px 24px rgba(17,24,39,0.12)',
+    dark: '0 -4px 24px rgba(0,0,0,0.5)',
+  },
+} as const;
+
 export const motion = {
   fast: 150,
   base: 250,

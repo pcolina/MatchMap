@@ -1,0 +1,29 @@
+{
+  "login": {
+    "brand": {
+      "tagline": "Compara, planea, descubre."
+    },
+    "signIn": {
+      "emailLabel": "Email",
+      "passwordLabel": "Contraseña",
+      "submit": "Iniciar sesión",
+      "goToRegister": "Crear cuenta",
+      "languageSwitcher": "idiomas",
+      "googleComingSoon": "Próximamente",
+      "or": "o",
+      "errorEmailRequired": "Introduce tu email.",
+      "errorEmailFormat": "Introduce un email válido.",
+      "errorEmailTooLong": "El email debe tener como máximo 254 caracteres.",
+      "errorPasswordRequired": "Introduce tu contraseña.",
+      "errorPasswordLength": "La contraseña debe tener entre 6 y 20 caracteres.",
+      "errorInvalidCredentials": "El email o la contraseña no son correctos.",
+      "errorTooManyAttempts": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo.",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña"
+    },
+    "common": {
+      "errorNetwork": "Sin conexión. Revisa tu red e inténtalo de nuevo.",
+      "errorUnknown": "Algo ha salido mal. Inténtalo de nuevo."
+    }
+  }
+}

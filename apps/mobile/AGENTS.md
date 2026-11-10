@@ -24,7 +24,7 @@ https://ng-native.com/llms-full.txt (outline: https://ng-native.com/llms.txt).
 - Long lists use `<virtual-list>`; `<scroll-view>` is only for short content.
 - Navigation uses `provideNativeRouter()` from `@ng-native/router`. HTTP uses
   `provideNativeHttpClient()` from `@ng-native/platform/http`. Forms use Signal Forms.
-- Icons come from `@ng-icons/lucide` through `NgIcon`, the only icon route ng-native renders.
+- Icons come from `@ng-icons/tabler-icons` through `NgIcon`, the only icon route ng-native renders.
   React Native icon packages such as `lucide-react-native` are not used.
 - No backticks inside inline templates.
 - Accessibility is set with props: `accessibilityRole`, `accessibilityLabel`,

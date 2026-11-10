@@ -35,6 +35,7 @@
 
 :root {
   --mm-font-display: 'Sora', 'Inter', system-ui, sans-serif;
+  --mm-font-handwritten: 'Caveat', cursive;
   --mm-font-body: 'Inter', system-ui, sans-serif;
   --mm-space-0: 0px;
   --mm-space-1: 4px;
@@ -53,14 +54,40 @@
   --mm-radius-xl: 20px;
   --mm-radius-xxl: 32px;
   --mm-radius-pill: 999px;
+  --mm-border-width-focus: 2px;
   --mm-motion-fast: 150ms;
   --mm-motion-base: 250ms;
   --mm-motion-slow: 400ms;
   --mm-easing: cubic-bezier(0.2, 0, 0, 1);
+  --mm-size-touch-target-min: 44px;
+  --mm-size-button-height: 52px;
+  --mm-size-input-height: 48px;
+  --mm-size-tab-bar-height: 56px;
+  --mm-size-icon-sm: 16px;
+  --mm-size-icon-md: 20px;
+  --mm-size-icon-lg: 24px;
+  --mm-elevation-card: 0 1px 2px rgba(17, 24, 39, 0.06), 0 1px 3px rgba(17, 24, 39, 0.08);
+  --mm-elevation-sheet: 0 -4px 24px rgba(17, 24, 39, 0.12);
+  --mm-type-caption-size: 12px;
+  --mm-type-caption-line-height: 16px;
+  --mm-type-caption-weight: 500;
+  --mm-type-caption-letter-spacing: 0.2px;
+  --mm-type-body-size: 16px;
+  --mm-type-body-strong-weight: 600;
+  --mm-type-label-size: 14px;
+  --mm-type-label-weight: 600;
+  --mm-type-button-size: 16px;
+  --mm-type-button-weight: 700;
+  --mm-type-tagline-size: 36px;
+  --mm-type-tagline-line-height: 43px;
+  --mm-type-tagline-weight: 600;
+  --mm-skew-tagline: -4deg;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
+    --mm-elevation-card: none;
+    --mm-elevation-sheet: 0 -4px 24px rgba(0, 0, 0, 0.5);
     --mm-color-accent: #2DD4BF;
     --mm-color-onAccent: #04201C;
     --mm-color-accentSubtle: #0E3B3A;
@@ -95,6 +122,8 @@
 }
 
 :root[data-theme='dark'] {
+  --mm-elevation-card: none;
+  --mm-elevation-sheet: 0 -4px 24px rgba(0, 0, 0, 0.5);
   --mm-color-accent: #2DD4BF;
   --mm-color-onAccent: #04201C;
   --mm-color-accentSubtle: #0E3B3A;

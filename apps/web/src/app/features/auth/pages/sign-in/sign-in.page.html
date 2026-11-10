@@ -1,0 +1,90 @@
+<div class="top-bar">
+  <app-language-switcher />
+</div>
+
+<header class="hero">
+  <img class="logo" src="brand/matchmap-stacked-light.png" alt="MatchMap" width="160" />
+  <p class="tagline">{{ 'login.brand.tagline' | translate }}</p>
+</header>
+
+<div class="content">
+  @if (store.isLoading()) {
+    <app-skeleton [shapes]="shapes" />
+  } @else {
+    <form class="form" novalidate (submit)="onSubmit($event)">
+      <label for="email">{{ 'login.signIn.emailLabel' | translate }}</label>
+      <div class="field">
+        <ng-icon class="field-icon" name="tablerUser" />
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          aria-describedby="email-error"
+          [formField]="form.email"
+          [class.field--invalid]="form.email().touched() && form.email().invalid()"
+        />
+        <p id="email-error" class="error" data-error>
+          @if (form.email().touched() && form.email().invalid()) {
+            {{ form.email().errors()[0]?.kind | translate }}
+          }
+        </p>
+      </div>
+
+      <label for="password">{{ 'login.signIn.passwordLabel' | translate }}</label>
+      <div class="field">
+        <ng-icon class="field-icon" name="tablerLock" />
+        <input
+          id="password"
+          [type]="showPassword() ? 'text' : 'password'"
+          autocomplete="current-password"
+          aria-describedby="password-error"
+          [formField]="form.password"
+          [class.field--invalid]="form.password().touched() && form.password().invalid()"
+        />
+        <button
+          type="button"
+          class="password-toggle"
+          [attr.aria-label]="(showPassword() ? 'login.signIn.hidePassword' : 'login.signIn.showPassword') | translate"
+          (click)="togglePassword()"
+        >
+          @if (showPassword()) {
+            <ng-icon name="tablerEye" />
+          } @else {
+            <ng-icon name="tablerEyeOff" />
+          }
+        </button>
+        <p id="password-error" class="error" data-error>
+          @if (form.password().touched() && form.password().invalid()) {
+            {{ form.password().errors()[0]?.kind | translate }}
+          }
+        </p>
+      </div>
+
+      <p class="error" data-error role="alert">
+        @if (failureMessage(); as message) {
+          {{ message | translate }}
+        }
+      </p>
+
+      <button type="submit" [disabled]="store.isLoading()">{{ 'login.signIn.submit' | translate }}</button>
+    </form>
+
+    <div class="divider">
+      <span class="divider-label" aria-hidden="true">{{ 'login.signIn.or' | translate }}</span>
+    </div>
+
+    <div class="social">
+      <button type="button" class="social-button" aria-label="Google" [attr.title]="'login.signIn.googleComingSoon' | translate" aria-disabled="true">
+        <ng-icon name="tablerBrandGoogle" />
+      </button>
+      <button type="button" class="social-button" aria-label="Facebook" [attr.title]="'login.signIn.googleComingSoon' | translate" aria-disabled="true">
+        <ng-icon name="tablerBrandFacebook" />
+      </button>
+      <button type="button" class="social-button" aria-label="Apple" [attr.title]="'login.signIn.googleComingSoon' | translate" aria-disabled="true">
+        <ng-icon name="tablerBrandApple" />
+      </button>
+    </div>
+  }
+
+  <a class="register" routerLink="/register">{{ 'login.signIn.goToRegister' | translate }}</a>
+</div>
