@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { registerMutation } from '../src/index.ts';
 
 const schemaPath = resolve(__dirname, '../src/generated/schema.ts');
 const operationsPath = resolve(__dirname, '../src/generated/operations.ts');
@@ -10,6 +11,11 @@ describe('register operation', () => {
   it('has a register.graphql operation document', () => {
     expect(existsSync(operationPath)).toBe(true);
     expect(readFileSync(operationPath, 'utf8')).toMatch(/mutation Register\(\$input: RegisterInput!\)/);
+  });
+
+  it('exports the same operation text as register.graphql', () => {
+    const graphql = readFileSync(operationPath, 'utf8');
+    expect(registerMutation.trim()).toBe(graphql.trim());
   });
 
   it('generates the input type with email and password only', () => {

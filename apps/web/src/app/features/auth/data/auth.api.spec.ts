@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 import { AuthApi } from './auth.api';
 
 const tokenBody = { tokenType: 'Bearer', accessToken: 'token', expiresIn: 900, refreshToken: 'ignored' };
@@ -10,7 +11,10 @@ describe('AuthApi', () => {
   let http: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({
+      imports: [ApolloTestingModule],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    });
     api = TestBed.inject(AuthApi);
     http = TestBed.inject(HttpTestingController);
   });
