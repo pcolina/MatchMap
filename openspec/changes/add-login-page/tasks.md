@@ -6,10 +6,10 @@ Precondition: the sign-in parts of the API change in `add-user-accounts` are mer
 
 ## 0. Contracts
 
-The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `openapi\`, GraphQL in `graphql\`). Their baseline is the `matchmap-api` commit `0bb29cb`, the last commit that touched `contracts/`.
+The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `openapi\`, GraphQL in `graphql\`). Their baseline is the `matchmap-api` commit `57943e3`, the last commit that touched `contracts/`.
 
-- [ ] **0.1 Contract baseline.** Test first: a check fails if `design.md` does not record the baseline commit. Code: record the commit in `design.md` under a "Contract baseline" heading, with the `auth.yaml` and `account.graphqls` contents this change depends on.
-- [ ] **0.2 Contract check before each API-using task.** Before starting any task in sections 1.3, 4.3, 4.5 or 5.4, run `git -C C:\workspace\pablo\matchmap-api log --oneline <baseline>..HEAD -- contracts/`. If the output is empty, go on. If it is not empty, compare the changed files with the specs and design, and when they affect a requirement or a request or response shape, stop and propose the change to the spec or design, as `CLAUDE.md` §6 requires, before writing code.
+- [x] **0.1 Contract baseline.** Test first: a check fails if `design.md` does not record the baseline commit. Code: record the commit in `design.md` under a "Contract baseline" heading, with the `auth.yaml` and `account.graphqls` contents this change depends on.
+- [x] **0.2 Contract check before each API-using task.** Before starting any task in sections 1.3, 4.3, 4.5 or 5.4, run `git -C C:\workspace\pablo\matchmap-api log --oneline <baseline>..HEAD -- contracts/`. If the output is empty, go on. If it is not empty, compare the changed files with the specs and design, and when they affect a requirement or a request or response shape, stop and propose the change to the spec or design, as `CLAUDE.md` §6 requires, before writing code.
 
 ## 1. Shared code (`packages/shared`)
 
@@ -51,4 +51,4 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 - [x] **6.1 Accessibility.** Test first: the accessibility checks fail for any interactive element without a role or accessible name. Code: fix the elements that fail.
 - [x] **6.2 Full check.** Run `pnpm check` for every app and package this change touched. Paste the summary in the PR.
-- [ ] **6.3 Translations.** List every new `es` and `en` value in the PR description under "Translations to review".
+- [x] **6.3 Translations.** List every new `es` and `en` value in the PR description under "Translations to review".
