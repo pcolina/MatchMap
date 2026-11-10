@@ -10,12 +10,10 @@ import {
   type RegisterMutationVariables,
 } from '@matchmap/shared';
 import { map, Observable, throwError, catchError } from 'rxjs';
-import type { SignInFailure, SignInGateway } from '../state/auth.store';
+import type { RegisterFailure, SignInFailure, SignInGateway } from '../state/auth.store';
 
 type TokenResponse = components['schemas']['TokenResponse'];
 type ErrorResponse = components['schemas']['Error'];
-
-export type RegisterFailure = 'emailTaken' | 'passwordInvalid' | 'network' | 'unknown';
 
 const toRegisterFailure = (error: unknown): RegisterFailure => {
   if (CombinedGraphQLErrors.is(error)) {
