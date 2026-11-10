@@ -291,3 +291,16 @@ test('shows the coming-soon text on the social buttons', async () => {
     expect(screen.getByRole('button', { name }).props['accessibilityHint']).toBe('Coming soon');
   }
 });
+
+test('every control on the sign-in page has an accessible name, and no unnamed control appears', async () => {
+  await setup();
+
+  expect(screen.getByLabelText(en.login.signIn.emailLabel)).toBeTruthy();
+  expect(screen.getByLabelText(en.login.signIn.passwordLabel)).toBeTruthy();
+  for (const name of ['languages', 'Sign in', 'Google', 'Facebook', 'Apple']) {
+    expect(screen.getByRole('button', { name })).toBeTruthy();
+  }
+  expect(screen.getByRole('link', { name: 'Create an account' })).toBeTruthy();
+  expect(screen.getAllByRole('button')).toHaveLength(6);
+  expect(screen.getAllByRole('link')).toHaveLength(1);
+});
