@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { SafeAreaProvider, SafeAreaView, Text } from '@ng-native/components';
+import { SafeAreaProvider, SafeAreaView } from '@ng-native/components';
+import { NativeStackOutlet } from '@ng-native/router';
 
 @Component({
-  imports: [SafeAreaProvider, SafeAreaView, Text],
   selector: 'app-root',
+  imports: [NativeStackOutlet, SafeAreaProvider, SafeAreaView],
   template: `
     <safe-area-provider>
-      <safe-area-view class="screen">
-        <text accessibilityRole="header" class="title">MatchMap</text>
+      <safe-area-view class="root">
+        <native-stack-outlet />
       </safe-area-view>
     </safe-area-provider>
   `,
@@ -15,14 +16,8 @@ import { SafeAreaProvider, SafeAreaView, Text } from '@ng-native/components';
     :host {
       flex: 1;
     }
-    .screen {
+    .root {
       flex: 1;
-      align-items: center;
-      justify-content: center;
-    }
-    .title {
-      font-size: 28px;
-      font-weight: 700;
     }
   `,
 })
