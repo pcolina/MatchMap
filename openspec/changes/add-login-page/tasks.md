@@ -41,11 +41,11 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 - [x] **5.1 Install dependencies.** Test first: `pnpm check` fails because `@ng-icons/core`, `@ng-icons/tabler-icons` and `expo-secure-store` are missing. Code: install them from the repo root with `pnpm install`.
 - [x] **5.2 Auth store.** Test first: the same store checks as 4.2. Code: `apps/mobile` `auth` SignalStore.
-- [ ] **5.3 Refresh token storage.** Test first: a test checks that the refresh token is stored with `expo-secure-store` and that the access token is never stored. Code: the storage service on mobile.
-- [ ] **5.4 Sign-in data access.** Test first: the same checks as 4.3, with the header `X-Client: mobile` and the refresh token read from the body of the response. Code: `apps/mobile` `data/auth.api.ts`.
+- [x] **5.3 Refresh token storage.** Test first: a test checks that the refresh token is stored with `expo-secure-store` and that the access token is never stored. Code: the storage service on mobile.
+- [x] **5.4 Sign-in data access.** Test first: the same checks as 4.3, with the header `X-Client: mobile` and the refresh token read from the body of the response. Code: `apps/mobile` `data/auth.api.ts`.
 - [x] **5.5 Sign-in page.** Test first: the same scenarios as 4.5, on ng-native. Code: the page and its form on mobile.
-- [ ] **5.6 Routes and main layout.** Test first: the same checks as 4.6 for mobile. Code: the routes and the main layout.
-- [ ] **5.7 Session restore and token refresh.** Test first: the same checks as 4.7, with the refresh token read from `expo-secure-store`, sent in the body of `POST /api/auth/refresh`, and the header `X-Client: mobile`. Code: the restore method in the `apps/mobile` auth store and the auth interceptor in `core/`.
+- [x] **5.6 Routes and main layout.** Test first: the same checks as 4.6 for mobile. Code: the routes and the main layout.
+- [x] **5.7 Session restore and token refresh.** Test first: the same checks as 4.7, with the refresh token read from `expo-secure-store`, sent in the body of `POST /api/auth/refresh`, and the header `X-Client: mobile`. Code: the restore method in the `apps/mobile` auth store and the auth interceptor in `core/`.
 
 ## 6. Checks and review
 
