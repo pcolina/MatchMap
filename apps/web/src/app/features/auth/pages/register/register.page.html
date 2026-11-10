@@ -60,6 +60,24 @@
         </p>
       </div>
 
+      <label for="repeat-password">{{ 'login.register.repeatPasswordLabel' | translate }}</label>
+      <div class="field">
+        <ng-icon class="field-icon" name="tablerLock" />
+        <input
+          id="repeat-password"
+          type="password"
+          autocomplete="new-password"
+          aria-describedby="repeat-password-error"
+          [formField]="form.repeatPassword"
+          [class.field--invalid]="form.repeatPassword().touched() && form.repeatPassword().invalid()"
+        />
+        <p id="repeat-password-error" class="error" data-error>
+          @if (form.repeatPassword().touched() && form.repeatPassword().invalid()) {
+            {{ form.repeatPassword().errors()[0]?.kind | translate }}
+          }
+        </p>
+      </div>
+
       <p class="error" data-error role="alert">
         @if (failureMessage(); as message) {
           {{ message | translate }}

@@ -24,6 +24,8 @@ const approvedCopy: Record<string, { en: string; es: string }> = {
   'login.register.title': { en: 'Create account', es: 'Crear cuenta' },
   'login.register.emailLabel': { en: 'Email', es: 'Email' },
   'login.register.passwordLabel': { en: 'Password', es: 'Contraseña' },
+  'login.register.repeatPasswordLabel': { en: 'Repeat password', es: 'Repetir contraseña' },
+  'login.register.errorPasswordMismatch': { en: 'Passwords do not match.', es: 'Las contraseñas no coinciden.' },
   'login.register.submit': { en: 'Create account', es: 'Crear cuenta' },
   'login.register.goToSignIn': {
     en: 'Already have an account? Sign in',

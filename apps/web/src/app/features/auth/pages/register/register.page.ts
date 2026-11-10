@@ -25,10 +25,13 @@ export class RegisterPage {
   protected readonly shapes: readonly SkeletonShape[] = ['field', 'field', 'button'];
   protected readonly showPassword = signal(false);
 
-  private readonly credentials = signal({ email: '', password: '' });
+  private readonly credentials = signal({ email: '', password: '', repeatPassword: '' });
   protected readonly form = form(this.credentials, (path) => {
     validate(path.email, ({ value }) => toError(validateSignInEmail(value())));
     validate(path.password, ({ value }) => toError(validateRegisterPassword(value())));
+    validate(path.repeatPassword, ({ value, valueOf }) =>
+      toError(value() === valueOf(path.password) ? null : 'login.register.errorPasswordMismatch'),
+    );
   });
 
   protected readonly failureMessage = computed(() => {

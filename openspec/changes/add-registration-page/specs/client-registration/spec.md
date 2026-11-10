@@ -16,7 +16,7 @@ The registration page SHALL centre its content horizontally and vertically, in p
 
 ### Requirement: Registration fields and actions
 
-The registration page SHALL show an email field (label `login.register.emailLabel`), a password field (label `login.register.passwordLabel`), one primary button (text `login.register.submit`) and a link back to sign-in (text `login.register.goToSignIn`).
+The registration page SHALL show an email field (label `login.register.emailLabel`), a password field (label `login.register.passwordLabel`), a repeat password field (label `login.register.repeatPasswordLabel`), one primary button (text `login.register.submit`) and a link back to sign-in (text `login.register.goToSignIn`).
 
 #### Scenario: Fields and actions are shown
 - **WHEN** the registration page is shown
@@ -58,6 +58,22 @@ The password SHALL have between 6 and 20 characters, with at least one lowercase
 - **THEN** the password field shows no error
 
 The password field shows the text of `login.register.errorPasswordInvalid`: `en` "Use 6 to 20 characters, with a lowercase letter, an uppercase letter and a special character.", `es` "Usa de 6 a 20 caracteres, con una letra minúscula, una mayúscula y un carácter especial."
+
+### Requirement: Repeat password
+
+The repeat password field SHALL match the password exactly, character by character, with no trimming and no change of case. The repeated value SHALL NOT be sent to the API. The field shows the text of `login.register.errorPasswordMismatch`: `en` "Passwords do not match.", `es` "Las contraseñas no coinciden."
+
+#### Scenario: Passwords do not match
+- **WHEN** the repeat password differs from the password
+- **THEN** the repeat password field shows the mismatch error and no request is sent
+
+#### Scenario: Passwords match
+- **WHEN** the repeat password is identical to the password
+- **THEN** the repeat password field shows no error and the request is sent with the password only
+
+#### Scenario: Only the password is sent
+- **WHEN** the user submits valid data with a matching repeat password
+- **THEN** the `register` mutation contains `email` and `password` and no other field
 
 ### Requirement: Field errors
 

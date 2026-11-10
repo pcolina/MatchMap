@@ -16,6 +16,8 @@ A user who cannot create an account cannot sign in, so the registration page is 
   - Registration title, `login.register.title`: `en` "Create account", `es` "Crear cuenta".
   - Email field, `login.register.emailLabel`: `en` "Email", `es` "Email".
   - Password field, `login.register.passwordLabel`: `en` "Password", `es` "Contraseña".
+  - Repeat password field, `login.register.repeatPasswordLabel`: `en` "Repeat password", `es` "Repetir contraseña".
+  - Passwords do not match, `login.register.errorPasswordMismatch`: `en` "Passwords do not match.", `es` "Las contraseñas no coinciden.".
   - Registration button, `login.register.submit`: `en` "Create account", `es` "Crear cuenta".
   - Link back to sign-in, `login.register.goToSignIn`: `en` "Already have an account? Sign in", `es` "¿Ya tienes cuenta? Iniciar sesión".
   - Email already registered, `login.register.errorEmailTaken`: `en` "An account with this email already exists.", `es` "Ya existe una cuenta con este email."

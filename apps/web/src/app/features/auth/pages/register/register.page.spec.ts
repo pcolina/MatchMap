@@ -214,6 +214,7 @@ describe('RegisterPage', () => {
 
     await typeInto(element, fixture, 'email', ' User@Example.com ');
     await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
     await submit(element, fixture);
 
     expect(gateway.register).toHaveBeenCalledTimes(1);
@@ -227,6 +228,7 @@ describe('RegisterPage', () => {
 
     await typeInto(element, fixture, 'email', 'user@example.com');
     await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
     await submit(element, fixture);
 
     expect(element.querySelector('app-skeleton')).not.toBeNull();
@@ -242,6 +244,7 @@ describe('RegisterPage', () => {
 
     await typeInto(element, fixture, 'email', 'user@example.com');
     await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
     await submit(element, fixture);
 
     expect(navigate).toHaveBeenCalledWith('/');
@@ -252,6 +255,7 @@ describe('RegisterPage', () => {
 
     await typeInto(element, fixture, 'email', 'user@example.com');
     await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
     await submit(element, fixture);
 
     expect(errorText(element)).toContain('An account with this email already exists.');
@@ -265,6 +269,7 @@ describe('RegisterPage', () => {
 
     await typeInto(element, fixture, 'email', 'user@example.com');
     await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
     await submit(element, fixture);
 
     expect(errorText(element)).toContain('No connection. Check your network and try again.');
@@ -276,6 +281,7 @@ describe('RegisterPage', () => {
 
     await typeInto(element, fixture, 'email', 'user@example.com');
     await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
     await submit(element, fixture);
 
     expect(navigate).toHaveBeenCalledWith('/login');
@@ -291,6 +297,42 @@ describe('RegisterPage', () => {
 
     expect(element.querySelector<HTMLButtonElement>('button[type="submit"]')?.textContent?.trim()).toBe('Crear cuenta');
     expect(element.querySelector<HTMLAnchorElement>('a.login-link')?.textContent?.trim()).toBe('¿Ya tienes cuenta? Iniciar sesión');
+  });
+
+  it('shows the repeat password field with its label', () => {
+    const { element } = setup(successGateway());
+
+    expect(element.querySelector('label[for="repeat-password"]')?.textContent?.trim()).toBe('Repeat password');
+    expect(field(element, 'repeat-password').type).toBe('password');
+  });
+
+  it('shows the mismatch message on the repeat field and sends no request when the passwords differ', async () => {
+    const gateway = successGateway();
+    const { fixture, element } = setup(gateway);
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!13');
+    await submit(element, fixture);
+
+    expect(errorText(element)).toContain('Passwords do not match.');
+    expect(field(element, 'repeat-password').nextElementSibling?.getAttribute('data-error')).not.toBeNull();
+    expect(gateway.register).not.toHaveBeenCalled();
+  });
+
+  it('compares the passwords exactly, without changing case or trimming spaces', async () => {
+    const gateway = successGateway();
+    const { fixture, element } = setup(gateway);
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'abc!12');
+    await submit(element, fixture);
+
+    expect(errorText(element)).toContain('Passwords do not match.');
+    expect(gateway.register).not.toHaveBeenCalled();
   });
 
   it('gives every interactive element an accessible name', () => {
