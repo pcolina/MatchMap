@@ -160,42 +160,6 @@ After a successful sign-in, the access token SHALL be kept in memory. On web, th
 - **WHEN** sign-in succeeds on web
 - **THEN** the refresh token is set by the API as an `httpOnly` cookie and is not stored by the app
 
-### Requirement: Session restore
-
-When the app starts, it SHALL try to restore the session with the refresh token, and a request rejected for an expired access token SHALL be retried once after a refresh.
-
-#### Scenario: Refresh when the app starts on web
-- **WHEN** the web app starts
-- **THEN** exactly one request is sent to `POST /api/auth/refresh`
-
-#### Scenario: Refresh when the app starts on mobile with a stored token
-- **WHEN** the mobile app starts and a refresh token is stored in `expo-secure-store`
-- **THEN** exactly one request is sent to `POST /api/auth/refresh` with that refresh token in the body
-
-#### Scenario: No request on mobile without a stored token
-- **WHEN** the mobile app starts and no refresh token is stored
-- **THEN** no request is sent to `POST /api/auth/refresh` and the sign-in page is shown
-
-#### Scenario: Successful refresh signs the user in
-- **WHEN** the refresh request succeeds
-- **THEN** the user is signed in with the new access token, which is kept in memory
-
-#### Scenario: Rejected refresh shows the sign-in page
-- **WHEN** the refresh request is rejected
-- **THEN** the sign-in page is shown and the user is not signed in
-
-#### Scenario: Expired access token is retried once
-- **WHEN** a request is rejected because the access token has expired
-- **THEN** the refresh request is sent once and the rejected request is repeated once with the new access token
-
-#### Scenario: Retry fails again
-- **WHEN** the repeated request is rejected again
-- **THEN** the user is signed out and the sign-in page is shown
-
-#### Scenario: Route guard without a session
-- **WHEN** the user opens `/` without a session
-- **THEN** the user is redirected to `/login`
-
 ### Requirement: Redirect after sign-in
 
 After a successful sign-in, the user SHALL be taken to the main route at `/`.
