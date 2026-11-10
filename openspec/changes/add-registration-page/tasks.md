@@ -13,7 +13,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 ## 1. Shared code (`packages/shared`)
 
-- [ ] **1.1 Registration catalogues.** Test first: `i18n.spec.ts` checks that every `login.register.*` key used in `client-registration/spec.md` exists in `en.json` and `es.json`, with a non-empty value in each. Code: add the approved registration copy from the proposal to `packages/shared/i18n/en.json` and `packages/shared/i18n/es.json`.
+- [x] **1.1 Registration catalogues.** Test first: `i18n.spec.ts` checks that every `login.register.*` key used in `client-registration/spec.md` exists in `en.json` and `es.json`, with a non-empty value in each. Code: add the approved registration copy from the proposal to `packages/shared/i18n/en.json` and `packages/shared/i18n/es.json`.
 - [ ] **1.2 Register operation.** Test first: the codegen check fails because the `register` operation and its generated types do not exist. Code: the GraphQL operation `register` in `packages/shared`, typed by `pnpm codegen` from `contracts/graphql/account.graphqls`, with `email` and `password` only.
 
 ## 2. Web (`apps/web`)

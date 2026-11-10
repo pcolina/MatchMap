@@ -24,6 +24,16 @@
     "common": {
       "errorNetwork": "Sin conexión. Revisa tu red e inténtalo de nuevo.",
       "errorUnknown": "Algo ha salido mal. Inténtalo de nuevo."
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "emailLabel": "Email",
+      "passwordLabel": "Contraseña",
+      "submit": "Crear cuenta",
+      "goToSignIn": "¿Ya tienes cuenta? Iniciar sesión",
+      "errorEmailTaken": "Ya existe una cuenta con este email.",
+      "errorPasswordInvalid": "Usa de 6 a 20 caracteres, con una letra minúscula, una mayúscula y un carácter especial.",
+      "errorSignInAfterRegister": "Tu cuenta se ha creado, pero no hemos podido iniciar sesión. Inicia sesión de nuevo."
     }
   }
 }
