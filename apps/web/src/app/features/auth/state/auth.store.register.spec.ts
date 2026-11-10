@@ -62,14 +62,30 @@ describe('AuthStore register', () => {
     expect(store.failure()).toBe('passwordInvalid');
   });
 
-  it('reports a failed sign-in after a successful registration', () => {
+  it('keeps invalid credentials as the sign-in failure after a successful registration', () => {
     const store = setup({ signIn: () => throwError(() => 'invalidCredentials') });
 
     store.register(credentials);
 
     expect(store.status()).toBe('error');
-    expect(store.failure()).toBe('signInAfterRegister');
+    expect(store.failure()).toBe('invalidCredentials');
     expect(store.accessToken()).toBeNull();
+  });
+
+  it('keeps too many attempts as the sign-in failure after a successful registration', () => {
+    const store = setup({ signIn: () => throwError(() => 'tooManyAttempts') });
+
+    store.register(credentials);
+
+    expect(store.failure()).toBe('tooManyAttempts');
+  });
+
+  it('reports any other sign-in failure after a successful registration as signInAfterRegister', () => {
+    const store = setup({ signIn: () => throwError(() => 'unknown') });
+
+    store.register(credentials);
+
+    expect(store.failure()).toBe('signInAfterRegister');
   });
 
   it('reports a network failure during the sign-in after registration with the same failure', () => {

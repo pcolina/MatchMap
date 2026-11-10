@@ -60,8 +60,9 @@ export const AuthStore = signalStore(
             switchMap(() =>
               gateway.signIn(email, password).pipe(
                 tap(({ accessToken }) => patchState(store, { status: 'idle', accessToken })),
-                catchError(() => {
-                  patchState(store, { status: 'error', failure: 'signInAfterRegister' });
+                catchError((failure: SignInFailure) => {
+                  const kept = failure === 'invalidCredentials' || failure === 'tooManyAttempts';
+                  patchState(store, { status: 'error', failure: kept ? failure : 'signInAfterRegister' });
                   return EMPTY;
                 }),
               ),
