@@ -49,6 +49,6 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 ## 6. Checks and review
 
-- [ ] **6.1 Accessibility.** Test first: the accessibility checks fail for any interactive element without a role or accessible name. Code: fix the elements that fail.
-- [ ] **6.2 Full check.** Run `pnpm check` for every app and package this change touched. Paste the summary in the PR.
+- [x] **6.1 Accessibility.** Test first: the accessibility checks fail for any interactive element without a role or accessible name. Code: fix the elements that fail.
+- [x] **6.2 Full check.** Run `pnpm check` for every app and package this change touched. Paste the summary in the PR.
 - [ ] **6.3 Translations.** List every new `es` and `en` value in the PR description under "Translations to review".
