@@ -56,6 +56,8 @@ The account rules themselves (password storage, token issuing, duplicate emails)
   - Installed in both apps for this change, at the user's request: `apollo-angular@^14.2.0`, `@apollo/client@^4.3.5`, `graphql@^16` (peer of Apollo) and `@ngx-translate/core@^18.0.0`.
   - Approved for this change, to be installed in both apps for the language switcher icon: `@ng-icons/core` and `@ng-icons/tabler-icons`, as `docs/design.md` §5 requires.
   - Approved for this change, to be installed in `apps/mobile`: `expo-secure-store`, for the refresh token on mobile.
+  - Approved for this change, to be installed in `apps/mobile`: `@ng-native/router` (pinned `0.14.0`, as the other `@ng-native/*` packages) and `@angular/router` (`^22.0.0`, same major as `@angular/core`), for `provideNativeRouter()` and the routes, as `apps/mobile/AGENTS.md` requires.
+  - Approved for this change, to be installed in `apps/mobile`: `@ng-icons/core` and `@ng-icons/tabler-icons` (`^36.1.0`, as in `apps/web`) and `expo-secure-store` (`~57.0.4`, compatible with Expo 57).
 
 ## Open questions
 

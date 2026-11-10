@@ -164,9 +164,17 @@ After a successful sign-in, the access token SHALL be kept in memory. On web, th
 
 When the app starts, it SHALL try to restore the session with the refresh token, and a request rejected for an expired access token SHALL be retried once after a refresh.
 
-#### Scenario: Refresh when the app starts
-- **WHEN** the app starts
+#### Scenario: Refresh when the app starts on web
+- **WHEN** the web app starts
 - **THEN** exactly one request is sent to `POST /api/auth/refresh`
+
+#### Scenario: Refresh when the app starts on mobile with a stored token
+- **WHEN** the mobile app starts and a refresh token is stored in `expo-secure-store`
+- **THEN** exactly one request is sent to `POST /api/auth/refresh` with that refresh token in the body
+
+#### Scenario: No request on mobile without a stored token
+- **WHEN** the mobile app starts and no refresh token is stored
+- **THEN** no request is sent to `POST /api/auth/refresh` and the sign-in page is shown
 
 #### Scenario: Successful refresh signs the user in
 - **WHEN** the refresh request succeeds

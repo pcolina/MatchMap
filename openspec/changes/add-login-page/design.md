@@ -11,7 +11,6 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 - For `X-Client: web`, the refresh token is only in the `refresh_token` cookie (`HttpOnly; Path=/api/auth; Secure; SameSite`). `TokenResponse` (`tokenType`, `accessToken`, `expiresIn`) omits `refreshToken`. `POST /api/auth/refresh` takes no body. `POST /api/auth/logout` takes no body and expires the cookie.
 - For `X-Client: mobile`, the refresh token travels in the body: `TokenResponse.refreshToken`, and `refreshToken` in the body of refresh and logout.
 - `LoginRequest` declares the limits (email up to 254 characters, password 6 to 20 characters). Errors `401 invalid_credentials`, `429 too_many_attempts` with `Retry-After`, `400 invalid_email` and `400 invalid_password`.
-- `contracts/graphql/account.graphqls`: `register(input: RegisterInput!)`. The contract still requires `username` and `displayName`, which GitHub issue `matchMap-api#13` removes. This change depends on the result of that issue.
 - Check for changes since the baseline before each API-using task (task 0.2 in `tasks.md`).
 
 ## Decisions
@@ -67,6 +66,13 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 ### Dependencies
 
 - `expo-secure-store` is added to `apps/mobile` in this change, and it is listed in the proposal.
+- `@ng-native/router` and `@angular/router` are added to `apps/mobile` in this change, as listed in the proposal.
+
+### Mobile session restore
+
+- On mobile, the refresh token is read from `expo-secure-store` when the app starts. If none is stored, no refresh request is sent (see the spec `client-sign-in`).
+- The mobile language comes from `Intl.DateTimeFormat().resolvedOptions().locale`, because `@ng-native/device` has no locale API. `es` is selected when the language starts with `es`, and `en` otherwise.
+- Mobile tests that depend on a signal store run the store's logic through pure functions (for example `sign-in.flow.ts`), because `rxMethod` needs an injection context that the `@ng-native/testing` harness does not provide to stores.
 
 ### Focus border
 
@@ -77,3 +83,8 @@ This design covers the platform details of the two specs `client-sign-in` and `c
 
 - Both pages follow the accessibility rules in the specs and `docs/design.md` §10.
 - No performance budget is changed by this design.
+- The accessibility checks of task 6.1 are role and accessible-name assertions in the component tests of each screen. This change adds no accessibility tool and no dependency.
+
+## Android development build
+
+- The Android package name in `apps/mobile/app.json` is `com.anonymous.matchmap`. It is temporary: the MVP runs locally and is not published, so the name is replaced before any store release.
