@@ -12,6 +12,7 @@ const writerThatSucceeds = (): RefreshTokenWriter & { write: ReturnType<typeof v
 const gatewayReturning = (signIn: SignInGateway['signIn']): SignInGateway => ({
   signIn,
   refresh: () => throwError(() => 'unused'),
+  register: () => throwError(() => 'unused'),
 });
 
 test('signs the user in with the access token and stores only the refresh token', async () => {

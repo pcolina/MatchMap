@@ -6,7 +6,7 @@ import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
 import es from '../../../../../../../../packages/shared/i18n/es.json';
-import { SIGN_IN_GATEWAY, type SignInGateway } from '../../state/auth.store';
+import { AuthStore, SIGN_IN_GATEWAY, type SignInGateway } from '../../state/auth.store';
 import { SignInPage } from './sign-in.page';
 
 type Gateway = { signIn: ReturnType<typeof vi.fn> };
@@ -338,6 +338,20 @@ describe('SignInPage', () => {
     fixture.detectChanges();
 
     expect(element.querySelector<HTMLButtonElement>('button[type="submit"]')?.textContent?.trim()).toBe('Iniciar sesión');
+  });
+
+  it('shows the sign-in after registration message when the automatic sign-in could not reach the server', async () => {
+    const { fixture, element } = setup({
+      signIn: vi.fn(() => throwError(() => 'network')),
+      register: vi.fn(() => of(undefined)),
+    } as Gateway);
+
+    TestBed.inject(AuthStore).register({ email: 'user@example.com', password: '123456' });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(errorText(element)).toContain('Your account was created, but we could not sign you in. Sign in again.');
   });
 
   it('gives every interactive element an accessible name', () => {

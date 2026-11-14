@@ -215,6 +215,8 @@ export class SignInPage {
         return 'login.common.errorNetwork';
       case 'unknown':
         return 'login.common.errorUnknown';
+      case 'signInAfterRegister':
+        return 'login.register.errorSignInAfterRegister';
       default:
         return null;
     }

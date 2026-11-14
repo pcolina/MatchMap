@@ -1,0 +1,11 @@
+schema: ../../../matchmap-api/contracts/graphql/*.graphqls
+documents: src/graphql/*.graphql
+generates:
+  src/generated/schema.ts:
+    plugins:
+      - typescript
+  src/generated/operations.ts:
+    plugins:
+      - typescript-operations
+    config:
+      importSchemaTypesFrom: ./src/generated/schema

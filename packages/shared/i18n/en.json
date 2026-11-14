@@ -24,6 +24,18 @@
     "common": {
       "errorNetwork": "No connection. Check your network and try again.",
       "errorUnknown": "Something went wrong. Try again."
+    },
+    "register": {
+      "title": "Create account",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Create account",
+      "goToSignIn": "Already have an account? Sign in",
+      "errorEmailTaken": "An account with this email already exists.",
+      "errorPasswordInvalid": "Use 6 to 20 characters, with a lowercase letter, an uppercase letter and a special character.",
+      "errorSignInAfterRegister": "Your account was created, but we could not sign you in. Sign in again.",
+      "repeatPasswordLabel": "Repeat password",
+      "errorPasswordMismatch": "Passwords do not match."
     }
   }
 }

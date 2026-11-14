@@ -5,9 +5,14 @@ import { catchError, EMPTY, finalize, Observable, pipe, switchMap, tap } from 'r
 
 export type SignInFailure = 'invalidCredentials' | 'invalidRefreshToken' | 'tooManyAttempts' | 'network' | 'unknown';
 
+export type RegisterFailure = 'emailTaken' | 'passwordInvalid' | 'network' | 'unknown';
+
+export type AuthFailure = SignInFailure | RegisterFailure | 'signInAfterRegister';
+
 export interface SignInGateway {
   signIn(email: string, password: string): Observable<{ accessToken: string }>;
   refresh(): Observable<{ accessToken: string }>;
+  register(email: string, password: string): Observable<void>;
 }
 
 export const SIGN_IN_GATEWAY = new InjectionToken<SignInGateway>('SIGN_IN_GATEWAY');
@@ -15,7 +20,7 @@ export const SIGN_IN_GATEWAY = new InjectionToken<SignInGateway>('SIGN_IN_GATEWA
 export interface AuthState {
   status: 'idle' | 'loading' | 'error';
   accessToken: string | null;
-  failure: SignInFailure | null;
+  failure: AuthFailure | null;
   sessionChecked: boolean;
 }
 
@@ -40,6 +45,29 @@ export const AuthStore = signalStore(
           gateway.signIn(email, password).pipe(
             tap(({ accessToken }) => patchState(store, { status: 'idle', accessToken })),
             catchError((failure: SignInFailure) => {
+              patchState(store, { status: 'error', failure });
+              return EMPTY;
+            }),
+          ),
+        ),
+      ),
+    ),
+    register: rxMethod<{ email: string; password: string }>(
+      pipe(
+        tap(() => patchState(store, { status: 'loading', failure: null })),
+        switchMap(({ email, password }) =>
+          gateway.register(email, password).pipe(
+            switchMap(() =>
+              gateway.signIn(email, password).pipe(
+                tap(({ accessToken }) => patchState(store, { status: 'idle', accessToken })),
+                catchError((failure: SignInFailure) => {
+                  const kept = failure === 'invalidCredentials' || failure === 'tooManyAttempts';
+                  patchState(store, { status: 'error', failure: kept ? failure : 'signInAfterRegister' });
+                  return EMPTY;
+                }),
+              ),
+            ),
+            catchError((failure: RegisterFailure) => {
               patchState(store, { status: 'error', failure });
               return EMPTY;
             }),

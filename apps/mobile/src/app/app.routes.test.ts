@@ -18,3 +18,10 @@ test('loads the main layout lazily at /, behind the session guard', () => {
   expect(main?.loadComponent).toBeTypeOf('function');
   expect(main?.canActivate).toEqual([authGuard]);
 });
+
+test('loads the registration page lazily at /register, without the session guard', () => {
+  const register = routes.find((route) => route.path === 'register');
+
+  expect(register?.loadComponent).toBeTypeOf('function');
+  expect(register?.canActivate).toBeUndefined();
+});

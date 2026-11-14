@@ -35,6 +35,8 @@ export class SignInPage {
         return 'login.signIn.errorInvalidCredentials';
       case 'tooManyAttempts':
         return 'login.signIn.errorTooManyAttempts';
+      case 'signInAfterRegister':
+        return 'login.register.errorSignInAfterRegister';
       case 'network':
         return 'login.common.errorNetwork';
       case 'unknown':

@@ -16,6 +16,8 @@ A user who cannot create an account cannot sign in, so the registration page is 
   - Registration title, `login.register.title`: `en` "Create account", `es` "Crear cuenta".
   - Email field, `login.register.emailLabel`: `en` "Email", `es` "Email".
   - Password field, `login.register.passwordLabel`: `en` "Password", `es` "Contraseña".
+  - Repeat password field, `login.register.repeatPasswordLabel`: `en` "Repeat password", `es` "Repetir contraseña".
+  - Passwords do not match, `login.register.errorPasswordMismatch`: `en` "Passwords do not match.", `es` "Las contraseñas no coinciden.".
   - Registration button, `login.register.submit`: `en` "Create account", `es` "Crear cuenta".
   - Link back to sign-in, `login.register.goToSignIn`: `en` "Already have an account? Sign in", `es` "¿Ya tienes cuenta? Iniciar sesión".
   - Email already registered, `login.register.errorEmailTaken`: `en` "An account with this email already exists.", `es` "Ya existe una cuenta con este email."
@@ -46,14 +48,16 @@ The account rules (password complexity, error codes) belong to the API change `a
 
 - The sign-in page, the language switcher, the main route and the token handling. They are in `add-login-page`.
 - Email confirmation after registration. In a future change, the user is asked to confirm the email, and a page tells them that a confirmation email has been sent.
-- Backend account logic (password complexity on the server, stable error codes). These are specified in the API change `add-user-accounts` and in `backend-issues/005-password-complexity.md`, `backend-issues/003-stable-auth-error-codes.md` and `backend-issues/004-register-email-and-password-only.md`.
+- Backend account logic (password complexity on the server, stable error codes). These are specified in the API change `add-user-accounts` and in GitHub issue `matchMap-api#10`, GitHub issue `matchMap-api#9` and GitHub issue `matchMap-api#13`.
 - The tablet and laptop web layouts. The iPad and laptop specs are separate changes, written later.
 
 ## Depends on
 
 - **Change `add-login-page`**, which must be archived before this change starts. This change reuses its validators, its skeleton, its language switcher, its auth store and its routes.
-- **API change `add-user-accounts`** in the `matchmap-api` repository (status: in review). This change needs its `register` mutation to accept `email` and `password` only, to enforce the password rules, and to return the stable error codes listed in `backend-issues/005-password-complexity.md` and `backend-issues/003-stable-auth-error-codes.md`. The contract change in `backend-issues/004-register-email-and-password-only.md` is required before this change starts.
+- **API change `add-user-accounts`** in the `matchmap-api` repository (status: in review). This change needs its `register` mutation to accept `email` and `password` only, to enforce the password rules, and to return the stable error codes listed in GitHub issue `matchMap-api#10` and GitHub issue `matchMap-api#9`. The contract change in GitHub issue `matchMap-api#13` is required before this change starts.
 
 ## Open questions
 
 None. The copy and rules in the spec are approved.
+
+Decided: the email rules (required, not blank, standard format, at most 254 characters, trimmed and lower-cased before storing) are declared in `contracts/graphql/account.graphqls`. The password is not checked against the email.

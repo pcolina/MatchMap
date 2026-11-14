@@ -304,3 +304,11 @@ test('every control on the sign-in page has an accessible name, and no unnamed c
   expect(screen.getAllByRole('button')).toHaveLength(6);
   expect(screen.getAllByRole('link')).toHaveLength(1);
 });
+
+test('shows the sign-in after registration message from the store', async () => {
+  const store = fakeStore();
+  store.failure.set('signInAfterRegister');
+  await setup(store);
+
+  expect(screen.getByText(en.login.register.errorSignInAfterRegister)).toBeTruthy();
+});

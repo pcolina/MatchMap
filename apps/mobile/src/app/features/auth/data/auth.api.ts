@@ -1,11 +1,36 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { normalizeEmail, type components } from '@matchmap/shared';
+import { CombinedGraphQLErrors } from '@apollo/client/errors';
+import { Apollo, gql } from 'apollo-angular';
+import {
+  normalizeEmail,
+  registerMutation,
+  type components,
+  type RegisterMutation,
+  type RegisterMutationVariables,
+} from '@matchmap/shared';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import type { SignInFailure, SignInGateway, Tokens } from '../state/auth.model.ts';
+import type { RegisterFailure, SignInFailure, SignInGateway, Tokens } from '../state/auth.model.ts';
 
 type TokenResponse = components['schemas']['TokenResponse'];
 type ErrorResponse = components['schemas']['Error'];
+
+const toRegisterFailure = (error: unknown): RegisterFailure => {
+  if (CombinedGraphQLErrors.is(error)) {
+    const code = error.errors[0]?.extensions?.['code'];
+    if (code === 'EMAIL_TAKEN') {
+      return 'emailTaken';
+    }
+    if (code === 'PASSWORD_INVALID') {
+      return 'passwordInvalid';
+    }
+    return 'unknown';
+  }
+  if (error instanceof HttpErrorResponse && error.status === 0) {
+    return 'network';
+  }
+  return 'unknown';
+};
 
 const toFailure = (error: unknown): SignInFailure => {
   if (!(error instanceof HttpErrorResponse)) {
@@ -30,6 +55,19 @@ const toFailure = (error: unknown): SignInFailure => {
 @Injectable({ providedIn: 'root' })
 export class AuthApi implements SignInGateway {
   private readonly http = inject(HttpClient);
+  private readonly apollo = inject(Apollo);
+
+  register(email: string, password: string): Observable<void> {
+    return this.apollo
+      .mutate<RegisterMutation, RegisterMutationVariables>({
+        mutation: gql(registerMutation),
+        variables: { input: { email: normalizeEmail(email), password } },
+      })
+      .pipe(
+        map(() => undefined),
+        catchError((error: unknown) => throwError(() => toRegisterFailure(error))),
+      );
+  }
 
   signIn(email: string, password: string): Observable<Tokens> {
     return this.tokens(

@@ -4,6 +4,9 @@ import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, ta
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideRouter } from '@angular/router';
+import { InMemoryCache } from '@apollo/client/cache';
+import { provideApollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
@@ -16,6 +19,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors([authInterceptor])),
+    provideApollo(() => ({
+      link: inject(HttpLink).create({ uri: '/graphql' }),
+      cache: new InMemoryCache(),
+    })),
     provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
     provideRouter(routes),
     provideTranslateService({ fallbackLang: 'en' }),
