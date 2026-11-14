@@ -74,6 +74,21 @@ test('maps too many attempts to its failure', async () => {
   http.verify();
 });
 
+test.each([
+  ['invalid_email', 'invalidEmail'],
+  ['email_too_long', 'emailTooLong'],
+  ['invalid_password', 'invalidPassword'],
+])('maps the %s input limit error to the %s failure', async (code, expected) => {
+  const { api, http } = await setup();
+  let failure: unknown;
+  api.signIn('user@example.com', 'wrong').subscribe({ error: (error) => (failure = error) });
+
+  http.expectOne('/api/auth/login').flush({ error: code }, { status: 400, statusText: 'Bad Request' });
+
+  expect(failure).toBe(expected);
+  http.verify();
+});
+
 test('maps a request with no connection to the network failure', async () => {
   const { api, http } = await setup();
   let failure: unknown;
