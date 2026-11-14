@@ -1,3 +1,4 @@
+export { loginLimitErrorKey } from './auth/limit-errors.ts';
 export { normalizeEmail, validateRegisterPassword, validateSignInEmail, validateSignInPassword } from './auth/validators.ts';
 export type { components, paths } from './generated/openapi.ts';
 export type { RegisterInput } from './generated/schema.ts';
