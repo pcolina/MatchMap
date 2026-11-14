@@ -143,6 +143,18 @@ After a successful `register` mutation, the client SHALL sign the user in with t
 - **WHEN** the request fails because there is no network connection during the automatic sign-in
 - **THEN** the user is taken to the sign-in page, which shows the text of `login.register.errorSignInAfterRegister`: `en` "Your account was created, but we could not sign you in. Sign in again.", `es` "Tu cuenta se ha creado, pero no hemos podido iniciar sesión. Inicia sesión de nuevo."
 
+### Requirement: Navigation between sign-in and registration
+
+The sign-in page SHALL show the link to the registration page (text `login.signIn.goToRegister`), as defined in `client-sign-in`. The registration page SHALL show the link back to sign-in (text `login.register.goToSignIn`). Both links SHALL be interactive elements with a role and an accessible name.
+
+#### Scenario: Link to registration on the sign-in page
+- **WHEN** the user activates the link to registration on the sign-in page
+- **THEN** the registration page is shown
+
+#### Scenario: Link back to sign-in on the registration page
+- **WHEN** the user activates the link back to sign-in on the registration page
+- **THEN** the sign-in page is shown
+
 ### Requirement: Language selection
 
 The web app SHALL start in the browser language when it is `en` or `es`, and in `en` otherwise.

@@ -21,14 +21,14 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 - [x] **2.1 Register data access.** Test first: `auth.api.spec.ts` checks that `register` is sent once with `email` and `password` only, and that the API error codes map to the registration errors. Code: the Apollo `register` call in `data/auth.api.ts`.
 - [x] **2.2 Sign-in after registration.** Test first: `auth.store.spec.ts` checks that after a successful `register` the store signs in with the same email and password, that a failed sign-in redirects to the sign-in page with `login.register.errorSignInAfterRegister`, and that a network failure does the same. Code: the `register` method in the `auth` store, with `rxMethod`.
 - [x] **2.3 Registration page.** Test first: one test per scenario in `client-registration/spec.md`, including the layout, the switcher, the fields, the validation, the request, the skeleton, the reduced motion, the errors, the link back to sign-in, and the language selection. Code: the registration page and its form with Signal Forms.
-- [x] **2.4 Route.** Test first: a routing test checks that `/register` renders the registration page and that the link on the sign-in page leads there. Code: the `/register` route.
+- [x] **2.4 Route and navigation.** Test first: a routing test checks that `/register` renders the registration page, that the `login.signIn.goToRegister` link on the sign-in page leads there, and that the `login.register.goToSignIn` link leads back to `/login`. Code: the `/register` route; the back link is covered by the registration page test. The sign-in link already exists in `apps/web` `sign-in.page.html`.
 
 ## 3. Mobile (`apps/mobile`)
 
 - [ ] **3.1 Register data access.** Test first: the same checks as 2.1. Code: the `register` call in `apps/mobile` `data/auth.api.ts`.
 - [ ] **3.2 Sign-in after registration.** Test first: the same checks as 2.2. Code: the `register` method in the `apps/mobile` `auth` store.
 - [ ] **3.3 Registration page.** Test first: the same scenarios as 2.3, on ng-native. Code: the page and its form on mobile.
-- [ ] **3.4 Route.** Test first: the same checks as 2.4 for mobile. Code: the route on mobile.
+- [ ] **3.4 Route and navigation.** Test first: the same checks as 2.4 for mobile: `/register` renders the registration page, the `login.signIn.goToRegister` link on the sign-in page leads there, and the `login.register.goToSignIn` link leads back to sign-in. Code: the route on mobile, and the back link if it is missing.
 
 ## 4. Checks and review
 
