@@ -12,7 +12,7 @@ Precondition: `matchmap-api` issue #27 is merged, so the contract has `email_too
 ## 1. Shared code (`packages/shared`)
 
 - [x] **1.1 Limit error mapping.** Test first: `limit-errors.spec.ts` checks that `loginLimitErrorKey` returns `login.signIn.errorInvalidEmail` for `invalid_email`, `login.signIn.errorEmailTooLong` for `email_too_long`, `login.signIn.errorInvalidPassword` for `invalid_password`, and `null` for any other code. Code: `packages/shared/src/auth/limit-errors.ts`, exported from the package index.
-- [ ] **1.2 Catalogues.** Test first: `i18n.spec.ts` checks that every `login.signIn.*` key used in `client-sign-in/spec.md` for this change exists in `en.json` and `es.json` with a non-empty value. Code: add `errorInvalidEmail` and `errorInvalidPassword` to `packages/shared/i18n/en.json` and `es.json`, with the texts in the spec.
+- [x] **1.2 Catalogues.** Test first: `i18n.spec.ts` checks that every `login.signIn.*` key used in `client-sign-in/spec.md` for this change exists in `en.json` and `es.json` with a non-empty value. Code: add `errorInvalidEmail` and `errorInvalidPassword` to `packages/shared/i18n/en.json` and `es.json`, with the texts in the spec.
 
 ## 2. Web (`apps/web`)
 
