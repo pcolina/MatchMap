@@ -26,6 +26,8 @@
         <p id="email-error" class="error" data-error>
           @if (form.email().touched() && form.email().invalid()) {
             {{ form.email().errors()[0]?.kind | translate }}
+          } @else if (emailLimitMessage(); as message) {
+            {{ message | translate }}
           }
         </p>
       </div>
@@ -56,6 +58,8 @@
         <p id="password-error" class="error" data-error>
           @if (form.password().touched() && form.password().invalid()) {
             {{ form.password().errors()[0]?.kind | translate }}
+          } @else if (passwordLimitMessage(); as message) {
+            {{ message | translate }}
           }
         </p>
       </div>

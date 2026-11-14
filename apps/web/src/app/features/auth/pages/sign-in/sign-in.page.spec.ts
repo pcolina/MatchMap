@@ -299,6 +299,23 @@ describe('SignInPage', () => {
     expect(field(element, 'password').value).toBe('123456');
   });
 
+  it.each([
+    ['invalidEmail', 'email', 'Enter a valid email address.'],
+    ['emailTooLong', 'email', 'Email must be at most 254 characters.'],
+    ['invalidPassword', 'password', 'Password must be 6 to 20 characters.'],
+  ])('shows the %s failure in the %s field and keeps the typed values', async (failure, id, message) => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => failure)) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+
+    expect(element.querySelector(`#${id}-error`)?.textContent?.trim()).toBe(message);
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('');
+    expect(field(element, 'email').value).toBe('user@example.com');
+    expect(field(element, 'password').value).toBe('123456');
+  });
+
   it('shows the network message after a network failure', async () => {
     const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'network')) });
 
