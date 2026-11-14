@@ -25,7 +25,7 @@ The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `
 
 ## 3. Mobile (`apps/mobile`)
 
-- [ ] **3.1 Register data access.** Test first: the same checks as 2.1. Code: the `register` call in `apps/mobile` `data/auth.api.ts`.
+- [x] **3.1 Register data access.** Test first: the same checks as 2.1. Code: the `register` call in `apps/mobile` `data/auth.api.ts`.
 - [ ] **3.2 Sign-in after registration.** Test first: the same checks as 2.2. Code: the `register` method in the `apps/mobile` `auth` store.
 - [ ] **3.3 Registration page.** Test first: the same scenarios as 2.3, on ng-native. Code: the page and its form on mobile.
 - [ ] **3.4 Route and navigation.** Test first: the same checks as 2.4 for mobile: `/register` renders the registration page, the `login.signIn.goToRegister` link on the sign-in page leads there, and the `login.register.goToSignIn` link leads back to sign-in. Code: the route on mobile, and the back link if it is missing.
