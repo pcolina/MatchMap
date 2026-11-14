@@ -4,6 +4,8 @@ export type SignInFailure = 'invalidCredentials' | 'invalidRefreshToken' | 'tooM
 
 export type RegisterFailure = 'emailTaken' | 'passwordInvalid' | 'network' | 'unknown';
 
+export type AuthFailure = SignInFailure | RegisterFailure | 'signInAfterRegister';
+
 export interface Tokens {
   accessToken: string;
   refreshToken: string;
@@ -12,6 +14,7 @@ export interface Tokens {
 export interface SignInGateway {
   signIn(email: string, password: string): Observable<Tokens>;
   refresh(refreshToken: string): Observable<Tokens>;
+  register(email: string, password: string): Observable<void>;
 }
 
 export interface RefreshTokenWriter {

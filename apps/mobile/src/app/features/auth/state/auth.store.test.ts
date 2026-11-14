@@ -24,7 +24,7 @@ const setup = (gateway: Partial<SignInGateway>) => {
     providers: [
       {
         provide: SIGN_IN_GATEWAY,
-        useValue: { refresh: () => throwError(() => 'invalidRefreshToken'), ...gateway },
+        useValue: { refresh: () => throwError(() => 'invalidRefreshToken'), register: () => of(undefined), ...gateway },
       },
       { provide: RefreshTokenStorage, useValue: storage },
     ],
@@ -85,4 +85,90 @@ test('reports a network failure', () => {
 
   expect(store.status()).toBe('error');
   expect(store.failure()).toBe('network');
+});
+
+test('registers once and then signs in with the same email and password', async () => {
+  const register = vi.fn(() => of(undefined));
+  const signIn = vi.fn(() => of({ accessToken: 'token', refreshToken: 'refresh' }));
+  const { store, storage } = setup({ register, signIn });
+
+  store.register(credentials);
+
+  await vi.waitFor(() => expect(store.accessToken()).toBe('token'));
+  expect(register).toHaveBeenCalledTimes(1);
+  expect(register).toHaveBeenCalledWith('user@example.com', '123456');
+  expect(signIn).toHaveBeenCalledTimes(1);
+  expect(signIn).toHaveBeenCalledWith('user@example.com', '123456');
+  expect(storage.write).toHaveBeenCalledWith('refresh');
+  expect(store.status()).toBe('idle');
+  expect(store.failure()).toBeNull();
+});
+
+test('is loading while the registration request runs', async () => {
+  const response = new Subject<void>();
+  const { store } = setup({ register: () => response });
+
+  store.register(credentials);
+
+  expect(store.isLoading()).toBe(true);
+
+  response.next();
+  response.complete();
+
+  await vi.waitFor(() => expect(store.status()).not.toBe('loading'));
+});
+
+test('reports an email already registered and does not sign in', async () => {
+  const signIn = vi.fn(() => of({ accessToken: 'token', refreshToken: 'refresh' }));
+  const { store, storage } = setup({ register: () => throwError(() => 'emailTaken'), signIn });
+
+  store.register(credentials);
+
+  await vi.waitFor(() => expect(store.failure()).toBe('emailTaken'));
+  expect(store.status()).toBe('error');
+  expect(signIn).not.toHaveBeenCalled();
+  expect(store.accessToken()).toBeNull();
+  expect(storage.write).not.toHaveBeenCalled();
+});
+
+test('reports an invalid password', async () => {
+  const { store } = setup({ register: () => throwError(() => 'passwordInvalid') });
+
+  store.register(credentials);
+
+  await vi.waitFor(() => expect(store.failure()).toBe('passwordInvalid'));
+});
+
+test('keeps invalid credentials as the sign-in failure after a successful registration', async () => {
+  const { store } = setup({ signIn: () => throwError(() => 'invalidCredentials') });
+
+  store.register(credentials);
+
+  await vi.waitFor(() => expect(store.failure()).toBe('invalidCredentials'));
+  expect(store.status()).toBe('error');
+  expect(store.accessToken()).toBeNull();
+});
+
+test('keeps too many attempts as the sign-in failure after a successful registration', async () => {
+  const { store } = setup({ signIn: () => throwError(() => 'tooManyAttempts') });
+
+  store.register(credentials);
+
+  await vi.waitFor(() => expect(store.failure()).toBe('tooManyAttempts'));
+});
+
+test('reports a network failure during the sign-in after registration as signInAfterRegister', async () => {
+  const { store } = setup({ signIn: () => throwError(() => 'network') });
+
+  store.register(credentials);
+
+  await vi.waitFor(() => expect(store.failure()).toBe('signInAfterRegister'));
+});
+
+test('reports any other sign-in failure after a successful registration as signInAfterRegister', async () => {
+  const { store } = setup({ signIn: () => throwError(() => 'unknown') });
+
+  store.register(credentials);
+
+  await vi.waitFor(() => expect(store.failure()).toBe('signInAfterRegister'));
 });
