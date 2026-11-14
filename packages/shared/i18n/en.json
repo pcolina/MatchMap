@@ -16,6 +16,8 @@
       "errorEmailTooLong": "Email must be at most 254 characters.",
       "errorPasswordRequired": "Enter your password.",
       "errorPasswordLength": "Password must be 6 to 20 characters.",
+      "errorInvalidEmail": "Enter a valid email address.",
+      "errorInvalidPassword": "Password must be 6 to 20 characters.",
       "errorInvalidCredentials": "Email or password is incorrect.",
       "errorTooManyAttempts": "Too many attempts. Wait a few minutes and try again.",
       "showPassword": "Show password",

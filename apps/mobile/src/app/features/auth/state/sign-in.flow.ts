@@ -6,7 +6,14 @@ export type SignInOutcome =
   | { kind: 'failed'; failure: SignInFailure };
 
 const toFailure = (error: unknown): SignInFailure =>
-  error === 'invalidCredentials' || error === 'tooManyAttempts' || error === 'network' ? error : 'unknown';
+  error === 'invalidCredentials' ||
+  error === 'tooManyAttempts' ||
+  error === 'invalidEmail' ||
+  error === 'emailTooLong' ||
+  error === 'invalidPassword' ||
+  error === 'network'
+    ? error
+    : 'unknown';
 
 export const signInFlow = (
   gateway: SignInGateway,

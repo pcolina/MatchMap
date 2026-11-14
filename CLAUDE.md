@@ -142,7 +142,7 @@ Each change lives in `openspec/changes/<kebab-name>/` and goes through these art
 | 3. Design | `design.md` | Technical decisions and approach, only when the change needs them | Stop for approval |
 | 4. Tasks | `tasks.md` | Ordered tasks. Each task names the failing test first, then the code that makes it pass | Stop for approval |
 | 5. Implement | code and tests | One task at a time, TDD, one commit per task | Stop when `tasks.md` is done, then open a PR |
-| 6. Archive | `openspec/specs/` and `openspec/changes/archive/` | The change's specs are merged into `openspec/specs/` and the change folder moves to `archive/` | After the PR is merged |
+| 6. Archive | `openspec/specs/` and `openspec/changes/archive/` | The change's specs are merged into `openspec/specs/` and the change folder moves to `archive/` | Once the implementation PR is open, the agent asks the user whether to archive. On yes, the archive goes in a second branch and PR, and both PRs are merged together. Nothing waits for a merge before archiving |
 
 ### Rules
 

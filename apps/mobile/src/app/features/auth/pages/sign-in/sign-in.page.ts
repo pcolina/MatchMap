@@ -50,7 +50,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
                 [style.backgroundColor]="palette().surface"
               />
             </view>
-            <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.email().touched() && form.email().invalid() ? t(form.email().errors()[0]?.kind ?? '') : '' }}</text>
+            <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ emailError() }}</text>
 
             <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.passwordLabel') }}</text>
             <view class="field">
@@ -74,7 +74,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
                 <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
               </pressable>
             </view>
-            <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.password().touched() && form.password().invalid() ? t(form.password().errors()[0]?.kind ?? '') : '' }}</text>
+            <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ passwordError() }}</text>
 
             <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
 
@@ -222,12 +222,43 @@ export class SignInPage {
     }
   });
 
+  protected readonly emailLimitMessage = computed(() => {
+    switch (this.store.failure()) {
+      case 'invalidEmail':
+        return 'login.signIn.errorInvalidEmail';
+      case 'emailTooLong':
+        return 'login.signIn.errorEmailTooLong';
+      default:
+        return null;
+    }
+  });
+
+  protected readonly passwordLimitMessage = computed(() =>
+    this.store.failure() === 'invalidPassword' ? 'login.signIn.errorInvalidPassword' : null,
+  );
+
   constructor() {
     effect(() => {
       if (this.store.accessToken() !== null) {
         void this.router.navigateByUrl('/');
       }
     });
+  }
+
+  protected emailError(): string {
+    if (this.form.email().touched() && this.form.email().invalid()) {
+      return this.t(this.form.email().errors()[0]?.kind ?? '');
+    }
+    const key = this.emailLimitMessage();
+    return key === null ? '' : this.t(key);
+  }
+
+  protected passwordError(): string {
+    if (this.form.password().touched() && this.form.password().invalid()) {
+      return this.t(this.form.password().errors()[0]?.kind ?? '');
+    }
+    const key = this.passwordLimitMessage();
+    return key === null ? '' : this.t(key);
   }
 
   protected failureText(): string {

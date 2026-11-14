@@ -305,6 +305,18 @@ test('every control on the sign-in page has an accessible name, and no unnamed c
   expect(screen.getAllByRole('link')).toHaveLength(1);
 });
 
+test.each([
+  ['invalidEmail', 'email-error', 'Enter a valid email address.'],
+  ['emailTooLong', 'email-error', 'Email must be at most 254 characters.'],
+  ['invalidPassword', 'password-error', 'Password must be 6 to 20 characters.'],
+] as const)('shows the %s failure in the %s field and keeps the failure alert empty', async (failure, testId, message) => {
+  const store = fakeStore();
+  store.failure.set(failure);
+  await setup(store);
+
+  expect(screen.getByText(message).props['testID']).toBe(testId);
+});
+
 test('shows the sign-in after registration message from the store', async () => {
   const store = fakeStore();
   store.failure.set('signInAfterRegister');

@@ -46,6 +46,21 @@ export class SignInPage {
     }
   });
 
+  protected readonly emailLimitMessage = computed(() => {
+    switch (this.store.failure()) {
+      case 'invalidEmail':
+        return 'login.signIn.errorInvalidEmail';
+      case 'emailTooLong':
+        return 'login.signIn.errorEmailTooLong';
+      default:
+        return null;
+    }
+  });
+
+  protected readonly passwordLimitMessage = computed(() =>
+    this.store.failure() === 'invalidPassword' ? 'login.signIn.errorInvalidPassword' : null,
+  );
+
   constructor() {
     effect(() => {
       if (this.store.accessToken() !== null) {

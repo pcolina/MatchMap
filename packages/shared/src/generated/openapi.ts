@@ -47,7 +47,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Exchange a refresh token for new tokens */
+        /**
+         * Exchange a refresh token for new tokens
+         * @description For X-Client mobile the request body carries refreshToken. For X-Client web the request has no body and the refresh token is read from the refresh_token cookie; any body is ignored.
+         */
         post: operations["refresh"];
         delete?: never;
         options?: never;
@@ -64,7 +67,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Sign out by revoking the session of a refresh token */
+        /**
+         * Sign out by revoking the session of a refresh token
+         * @description For X-Client mobile the request body carries refreshToken. For X-Client web the request has no body; the refresh token is read from the refresh_token cookie, and the response clears that cookie.
+         */
         post: operations["logout"];
         delete?: never;
         options?: never;
@@ -85,8 +91,9 @@ export interface components {
         GoogleSignInRequest: {
             idToken: string;
         };
+        /** @description Required for X-Client mobile. Not used for X-Client web. */
         RefreshTokenRequest: {
-            refreshToken: string;
+            refreshToken?: string;
         };
         TokenResponse: {
             /** @constant */
@@ -97,17 +104,26 @@ export interface components {
              * @example 900
              */
             expiresIn: number;
-            refreshToken: string;
+            /** @description Present for X-Client mobile only. Web receives the refresh token in the refresh_token cookie. */
+            refreshToken?: string;
         };
         Error: {
             /** @enum {string} */
-            error: "invalid_credentials" | "too_many_attempts" | "invalid_google_token" | "google_email_not_verified" | "invalid_refresh_token";
+            error: "invalid_client" | "invalid_credentials" | "too_many_attempts" | "invalid_google_token" | "google_email_not_verified" | "invalid_refresh_token" | "invalid_email" | "invalid_password";
         };
     };
     responses: never;
-    parameters: never;
+    parameters: {
+        /** @description Which client sends the request. web keeps the refresh token in a cookie; mobile keeps it in the body. */
+        XClient: "web" | "mobile";
+    };
     requestBodies: never;
-    headers: never;
+    headers: {
+        /** @description refresh_token=<token>; Path=/api/auth; Max-Age=2592000; HttpOnly; Secure; SameSite=<configured value, Lax by default> */
+        RefreshTokenCookie: string;
+        /** @description refresh_token=; Path=/api/auth; Max-Age=0; HttpOnly; Secure; SameSite=<configured value, Lax by default> */
+        ClearRefreshTokenCookie: string;
+    };
     pathItems: never;
 }
 export type $defs = Record<string, never>;
@@ -115,7 +131,10 @@ export interface operations {
     login: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                /** @description Which client sends the request. web keeps the refresh token in a cookie; mobile keeps it in the body. */
+                "X-Client": components["parameters"]["XClient"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -125,13 +144,28 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Signed in. */
+            /** @description Signed in. For X-Client mobile the body contains refreshToken. For X-Client web the body omits refreshToken and the response sets the refresh_token cookie. */
             200: {
                 headers: {
+                    "Set-Cookie": components["headers"]["RefreshTokenCookie"];
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["TokenResponse"];
+                };
+            };
+            /** @description The X-Client header is missing or unknown (invalid_client), or the email or the password breaks its input limits (invalid_email or invalid_password). */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "error": "invalid_email"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["Error"];
                 };
             };
             /** @description Wrong password, unknown email or account without password. */
@@ -169,7 +203,10 @@ export interface operations {
     signInWithGoogle: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                /** @description Which client sends the request. web keeps the refresh token in a cookie; mobile keeps it in the body. */
+                "X-Client": components["parameters"]["XClient"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -179,13 +216,28 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Signed in; the account is created or linked if needed. */
+            /** @description Signed in; the account is created or linked if needed. The refresh token follows the same rule as login for the X-Client value. */
             200: {
                 headers: {
+                    "Set-Cookie": components["headers"]["RefreshTokenCookie"];
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["TokenResponse"];
+                };
+            };
+            /** @description The X-Client header is missing or unknown. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "error": "invalid_client"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["Error"];
                 };
             };
             /** @description The ID token is invalid, expired or for another audience. */
@@ -221,26 +273,44 @@ export interface operations {
     refresh: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                /** @description Which client sends the request. web keeps the refresh token in a cookie; mobile keeps it in the body. */
+                "X-Client": components["parameters"]["XClient"];
+            };
             path?: never;
             cookie?: never;
         };
-        requestBody: {
+        requestBody?: {
             content: {
                 "application/json": components["schemas"]["RefreshTokenRequest"];
             };
         };
         responses: {
-            /** @description New access and refresh tokens; the presented refresh token is no longer valid. */
+            /** @description New access and refresh tokens; the presented refresh token is no longer valid. For X-Client web the body omits refreshToken and the response sets the new refresh_token cookie. */
             200: {
                 headers: {
+                    "Set-Cookie": components["headers"]["RefreshTokenCookie"];
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["TokenResponse"];
                 };
             };
-            /** @description Unknown, expired, revoked or reused refresh token. */
+            /** @description The X-Client header is missing or unknown. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "error": "invalid_client"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Unknown, expired, revoked or reused refresh token, or a web request without the refresh_token cookie. */
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -259,22 +329,40 @@ export interface operations {
     logout: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                /** @description Which client sends the request. web keeps the refresh token in a cookie; mobile keeps it in the body. */
+                "X-Client": components["parameters"]["XClient"];
+            };
             path?: never;
             cookie?: never;
         };
-        requestBody: {
+        requestBody?: {
             content: {
                 "application/json": components["schemas"]["RefreshTokenRequest"];
             };
         };
         responses: {
-            /** @description Session revoked, or the token was already unknown or revoked. */
+            /** @description Session revoked, or the token was already unknown, revoked or missing. For X-Client web the response expires the refresh_token cookie. */
             204: {
                 headers: {
+                    "Set-Cookie": components["headers"]["ClearRefreshTokenCookie"];
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description The X-Client header is missing or unknown. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "error": "invalid_client"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["Error"];
+                };
             };
         };
     };

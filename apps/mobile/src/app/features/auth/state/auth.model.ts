@@ -1,6 +1,14 @@
 import type { Observable } from 'rxjs';
 
-export type SignInFailure = 'invalidCredentials' | 'invalidRefreshToken' | 'tooManyAttempts' | 'network' | 'unknown';
+export type SignInFailure =
+  | 'invalidCredentials'
+  | 'invalidRefreshToken'
+  | 'tooManyAttempts'
+  | 'invalidEmail'
+  | 'emailTooLong'
+  | 'invalidPassword'
+  | 'network'
+  | 'unknown';
 
 export type RegisterFailure = 'emailTaken' | 'passwordInvalid' | 'network' | 'unknown';
 

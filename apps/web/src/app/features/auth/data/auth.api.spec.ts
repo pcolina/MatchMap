@@ -86,6 +86,19 @@ describe('AuthApi', () => {
     expect(failure).toBe('tooManyAttempts');
   });
 
+  it.each([
+    ['invalid_email', 'invalidEmail'],
+    ['email_too_long', 'emailTooLong'],
+    ['invalid_password', 'invalidPassword'],
+  ])('maps the %s input limit error to the %s failure', (code, expected) => {
+    let failure: unknown;
+    api.signIn('user@example.com', 'wrong').subscribe({ error: (error) => (failure = error) });
+
+    http.expectOne('/api/auth/login').flush({ error: code }, { status: 400, statusText: 'Bad Request' });
+
+    expect(failure).toBe(expected);
+  });
+
   it('maps a request with no connection to the network failure', () => {
     let failure: unknown;
     api.signIn('user@example.com', '123456').subscribe({ error: (error) => (failure = error) });
