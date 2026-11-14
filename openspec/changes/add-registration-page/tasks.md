@@ -9,7 +9,7 @@ Precondition: the change `add-login-page` is archived, and the registration part
 The contracts live in `C:\workspace\pablo\matchmap-api\contracts\` (OpenAPI in `openapi\`, GraphQL in `graphql\`). Their baseline is the `matchmap-api` commit `57943e3`, the last commit that touched `contracts/` before this change. Commit `78027e0` (declare the email rules) came after it and was checked against the specs in task 0.2.
 
 - [x] **0.1 Contract baseline.** Test first: a check fails if `design.md` of `add-login-page` does not record the baseline commit. Code: record the commit in `add-login-page/design.md` under "Contract baseline", and repeat the check here for `account.graphqls`.
-- [ ] **0.2 Contract check before each API-using task.** Before starting any task in sections 1.2, 2.1, 2.2, 3.1 or 3.2, run `git -C C:\workspace\pablo\matchmap-api log --oneline <baseline>..HEAD -- contracts/`. If the output is empty, go on. If it is not empty, compare the changed files with the specs and design, and when they affect a requirement or a request or response shape, stop and propose the change to the spec or design, as `CLAUDE.md` §6 requires, before writing code.
+- [x] **0.2 Contract check before each API-using task.** Before starting any task in sections 1.2, 2.1, 2.2, 3.1 or 3.2, run `git -C C:\workspace\pablo\matchmap-api log --oneline <baseline>..HEAD -- contracts/`. If the output is empty, go on. If it is not empty, compare the changed files with the specs and design, and when they affect a requirement or a request or response shape, stop and propose the change to the spec or design, as `CLAUDE.md` §6 requires, before writing code.
 
 ## 1. Shared code (`packages/shared`)
 
