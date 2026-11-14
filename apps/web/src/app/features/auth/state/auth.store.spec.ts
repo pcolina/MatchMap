@@ -83,6 +83,19 @@ describe('AuthStore', () => {
     expect(store.failure()).toBe('tooManyAttempts');
   });
 
+  it.each(['invalidEmail', 'emailTooLong', 'invalidPassword'] as const)(
+    'reports the %s input limit failure, keeps no token and writes nothing to storage',
+    (failure) => {
+      const store = setup({ signIn: () => throwError(() => failure) });
+
+      store.signIn(credentials);
+
+      expect(store.status()).toBe('error');
+      expect(store.failure()).toBe(failure);
+      expect(store.accessToken()).toBeNull();
+    },
+  );
+
   it('refreshes the session once when the app starts', () => {
     const refresh = vi.fn(() => of({ accessToken: 'token' }));
     const store = setup({ signIn: () => of({ accessToken: 'unused' }), refresh });

@@ -17,7 +17,7 @@ Precondition: `matchmap-api` issue #27 is merged, so the contract has `email_too
 ## 2. Web (`apps/web`)
 
 - [x] **2.1 Data access.** Test first: `auth.api.spec.ts` checks that a login response with `invalid_email`, `email_too_long` or `invalid_password` fails with `invalidEmail`, `emailTooLong` or `invalidPassword`, and that other codes still fail with their current failure. Code: the new cases in `toFailure` in `data/auth.api.ts`.
-- [ ] **2.2 Store.** Test first: `auth.store.spec.ts` checks that each new failure is set as the store failure, with `status` `error`, no access token, and the typed values unchanged. Code: the three values in `SignInFailure`.
+- [x] **2.2 Store.** Test first: `auth.store.spec.ts` checks that each new failure is set as the store failure, with `status` `error`, no access token, and the typed values unchanged. Code: the three values in `SignInFailure`.
 - [ ] **2.3 Sign-in page.** Test first: `sign-in.page.spec.ts` checks that `invalidEmail` and `emailTooLong` show their text in the email field, that `invalidPassword` shows its text in the password field, and that the credentials, network and unknown messages are unchanged. Code: the field messages in `sign-in.page.ts` and `.html`.
 
 ## 3. Mobile (`apps/mobile`)
