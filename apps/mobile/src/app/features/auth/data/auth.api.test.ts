@@ -1,10 +1,14 @@
 import '@angular/compiler';
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { CombinedGraphQLErrors } from '@apollo/client/errors';
+import { Apollo } from 'apollo-angular';
 import { View } from '@ng-native/components';
 import { provideNativeHttpClient } from '@ng-native/platform/http';
 import { render } from '@ng-native/testing';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
+import { of, throwError } from 'rxjs';
 import { AuthApi } from './auth.api.ts';
 
 @Component({
@@ -14,13 +18,19 @@ import { AuthApi } from './auth.api.ts';
 })
 class ApiHost {}
 
-const setup = async () => {
+const registeredUser = { register: { id: '1', email: 'user@example.com', createdAt: '2026-11-10T00:00:00Z' } };
+
+const graphqlError = (code: string) =>
+  new CombinedGraphQLErrors({ data: null, errors: [{ message: 'error', extensions: { code } }] });
+
+const setup = async (mutate = vi.fn(() => of({ data: registeredUser }))) => {
   const { componentRef } = await render(ApiHost, {
-    providers: [provideNativeHttpClient(), provideHttpClientTesting()],
+    providers: [provideNativeHttpClient(), provideHttpClientTesting(), { provide: Apollo, useValue: { mutate } }],
   });
   return {
     api: componentRef.injector.get(AuthApi),
     http: componentRef.injector.get(HttpTestingController),
+    mutate,
   };
 };
 
@@ -122,4 +132,48 @@ test('maps a rejected refresh to the invalid refresh token failure', async () =>
 
   expect(failure).toBe('invalidRefreshToken');
   http.verify();
+});
+
+test('sends one register mutation with the normalised email and the password only', async () => {
+  const { api, mutate } = await setup();
+  let registered = false;
+  api.register(' User@Example.com ', 'Abc!12').subscribe(() => (registered = true));
+
+  expect(mutate).toHaveBeenCalledTimes(1);
+  expect(mutate).toHaveBeenCalledWith(
+    expect.objectContaining({ variables: { input: { email: 'user@example.com', password: 'Abc!12' } } }),
+  );
+  expect(registered).toBe(true);
+});
+
+test('maps EMAIL_TAKEN to the email taken failure', async () => {
+  const { api } = await setup(vi.fn(() => throwError(() => graphqlError('EMAIL_TAKEN'))));
+  let failure: unknown;
+  api.register('user@example.com', 'Abc!12').subscribe({ error: (error) => (failure = error) });
+
+  expect(failure).toBe('emailTaken');
+});
+
+test('maps PASSWORD_INVALID to the password invalid failure', async () => {
+  const { api } = await setup(vi.fn(() => throwError(() => graphqlError('PASSWORD_INVALID'))));
+  let failure: unknown;
+  api.register('user@example.com', 'abc').subscribe({ error: (error) => (failure = error) });
+
+  expect(failure).toBe('passwordInvalid');
+});
+
+test('maps a request with no connection to the network failure on register', async () => {
+  const { api } = await setup(vi.fn(() => throwError(() => new HttpErrorResponse({ status: 0 }))));
+  let failure: unknown;
+  api.register('user@example.com', 'Abc!12').subscribe({ error: (error) => (failure = error) });
+
+  expect(failure).toBe('network');
+});
+
+test('maps any other register error to the unknown failure', async () => {
+  const { api } = await setup(vi.fn(() => throwError(() => graphqlError('INTERNAL'))));
+  let failure: unknown;
+  api.register('user@example.com', 'Abc!12').subscribe({ error: (error) => (failure = error) });
+
+  expect(failure).toBe('unknown');
 });

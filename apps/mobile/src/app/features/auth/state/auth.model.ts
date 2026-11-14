@@ -2,6 +2,8 @@ import type { Observable } from 'rxjs';
 
 export type SignInFailure = 'invalidCredentials' | 'invalidRefreshToken' | 'tooManyAttempts' | 'network' | 'unknown';
 
+export type RegisterFailure = 'emailTaken' | 'passwordInvalid' | 'network' | 'unknown';
+
 export interface Tokens {
   accessToken: string;
   refreshToken: string;
