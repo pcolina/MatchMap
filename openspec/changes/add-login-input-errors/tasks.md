@@ -24,7 +24,7 @@ Precondition: `matchmap-api` issue #27 is merged, so the contract has `email_too
 
 - [x] **3.1 Data access.** Test first: `auth.api.test.ts` checks the same codes as 2.1 for `POST /api/auth/login`. Code: the new cases in `toFailure` in `data/auth.api.ts`, and in `sign-in.flow.ts`.
 - [x] **3.2 Store.** Test first: `auth.store.test.ts` checks the same as 2.2. Code: the three values in `SignInFailure` in `state/auth.model.ts`.
-- [ ] **3.3 Sign-in page.** Test first: `sign-in.page.test.ts` checks the same as 2.3, with the field messages on ng-native. Code: the field messages in `sign-in.page.ts`.
+- [x] **3.3 Sign-in page.** Test first: `sign-in.page.test.ts` checks the same as 2.3, with the field messages on ng-native. Code: the field messages in `sign-in.page.ts`.
 
 ## 4. Checks and review
 
