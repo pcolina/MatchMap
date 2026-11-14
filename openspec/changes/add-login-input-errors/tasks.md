@@ -28,5 +28,5 @@ Precondition: `matchmap-api` issue #27 is merged, so the contract has `email_too
 
 ## 4. Checks and review
 
-- [ ] **4.1 Full check.** Run `pnpm check` for every app and package this change touched, and paste the summary in the PR.
-- [ ] **4.2 Translations.** List the two new `es` and `en` values in the PR description under "Translations to review". The `email_too_long` text is an existing key, so it is not listed as new.
+- [x] **4.1 Full check.** Run `pnpm check` for every app and package this change touched, and paste the summary in the PR.
+- [x] **4.2 Translations.** List the two new `es` and `en` values in the PR description under "Translations to review". The `email_too_long` text is an existing key, so it is not listed as new.
