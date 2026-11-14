@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const loginDir = resolve(__dirname, '../../../openspec/changes/archive/2026-11-10-add-login-page');
-const registrationDir = resolve(__dirname, '../../../openspec/changes/add-registration-page');
+const registrationDir = resolve(__dirname, '../../../openspec/changes/archive/2026-11-14-add-registration-page');
 const baseline = '57943e3';
 
 describe('add-login-page contract baseline', () => {

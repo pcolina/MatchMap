@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-const specPath = resolve(__dirname, '../../../openspec/changes/add-registration-page/specs/client-registration/spec.md');
-const proposalPath = resolve(__dirname, '../../../openspec/changes/add-registration-page/proposal.md');
+const specPath = resolve(__dirname, '../../../openspec/changes/archive/2026-11-14-add-registration-page/specs/client-registration/spec.md');
+const proposalPath = resolve(__dirname, '../../../openspec/changes/archive/2026-11-14-add-registration-page/proposal.md');
 
 const loadCatalogue = (locale: 'en' | 'es'): Record<string, unknown> =>
   JSON.parse(readFileSync(resolve(__dirname, `../i18n/${locale}.json`), 'utf8'));
