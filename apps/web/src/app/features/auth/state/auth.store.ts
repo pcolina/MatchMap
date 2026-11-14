@@ -3,7 +3,15 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, EMPTY, finalize, Observable, pipe, switchMap, tap } from 'rxjs';
 
-export type SignInFailure = 'invalidCredentials' | 'invalidRefreshToken' | 'tooManyAttempts' | 'network' | 'unknown';
+export type SignInFailure =
+  | 'invalidCredentials'
+  | 'invalidRefreshToken'
+  | 'tooManyAttempts'
+  | 'invalidEmail'
+  | 'emailTooLong'
+  | 'invalidPassword'
+  | 'network'
+  | 'unknown';
 
 export type RegisterFailure = 'emailTaken' | 'passwordInvalid' | 'network' | 'unknown';
 

@@ -39,7 +39,7 @@ const toFailure = (error: unknown): SignInFailure => {
   if (error.status === 0) {
     return 'network';
   }
-  const code = (error.error as ErrorResponse | null)?.error;
+  const code: string | undefined = (error.error as ErrorResponse | null)?.error;
   if (code === 'invalid_credentials') {
     return 'invalidCredentials';
   }
@@ -48,6 +48,15 @@ const toFailure = (error: unknown): SignInFailure => {
   }
   if (code === 'invalid_refresh_token') {
     return 'invalidRefreshToken';
+  }
+  if (code === 'invalid_email') {
+    return 'invalidEmail';
+  }
+  if (code === 'email_too_long') {
+    return 'emailTooLong';
+  }
+  if (code === 'invalid_password') {
+    return 'invalidPassword';
   }
   return 'unknown';
 };
