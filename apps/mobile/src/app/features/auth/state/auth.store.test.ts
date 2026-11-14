@@ -78,6 +78,20 @@ test('reports invalid credentials and keeps no token', () => {
   expect(storage.write).not.toHaveBeenCalled();
 });
 
+test.each(['invalidEmail', 'emailTooLong', 'invalidPassword'] as const)(
+  'reports the %s input limit failure and keeps no token',
+  (failure) => {
+    const { store, storage } = setup({ signIn: () => throwError(() => failure) });
+
+    store.signIn(credentials);
+
+    expect(store.status()).toBe('error');
+    expect(store.failure()).toBe(failure);
+    expect(store.accessToken()).toBeNull();
+    expect(storage.write).not.toHaveBeenCalled();
+  },
+);
+
 test('reports a network failure', () => {
   const { store } = setup({ signIn: () => throwError(() => 'network') });
 
