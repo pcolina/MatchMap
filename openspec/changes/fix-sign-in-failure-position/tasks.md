@@ -22,6 +22,8 @@ No API call changes in this change, so no contract check is needed before the ta
 
 - [x] **1.9 Error position.** Test first: in `sign-in.page.spec.ts`, the email and password error lines have a computed top margin of `0px` and a bottom margin of `var(--mm-space-4)` (see `design.md` "Error position update"). Code: `sign-in.page.css`.
 
+- [x] **1.10 Error offset.** Test first: in `sign-in.page.spec.ts`, the email and password error lines have a computed top margin of `5px` and a bottom margin of `calc(var(--mm-space-4) - 5px)` (see `design.md` "Error offset update"). Code: `sign-in.page.css`.
+
 ## 2. Mobile (`apps/mobile`)
 
 - [x] **2.1 Failure position.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is rendered after `password-error` and before the submit button (scenarios "Failure message below the password field" and "Same position on mobile"). Code: move the `<text testID="failure">` in `sign-in.page.ts` into the password field group, after `testID="password-error"`.

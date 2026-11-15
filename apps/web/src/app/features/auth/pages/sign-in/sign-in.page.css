@@ -140,8 +140,8 @@ input {
 
 #email-error,
 #password-error {
-  margin-top: 0;
-  margin-bottom: var(--mm-space-4);
+  margin-top: 5px;
+  margin-bottom: calc(var(--mm-space-4) - 5px);
 }
 
 .error {

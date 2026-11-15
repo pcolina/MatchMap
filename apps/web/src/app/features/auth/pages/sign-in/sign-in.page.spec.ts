@@ -101,14 +101,14 @@ describe('SignInPage', () => {
     expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('var(--mm-space-2)');
   });
 
-  it('sits each field error right under its input and keeps the room below it', () => {
+  it('sits each field error 5 px under its input and keeps the rest of the layout still', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
 
     for (const id of ['#email-error', '#password-error']) {
       const error = element.querySelector<HTMLElement>(id)!;
 
-      expect(getComputedStyle(error).getPropertyValue('margin-top')).toBe('0px');
-      expect(getComputedStyle(error).getPropertyValue('margin-bottom')).toBe('var(--mm-space-4)');
+      expect(getComputedStyle(error).getPropertyValue('margin-top')).toBe('5px');
+      expect(getComputedStyle(error).getPropertyValue('margin-bottom')).toBe('calc(var(--mm-space-4) - 5px)');
     }
   });
 

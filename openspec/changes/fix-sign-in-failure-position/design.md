@@ -66,3 +66,7 @@ Requested after review: the error messages should sit closer to their input than
 ## Error position update (web), replacing "Error closeness update"
 
 The field errors sit right under their input (`margin-top: 0`). The 16 px that was above them now sits below them (`margin-bottom: space-4`). The rest of the layout does not move: the password label, the failure message and the Sign in button keep their positions, because the 16 px moves from above each error to below it.
+
+## Error offset update (web)
+
+The field errors sit 5 px under their input (`margin-top: 5px`). The bottom margin shrinks by the same 5 px (`calc(var(--mm-space-4) - 5px)`), so the password label, the failure message and the Sign in button keep their positions. The 5 px is a literal value at the request of the reviewer; the nearest tokens are `space-1` (4 px) and `space-2` (8 px).
