@@ -80,7 +80,7 @@ input {
   padding: 0 var(--mm-space-3);
   border-width: 1px;
   border-style: solid;
-  border-color: var(--mm-color-borderStrong);
+  border-color: var(--mm-color-borderInput);
   border-radius: var(--mm-radius-md);
   background-color: var(--mm-color-surface);
   color: var(--mm-color-text);
@@ -138,6 +138,15 @@ input {
   border-color: var(--mm-color-danger);
 }
 
+.error-icon {
+  width: var(--mm-size-icon-md);
+  height: var(--mm-size-icon-md);
+  vertical-align: text-bottom;
+  position: relative;
+  top: 3px;
+  color: var(--mm-color-danger);
+}
+
 #email-error,
 #password-error {
   margin-top: 5px;
@@ -145,7 +154,7 @@ input {
 }
 
 .error {
-  min-height: var(--mm-type-caption-line-height);
+  min-height: max(var(--mm-type-caption-line-height), var(--mm-size-icon-md));
   margin: 0;
   color: var(--mm-color-danger);
   font-family: var(--mm-font-body);
@@ -208,7 +217,7 @@ button[type='submit'] {
   width: var(--mm-size-touch-target-min);
   height: var(--mm-size-touch-target-min);
   padding: 0;
-  border: 1px solid var(--mm-color-border);
+  border: 1px solid var(--mm-color-borderInput);
   border-radius: var(--mm-radius-pill);
   background-color: var(--mm-color-surface);
   color: var(--mm-color-textSecondary);

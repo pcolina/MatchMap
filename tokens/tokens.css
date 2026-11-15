@@ -11,6 +11,7 @@
   --mm-color-textSecondary: #4B5563;
   --mm-color-border: #E1E5EC;
   --mm-color-borderStrong: #C3CCD9;
+  --mm-color-borderInput: #6B7485;
   --mm-color-success: #15803D;
   --mm-color-warning: #B45309;
   --mm-color-danger: #B91C1C;
@@ -98,6 +99,7 @@
     --mm-color-textSecondary: #9AA6BA;
     --mm-color-border: #222C40;
     --mm-color-borderStrong: #3B4660;
+    --mm-color-borderInput: #3B4660;
     --mm-color-success: #4ADE80;
     --mm-color-warning: #FBBF24;
     --mm-color-danger: #F87171;
@@ -134,6 +136,7 @@
   --mm-color-textSecondary: #9AA6BA;
   --mm-color-border: #222C40;
   --mm-color-borderStrong: #3B4660;
+  --mm-color-borderInput: #3B4660;
   --mm-color-success: #4ADE80;
   --mm-color-warning: #FBBF24;
   --mm-color-danger: #F87171;

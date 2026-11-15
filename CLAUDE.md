@@ -189,6 +189,8 @@ not enforce. If a rule is wanted and the API lacks it, the change records it as 
 
 - WCAG 2.2 AA on web and mobile. Every interactive element has a role and an accessible name, and
   tests query by role.
+- Colour is never the only cue: an error message shown in red also shows an alert icon (WCAG 1.4.1,
+  see `docs/design.md` §10).
 - Map states are distinguishable without colour (pattern, outline or opacity). Text on the map meets
   4.5:1 contrast and graphical boundaries meet 3:1 (see `docs/design.md` §2.2).
 - Web supports Chrome and Edge and works from 320 px to wide desktop. Mobile works on phones and

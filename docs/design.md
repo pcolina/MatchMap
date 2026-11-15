@@ -186,7 +186,7 @@ Height 52, radius `lg`, horizontal padding 20, text in the `button` style. State
 - **Pressed:** opacity 0.85 + scale 0.98.
 - **Disabled:** opacity 0.4.
 - **Loading:** spinner in `onAccent`, same width.
-- **Focus (keyboard or screen reader):** every interactive element shows the same focus style: a 3 px `accent` ring (the `borderWidth.focus` token of 2 px plus 1 px), offset 2 px, and an outer halo in `accent` that fades out in three layers at 45 %, 35 % and 18 % opacity (spread 4 px, blur 20 px with spread 8 px, blur 40 px with spread 16 px). The halo is defined once as `--mm-focus-halo` in `apps/web/src/styles.css`, and components that set their own `box-shadow` (such as the language switcher) add it back on `:focus-visible`, so the halo is never lost.
+- **Focus (keyboard or screen reader):** every interactive element shows the same focus style: a 3 px `accent` ring (the `borderWidth.focus` token of 2 px plus 1 px), offset 2 px, and an outer halo in `accent` that fades out in three layers at 45 %, 35 % and 18 % opacity (spread 4 px, blur 20 px with spread 8 px, blur 40 px with spread 16 px). The halo is defined once as `--mm-focus-halo` in `apps/web/src/styles.css`, and components that set their own `box-shadow` (such as the language switcher) add it back on `:focus-visible`, so the halo is never lost. Pointer focus on web (a mouse click) differs: no halo, and a 2.5 px ring instead of 3 px. The page is in pointer mode after a pointer press and in keyboard mode after Tab (`data-input` on `<html>`), and the pointer style applies only in pointer mode.
 
 ### 7.2 Ego counter (`EgoCounter`)
 
@@ -279,6 +279,7 @@ Informal, using "tú", with humour and some hook, but **never at the expense of 
 - [ ] Touch targets ≥ 44.
 - [ ] Text at 130 % without cut-offs.
 - [ ] Logical focus order; `accessibilityRole` and `accessibilityLabel` on everything interactive.
+- [ ] A message shown in red also shows an icon, so colour is not the only cue (WCAG 1.4.1).
 - [ ] «Reduce motion» respected.
 
 ---
