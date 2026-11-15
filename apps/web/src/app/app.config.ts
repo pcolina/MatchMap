@@ -12,6 +12,8 @@ import { authInterceptor } from './core/auth/auth.interceptor';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { setupTranslations } from './core/i18n/language';
 import { trackInputModality } from './core/input-modality';
+import { graphqlUrl } from './core/api-url';
+import { environment } from '../environments/environment';
 import { AuthApi } from './features/auth/data/auth.api';
 import { AuthStore, SIGN_IN_GATEWAY } from './features/auth/state/auth.store';
 import { routes } from './app.routes';
@@ -21,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideApollo(() => ({
-      link: inject(HttpLink).create({ uri: '/graphql' }),
+      link: inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) }),
       cache: new InMemoryCache(),
     })),
     provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),

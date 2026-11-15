@@ -4,6 +4,8 @@ import * as Font from 'expo-font';
 import { inject, provideAppInitializer } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideApollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
@@ -18,6 +20,8 @@ import es from '../../../packages/shared/i18n/es.json';
 import { App } from './app/app.ts';
 import { routes } from './app/app.routes.ts';
 import { authInterceptor } from './app/core/auth/auth.interceptor.ts';
+import { apolloOptions } from './app/core/apollo.ts';
+import { environment } from './environments/environment.ts';
 import { deviceLocale, resolveLanguage } from './app/core/i18n/language.ts';
 import { appFonts } from './app/core/fonts/fonts.ts';
 import { AuthApi } from './app/features/auth/data/auth.api.ts';
@@ -28,6 +32,7 @@ registerPlatformComponents(Platform.OS);
 const appProviders = [
   provideNativeRouter(routes),
   provideNativeHttpClient(withInterceptors([authInterceptor])),
+  provideApollo(() => apolloOptions(inject(HttpLink), environment.apiBaseUrl)),
   provideTranslateService({ fallbackLang: 'en' }),
   provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
   provideAppInitializer(() => Font.loadAsync(appFonts)),
