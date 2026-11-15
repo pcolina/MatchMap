@@ -30,12 +30,12 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
         <text class="tagline" [style]="tagline" [style.color]="palette().text">{{ t('login.brand.tagline') }}</text>
       </view>
 
-      <view class="content">
+      <view class="content" [style.paddingTop]="space[0]">
         @if (store.isLoading()) {
           <app-skeleton [shapes]="shapes" />
         } @else {
-          <view class="form">
-            <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.emailLabel') }}</text>
+          <view class="form" [style.gap]="space[5]">
+            <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[2]">{{ t('login.signIn.emailLabel') }}</text>
             <view class="field">
               <ng-icon name="tablerUser" [color]="palette().textSecondary" />
               <text-input
@@ -50,37 +50,39 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
                 [style.backgroundColor]="palette().surface"
               />
             </view>
-            <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ emailError() }}</text>
+            <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">{{ emailError() }}</text>
 
-            <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.passwordLabel') }}</text>
-            <view class="field">
-              <ng-icon name="tablerLock" [color]="palette().textSecondary" />
-              <text-input
-                class="input"
-                [accessibilityLabel]="t('login.signIn.passwordLabel')"
-                [secureTextEntry]="!showPassword()"
-                autoCapitalize="none"
-                autoComplete="current-password"
-                [formField]="form.password"
-                [style.color]="palette().text"
-                [style.borderColor]="form.password().touched() && form.password().invalid() ? palette().danger : palette().borderStrong"
-                [style.backgroundColor]="palette().surface"
-              />
-              <pressable
-                accessibilityRole="button"
-                [accessibilityLabel]="t(showPassword() ? 'login.signIn.hidePassword' : 'login.signIn.showPassword')"
-                (press)="togglePassword()"
-              >
-                <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
-              </pressable>
+            <view>
+              <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[2]">{{ t('login.signIn.passwordLabel') }}</text>
+              <view class="field">
+                <ng-icon name="tablerLock" [color]="palette().textSecondary" />
+                <text-input
+                  class="input"
+                  [accessibilityLabel]="t('login.signIn.passwordLabel')"
+                  [secureTextEntry]="!showPassword()"
+                  autoCapitalize="none"
+                  autoComplete="current-password"
+                  [formField]="form.password"
+                  [style.color]="palette().text"
+                  [style.borderColor]="form.password().touched() && form.password().invalid() ? palette().danger : palette().borderStrong"
+                  [style.backgroundColor]="palette().surface"
+                />
+                <pressable
+                  accessibilityRole="button"
+                  [accessibilityLabel]="t(showPassword() ? 'login.signIn.hidePassword' : 'login.signIn.showPassword')"
+                  (press)="togglePassword()"
+                >
+                  <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
+                </pressable>
+              </view>
+              <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">{{ passwordError() }}</text>
+              <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
             </view>
-            <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ passwordError() }}</text>
-
-            <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
 
             <pressable
               accessibilityRole="button"
               [disabled]="store.isLoading()"
+              [style.marginTop]="space[10]"
               [style.height]="size.buttonHeight"
               [style.borderRadius]="radius.md"
               [style.backgroundColor]="palette().accent"
@@ -195,6 +197,7 @@ export class SignInPage {
   protected readonly radius = radius;
   protected readonly size = size;
   protected readonly space = space;
+  protected readonly errorOffset = 5;
   protected readonly shapes: readonly SkeletonShape[] = ['field', 'field', 'button'];
   protected readonly socialNames = ['Google', 'Facebook', 'Apple'];
   protected readonly showPassword = signal(false);

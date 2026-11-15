@@ -78,6 +78,40 @@ describe('SignInPage', () => {
     expect(getComputedStyle(header).getPropertyValue('background-image')).toContain('var(--mm-color-bg)');
   });
 
+  it('spaces the form components wider and takes that space from the header above the form', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const form = element.querySelector<HTMLElement>('form')!;
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+
+    expect(getComputedStyle(form).getPropertyValue('gap')).toBe('var(--mm-space-5)');
+    expect(rules.some((text) => text.includes('.hero') && text.includes('var(--mm-space-12)'))).toBe(true);
+  });
+
+  it('pulls each label slightly closer to its input', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const label = element.querySelector<HTMLElement>('label[for="email"]')!;
+
+    expect(getComputedStyle(label).getPropertyValue('margin-bottom')).toBe('calc(-1 * var(--mm-space-2))');
+  });
+
+  it('adds more space between the password field and the sign-in button', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const submit = element.querySelector<HTMLElement>('button[type="submit"]')!;
+
+    expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('var(--mm-space-2)');
+  });
+
+  it('sits each field error 5 px under its input and keeps the rest of the layout still', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    for (const id of ['#email-error', '#password-error']) {
+      const error = element.querySelector<HTMLElement>(id)!;
+
+      expect(getComputedStyle(error).getPropertyValue('margin-top')).toBe('5px');
+      expect(getComputedStyle(error).getPropertyValue('margin-bottom')).toBe('calc(var(--mm-space-4) - 5px)');
+    }
+  });
+
   it('sets the tagline in the handwritten font and slants it upwards', () => {
     setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
@@ -97,6 +131,41 @@ describe('SignInPage', () => {
     expect(emailError.textContent?.trim()).toBe('');
     expect(passwordError.textContent?.trim()).toBe('');
     expect(getComputedStyle(emailError).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
+  });
+
+  it('keeps the space of the sign-in failure reserved so that showing it does not move the layout', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
+
+    expect(alert).not.toBeNull();
+    expect(alert.textContent?.trim()).toBe('');
+    expect(getComputedStyle(alert).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
+  });
+
+  it('shows every sign-in failure text inside the password field group', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'unknown')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+
+    const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
+    expect(field(element, 'password').parentElement!.contains(alert)).toBe(true);
+    expect(alert.textContent?.trim()).toBe('Something went wrong. Try again.');
+  });
+
+  it('shows the sign-in failure directly below the password field and above the submit button', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
+    const passwordField = field(element, 'password').parentElement!;
+    const passwordError = element.querySelector<HTMLElement>('#password-error')!;
+    const submitButton = element.querySelector<HTMLElement>('button[type="submit"]')!;
+
+    expect(passwordField.contains(alert)).toBe(true);
+    expect(passwordError.compareDocumentPosition(alert) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(alert.compareDocumentPosition(submitButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it('shows a user icon inside the email field and a lock icon inside the password field', () => {

@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--mm-space-3);
-  padding: var(--mm-space-8) var(--mm-space-4) var(--mm-space-16);
+  padding: var(--mm-space-8) var(--mm-space-4) var(--mm-space-12);
   background-image: linear-gradient(180deg, var(--mm-color-accentSubtle), var(--mm-color-bg));
 }
 
@@ -57,12 +57,13 @@ form {
   top: -10px;
   display: flex;
   flex-direction: column;
-  gap: var(--mm-space-4);
+  gap: var(--mm-space-5);
   width: 100%;
   max-width: 360px;
 }
 
 label {
+  margin-bottom: calc(-1 * var(--mm-space-2));
   color: var(--mm-color-text);
   font-family: var(--mm-font-body);
 }
@@ -137,6 +138,12 @@ input {
   border-color: var(--mm-color-danger);
 }
 
+#email-error,
+#password-error {
+  margin-top: 5px;
+  margin-bottom: calc(var(--mm-space-4) - 5px);
+}
+
 .error {
   min-height: var(--mm-type-caption-line-height);
   margin: 0;
@@ -152,7 +159,7 @@ button[type='submit'] {
   position: relative;
   top: -10px;
   height: var(--mm-size-button-height);
-  margin-top: calc(var(--mm-space-2) - var(--mm-space-8) + var(--mm-space-2) + 7px);
+  margin-top: var(--mm-space-2);
   border: none;
   border-radius: var(--mm-radius-md);
   background-color: var(--mm-color-accent);

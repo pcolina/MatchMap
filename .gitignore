@@ -8,3 +8,4 @@ node_modules/
 build/
 .env
 pending-decisions.md
+login-register-test-checklist.md

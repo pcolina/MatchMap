@@ -9,7 +9,7 @@ import { ColorScheme } from '@ng-native/device';
 import { render, screen, userEvent } from '@ng-native/testing';
 import { beforeEach, expect, test, vi } from 'vitest';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
-import { colors } from '../../../../core/theme/tokens.ts';
+import { colors, space } from '../../../../core/theme/tokens.ts';
 import { AuthStore, type AuthState } from '../../state/auth.store.ts';
 import { SignInPage } from './sign-in.page.ts';
 
@@ -254,6 +254,39 @@ test('shows the too-many-attempts message from the store', async () => {
   await setup(store);
 
   expect(screen.getByText('Too many attempts. Wait a few minutes and try again.')).toBeTruthy();
+});
+
+test('shows the sign-in failure in the password group, not in the group of the submit button', async () => {
+  const store = fakeStore();
+  store.failure.set('unknown');
+  await setup(store);
+
+  const failure = screen.getByTestId('failure');
+
+  expect(failure.parent).toBe(screen.getByTestId('password-error').parent);
+  expect(failure.parent).toBe(screen.getByLabelText('Password').parent!.parent);
+  expect(failure.parent).not.toBe(screen.getByRole('button', { name: 'Sign in' }).parent);
+});
+
+test('spaces the form components with the wider gap and no extra space above the form', async () => {
+  await setup(fakeStore());
+
+  const form = screen.getByTestId('password-error').parent!.parent!;
+
+  expect(form.props).toMatchObject({ gap: space[5] });
+  expect(form.parent!.props).toMatchObject({ paddingTop: space[0] });
+  expect(screen.getByText('Email').props).toMatchObject({ marginBottom: -space[2] });
+  expect(screen.getByText('Password').props).toMatchObject({ marginBottom: -space[2] });
+  expect(screen.getByRole('button', { name: 'Sign in' }).props).toMatchObject({ marginTop: space[10] });
+  expect(screen.getByTestId('email-error').props).toMatchObject({ marginTop: 5, marginBottom: -5 });
+  expect(screen.getByTestId('password-error').props).toMatchObject({ marginTop: 5, marginBottom: -5 });
+});
+
+test('keeps the sign-in failure element rendered when there is no failure', async () => {
+  await setup(fakeStore());
+
+  expect(screen.getByTestId('failure')).toBeTruthy();
+  expect(screen.queryByText('Something went wrong. Try again.')).toBeNull();
 });
 
 test('shows the unknown failure message from the store', async () => {
