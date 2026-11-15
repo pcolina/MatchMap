@@ -294,27 +294,19 @@ The messages are:
 
 ### Requirement: Sign-in failure position
 
-The sign-in page SHALL show the sign-in failure message directly below the password field, closer to the password field than to the Sign in button, on the web app at every supported width and on the mobile app.
+The sign-in page SHALL show the sign-in failure message directly below the Sign in button, on the web app at every supported width and on the mobile app. The space for the message SHALL stay reserved, so that showing or hiding the message does not move the Sign in button, the divider or the social buttons.
 
-#### Scenario: Failure message below the password field
-- **WHEN** a sign-in request fails with any sign-in failure message
-- **THEN** the failure message is shown directly below the password field and above the Sign in button
+#### Scenario: Failure message below the Sign in button
+- **WHEN** a sign-in failure message is shown
+- **THEN** the message is directly below the Sign in button and above the divider
 
-#### Scenario: Failure message closer to the password field than to the button
-- **WHEN** a sign-in failure message is shown on the laptop web layout or the web layout at phone width
-- **THEN** the gap between the password field and the message is smaller than the gap between the message and the Sign in button
+#### Scenario: Social buttons do not move
+- **WHEN** the sign-in failure message is shown or hidden
+- **THEN** the Sign in button, the divider and the social buttons keep their position
 
 #### Scenario: Same position on mobile
 - **WHEN** a sign-in failure message is shown in the mobile app
-- **THEN** the message is shown in the same position as on the web layout at phone width
-
-#### Scenario: Reserved space keeps the layout still
-- **WHEN** a sign-in failure message is shown or hidden
-- **THEN** the Sign in button and the social buttons do not move
-
-#### Scenario: Position does not change the message
-- **WHEN** a sign-in request fails with `login.signIn.errorInvalidCredentials`, `login.signIn.errorTooManyAttempts`, `login.common.errorNetwork` or `login.common.errorUnknown`
-- **THEN** the page shows the same text as before this change
+- **THEN** the message is shown in the same position as on the web layout
 
 ### Requirement: Input border contrast
 
@@ -379,3 +371,31 @@ Every error message on the sign-in page SHALL show a red alert icon before its t
 #### Scenario: Icon is decorative
 - **WHEN** the icon is shown with its message
 - **THEN** the icon does not add its own accessible name, and the message text is what a screen reader announces
+
+### Requirement: Failure cleared when the user edits a field
+
+The sign-in page SHALL hide the sign-in failure message when the user changes the email or the password after a failed sign-in. The typed values SHALL be kept, and the reserved space of the failure message SHALL stay, so the layout does not move.
+
+#### Scenario: Editing the email hides the failure
+- **WHEN** a sign-in failure message is shown and the user changes the email
+- **THEN** the sign-in failure message is hidden, and the typed email and password are kept
+
+#### Scenario: Editing the password hides the failure
+- **WHEN** a sign-in failure message is shown and the user changes the password
+- **THEN** the sign-in failure message is hidden, and the typed email and password are kept
+
+#### Scenario: Field error is shown alone after an edit
+- **WHEN** a sign-in failure message is shown and the user changes the password to a value shorter than 6 characters
+- **THEN** only the password field error `login.signIn.errorPasswordLength` is shown, and the sign-in failure message is hidden
+
+#### Scenario: Reserved space stays after the failure is hidden
+- **WHEN** the sign-in failure message is hidden by an edit
+- **THEN** the Sign in button and the social buttons do not move
+
+#### Scenario: Failure shown again after a new failed submit
+- **WHEN** the user submits again and the sign-in request fails
+- **THEN** the sign-in failure message is shown again
+
+#### Scenario: Failure cleared before a submit with empty fields
+- **WHEN** a sign-in failure message is shown and the user submits with an empty email
+- **THEN** the sign-in failure message is hidden before the field errors are shown, and no request is sent
