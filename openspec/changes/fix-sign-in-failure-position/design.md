@@ -62,3 +62,7 @@ The mobile app has no halo, so this change is web-only for now.
 ## Error closeness update (web)
 
 Requested after review: the error messages should sit closer to their input than the 24 px above, but not touch it as before. The email and password error lines now have a top margin of `space-4` (16 px). That is outside the focus ring (5 px) and most of the halo's visible part, and it is still closer than the previous 24 px.
+
+## Error position update (web), replacing "Error closeness update"
+
+The field errors sit right under their input (`margin-top: 0`). The 16 px that was above them now sits below them (`margin-bottom: space-4`). The rest of the layout does not move: the password label, the failure message and the Sign in button keep their positions, because the 16 px moves from above each error to below it.

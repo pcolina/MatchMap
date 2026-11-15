@@ -101,11 +101,15 @@ describe('SignInPage', () => {
     expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('var(--mm-space-2)');
   });
 
-  it('keeps each field error close to its input but clear of the focus ring', () => {
+  it('sits each field error right under its input and keeps the room below it', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
 
-    expect(getComputedStyle(element.querySelector<HTMLElement>('#email-error')!).getPropertyValue('margin-top')).toBe('var(--mm-space-4)');
-    expect(getComputedStyle(element.querySelector<HTMLElement>('#password-error')!).getPropertyValue('margin-top')).toBe('var(--mm-space-4)');
+    for (const id of ['#email-error', '#password-error']) {
+      const error = element.querySelector<HTMLElement>(id)!;
+
+      expect(getComputedStyle(error).getPropertyValue('margin-top')).toBe('0px');
+      expect(getComputedStyle(error).getPropertyValue('margin-bottom')).toBe('var(--mm-space-4)');
+    }
   });
 
   it('sets the tagline in the handwritten font and slants it upwards', () => {
