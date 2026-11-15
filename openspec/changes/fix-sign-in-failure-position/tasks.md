@@ -35,6 +35,8 @@ No API call changes in this change, so no contract check is needed before the ta
 
 - [x] **2.5 Second label and button spacing.** Test first: in `sign-in.page.test.ts`, the email and password labels have a bottom margin of `-space[2]` and the Sign in button a top margin of `space[10]` (see `design.md` "Second label and button spacing update"). Code: `sign-in.page.ts`.
 
+- [x] **2.6 Error offset.** Test first: in `sign-in.page.test.ts`, the email and password error texts have a `marginTop` of 5 and a `marginBottom` of -5 (see `design.md` "Error offset update (mobile)"). Code: `sign-in.page.ts`, with `errorOffset`.
+
 ## 3. Checks and review
 
 - [ ] **3.1 Full check.** Run `pnpm check` for `apps/web` and `apps/mobile`, and paste the summary in the PR.

@@ -278,6 +278,8 @@ test('spaces the form components with the wider gap and no extra space above the
   expect(screen.getByText('Email').props).toMatchObject({ marginBottom: -space[2] });
   expect(screen.getByText('Password').props).toMatchObject({ marginBottom: -space[2] });
   expect(screen.getByRole('button', { name: 'Sign in' }).props).toMatchObject({ marginTop: space[10] });
+  expect(screen.getByTestId('email-error').props).toMatchObject({ marginTop: 5, marginBottom: -5 });
+  expect(screen.getByTestId('password-error').props).toMatchObject({ marginTop: 5, marginBottom: -5 });
 });
 
 test('keeps the sign-in failure element rendered when there is no failure', async () => {

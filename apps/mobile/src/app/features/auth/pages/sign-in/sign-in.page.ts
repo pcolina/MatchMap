@@ -50,7 +50,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
                 [style.backgroundColor]="palette().surface"
               />
             </view>
-            <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ emailError() }}</text>
+            <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">{{ emailError() }}</text>
 
             <view>
               <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[2]">{{ t('login.signIn.passwordLabel') }}</text>
@@ -75,7 +75,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
                   <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
                 </pressable>
               </view>
-              <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ passwordError() }}</text>
+              <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">{{ passwordError() }}</text>
               <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
             </view>
 
@@ -197,6 +197,7 @@ export class SignInPage {
   protected readonly radius = radius;
   protected readonly size = size;
   protected readonly space = space;
+  protected readonly errorOffset = 5;
   protected readonly shapes: readonly SkeletonShape[] = ['field', 'field', 'button'];
   protected readonly socialNames = ['Google', 'Facebook', 'Apple'];
   protected readonly showPassword = signal(false);

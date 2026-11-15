@@ -70,3 +70,7 @@ The field errors sit right under their input (`margin-top: 0`). The 16 px that w
 ## Error offset update (web)
 
 The field errors sit 5 px under their input (`margin-top: 5px`). The bottom margin shrinks by the same 5 px (`calc(var(--mm-space-4) - 5px)`), so the password label, the failure message and the Sign in button keep their positions. The 5 px is a literal value at the request of the reviewer; the nearest tokens are `space-1` (4 px) and `space-2` (8 px).
+
+## Error offset update (mobile)
+
+The same 5 px offset as on web. The email and password error texts have `marginTop` 5 and `marginBottom` -5, so they sit 5 px under their input, and the 20 px form gap below them is reduced by the same 5 px. The password label, the failure message and the Sign in button keep their positions. The value is the literal `errorOffset` (5) in the component, for the same reason as on web.
