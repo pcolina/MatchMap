@@ -14,7 +14,7 @@ describe('pointer focus style', () => {
     const rule = globalStyles.slice(globalStyles.indexOf(":root[data-input='pointer'] :focus-visible"));
     const body = rule.slice(0, rule.indexOf('}'));
 
-    expect(body).toContain('outline: calc((var(--mm-border-width-focus) + 1px) / 2) solid var(--mm-color-accent);');
+    expect(body).toContain('outline: calc((var(--mm-border-width-focus) + 1px) / 2 + 1px) solid var(--mm-color-accent);');
     expect(body).toContain('box-shadow: none;');
   });
 

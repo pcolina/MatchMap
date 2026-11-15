@@ -142,6 +142,8 @@ input {
   width: var(--mm-size-icon-md);
   height: var(--mm-size-icon-md);
   vertical-align: text-bottom;
+  position: relative;
+  top: 3px;
   color: var(--mm-color-danger);
 }
 
@@ -152,7 +154,7 @@ input {
 }
 
 .error {
-  min-height: var(--mm-type-caption-line-height);
+  min-height: max(var(--mm-type-caption-line-height), var(--mm-size-icon-md));
   margin: 0;
   color: var(--mm-color-danger);
   font-family: var(--mm-font-body);

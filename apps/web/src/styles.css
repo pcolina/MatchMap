@@ -27,7 +27,7 @@ body {
 }
 
 :root[data-input='pointer'] :focus-visible {
-  outline: calc((var(--mm-border-width-focus) + 1px) / 2) solid var(--mm-color-accent);
+  outline: calc((var(--mm-border-width-focus) + 1px) / 2 + 1px) solid var(--mm-color-accent);
   outline-offset: var(--mm-border-width-focus);
   box-shadow: none;
 }

@@ -138,7 +138,7 @@ describe('SignInPage', () => {
     expect(passwordError).not.toBeNull();
     expect(emailError.textContent?.trim()).toBe('');
     expect(passwordError.textContent?.trim()).toBe('');
-    expect(getComputedStyle(emailError).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
+    expect(getComputedStyle(emailError).getPropertyValue('min-height')).toBe('max(var(--mm-type-caption-line-height), var(--mm-size-icon-md))');
   });
 
   it('keeps the space of the sign-in failure reserved so that showing it does not move the layout', () => {
@@ -148,7 +148,7 @@ describe('SignInPage', () => {
 
     expect(alert).not.toBeNull();
     expect(alert.textContent?.trim()).toBe('');
-    expect(getComputedStyle(alert).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
+    expect(getComputedStyle(alert).getPropertyValue('min-height')).toBe('max(var(--mm-type-caption-line-height), var(--mm-size-icon-md))');
   });
 
   it('shows every sign-in failure text inside the password field group', async () => {
@@ -190,6 +190,9 @@ describe('SignInPage', () => {
     const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
 
     expect(rules.some((text) => text.includes('.error-icon') && text.includes('color: var(--mm-color-danger)') && text.includes('width: var(--mm-size-icon-md)'))).toBe(true);
+
+
+    expect(rules.some((text) => text.includes('.error-icon') && text.includes('top: 3px'))).toBe(true);
   });
 
   it('shows no alert icon in an empty error space', () => {
