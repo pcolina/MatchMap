@@ -66,6 +66,33 @@ describe('buildMapStyle', () => {
     });
   });
 
+  describe('capitals and network', () => {
+    it('draws one circle per capital from the capitals source in day mode', () => {
+      const style = buildMapStyle({}, 'day') as unknown as Style;
+      const capitals = layerById(style, 'capitals-point');
+
+      expect(capitals.type).toBe('circle');
+      expect(capitals.source).toBe('capitals');
+      expect(capitals.paint?.['circle-color']).toBe(colors.light.text);
+    });
+
+    it('uses the night text colour for capital points in night mode', () => {
+      const style = buildMapStyle({}, 'night') as unknown as Style;
+
+      expect(layerById(style, 'capitals-point').paint?.['circle-color']).toBe(colors.dark.text);
+    });
+
+    it('has only GeoJSON sources, with no raster or vector tile source and no glyphs', () => {
+      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
+
+      expect(Object.keys(style.sources).sort()).toEqual(['capitals', 'countries']);
+      for (const source of Object.values(style.sources)) {
+        expect((source as { type: string }).type).toBe('geojson');
+      }
+      expect(style.glyphs).toBeUndefined();
+    });
+  });
+
   describe('state outline', () => {
     it('draws a 1.5 px text-coloured outline only around the coloured countries in day mode', () => {
       const style = buildMapStyle({ FR: 'visited', JP: 'wantToGo' }, 'day') as unknown as Style;

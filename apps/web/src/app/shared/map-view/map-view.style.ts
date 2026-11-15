@@ -14,6 +14,7 @@ export const buildMapStyle = (states: Record<string, MapState>, scheme: MapSchem
     version: 8,
     sources: {
       countries: { type: 'geojson', data: '/geo/countries.geojson' },
+      capitals: { type: 'geojson', data: '/geo/capitals.geojson' },
     },
     layers: [
       { id: 'background', type: 'background', paint: { 'background-color': palette.ocean } },
@@ -25,6 +26,7 @@ export const buildMapStyle = (states: Record<string, MapState>, scheme: MapSchem
         filter: ['in', ['get', 'iso_a2'], ['literal', Object.keys(states)]] as never,
         paint: { 'line-color': text, 'line-width': 1.5 },
       },
+      { id: 'capitals-point', type: 'circle', source: 'capitals', paint: { 'circle-color': text } },
     ],
   };
 };
