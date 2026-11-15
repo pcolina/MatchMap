@@ -58,3 +58,7 @@ The focus style from `docs/design.md` §Focus is a 3 px accent ring with a 2 px 
 - The gap between the email field and the password field grows with the email error margin, so it does not need its own change.
 
 The mobile app has no halo, so this change is web-only for now.
+
+## Error closeness update (web)
+
+Requested after review: the error messages should sit closer to their input than the 24 px above, but not touch it as before. The email and password error lines now have a top margin of `space-4` (16 px). That is outside the focus ring (5 px) and most of the halo's visible part, and it is still closer than the previous 24 px.
