@@ -9,6 +9,10 @@ import es from '../../../../../../../../packages/shared/i18n/es.json';
 import { AuthStore, SIGN_IN_GATEWAY, type SignInGateway } from '../../state/auth.store';
 import { RegisterPage } from './register.page';
 
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => undefined;
+}
+
 type Gateway = { register: ReturnType<typeof vi.fn>; signIn: ReturnType<typeof vi.fn> };
 
 const setup = (gateway: Gateway) => {
@@ -285,6 +289,66 @@ describe('RegisterPage', () => {
     await submit(element, fixture);
 
     expect(navigate).toHaveBeenCalledWith('/login');
+  });
+
+  it('shows the registration failure as a form child directly after the create account button', async () => {
+    const { fixture, element } = setup({ ...successGateway(), register: vi.fn(() => throwError(() => 'emailTaken')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
+    await submit(element, fixture);
+
+    const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
+    expect(alert.parentElement?.tagName).toBe('FORM');
+    expect(alert.previousElementSibling?.tagName).toBe('BUTTON');
+  });
+
+  it('shows a decorative alert icon before each error message', async () => {
+    const { fixture, element } = setup({ ...successGateway(), register: vi.fn(() => throwError(() => 'emailTaken')) });
+
+    await submit(element, fixture);
+    expect(element.querySelector('#email-error ng-icon')?.getAttribute('name')).toBe('tablerAlertCircle');
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', 'Abc!12');
+    await typeInto(element, fixture, 'repeat-password', 'Abc!12');
+    await submit(element, fixture);
+    const icon = element.querySelector('[role="alert"] ng-icon')!;
+    expect(icon.getAttribute('name')).toBe('tablerAlertCircle');
+    expect(icon.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('reserves the height of two lines for every error message', () => {
+    const { element } = setup(successGateway());
+
+    expect(getComputedStyle(element.querySelector<HTMLElement>('#email-error')!).getPropertyValue('min-height')).toBe('calc(2 * var(--mm-type-caption-line-height))');
+    expect(getComputedStyle(element.querySelector<HTMLElement>('#password-error')!).getPropertyValue('min-height')).toBe('calc(2 * var(--mm-type-caption-line-height))');
+  });
+
+  it('keeps the failure element rendered when there is no failure', () => {
+    const { element } = setup(successGateway());
+
+    expect(element.querySelector('[role="alert"]')).not.toBeNull();
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('');
+  });
+
+  it('scrolls the failure into view after a failed registration', async () => {
+    const scroll = vi.fn();
+    const original = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = scroll;
+    try {
+      const { fixture, element } = setup({ ...successGateway(), register: vi.fn(() => throwError(() => 'emailTaken')) });
+
+      await typeInto(element, fixture, 'email', 'user@example.com');
+      await typeInto(element, fixture, 'password', 'Abc!12');
+      await typeInto(element, fixture, 'repeat-password', 'Abc!12');
+      await submit(element, fixture);
+
+      expect(scroll).toHaveBeenCalledWith({ block: 'nearest' });
+    } finally {
+      Element.prototype.scrollIntoView = original;
+    }
   });
 
   it('shows the texts of the active language', async () => {

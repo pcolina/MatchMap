@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, viewChild, ElementRef } from '@angular/core';
 import { FormField, form, submit, validate } from '@angular/forms/signals';
 import { NgIcon } from '@ng-icons/core';
 import { Router, RouterLink } from '@angular/router';
@@ -24,6 +24,7 @@ export class RegisterPage {
   protected readonly store = inject(AuthStore);
   protected readonly shapes: readonly SkeletonShape[] = ['field', 'field', 'button'];
   protected readonly showPassword = signal(false);
+  protected readonly failureAlert = viewChild<ElementRef<HTMLElement>>('failureAlert');
 
   private readonly credentials = signal({ email: '', password: '', repeatPassword: '' });
   protected readonly form = form(this.credentials, (path) => {
@@ -59,6 +60,13 @@ export class RegisterPage {
       const failure = this.store.failure();
       if (failure !== null && signInFailures.has(failure)) {
         this.router.navigateByUrl('/login');
+      }
+    });
+    effect(() => {
+      const failure = this.store.failure();
+      const alert = this.failureAlert();
+      if (failure !== null && alert) {
+        alert.nativeElement.scrollIntoView({ block: 'nearest' });
       }
     });
   }

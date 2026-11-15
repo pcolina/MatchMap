@@ -6,11 +6,11 @@ No API call changes, so no contract check is needed.
 
 ## 1. Web (`apps/web`)
 
-- [ ] **1.1 Failure below the submit button.** Test first: in `register.page.spec.ts`, the failure element is a direct child of the form and comes after the submit button (scenario "Failure message below the button"). Code: move the `<p role="alert">` after the button in `register.page.html`, with the margin from `design.md`. Also remove the stray `</p>`.
-- [ ] **1.2 Icon on every error.** Test first: each error element contains an `ng-icon` named `tablerAlertCircle` with `aria-hidden="true"`, and an empty error has no icon (scenarios "Error state on a field" and "Error space stays when there is no error"). Code: the icon in `register.page.html`, and the `.error-icon` rule in `register.page.css` as in `design.md`.
-- [ ] **1.3 Two-line reserved space.** Test first: `.error` has computed `min-height` `calc(2 * var(--mm-type-caption-line-height))` (scenario "Two-line error keeps the layout"). Code: `register.page.css`.
-- [ ] **1.4 Button does not move.** Test first: the submit button keeps its position when the failure is shown or hidden (scenario "Button does not move when the message appears"). Code: none expected; fix the template only if the test fails.
-- [ ] **1.5 Scroll to the failure.** Test first: on a failed request, the failure element's `scrollIntoView` is called with `{ block: 'nearest' }` (scenario "Form scrolls when the message does not fit"). `scrollIntoView` is stubbed in the test, since jsdom has none. Code: call it after the failure is set, in `register.page.ts`.
+- [x] **1.1 Failure below the submit button.** Test first: in `register.page.spec.ts`, the failure element is a direct child of the form and comes after the submit button (scenario "Failure message below the button"). Code: move the `<p role="alert">` after the button in `register.page.html`, with the margin from `design.md`. Also remove the stray `</p>`.
+- [x] **1.2 Icon on every error.** Test first: each error element contains an `ng-icon` named `tablerAlertCircle` with `aria-hidden="true"`, and an empty error has no icon (scenarios "Error state on a field" and "Error space stays when there is no error"). Code: the icon in `register.page.html`, and the `.error-icon` rule in `register.page.css` as in `design.md`.
+- [x] **1.3 Two-line reserved space.** Test first: `.error` has computed `min-height` `calc(2 * var(--mm-type-caption-line-height))` (scenario "Two-line error keeps the layout"). Code: `register.page.css`.
+- [x] **1.4 Button does not move.** Test first: the submit button keeps its position when the failure is shown or hidden (scenario "Button does not move when the message appears"). Code: none expected; fix the template only if the test fails.
+- [x] **1.5 Scroll to the failure.** Test first: on a failed request, the failure element's `scrollIntoView` is called with `{ block: 'nearest' }` (scenario "Form scrolls when the message does not fit"). `scrollIntoView` is stubbed in the test, since jsdom has none. Code: call it after the failure is set, in `register.page.ts`.
 
 ## 2. Mobile (`apps/mobile`)
 
