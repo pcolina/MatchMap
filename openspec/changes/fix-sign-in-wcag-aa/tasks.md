@@ -19,17 +19,17 @@ No API call changes in this change, so no contract check is needed.
 
 ## 3. Mobile (`apps/mobile`)
 
-- [ ] **3.1 Error icon row.** Test first: in `sign-in.page.test.ts`, the email error, the password error and the failure text each sit in a row with a `tablerAlertCircle` icon coloured with the palette `danger` colour, and the failure keeps `accessibilityRole="alert"` (scenarios "Field error with icon" and "Sign-in failure with icon"). Code: wrap each error text and its icon in a `view` row in `sign-in.page.ts`.
-- [ ] **3.2 Reserved space and offset.** Test first: the rows keep the 5 px offset and the reserved space of the previous change, so the existing offset assertions still pass. Code: move the offset from the text to the row.
+- [x] **3.1 Error icon row.** Test first: in `sign-in.page.test.ts`, the email error, the password error and the failure text each sit in a row with a `tablerAlertCircle` icon coloured with the palette `danger` colour, and the failure keeps `accessibilityRole="alert"` (scenarios "Field error with icon" and "Sign-in failure with icon"). Code: wrap each error text and its icon in a `view` row in `sign-in.page.ts`.
+- [x] **3.2 Reserved space and offset.** Test first: the rows keep the 5 px offset and the reserved space of the previous change, so the existing offset assertions still pass. Code: move the offset from the text to the row.
 
 ## 4. Docs and rules
 
-- [ ] **4.1 Design doc.** Test first: a check that `docs/design.md` has the rule "A message that is shown in red must also show an icon" under accessibility, and the focus section describes the keyboard and pointer split. Code: edit `docs/design.md`.
-- [ ] **4.2 Project rules.** Test first: a check that `CLAUDE.md` §9 has the same rule in one line. Code: edit `CLAUDE.md` §9.
+- [x] **4.1 Design doc.** Test first: a check that `docs/design.md` has the rule "A message that is shown in red must also show an icon" under accessibility, and the focus section describes the keyboard and pointer split. Code: edit `docs/design.md`.
+- [x] **4.2 Project rules.** Test first: a check that `CLAUDE.md` §9 has the same rule in one line. Code: edit `CLAUDE.md` §9.
 
 ## 5. Checks and review
 
-- [ ] **5.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check, and paste the summary in the PR.
-- [ ] **5.2 Visual check.** At phone width in the web app and in the mobile app, confirm that the icon sits in line with the error text, that the focus ring by mouse is half width without halo, and that the keyboard ring is unchanged. Record the result in the PR.
-- [ ] **5.3 Translations.** No new keys: the PR description says "Translations to review: none".
-- [ ] **5.4 Dark mode.** Not in this change. The PR says that dark mode contrast is tracked by issue `matchMap` #7.
+- [x] **5.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check, and paste the summary in the PR.
+- [x] **5.2 Visual check.** At phone width in the web app and in the mobile app, confirm that the icon sits in line with the error text, that the focus ring by mouse is half width without halo, and that the keyboard ring is unchanged. Record the result in the PR.
+- [x] **5.3 Translations.** No new keys: the PR description says "Translations to review: none".
+- [x] **5.4 Dark mode.** Not in this change. The PR says that dark mode contrast is tracked by issue `matchMap` #7.
