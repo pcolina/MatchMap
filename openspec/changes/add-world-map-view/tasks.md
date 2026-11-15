@@ -7,9 +7,9 @@ No API call changes, so no contract check is needed.
 ## 1. Dependency and data
 
 - [x] **1.1 Pinned dependency.** Test first: a spec reads `apps/web/package.json` and fails because `maplibre-gl` is not listed. It checks that `maplibre-gl` is `6.16.0`, with no `^` or `~`. Code: add it with `pnpm --filter @matchmap/web add -E maplibre-gl@6.16.0`.
-- [ ] **1.2 Countries data.** Test first: a spec checks that `apps/web/public/geo/countries.geojson` exists, is a FeatureCollection of polygons, and every feature has an `iso_a2` string. Code: convert the Natural Earth 1:50m `admin_0_countries` file, keep `iso_a2`, and simplify it.
-- [ ] **1.3 Capitals data.** Test first: a spec checks that `apps/web/public/geo/capitals.geojson` exists, every feature is a point, and every feature has `iso_a2` and `name`. Code: filter the Natural Earth 1:50m `populated_places` file to `FEATURECLASS = "Admin-0 capital"`.
-- [ ] **1.4 Measured sizes.** Measure both files after conversion and write the sizes in this file under "Measured sizes". If the total exceeds the budget in `CLAUDE.md` §9, the justification goes in `design.md` before the change continues. No test; recorded in the PR.
+- [x] **1.2 Countries data.** Test first: a spec checks that `apps/web/public/geo/countries.geojson` exists, is a FeatureCollection of polygons, and every feature has an `iso_a2` string. Code: convert the Natural Earth 1:50m `admin_0_countries` file, keep `iso_a2`, and simplify it.
+- [x] **1.3 Capitals data.** Test first: a spec checks that `apps/web/public/geo/capitals.geojson` exists, every feature is a point, and every feature has `iso_a2` and `name`. Code: filter the Natural Earth 1:50m `populated_places` file to `FEATURECLASS = "Admin-0 capital"`.
+- [x] **1.4 Measured sizes.** Measure both files after conversion and write the sizes in this file under "Measured sizes". If the total exceeds the budget in `CLAUDE.md` §9, the justification goes in `design.md` before the change continues. No test; recorded in the PR.
 
 ## 2. Style (`apps/web`)
 
@@ -33,4 +33,16 @@ No API call changes, so no contract check is needed.
 
 ## Measured sizes
 
-To be filled in task 1.4.
+- `apps/web/public/geo/countries.geojson`: 1,869,164 bytes raw, 679,933 bytes gzipped, 239 features.
+- `apps/web/public/geo/capitals.geojson`: 25,104 bytes raw, 4,266 bytes gzipped, 200 features.
+- Total: 1,894,268 bytes raw, 684,199 bytes gzipped. The Angular `initial` budget (500 kB warning, 1 MB error in `angular.json`) covers the JavaScript bundle, not `public/` files, so it does not apply to these files. No other asset budget is defined in the repo.
+
+## Decisions taken for tasks 1.2 and 1.3
+
+- `iso_a2` takes the value of Natural Earth `ISO_A2_EH`. Taiwan is `TW`, France `FR`, Norway `NO`, Kosovo `XK`.
+- Features without a two-letter ISO code are dropped: Somaliland, N. Cyprus and Siachen (countries), and Hargeisa (capital). This removes 3 of 242 countries and 2 of 202 capitals.
+- `Indian Ocean Ter.` and `Ashmore and Cartier Is.` keep `AU`, their `ISO_A2_EH` value.
+- The capital filter field is `FEATURECLA` (Natural Earth's name), not `FEATURECLASS`.
+- Coordinates are rounded to 4 decimals, and countries keep only `iso_a2`, capitals only `iso_a2` and `name`.
+- Task 1.3 order: the data was generated before its spec was written, so the spec passed on its first run. It is not a red-first cycle.
+
