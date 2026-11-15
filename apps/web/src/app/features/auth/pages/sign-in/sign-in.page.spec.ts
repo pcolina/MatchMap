@@ -112,6 +112,14 @@ describe('SignInPage', () => {
     }
   });
 
+  it('uses the input border token for the inputs and the social button outlines', () => {
+    setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+
+    expect(rules.some((text) => text.startsWith('input') && text.includes('border-color: var(--mm-color-borderInput)'))).toBe(true);
+    expect(rules.some((text) => text.includes('.social-button') && text.includes('var(--mm-color-borderInput)'))).toBe(true);
+  });
+
   it('sets the tagline in the handwritten font and slants it upwards', () => {
     setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
