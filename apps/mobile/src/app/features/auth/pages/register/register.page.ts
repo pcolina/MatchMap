@@ -37,8 +37,8 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
         @if (store.isLoading()) {
           <app-skeleton [shapes]="shapes" />
         } @else {
-          <view class="form">
-            <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.register.emailLabel') }}</text>
+          <view class="form" [style.gap]="space[5]">
+            <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[2]">{{ t('login.register.emailLabel') }}</text>
             <view class="field">
               <ng-icon name="tablerUser" [color]="palette().textSecondary" />
               <text-input
@@ -53,14 +53,14 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
                 [style.backgroundColor]="palette().surface"
               />
             </view>
-            <view class="error-row" [style.minHeight]="errorMinHeight">
+            <view class="error-row" [style.minHeight]="errorMinHeight" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">
               @if (form.email().touched() && form.email().invalid()) {
                 <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
               }
               <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.email().touched() && form.email().invalid() ? t(form.email().errors()[0]?.kind ?? '') : '' }}</text>
             </view>
 
-            <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.register.passwordLabel') }}</text>
+            <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[2]">{{ t('login.register.passwordLabel') }}</text>
             <view class="field">
               <ng-icon name="tablerLock" [color]="palette().textSecondary" />
               <text-input
@@ -82,14 +82,14 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
                 <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
               </pressable>
             </view>
-            <view class="error-row" [style.minHeight]="errorMinHeight">
+            <view class="error-row" [style.minHeight]="errorMinHeight" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">
               @if (form.password().touched() && form.password().invalid()) {
                 <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
               }
               <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.password().touched() && form.password().invalid() ? t(form.password().errors()[0]?.kind ?? '') : '' }}</text>
             </view>
 
-            <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.register.repeatPasswordLabel') }}</text>
+            <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[2]">{{ t('login.register.repeatPasswordLabel') }}</text>
             <view class="field">
               <ng-icon name="tablerLock" [color]="palette().textSecondary" />
               <text-input
@@ -104,7 +104,7 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
                 [style.backgroundColor]="palette().surface"
               />
             </view>
-            <view class="error-row" [style.minHeight]="errorMinHeight">
+            <view class="error-row" [style.minHeight]="errorMinHeight" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">
               @if (form.repeatPassword().touched() && form.repeatPassword().invalid()) {
                 <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
               }
@@ -114,6 +114,7 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
             <pressable
               accessibilityRole="button"
               [disabled]="store.isLoading()"
+              [style.marginTop]="space[10]"
               [style.height]="size.buttonHeight"
               [style.borderRadius]="radius.md"
               [style.backgroundColor]="palette().accent"
@@ -123,7 +124,7 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
             >
               <text [style]="ts('button')" [style.color]="palette().onAccent">{{ t('login.register.submit') }}</text>
             </pressable>
-            <view class="error-row" [style.minHeight]="errorMinHeight">
+            <view class="error-row" [style.minHeight]="errorMinHeight" [style.marginTop]="-space[2]" [style.marginBottom]="0">
               @if (failureText()) {
                 <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
               }
@@ -196,6 +197,7 @@ export class RegisterPage {
   protected readonly size = size;
   protected readonly space = space;
   protected readonly errorMinHeight = typography.caption.lineHeight * 2;
+  protected readonly errorOffset = 5;
   protected readonly shapes: readonly SkeletonShape[] = ['field', 'field', 'button'];
   protected readonly showPassword = signal(false);
 

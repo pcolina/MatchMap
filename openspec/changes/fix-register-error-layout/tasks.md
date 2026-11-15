@@ -26,3 +26,8 @@ No API call changes, so no contract check is needed.
 - [ ] **3.2 Visual check, web.** At phone width in Chrome or Edge, with the dev server restarted: check the icon alignment (2 px), the two-line space, and that the message is visible after a failed submit.
 - [ ] **3.3 Visual check, mobile.** On the Android emulator: the same checks. Done by the user.
 - [x] **3.4 Translations.** No new keys: the PR description says "Translations to review: none".
+
+## 4. Review fixes (distances as on sign-in)
+
+- [x] **4.1 Web distances.** Test first: in `register.page.spec.ts`, the field error lines have margin-top `5px` and margin-bottom `calc(var(--mm-space-4) - 5px)`, the submit button has margin-top `var(--mm-space-2)`, and the error icon is lowered 3 px as on sign-in. Code: `register.page.css`.
+- [x] **4.2 Mobile distances.** Test first: in `register.page.test.ts`, the labels have bottom margin `-space[2]`, the error rows have margins 5 and -5, the failure row has margins `-space[2]` and 0, the submit button has top margin `space[10]`, and the form has `gap` `space[5]`. Code: `register.page.ts`.

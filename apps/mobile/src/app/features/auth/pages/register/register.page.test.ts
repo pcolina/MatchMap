@@ -9,7 +9,7 @@ import { ColorScheme } from '@ng-native/device';
 import { render, screen, userEvent } from '@ng-native/testing';
 import { beforeEach, expect, test, vi } from 'vitest';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
-import { colors, size, typography } from '../../../../core/theme/tokens.ts';
+import { colors, size, space, typography } from '../../../../core/theme/tokens.ts';
 import { AuthStore, type AuthState } from '../../state/auth.store.ts';
 import { RegisterPage } from './register.page.ts';
 
@@ -267,5 +267,22 @@ test('shows a red alert icon in the row of each error, with room for two lines',
   const row = screen.getByTestId('email-error').parent!;
   expect(row.children.some((child) => child.viewName === 'RNSVGSvgView' && child.props['color'] === colors.light.danger && child.props['width'] === size.iconMd)).toBe(true);
   expect(row.props).toMatchObject({ minHeight: typography.caption.lineHeight * 2 });
+});
+
+test('keeps the same distances as the sign-in page for labels, errors, failure and button', async () => {
+  const store = fakeStore();
+  store.failure.set('emailTaken');
+  await setup(store);
+
+  for (const label of [en.login.register.emailLabel, en.login.register.passwordLabel, en.login.register.repeatPasswordLabel]) {
+    expect(screen.getByText(label).props).toMatchObject({ marginBottom: -space[2] });
+  }
+  for (const testId of ['email-error', 'password-error', 'repeat-password-error']) {
+    expect(screen.getByTestId(testId).parent!.props).toMatchObject({ marginTop: 5, marginBottom: -5 });
+  }
+  expect(screen.getByTestId('failure').parent!.props).toMatchObject({ marginTop: -space[2], marginBottom: 0 });
+  const button = screen.getByRole('button', { name: 'Create account' });
+  expect(button.props).toMatchObject({ marginTop: space[10] });
+  expect(button.parent!.props).toMatchObject({ gap: space[5] });
 });
 

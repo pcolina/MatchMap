@@ -326,6 +326,19 @@ describe('RegisterPage', () => {
     expect(getComputedStyle(element.querySelector<HTMLElement>('#password-error')!).getPropertyValue('min-height')).toBe('calc(2 * var(--mm-type-caption-line-height))');
   });
 
+  it('keeps the same distances as the sign-in page for errors, button and icon', () => {
+    const { element } = setup(successGateway());
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+
+    for (const id of ['#email-error', '#password-error', '#repeat-password-error']) {
+      const error = element.querySelector<HTMLElement>(id)!;
+      expect(getComputedStyle(error).getPropertyValue('margin-top')).toBe('5px');
+      expect(getComputedStyle(error).getPropertyValue('margin-bottom')).toBe('calc(var(--mm-space-4) - 5px)');
+    }
+    expect(getComputedStyle(element.querySelector<HTMLElement>('button[type="submit"]')!).getPropertyValue('margin-top')).toBe('var(--mm-space-2)');
+    expect(rules.some((text) => text.includes('.error-icon') && text.includes('top: 3px'))).toBe(true);
+  });
+
   it('keeps the failure element rendered when there is no failure', () => {
     const { element } = setup(successGateway());
 
