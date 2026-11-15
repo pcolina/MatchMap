@@ -6,7 +6,7 @@ No API call changes, so no contract check is needed.
 
 ## 1. Dependency and data
 
-- [ ] **1.1 Pinned dependency.** Test first: a spec reads `apps/web/package.json` and fails because `maplibre-gl` is not listed. It checks that `maplibre-gl` is `6.16.0`, with no `^` or `~`. Code: add it with `pnpm --filter @matchmap/web add -E maplibre-gl@6.16.0`.
+- [x] **1.1 Pinned dependency.** Test first: a spec reads `apps/web/package.json` and fails because `maplibre-gl` is not listed. It checks that `maplibre-gl` is `6.16.0`, with no `^` or `~`. Code: add it with `pnpm --filter @matchmap/web add -E maplibre-gl@6.16.0`.
 - [ ] **1.2 Countries data.** Test first: a spec checks that `apps/web/public/geo/countries.geojson` exists, is a FeatureCollection of polygons, and every feature has an `iso_a2` string. Code: convert the Natural Earth 1:50m `admin_0_countries` file, keep `iso_a2`, and simplify it.
 - [ ] **1.3 Capitals data.** Test first: a spec checks that `apps/web/public/geo/capitals.geojson` exists, every feature is a point, and every feature has `iso_a2` and `name`. Code: filter the Natural Earth 1:50m `populated_places` file to `FEATURECLASS = "Admin-0 capital"`.
 - [ ] **1.4 Measured sizes.** Measure both files after conversion and write the sizes in this file under "Measured sizes". If the total exceeds the budget in `CLAUDE.md` §9, the justification goes in `design.md` before the change continues. No test; recorded in the PR.
