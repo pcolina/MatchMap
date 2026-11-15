@@ -48,3 +48,13 @@ Requested again after review, on both platforms:
 
 - Labels move 8 px closer to their input: the label bottom margin is `-space-2` (was `-space-1`).
 - The space between the password field and the Sign in button grows again. Web: the button top margin goes from `-space-1` to `0`, so the effective space is the form gap, 20 px (was 16 px). Mobile: the button top margin goes from `space-8` to `space-10` (40 px), so the effective space is 60 px (was 52 px).
+
+## Focus ring and error spacing update (web)
+
+The focus style from `docs/design.md` §Focus is a 3 px accent ring with a 2 px offset, plus a halo that fades out up to 16 px beyond the input. A field error placed right under a focused input would sit inside that ring and halo.
+
+- The email and password error lines get a top margin of `space-6` (24 px), which clears the ring (5 px) and the halo (16 px spread). The margin is set by id, so the failure message below the password error does not get it.
+- The space between the password field and the Sign in button grows from the form gap plus 0 to the form gap plus `space-2` (8 px) on web.
+- The gap between the email field and the password field grows with the email error margin, so it does not need its own change.
+
+The mobile app has no halo, so this change is web-only for now.

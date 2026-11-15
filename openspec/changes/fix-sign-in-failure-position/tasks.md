@@ -16,6 +16,8 @@ No API call changes in this change, so no contract check is needed before the ta
 
 - [x] **1.6 Second label and button spacing.** Test first: in `sign-in.page.spec.ts`, the email label's computed bottom margin is `calc(-1 * var(--mm-space-2))` and the submit button's computed top margin is `0px` (see `design.md` "Second label and button spacing update"). Code: `sign-in.page.css`.
 
+- [x] **1.7 Focus ring clearance and button spacing.** Test first: in `sign-in.page.spec.ts`, the email and password error lines have a computed top margin of `var(--mm-space-6)`, and the submit button's computed top margin is `var(--mm-space-2)` (see `design.md` "Focus ring and error spacing update"). Code: `sign-in.page.css`.
+
 ## 2. Mobile (`apps/mobile`)
 
 - [x] **2.1 Failure position.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is rendered after `password-error` and before the submit button (scenarios "Failure message below the password field" and "Same position on mobile"). Code: move the `<text testID="failure">` in `sign-in.page.ts` into the password field group, after `testID="password-error"`.
