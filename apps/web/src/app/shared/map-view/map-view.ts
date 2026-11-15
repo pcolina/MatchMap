@@ -11,12 +11,14 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Map as MapLibreMap } from 'maplibre-gl';
 import { MapScheme, MapState, buildMapStyle } from './map-view.style';
 
 @Component({
   selector: 'app-map-view',
-  template: '<div #container class="map-view"></div>',
+  imports: [TranslatePipe],
+  template: `<div #container class="map-view" role="img" [attr.aria-label]="'map.world.label' | translate"></div>`,
   styleUrl: './map-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

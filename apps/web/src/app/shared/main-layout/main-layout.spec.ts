@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideTranslateService } from '@ngx-translate/core';
 import { MainLayout } from './main-layout';
 
 vi.mock('maplibre-gl', () => ({
@@ -20,6 +21,7 @@ const { resolve } = nodeProcess.getBuiltinModule('node:path');
 
 describe('MainLayout', () => {
   beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideTranslateService({ fallbackLang: 'en' })] });
     vi.stubGlobal(
       'matchMedia',
       vi.fn(() => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() })),

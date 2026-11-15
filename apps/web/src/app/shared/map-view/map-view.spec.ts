@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { mapColors } from '../../../../../../tokens/tokens.ts';
 import { MapView } from './map-view';
 
@@ -28,6 +29,7 @@ describe('MapView', () => {
   let darkListener: ((event: { matches: boolean }) => void) | undefined;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideTranslateService({ fallbackLang: 'en' })] });
     mapLibre.instances.length = 0;
     darkListener = undefined;
     vi.stubGlobal(
@@ -67,6 +69,18 @@ describe('MapView', () => {
     expect(map.setStyle).toHaveBeenCalledTimes(1);
     const style = map.setStyle.mock.calls[0][0] as { layers: { id: string; paint?: Record<string, unknown> }[] };
     expect(style.layers.find((layer) => layer.id === 'background')?.paint?.['background-color']).toBe(mapColors.dark.ocean);
+  });
+
+  it('exposes the map as an image with its translated name', async () => {
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('en', { map: { world: { label: 'World map' } } });
+    translate.use('en');
+    const fixture = TestBed.createComponent(MapView);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const image = (fixture.nativeElement as HTMLElement).querySelector('[role="img"]');
+    expect(image?.getAttribute('aria-label')).toBe('World map');
   });
 
   it('removes the map when it is destroyed', async () => {
