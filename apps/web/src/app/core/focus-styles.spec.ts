@@ -1,3 +1,4 @@
+export {};
 type NodeProcess = {
   cwd(): string;
   getBuiltinModule(id: 'node:fs'): { readFileSync(path: string, encoding: 'utf8'): string };
