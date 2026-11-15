@@ -99,6 +99,19 @@ describe('SignInPage', () => {
     expect(getComputedStyle(emailError).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
   });
 
+  it('shows the sign-in failure directly below the password field and above the submit button', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
+    const passwordField = field(element, 'password').parentElement!;
+    const passwordError = element.querySelector<HTMLElement>('#password-error')!;
+    const submitButton = element.querySelector<HTMLElement>('button[type="submit"]')!;
+
+    expect(passwordField.contains(alert)).toBe(true);
+    expect(passwordError.compareDocumentPosition(alert) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(alert.compareDocumentPosition(submitButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it('shows a user icon inside the email field and a lock icon inside the password field', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
 

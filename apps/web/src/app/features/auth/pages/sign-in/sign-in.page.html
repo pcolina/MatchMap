@@ -62,13 +62,12 @@
             {{ message | translate }}
           }
         </p>
+        <p class="error" data-error role="alert">
+          @if (failureMessage(); as message) {
+            {{ message | translate }}
+          }
+        </p>
       </div>
-
-      <p class="error" data-error role="alert">
-        @if (failureMessage(); as message) {
-          {{ message | translate }}
-        }
-      </p>
 
       <button type="submit" [disabled]="store.isLoading()">{{ 'login.signIn.submit' | translate }}</button>
     </form>
