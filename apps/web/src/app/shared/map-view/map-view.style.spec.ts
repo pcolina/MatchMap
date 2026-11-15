@@ -1,7 +1,7 @@
-import { mapColors } from '../../../../../../tokens/tokens.ts';
+import { colors, mapColors } from '../../../../../../tokens/tokens.ts';
 import { buildMapStyle } from './map-view.style';
 
-type Layer = { id: string; type: string; source?: string; paint?: Record<string, unknown> };
+type Layer = { id: string; type: string; source?: string; paint?: Record<string, unknown>; filter?: unknown[] };
 type Style = { version: number; sources: Record<string, unknown>; layers: Layer[]; glyphs?: string };
 
 const layerById = (style: Style, id: string): Layer => {
@@ -66,4 +66,29 @@ describe('buildMapStyle', () => {
     });
   });
 
+  describe('state outline', () => {
+    it('draws a 1.5 px text-coloured outline only around the coloured countries in day mode', () => {
+      const style = buildMapStyle({ FR: 'visited', JP: 'wantToGo' }, 'day') as unknown as Style;
+      const outline = layerById(style, 'countries-state-outline');
+
+      expect(outline.type).toBe('line');
+      expect(outline.source).toBe('countries');
+      expect(outline.paint?.['line-color']).toBe(colors.light.text);
+      expect(outline.paint?.['line-width']).toBe(1.5);
+      expect(outline.filter).toEqual(['in', ['get', 'iso_a2'], ['literal', ['FR', 'JP']]]);
+    });
+
+    it('uses the night text colour in night mode', () => {
+      const style = buildMapStyle({ FR: 'visited' }, 'night') as unknown as Style;
+
+      expect(layerById(style, 'countries-state-outline').paint?.['line-color']).toBe(colors.dark.text);
+    });
+
+    it('draws the outline above the country fill', () => {
+      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
+      const ids = style.layers.map((layer) => layer.id);
+
+      expect(ids.indexOf('countries-state-outline')).toBeGreaterThan(ids.indexOf('countries-fill'));
+    });
+  });
 });
