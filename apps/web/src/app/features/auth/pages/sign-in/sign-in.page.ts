@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, untracked } from '@angular/core';
 import { FormField, form, submit, validate } from '@angular/forms/signals';
 import { NgIcon } from '@ng-icons/core';
 import { Router, RouterLink } from '@angular/router';
@@ -67,6 +67,16 @@ export class SignInPage {
         this.router.navigateByUrl('/');
       }
     });
+    let edited = false;
+    effect(() => {
+      this.credentials();
+      untracked(() => {
+        if (edited) {
+          this.store.clearFailure();
+        }
+        edited = true;
+      });
+    });
   }
 
   protected togglePassword(): void {
@@ -75,6 +85,7 @@ export class SignInPage {
 
   protected onSubmit(event: Event): void {
     event.preventDefault();
+    this.store.clearFailure();
     submit(this.form, async () => {
       this.store.signIn(this.credentials());
     });

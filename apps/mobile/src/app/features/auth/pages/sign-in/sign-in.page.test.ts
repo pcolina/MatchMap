@@ -28,6 +28,7 @@ const fakeStore = () => {
     accessToken,
     isLoading: computed(() => status() === 'loading'),
     signIn: vi.fn(),
+    clearFailure: vi.fn(() => failure.set(null)),
   };
 };
 
@@ -256,16 +257,16 @@ test('shows the too-many-attempts message from the store', async () => {
   expect(screen.getByText('Too many attempts. Wait a few minutes and try again.')).toBeTruthy();
 });
 
-test('shows the sign-in failure in the password group, not in the group of the submit button', async () => {
+test('shows the sign-in failure in the form directly after the Sign in button', async () => {
   const store = fakeStore();
   store.failure.set('unknown');
   await setup(store);
 
-  const failure = screen.getByTestId('failure');
+  const failureRow = screen.getByTestId('failure').parent!;
+  const button = screen.getByRole('button', { name: 'Sign in' });
+  const siblings = button.parent!.children;
 
-  expect(failure.parent!.parent).toBe(screen.getByTestId('password-error').parent!.parent);
-  expect(failure.parent!.parent).toBe(screen.getByLabelText('Password').parent!.parent);
-  expect(failure.parent).not.toBe(screen.getByRole('button', { name: 'Sign in' }).parent);
+  expect(siblings.indexOf(failureRow)).toBe(siblings.indexOf(button) + 1);
 });
 
 test('spaces the form components with the wider gap and no extra space above the form', async () => {
@@ -328,6 +329,49 @@ test('shows the unknown failure message from the store', async () => {
   await setup(store);
 
   expect(screen.getByText('Something went wrong. Try again.')).toBeTruthy();
+});
+
+test('hides the sign-in failure when the user edits the email', async () => {
+  const store = fakeStore();
+  store.failure.set('invalidCredentials');
+  const { user } = await setup(store);
+
+  expect(screen.getByText('Email or password is incorrect.')).toBeTruthy();
+
+  await user.type(screen.getByLabelText('Email'), 'x');
+
+  expect(screen.queryByText('Email or password is incorrect.')).toBeNull();
+  expect(screen.getByLabelText('Email').props['text']).toBe('x');
+});
+
+test('hides the sign-in failure when the user edits the password', async () => {
+  const store = fakeStore();
+  store.failure.set('invalidCredentials');
+  const { user } = await setup(store);
+
+  await user.type(screen.getByLabelText('Password'), 'x');
+
+  expect(screen.queryByText('Email or password is incorrect.')).toBeNull();
+  expect(screen.getByLabelText('Password').props['text']).toBe('x');
+});
+
+test('hides the sign-in failure and sends no request when the user submits an empty form', async () => {
+  const store = fakeStore();
+  store.failure.set('invalidCredentials');
+  const { user } = await setup(store);
+
+  await user.press(screen.getByRole('button', { name: 'Sign in' }));
+
+  expect(screen.queryByText('Email or password is incorrect.')).toBeNull();
+  expect(screen.getByText('Enter your email.')).toBeTruthy();
+  expect(store.signIn).not.toHaveBeenCalled();
+});
+
+test('places the sign-in failure 12 px below the Sign in button and keeps its space reserved', async () => {
+  await setup(fakeStore());
+
+  expect(screen.getByTestId('failure').parent!.props).toMatchObject({ marginTop: -space[2], marginBottom: 0, minHeight: size.iconMd });
+  expect(screen.getByRole('button', { name: 'Sign in' }).props).toMatchObject({ marginTop: space[10] });
 });
 
 test('keeps the typed email and password after a failed sign-in', async () => {

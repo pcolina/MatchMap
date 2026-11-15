@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, untracked } from '@angular/core';
 import { FormField, form, submit, validate } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { NgIcon } from '@ng-native/icons';
@@ -86,12 +86,6 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
                 }
                 <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ passwordError() }}</text>
               </view>
-              <view class="error-row" [style.minHeight]="size.iconMd" [style.marginTop]="errorOffset" [style.marginBottom]="-errorOffset">
-                @if (failureText()) {
-                  <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
-                }
-                <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
-              </view>
             </view>
 
             <pressable
@@ -107,6 +101,12 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
             >
               <text [style]="ts('button')" [style.color]="palette().onAccent">{{ t('login.signIn.submit') }}</text>
             </pressable>
+            <view class="error-row" [style.minHeight]="size.iconMd" [style.marginTop]="-space[2]" [style.marginBottom]="0">
+              @if (failureText()) {
+                <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
+              }
+              <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
+            </view>
           </view>
 
           <view class="divider" [style.borderTopColor]="palette().border">
@@ -265,6 +265,16 @@ export class SignInPage {
         void this.router.navigateByUrl('/');
       }
     });
+    let edited = false;
+    effect(() => {
+      this.credentials();
+      untracked(() => {
+        if (edited) {
+          this.store.clearFailure();
+        }
+        edited = true;
+      });
+    });
   }
 
   protected emailError(): string {
@@ -301,6 +311,7 @@ export class SignInPage {
   }
 
   protected onSubmit(): void {
+    this.store.clearFailure();
     void submit(this.form, async () => {
       this.store.signIn(this.credentials());
     });

@@ -151,7 +151,7 @@ describe('SignInPage', () => {
     expect(getComputedStyle(alert).getPropertyValue('min-height')).toBe('max(var(--mm-type-caption-line-height), var(--mm-size-icon-md))');
   });
 
-  it('shows every sign-in failure text inside the password field group', async () => {
+  it('shows every sign-in failure text in the form below the submit button', async () => {
     const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'unknown')) });
 
     await typeInto(element, fixture, 'email', 'user@example.com');
@@ -159,8 +159,83 @@ describe('SignInPage', () => {
     await submit(element, fixture);
 
     const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
-    expect(field(element, 'password').parentElement!.contains(alert)).toBe(true);
+    expect(alert.parentElement?.tagName).toBe('FORM');
     expect(alert.textContent?.trim()).toBe('Something went wrong. Try again.');
+  });
+
+  it('hides the sign-in failure when the user edits the email and keeps the typed values', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'invalidCredentials')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('Email or password is incorrect.');
+
+    await typeInto(element, fixture, 'email', 'other@example.com');
+
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('');
+    expect(field(element, 'email').value).toBe('other@example.com');
+    expect(field(element, 'password').value).toBe('123456');
+  });
+
+  it('hides the sign-in failure when the user edits the password', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'invalidCredentials')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+
+    await typeInto(element, fixture, 'password', '654321');
+
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('');
+    expect(field(element, 'password').value).toBe('654321');
+  });
+
+  it('shows only the password field error after an edit to a value that is too short', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'invalidCredentials')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+
+    await typeInto(element, fixture, 'password', '123');
+
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('');
+    expect(element.querySelector('#password-error')?.textContent?.trim()).toBe('Password must be 6 to 20 characters.');
+  });
+
+  it('shows the sign-in failure again after a new failed submit', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'invalidCredentials')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+    await typeInto(element, fixture, 'email', 'other@example.com');
+    await submit(element, fixture);
+
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('Email or password is incorrect.');
+  });
+
+  it('hides the sign-in failure and sends no request when the user submits an empty email', async () => {
+    const signIn = vi.fn(() => throwError(() => 'invalidCredentials'));
+    const { fixture, element } = setup({ signIn });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+    await typeInto(element, fixture, 'email', '');
+    await submit(element, fixture);
+
+    expect(element.querySelector('[role="alert"]')?.textContent?.trim()).toBe('');
+    expect(errorText(element)).toContain('Enter your email.');
+    expect(signIn).toHaveBeenCalledTimes(1);
+  });
+
+  it('places the sign-in failure 12 px below the Sign in button', () => {
+    setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+
+    expect(rules.some((text) => text.includes('[role=alert]') && text.includes('margin-top: calc(var(--mm-space-3) - var(--mm-space-5))'))).toBe(true);
   });
 
   it('shows a decorative alert icon before the failure message', async () => {
@@ -203,17 +278,15 @@ describe('SignInPage', () => {
     expect(element.querySelector('[role="alert"] ng-icon')).toBeNull();
   });
 
-  it('shows the sign-in failure directly below the password field and above the submit button', () => {
+  it('shows the sign-in failure as a form child directly after the submit button', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
 
     const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
-    const passwordField = field(element, 'password').parentElement!;
-    const passwordError = element.querySelector<HTMLElement>('#password-error')!;
     const submitButton = element.querySelector<HTMLElement>('button[type="submit"]')!;
 
-    expect(passwordField.contains(alert)).toBe(true);
-    expect(passwordError.compareDocumentPosition(alert) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(alert.compareDocumentPosition(submitButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(alert.parentElement?.tagName).toBe('FORM');
+    expect(submitButton.compareDocumentPosition(alert) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(alert.previousElementSibling).toBe(submitButton);
   });
 
   it('shows a user icon inside the email field and a lock icon inside the password field', () => {

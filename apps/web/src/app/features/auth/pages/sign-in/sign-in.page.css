@@ -251,4 +251,6 @@ button[type='submit'] {
   font-weight: var(--mm-type-body-strong-weight);
 }
 
-
+[role='alert'] {
+  margin-top: calc(var(--mm-space-3) - var(--mm-space-5));
+}
