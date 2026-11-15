@@ -11,14 +11,14 @@ No API call changes in this change, so no contract check is needed.
 - [x] **1.3 Field error alone after an edit.** Test first: after a failure, a password shorter than 6 characters shows only `login.signIn.errorPasswordLength` (scenario "Field error is shown alone after an edit"). Code: none expected; fix the page only if the test fails.
 - [x] **1.4 Failure again after a new failed submit.** Test first: a second failed submit shows the failure again (scenario "Failure shown again after a new failed submit"). Code: none expected.
 - [x] **1.5 Clear before an empty submit.** Test first: after a failure, submitting with an empty email hides the failure before the field errors, and sends no request (scenario "Failure cleared before a submit with empty fields"). Code: clear the failure in the submit path before the validation message.
-- [x] **1.6 Centred failure position.** Test first: in `sign-in.page.spec.ts`, the failure element has computed `margin-top` `calc(-1 * var(--mm-space-1))`, and the submit button has `margin-top` `var(--mm-space-3)` (scenarios "Equal space above and below the failure message" and "Total space unchanged"). Code: `sign-in.page.css`, as in `design.md` §Web.
+- [ ] **1.6 Failure below the Sign in button.** Test first: in `sign-in.page.spec.ts`, the alert element is a direct child of the `<form>` after the submit button, its `margin-top` is `calc(var(--mm-space-3) - var(--mm-space-5))`, and the submit button's `margin-top` is `var(--mm-space-2)` (scenarios "Failure message below the Sign in button" and "Social buttons do not move"). Code: move the alert in `sign-in.page.html`, and update `sign-in.page.css` as in `design.md` §Web.
 - [x] **1.7 Reserved space stays.** Test first: the failure element is still rendered and keeps its reserved height when hidden (scenario "Reserved space stays"). Code: none expected.
 
 ## 2. Mobile (`apps/mobile`)
 
 - [x] **2.1 Hide the failure on edit.** Test first: in `sign-in.page.test.ts`, after a failed sign-in, changing the email or the password hides the failure text and keeps the typed values (scenarios "Editing the email hides the failure" and "Editing the password hides the failure"). Code: clear the store failure on field change in the mobile store and page.
 - [x] **2.2 Clear before an empty submit.** Test first: a submit with empty fields hides the failure before the field errors, and sends no request (scenario "Failure cleared before a submit with empty fields"). Code: clear the failure in the submit path.
-- [x] **2.3 Centred failure position.** Test first: in `sign-in.page.test.ts`, the failure row has `marginTop` `space[5]` and `marginBottom` `-space[5]`, and the submit button keeps `marginTop` `space[10]` (scenarios "Equal space above and below the failure message" and "Total space unchanged"). Code: `sign-in.page.ts`, as in `design.md` §Mobile.
+- [ ] **2.3 Failure below the Sign in button.** Test first: in `sign-in.page.test.ts`, the failure text's row comes after the Sign in button in the render order, has `marginTop` `-space[2]` and `marginBottom` `0`, and the Sign in button keeps `marginTop` `space[10]` (scenarios "Failure message below the Sign in button" and "Same position on mobile"). Code: move the row in `sign-in.page.ts`, as in `design.md` §Mobile.
 
 ## 3. Checks and review
 
