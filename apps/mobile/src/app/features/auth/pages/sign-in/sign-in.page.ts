@@ -86,12 +86,6 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
                 }
                 <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ passwordError() }}</text>
               </view>
-              <view class="error-row" [style.minHeight]="size.iconMd" [style.marginTop]="space[5]" [style.marginBottom]="-space[5]">
-                @if (failureText()) {
-                  <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
-                }
-                <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
-              </view>
             </view>
 
             <pressable
@@ -107,6 +101,12 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
             >
               <text [style]="ts('button')" [style.color]="palette().onAccent">{{ t('login.signIn.submit') }}</text>
             </pressable>
+            <view class="error-row" [style.minHeight]="size.iconMd" [style.marginTop]="-space[2]" [style.marginBottom]="0">
+              @if (failureText()) {
+                <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
+              }
+              <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
+            </view>
           </view>
 
           <view class="divider" [style.borderTopColor]="palette().border">

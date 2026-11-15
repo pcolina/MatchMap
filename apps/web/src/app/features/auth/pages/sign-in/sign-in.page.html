@@ -62,14 +62,14 @@
             <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ message | translate }}
           }
         </p>
-        <p class="error" data-error role="alert">
-          @if (failureMessage(); as message) {
-            <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ message | translate }}
-          }
-        </p>
       </div>
 
       <button type="submit" [disabled]="store.isLoading()">{{ 'login.signIn.submit' | translate }}</button>
+      <p class="error" data-error role="alert">
+        @if (failureMessage(); as message) {
+          <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ message | translate }}
+        }
+      </p>
     </form>
 
     <div class="divider">

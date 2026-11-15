@@ -98,7 +98,7 @@ describe('SignInPage', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const submit = element.querySelector<HTMLElement>('button[type="submit"]')!;
 
-    expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('var(--mm-space-3)');
+    expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('var(--mm-space-2)');
   });
 
   it('sits each field error 5 px under its input and keeps the rest of the layout still', () => {
@@ -151,7 +151,7 @@ describe('SignInPage', () => {
     expect(getComputedStyle(alert).getPropertyValue('min-height')).toBe('max(var(--mm-type-caption-line-height), var(--mm-size-icon-md))');
   });
 
-  it('shows every sign-in failure text inside the password field group', async () => {
+  it('shows every sign-in failure text in the form below the submit button', async () => {
     const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'unknown')) });
 
     await typeInto(element, fixture, 'email', 'user@example.com');
@@ -159,7 +159,7 @@ describe('SignInPage', () => {
     await submit(element, fixture);
 
     const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
-    expect(field(element, 'password').parentElement!.contains(alert)).toBe(true);
+    expect(alert.parentElement?.tagName).toBe('FORM');
     expect(alert.textContent?.trim()).toBe('Something went wrong. Try again.');
   });
 
@@ -231,12 +231,11 @@ describe('SignInPage', () => {
     expect(signIn).toHaveBeenCalledTimes(1);
   });
 
-  it('centres the sign-in failure between the password input and the sign-in button', () => {
-    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+  it('places the sign-in failure 12 px below the Sign in button', () => {
+    setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
 
-    expect(rules.some((text) => text.includes('[role=alert]') && text.includes('margin-top: calc(-1 * var(--mm-space-1))'))).toBe(true);
-    expect(rules.some((text) => text.includes('button[type=submit]') && text.includes('margin-top: var(--mm-space-3)'))).toBe(true);
+    expect(rules.some((text) => text.includes('[role=alert]') && text.includes('margin-top: calc(var(--mm-space-3) - var(--mm-space-5))'))).toBe(true);
   });
 
   it('shows a decorative alert icon before the failure message', async () => {
@@ -279,17 +278,15 @@ describe('SignInPage', () => {
     expect(element.querySelector('[role="alert"] ng-icon')).toBeNull();
   });
 
-  it('shows the sign-in failure directly below the password field and above the submit button', () => {
+  it('shows the sign-in failure as a form child directly after the submit button', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
 
     const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
-    const passwordField = field(element, 'password').parentElement!;
-    const passwordError = element.querySelector<HTMLElement>('#password-error')!;
     const submitButton = element.querySelector<HTMLElement>('button[type="submit"]')!;
 
-    expect(passwordField.contains(alert)).toBe(true);
-    expect(passwordError.compareDocumentPosition(alert) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(alert.compareDocumentPosition(submitButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(alert.parentElement?.tagName).toBe('FORM');
+    expect(submitButton.compareDocumentPosition(alert) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(alert.previousElementSibling).toBe(submitButton);
   });
 
   it('shows a user icon inside the email field and a lock icon inside the password field', () => {
