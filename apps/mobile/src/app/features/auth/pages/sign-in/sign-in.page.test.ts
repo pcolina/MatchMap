@@ -9,7 +9,7 @@ import { ColorScheme } from '@ng-native/device';
 import { render, screen, userEvent } from '@ng-native/testing';
 import { beforeEach, expect, test, vi } from 'vitest';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
-import { colors } from '../../../../core/theme/tokens.ts';
+import { colors, space } from '../../../../core/theme/tokens.ts';
 import { AuthStore, type AuthState } from '../../state/auth.store.ts';
 import { SignInPage } from './sign-in.page.ts';
 
@@ -266,6 +266,15 @@ test('shows the sign-in failure in the password group, not in the group of the s
   expect(failure.parent).toBe(screen.getByTestId('password-error').parent);
   expect(failure.parent).toBe(screen.getByLabelText('Password').parent!.parent);
   expect(failure.parent).not.toBe(screen.getByRole('button', { name: 'Sign in' }).parent);
+});
+
+test('spaces the form components with the wider gap and no extra space above the form', async () => {
+  await setup(fakeStore());
+
+  const form = screen.getByTestId('password-error').parent!.parent!;
+
+  expect(form.props).toMatchObject({ gap: space[5] });
+  expect(form.parent!.props).toMatchObject({ paddingTop: space[0] });
 });
 
 test('keeps the sign-in failure element rendered when there is no failure', async () => {

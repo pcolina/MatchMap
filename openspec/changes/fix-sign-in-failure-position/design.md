@@ -19,7 +19,7 @@ After the failure message moved under the password field, the form felt cramped.
 - The form `gap` goes from `--mm-space-4` (16 px) to `--mm-space-5` (20 px).
 - The bottom padding of the header (`.hero`) goes from `--mm-space-16` (64 px) to `--mm-space-12` (48 px), so the form gains room below and loses 16 px above it.
 
-The mobile form has no gap today; its spacing is not changed here and needs its own decision.
+The same change applies to the mobile form. Its gap was 0 and becomes `space[5]` (20 px). The top padding of its content container goes from `space[4]` (16 px) to `space[0]` (0), which removes the 16 px above the form. The mobile header keeps its own 16 px padding, because it has no 64 px bottom padding to reduce.
 
 ## Tests
 

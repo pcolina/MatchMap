@@ -30,11 +30,11 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
         <text class="tagline" [style]="tagline" [style.color]="palette().text">{{ t('login.brand.tagline') }}</text>
       </view>
 
-      <view class="content">
+      <view class="content" [style.paddingTop]="space[0]">
         @if (store.isLoading()) {
           <app-skeleton [shapes]="shapes" />
         } @else {
-          <view class="form">
+          <view class="form" [style.gap]="space[5]">
             <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.emailLabel') }}</text>
             <view class="field">
               <ng-icon name="tablerUser" [color]="palette().textSecondary" />
