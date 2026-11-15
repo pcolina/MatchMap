@@ -24,6 +24,12 @@ This check covers colour tokens only. It does not run axe, a screen reader or a 
 - **Scope of the token:** `borderStrong` is also used for inactive focus. The change must keep the focus style of `docs/design.md` §Focus (3 px `accent` ring) as the focus indicator.
   - [NEEDS CLARIFICATION: is changing `borderStrong` for every use acceptable, or should a separate `input.border` token be added for input borders only?]
 
+- **Keyboard and mouse focus:** the focus style today is the same for keyboard and mouse. It is a 3 px `accent` ring with a halo that fades out up to 16 px. The keyboard focus (Tab) keeps this style, as `docs/design.md` §Focus requires. Mouse focus becomes more discreet: a border half as strong as the keyboard ring, and a smaller outer halo.
+  - [NEEDS CLARIFICATION: (a) the exact mouse values: ring width (keyboard is 3 px), and halo spread and opacity; (b) on text inputs, browsers show `:focus-visible` after a mouse click too, so CSS alone cannot tell the two apart. Should the change detect the pointer in JavaScript and add a class, or should text inputs keep the keyboard style for both?]
+- **Errors need more than red text (WCAG 1.4.1):** every error message gets a red warning icon before its text, not only the red colour. This covers the field errors (email and password) and the sign-in failure message, on web and mobile.
+  - Proposed: `tablerAlertCircle` from `@ng-icons/tabler-icons`, coloured `danger`, at the existing `size-icon-md` token. No new token.
+  - Also added as a general rule: `docs/design.md` (a new rule under accessibility) and `CLAUDE.md` §9.
+
 ## Capabilities
 
 ### New Capabilities
