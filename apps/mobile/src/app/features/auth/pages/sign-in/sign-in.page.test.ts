@@ -28,6 +28,7 @@ const fakeStore = () => {
     accessToken,
     isLoading: computed(() => status() === 'loading'),
     signIn: vi.fn(),
+    clearFailure: vi.fn(() => failure.set(null)),
   };
 };
 
@@ -328,6 +329,49 @@ test('shows the unknown failure message from the store', async () => {
   await setup(store);
 
   expect(screen.getByText('Something went wrong. Try again.')).toBeTruthy();
+});
+
+test('hides the sign-in failure when the user edits the email', async () => {
+  const store = fakeStore();
+  store.failure.set('invalidCredentials');
+  const { user } = await setup(store);
+
+  expect(screen.getByText('Email or password is incorrect.')).toBeTruthy();
+
+  await user.type(screen.getByLabelText('Email'), 'x');
+
+  expect(screen.queryByText('Email or password is incorrect.')).toBeNull();
+  expect(screen.getByLabelText('Email').props['text']).toBe('x');
+});
+
+test('hides the sign-in failure when the user edits the password', async () => {
+  const store = fakeStore();
+  store.failure.set('invalidCredentials');
+  const { user } = await setup(store);
+
+  await user.type(screen.getByLabelText('Password'), 'x');
+
+  expect(screen.queryByText('Email or password is incorrect.')).toBeNull();
+  expect(screen.getByLabelText('Password').props['text']).toBe('x');
+});
+
+test('hides the sign-in failure and sends no request when the user submits an empty form', async () => {
+  const store = fakeStore();
+  store.failure.set('invalidCredentials');
+  const { user } = await setup(store);
+
+  await user.press(screen.getByRole('button', { name: 'Sign in' }));
+
+  expect(screen.queryByText('Email or password is incorrect.')).toBeNull();
+  expect(screen.getByText('Enter your email.')).toBeTruthy();
+  expect(store.signIn).not.toHaveBeenCalled();
+});
+
+test('centres the sign-in failure between the password input and the sign-in button', async () => {
+  await setup(fakeStore());
+
+  expect(screen.getByTestId('failure').parent!.props).toMatchObject({ marginTop: space[5], marginBottom: -space[5] });
+  expect(screen.getByRole('button', { name: 'Sign in' }).props).toMatchObject({ marginTop: space[10] });
 });
 
 test('keeps the typed email and password after a failed sign-in', async () => {

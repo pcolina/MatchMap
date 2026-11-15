@@ -67,9 +67,15 @@ export class SignInPage {
         this.router.navigateByUrl('/');
       }
     });
+    let edited = false;
     effect(() => {
       this.credentials();
-      untracked(() => this.store.clearFailure());
+      untracked(() => {
+        if (edited) {
+          this.store.clearFailure();
+        }
+        edited = true;
+      });
     });
   }
 
@@ -79,6 +85,7 @@ export class SignInPage {
 
   protected onSubmit(event: Event): void {
     event.preventDefault();
+    this.store.clearFailure();
     submit(this.form, async () => {
       this.store.signIn(this.credentials());
     });

@@ -16,12 +16,12 @@ No API call changes in this change, so no contract check is needed.
 
 ## 2. Mobile (`apps/mobile`)
 
-- [ ] **2.1 Hide the failure on edit.** Test first: in `sign-in.page.test.ts`, after a failed sign-in, changing the email or the password hides the failure text and keeps the typed values (scenarios "Editing the email hides the failure" and "Editing the password hides the failure"). Code: clear the store failure on field change in the mobile store and page.
-- [ ] **2.2 Clear before an empty submit.** Test first: a submit with empty fields hides the failure before the field errors, and sends no request (scenario "Failure cleared before a submit with empty fields"). Code: clear the failure in the submit path.
-- [ ] **2.3 Centred failure position.** Test first: in `sign-in.page.test.ts`, the failure row has `marginTop` `space[5]` and `marginBottom` `-space[5]`, and the submit button keeps `marginTop` `space[10]` (scenarios "Equal space above and below the failure message" and "Total space unchanged"). Code: `sign-in.page.ts`, as in `design.md` §Mobile.
+- [x] **2.1 Hide the failure on edit.** Test first: in `sign-in.page.test.ts`, after a failed sign-in, changing the email or the password hides the failure text and keeps the typed values (scenarios "Editing the email hides the failure" and "Editing the password hides the failure"). Code: clear the store failure on field change in the mobile store and page.
+- [x] **2.2 Clear before an empty submit.** Test first: a submit with empty fields hides the failure before the field errors, and sends no request (scenario "Failure cleared before a submit with empty fields"). Code: clear the failure in the submit path.
+- [x] **2.3 Centred failure position.** Test first: in `sign-in.page.test.ts`, the failure row has `marginTop` `space[5]` and `marginBottom` `-space[5]`, and the submit button keeps `marginTop` `space[10]` (scenarios "Equal space above and below the failure message" and "Total space unchanged"). Code: `sign-in.page.ts`, as in `design.md` §Mobile.
 
 ## 3. Checks and review
 
-- [ ] **3.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check. Paste the summary in the PR.
+- [x] **3.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check. Paste the summary in the PR.
 - [ ] **3.2 Visual check.** At phone width in the web app and in the mobile app, confirm that the failure message sits in the middle between the password input and the button, and that no field moves when it is shown or hidden. Record the result in the PR. The values in `design.md` are from hand calculation, so this check is required.
-- [ ] **3.3 Translations.** No new keys: the PR description says "Translations to review: none".
+- [x] **3.3 Translations.** No new keys: the PR description says "Translations to review: none".
