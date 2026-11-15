@@ -15,7 +15,7 @@ No change to the API contract. The API routes are the ones already in `matchmap-
 
 - [x] **2.1 Development environment.** Test first: a test checks that `src/app/core/config/environment.ts` (or the path chosen in the code) exports `apiBaseUrl` equal to `http://10.0.2.2:8080`, and fails because the file does not exist. Code: create it.
 - [x] **2.2 Auth calls from the base.** Test first: `auth.api.test.ts` checks that the login and refresh requests use the mobile base URL. Code: `features/auth/data/auth.api.ts`.
-- [ ] **2.3 Apollo from the base.** Test first: a test checks that the Apollo link URI is the mobile base plus `/graphql`. Code: the mobile Apollo setup in `core/`.
+- [x] **2.3 Apollo from the base.** Test first: a test checks that the Apollo link URI is the mobile base plus `/graphql`. Code: the mobile Apollo setup in `core/`.
 - [x] **2.4 Interceptor by path.** Test first: `core/auth/auth.interceptor.test.ts` checks the same as 1.4 for the mobile base URL. Code: `core/auth/auth.interceptor.ts`.
 
 ## 3. Checks and review
