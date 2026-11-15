@@ -26,6 +26,12 @@ body {
   box-shadow: var(--mm-focus-halo);
 }
 
+:root[data-input='pointer'] :focus-visible {
+  outline: calc((var(--mm-border-width-focus) + 1px) / 2) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
+  box-shadow: none;
+}
+
 app-root {
   display: block;
 }
