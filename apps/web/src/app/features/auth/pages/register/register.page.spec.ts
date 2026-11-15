@@ -336,7 +336,9 @@ describe('RegisterPage', () => {
       expect(getComputedStyle(error).getPropertyValue('margin-bottom')).toBe('calc(var(--mm-space-4) - 5px)');
     }
     expect(getComputedStyle(element.querySelector<HTMLElement>('button[type="submit"]')!).getPropertyValue('margin-top')).toBe('var(--mm-space-2)');
-    expect(rules.some((text) => text.includes('.error-icon') && text.includes('top: 3px'))).toBe(true);
+    expect(rules.some((text) => text.includes('.error-icon') && text.includes('flex-shrink: 0'))).toBe(true);
+    expect(rules.some((text) => text.includes('.error-icon') && text.includes('top:'))).toBe(false);
+    expect(getComputedStyle(element.querySelector<HTMLElement>('#password-error')!).getPropertyValue('align-items')).toBe('center');
   });
 
   it('lays out each error as a row so that the icon does not grow the line and move the layout', () => {

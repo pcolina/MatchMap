@@ -35,3 +35,5 @@ No API call changes, so no contract check is needed.
 - [x] **4.3 Icon registration and mismatch message.** Test first: a mobile test checks that `tablerAlertCircle` is in the `provideIcons` list of `main.ts` (without it the icon renders nothing in the app), and a web test checks that the repeat-password mismatch message has the icon and the same 5 px offset as the other errors. Code: `apps/mobile/src/main.ts`.
 
 - [x] **4.4 Layout shift with two-line errors (web).** Test first: the three field error lines of the register page have `display: flex`, so the icon is a separate flex item and does not grow the first line. Without it, the 20 px icon made the first line taller than the 16 px line, and everything below moved down. Code: `register.page.css`.
+
+- [x] **4.5 Icon centred on the error text (web).** Test first: the error line is `align-items: center`, the icon has `flex-shrink: 0` and no vertical offset. Code: `register.page.css`. The offset from 4.4 is removed; the icon is centred on the text, and it no longer overlaps the second line.
