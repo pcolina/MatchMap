@@ -9,7 +9,7 @@ const withAccessToken = (request: HttpRequest<unknown>, accessToken: string | nu
   accessToken ? request.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } }) : request;
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
-  if (request.url.startsWith('/api/auth/')) {
+  if (new URL(request.url, 'http://local').pathname.startsWith('/api/auth/')) {
     return next(request);
   }
   const store = inject(AuthStore);

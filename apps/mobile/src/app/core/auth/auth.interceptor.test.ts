@@ -93,6 +93,17 @@ test('does not add the token to the auth endpoints', async () => {
   testing.verify();
 });
 
+test('does not add the token to auth endpoints given as absolute URLs', async () => {
+  const { http, testing } = await setup({ token: 'token' });
+
+  http.post('http://10.0.2.2:8080/api/auth/refresh', null).subscribe();
+
+  const request = testing.expectOne('http://10.0.2.2:8080/api/auth/refresh');
+  expect(request.request.headers.has('Authorization')).toBe(false);
+  request.flush({});
+  testing.verify();
+});
+
 test('refreshes once with the stored token after a 401 and repeats the request', async () => {
   const { http, testing, store, gateway, storage } = await setup({});
   let body: unknown;

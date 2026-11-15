@@ -41,7 +41,7 @@ test('sends one sign-in request with the normalised email and the mobile client 
   let tokens: unknown;
   api.signIn(' User@Example.com ', '123456').subscribe((result) => (tokens = result));
 
-  const request = http.expectOne('/api/auth/login');
+  const request = http.expectOne('http://10.0.2.2:8080/api/auth/login');
   expect(request.request.method).toBe('POST');
   expect(request.request.body).toEqual({ email: 'user@example.com', password: '123456' });
   expect(request.request.headers.get('X-Client')).toBe('mobile');
@@ -57,7 +57,7 @@ test('maps invalid credentials to its failure', async () => {
   let failure: unknown;
   api.signIn('user@example.com', 'wrong').subscribe({ error: (error) => (failure = error) });
 
-  http.expectOne('/api/auth/login').flush({ error: 'invalid_credentials' }, { status: 401, statusText: 'Unauthorized' });
+  http.expectOne('http://10.0.2.2:8080/api/auth/login').flush({ error: 'invalid_credentials' }, { status: 401, statusText: 'Unauthorized' });
 
   expect(failure).toBe('invalidCredentials');
   http.verify();
@@ -68,7 +68,7 @@ test('maps too many attempts to its failure', async () => {
   let failure: unknown;
   api.signIn('user@example.com', 'wrong').subscribe({ error: (error) => (failure = error) });
 
-  http.expectOne('/api/auth/login').flush({ error: 'too_many_attempts' }, { status: 429, statusText: 'Too Many Requests' });
+  http.expectOne('http://10.0.2.2:8080/api/auth/login').flush({ error: 'too_many_attempts' }, { status: 429, statusText: 'Too Many Requests' });
 
   expect(failure).toBe('tooManyAttempts');
   http.verify();
@@ -83,7 +83,7 @@ test.each([
   let failure: unknown;
   api.signIn('user@example.com', 'wrong').subscribe({ error: (error) => (failure = error) });
 
-  http.expectOne('/api/auth/login').flush({ error: code }, { status: 400, statusText: 'Bad Request' });
+  http.expectOne('http://10.0.2.2:8080/api/auth/login').flush({ error: code }, { status: 400, statusText: 'Bad Request' });
 
   expect(failure).toBe(expected);
   http.verify();
@@ -94,7 +94,7 @@ test('maps a request with no connection to the network failure', async () => {
   let failure: unknown;
   api.signIn('user@example.com', '123456').subscribe({ error: (error) => (failure = error) });
 
-  http.expectOne('/api/auth/login').flush({}, { status: 0, statusText: 'Unknown Error' });
+  http.expectOne('http://10.0.2.2:8080/api/auth/login').flush({}, { status: 0, statusText: 'Unknown Error' });
 
   expect(failure).toBe('network');
   http.verify();
@@ -105,7 +105,7 @@ test('treats a response without a refresh token as unknown', async () => {
   let failure: unknown;
   api.signIn('user@example.com', '123456').subscribe({ error: (error) => (failure = error) });
 
-  http.expectOne('/api/auth/login').flush({ tokenType: 'Bearer', accessToken: 'access', expiresIn: 900 });
+  http.expectOne('http://10.0.2.2:8080/api/auth/login').flush({ tokenType: 'Bearer', accessToken: 'access', expiresIn: 900 });
 
   expect(failure).toBe('unknown');
   http.verify();
@@ -116,7 +116,7 @@ test('maps any other error to the unknown failure', async () => {
   let failure: unknown;
   api.signIn('user@example.com', '123456').subscribe({ error: (error) => (failure = error) });
 
-  http.expectOne('/api/auth/login').flush({ error: 'server_error' }, { status: 500, statusText: 'Internal Server Error' });
+  http.expectOne('http://10.0.2.2:8080/api/auth/login').flush({ error: 'server_error' }, { status: 500, statusText: 'Internal Server Error' });
 
   expect(failure).toBe('unknown');
   http.verify();
@@ -127,7 +127,7 @@ test('sends the stored refresh token in the body with the mobile client header',
   let tokens: unknown;
   api.refresh('stored').subscribe((result) => (tokens = result));
 
-  const request = http.expectOne('/api/auth/refresh');
+  const request = http.expectOne('http://10.0.2.2:8080/api/auth/refresh');
   expect(request.request.method).toBe('POST');
   expect(request.request.body).toEqual({ refreshToken: 'stored' });
   expect(request.request.headers.get('X-Client')).toBe('mobile');
@@ -143,7 +143,7 @@ test('maps a rejected refresh to the invalid refresh token failure', async () =>
   let failure: unknown;
   api.refresh('stored').subscribe({ error: (error) => (failure = error) });
 
-  http.expectOne('/api/auth/refresh').flush({ error: 'invalid_refresh_token' }, { status: 401, statusText: 'Unauthorized' });
+  http.expectOne('http://10.0.2.2:8080/api/auth/refresh').flush({ error: 'invalid_refresh_token' }, { status: 401, statusText: 'Unauthorized' });
 
   expect(failure).toBe('invalidRefreshToken');
   http.verify();

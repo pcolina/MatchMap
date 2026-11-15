@@ -11,6 +11,8 @@ import {
 } from '@matchmap/shared';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import type { RegisterFailure, SignInFailure, SignInGateway, Tokens } from '../state/auth.model.ts';
+import { apiUrl } from '../../../core/api-url.ts';
+import { environment } from '../../../../environments/environment.ts';
 
 type TokenResponse = components['schemas']['TokenResponse'];
 type ErrorResponse = components['schemas']['Error'];
@@ -81,7 +83,7 @@ export class AuthApi implements SignInGateway {
   signIn(email: string, password: string): Observable<Tokens> {
     return this.tokens(
       this.http.post<TokenResponse>(
-        '/api/auth/login',
+        apiUrl('/api/auth/login', environment.apiBaseUrl),
         { email: normalizeEmail(email), password },
         { headers: { 'X-Client': 'mobile' } },
       ),
@@ -91,7 +93,7 @@ export class AuthApi implements SignInGateway {
   refresh(refreshToken: string): Observable<Tokens> {
     return this.tokens(
       this.http.post<TokenResponse>(
-        '/api/auth/refresh',
+        apiUrl('/api/auth/refresh', environment.apiBaseUrl),
         { refreshToken },
         { headers: { 'X-Client': 'mobile' } },
       ),
