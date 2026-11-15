@@ -10,6 +10,8 @@ No API call changes in this change, so no contract check is needed before the ta
 - [x] **1.2 Reserved space.** Test first: in `sign-in.page.spec.ts`, check that the failure element is always rendered, even with no failure, so showing or hiding it does not move the button or the social buttons (scenario "Reserved space keeps the layout still"). Code: keep the `min-height` of the failure element in `sign-in.page.css` after the move.
 - [x] **1.3 Messages unchanged.** Test first: in `sign-in.page.spec.ts`, check that the credentials, too-many-attempts, network and unknown messages show the same text in the new position (scenario "Position does not change the message"). The existing tests in this file must still pass. Code: none expected; if a test fails, fix the template only.
 
+- [x] **1.4 Form spacing.** Test first: in `sign-in.page.spec.ts`, check that the form `gap` is `var(--mm-space-5)` and that the header rule uses `var(--mm-space-12)` as bottom padding (requested after review, see `design.md` "Spacing update"). Code: `sign-in.page.css`.
+
 ## 2. Mobile (`apps/mobile`)
 
 - [x] **2.1 Failure position.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is rendered after `password-error` and before the submit button (scenarios "Failure message below the password field" and "Same position on mobile"). Code: move the `<text testID="failure">` in `sign-in.page.ts` into the password field group, after `testID="password-error"`.

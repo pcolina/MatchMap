@@ -12,6 +12,15 @@ The sign-in failure message (`role="alert"`) is a sibling of the password field 
 - **Keep the element and its semantics.** It keeps `role="alert"` (web) and `accessibilityRole="alert"` (mobile). Its i18n keys and the mapping in `failureMessage()` are unchanged.
 - **Same layout on both apps.** The DOM order is the same on web and mobile, as the spec requires.
 
+## Spacing update (web)
+
+After the failure message moved under the password field, the form felt cramped. The user asked for wider spacing between the form components, paid for with space above the form:
+
+- The form `gap` goes from `--mm-space-4` (16 px) to `--mm-space-5` (20 px).
+- The bottom padding of the header (`.hero`) goes from `--mm-space-16` (64 px) to `--mm-space-12` (48 px), so the form gains room below and loses 16 px above it.
+
+The mobile form has no gap today; its spacing is not changed here and needs its own decision.
+
 ## Tests
 
 Each test is written first and must fail before the change (`CLAUDE.md` §2, TDD).

@@ -78,6 +78,15 @@ describe('SignInPage', () => {
     expect(getComputedStyle(header).getPropertyValue('background-image')).toContain('var(--mm-color-bg)');
   });
 
+  it('spaces the form components wider and takes that space from the header above the form', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const form = element.querySelector<HTMLElement>('form')!;
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+
+    expect(getComputedStyle(form).getPropertyValue('gap')).toBe('var(--mm-space-5)');
+    expect(rules.some((text) => text.includes('.hero') && text.includes('var(--mm-space-12)'))).toBe(true);
+  });
+
   it('sets the tagline in the handwritten font and slants it upwards', () => {
     setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
