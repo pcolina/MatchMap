@@ -6,10 +6,10 @@ No change to the API contract. The API routes are the ones already in `matchmap-
 
 ## 1. Web (`apps/web`)
 
-- [ ] **1.1 Development environment.** Test first: a spec checks that `src/environments/environment.ts` exports `environment.apiBaseUrl` equal to `''`, and fails because the file does not exist. Code: create `apps/web/src/environments/environment.ts`.
-- [ ] **1.2 Auth calls from the base.** Test first: `auth.api.spec.ts` checks that the login and refresh requests are sent to `${apiBaseUrl}/api/auth/login` and `${apiBaseUrl}/api/auth/refresh`, and that with the development value they are relative. Code: build the two URLs in `features/auth/data/auth.api.ts` from `environment.apiBaseUrl`.
-- [ ] **1.3 GraphQL link from the base.** Test first: a spec checks that the Apollo link URI is `${apiBaseUrl}/graphql`. Code: `apps/web/src/app/app.config.ts`.
-- [ ] **1.4 Interceptor by path.** Test first: `auth.interceptor.spec.ts` checks that an absolute request to `http://localhost:8080/api/auth/login` gets the `X-Client: web` header, and that a request to `/graphql` does not. Code: parse the URL with `new URL(request.url, 'http://local')` and test the pathname in `core/auth/auth.interceptor.ts`.
+- [x] **1.1 Development environment.** Test first: a spec checks that `src/environments/environment.ts` exports `environment.apiBaseUrl` equal to `''`, and fails because the file does not exist. Code: create `apps/web/src/environments/environment.ts`.
+- [x] **1.2 Auth calls from the base.** Test first: `auth.api.spec.ts` checks that the login and refresh requests are sent to `${apiBaseUrl}/api/auth/login` and `${apiBaseUrl}/api/auth/refresh`, and that with the development value they are relative. Code: build the two URLs in `features/auth/data/auth.api.ts` from `environment.apiBaseUrl`.
+- [x] **1.3 GraphQL link from the base.** Test first: a spec checks that the Apollo link URI is `${apiBaseUrl}/graphql`. Code: `apps/web/src/app/app.config.ts`.
+- [x] **1.4 Interceptor by path.** Test first: `auth.interceptor.spec.ts` checks that an absolute request to `http://localhost:8080/api/auth/login` gets the `X-Client: web` header, and that a request to `/graphql` does not. Code: parse the URL with `new URL(request.url, 'http://local')` and test the pathname in `core/auth/auth.interceptor.ts`.
 
 ## 2. Mobile (`apps/mobile`)
 

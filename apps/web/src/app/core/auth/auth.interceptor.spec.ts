@@ -55,6 +55,18 @@ describe('authInterceptor', () => {
     testing.verify();
   });
 
+  it('does not add the token to auth endpoints given as absolute URLs', () => {
+    const { http, testing, store } = setup(() => throwError(() => 'unused'));
+    store.setAccessToken('token');
+
+    http.post('http://localhost:8080/api/auth/refresh', null).subscribe();
+
+    const request = testing.expectOne('http://localhost:8080/api/auth/refresh');
+    expect(request.request.headers.has('Authorization')).toBe(false);
+    request.flush({});
+    testing.verify();
+  });
+
   it('refreshes once after a 401 and repeats the request with the new token', () => {
     const refresh = vi.fn(() => of({ accessToken: 'fresh' }));
     const { http, testing, store } = setup(refresh);
