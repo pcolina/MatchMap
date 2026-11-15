@@ -91,14 +91,14 @@ describe('SignInPage', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const label = element.querySelector<HTMLElement>('label[for="email"]')!;
 
-    expect(getComputedStyle(label).getPropertyValue('margin-bottom')).toBe('calc(-1 * var(--mm-space-1))');
+    expect(getComputedStyle(label).getPropertyValue('margin-bottom')).toBe('calc(-1 * var(--mm-space-2))');
   });
 
-  it('adds about half as much again of space between the password field and the sign-in button', () => {
+  it('adds more space between the password field and the sign-in button', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const submit = element.querySelector<HTMLElement>('button[type="submit"]')!;
 
-    expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('calc(-1 * var(--mm-space-1))');
+    expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('0px');
   });
 
   it('sets the tagline in the handwritten font and slants it upwards', () => {

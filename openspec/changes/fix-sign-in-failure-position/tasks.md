@@ -14,6 +14,8 @@ No API call changes in this change, so no contract check is needed before the ta
 
 - [x] **1.5 Label and button spacing.** Test first: in `sign-in.page.spec.ts`, check that the email label's computed bottom margin is `calc(-1 * var(--mm-space-1))` and that the submit button's computed top margin is `calc(-1 * var(--mm-space-1))` (see `design.md` "Label and button spacing update"). Code: `sign-in.page.css`.
 
+- [x] **1.6 Second label and button spacing.** Test first: in `sign-in.page.spec.ts`, the email label's computed bottom margin is `calc(-1 * var(--mm-space-2))` and the submit button's computed top margin is `0px` (see `design.md` "Second label and button spacing update"). Code: `sign-in.page.css`.
+
 ## 2. Mobile (`apps/mobile`)
 
 - [x] **2.1 Failure position.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is rendered after `password-error` and before the submit button (scenarios "Failure message below the password field" and "Same position on mobile"). Code: move the `<text testID="failure">` in `sign-in.page.ts` into the password field group, after `testID="password-error"`.
@@ -22,6 +24,8 @@ No API call changes in this change, so no contract check is needed before the ta
 - [x] **2.3 Form spacing.** Test first: in `sign-in.page.test.ts`, check that the form `gap` is `space[5]` and that the content container has no top padding (the same change as 1.4 on mobile). Code: `sign-in.page.ts`, `[style.gap]` on the form and `[style.paddingTop]` on the content container.
 
 - [x] **2.4 Label and button spacing.** Test first: in `sign-in.page.test.ts`, check that the email and password labels have a bottom margin of `-space[1]` and that the Sign in button has a top margin of `space[8]` (see `design.md` "Label and button spacing update"). Code: `sign-in.page.ts`.
+
+- [x] **2.5 Second label and button spacing.** Test first: in `sign-in.page.test.ts`, the email and password labels have a bottom margin of `-space[2]` and the Sign in button a top margin of `space[10]` (see `design.md` "Second label and button spacing update"). Code: `sign-in.page.ts`.
 
 ## 3. Checks and review
 

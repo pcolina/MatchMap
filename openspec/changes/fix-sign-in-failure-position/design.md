@@ -41,3 +41,10 @@ Each test is written first and must fail before the change (`CLAUDE.md` §2, TDD
 
 - On mobile the password field group is a flex stack with its own styling. The move must keep the message full width and aligned with the field, not with the icon. Checked visually at phone width in the mobile app.
 - On web, the `top: -10px` offsets on `form` and on the submit button are untouched; the message moves with the password group, so the existing offsets keep applying to the button only.
+
+## Second label and button spacing update
+
+Requested again after review, on both platforms:
+
+- Labels move 8 px closer to their input: the label bottom margin is `-space-2` (was `-space-1`).
+- The space between the password field and the Sign in button grows again. Web: the button top margin goes from `-space-1` to `0`, so the effective space is the form gap, 20 px (was 16 px). Mobile: the button top margin goes from `space-8` to `space-10` (40 px), so the effective space is 60 px (was 52 px).
