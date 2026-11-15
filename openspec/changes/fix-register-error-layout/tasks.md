@@ -33,3 +33,5 @@ No API call changes, so no contract check is needed.
 - [x] **4.2 Mobile distances.** Test first: in `register.page.test.ts`, the labels have bottom margin `-space[2]`, the error rows have margins 5 and -5, the failure row has margins `-space[2]` and 0, the submit button has top margin `space[10]`, and the form has `gap` `space[5]`. Code: `register.page.ts`.
 
 - [x] **4.3 Icon registration and mismatch message.** Test first: a mobile test checks that `tablerAlertCircle` is in the `provideIcons` list of `main.ts` (without it the icon renders nothing in the app), and a web test checks that the repeat-password mismatch message has the icon and the same 5 px offset as the other errors. Code: `apps/mobile/src/main.ts`.
+
+- [x] **4.4 Layout shift with two-line errors (web).** Test first: the three field error lines of the register page have `display: flex`, so the icon is a separate flex item and does not grow the first line. Without it, the 20 px icon made the first line taller than the 16 px line, and everything below moved down. Code: `register.page.css`.

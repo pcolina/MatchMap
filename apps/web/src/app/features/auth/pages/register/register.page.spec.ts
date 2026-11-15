@@ -339,6 +339,14 @@ describe('RegisterPage', () => {
     expect(rules.some((text) => text.includes('.error-icon') && text.includes('top: 3px'))).toBe(true);
   });
 
+  it('lays out each error as a row so that the icon does not grow the line and move the layout', () => {
+    const { element } = setup(successGateway());
+
+    for (const id of ['#email-error', '#password-error', '#repeat-password-error']) {
+      expect(getComputedStyle(element.querySelector<HTMLElement>(id)!).getPropertyValue('display')).toBe('flex');
+    }
+  });
+
   it('keeps the failure element rendered when there is no failure', () => {
     const { element } = setup(successGateway());
 
