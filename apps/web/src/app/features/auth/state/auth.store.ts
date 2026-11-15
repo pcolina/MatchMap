@@ -96,5 +96,6 @@ export const AuthStore = signalStore(
     ),
     setAccessToken: (accessToken: string) => patchState(store, { accessToken }),
     signOut: () => patchState(store, { status: 'idle', accessToken: null, failure: null }),
+    clearFailure: () => patchState(store, { failure: null }),
   })),
 );
