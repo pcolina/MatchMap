@@ -20,8 +20,8 @@ No change to the API contract. The API routes are the ones already in `matchmap-
 
 ## 3. Checks and review
 
-- [ ] **3.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check. Paste the summary in the PR.
+- [x] **3.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check. Paste the summary in the PR.
 - [ ] **3.2 Manual check, web.** After restarting `pnpm web`, sign in from the web app on port 4300 and record the result in the PR (the login must reach the API, not return 404).
 - [ ] **3.3 Manual check, mobile.** On the Android emulator, sign in from the app and record the result in the PR. This check is done by the user.
-- [ ] **3.4 Translations.** No new keys: the PR description says "Translations to review: none".
+- [x] **3.4 Translations.** No new keys: the PR description says "Translations to review: none".
 - [ ] **3.5 Production.** Not in this change. The production origin is still `[NEEDS CLARIFICATION]` in the proposal.
