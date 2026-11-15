@@ -11,6 +11,7 @@ import { filter, firstValueFrom } from 'rxjs';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { setupTranslations } from './core/i18n/language';
+import { trackInputModality } from './core/input-modality';
 import { AuthApi } from './features/auth/data/auth.api';
 import { AuthStore, SIGN_IN_GATEWAY } from './features/auth/state/auth.store';
 import { routes } from './app.routes';
@@ -27,6 +28,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideTranslateService({ fallbackLang: 'en' }),
     provideAppInitializer(() => setupTranslations(inject(TranslateService), navigator.language)),
+    provideAppInitializer(() => {
+      trackInputModality(document);
+    }),
     provideAppInitializer(() => {
       const store = inject(AuthStore);
       store.restore();
