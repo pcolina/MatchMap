@@ -20,7 +20,7 @@ No API call changes, so no contract check is needed.
 
 ## 3. Component and page (`apps/web`)
 
-- [ ] **3.1 Map component.** Test first: `map-view.spec.ts` mocks `maplibre-gl`, and checks that the component creates the map once with the built style, and rebuilds the style when the scheme changes (scenario "World map is shown"). Code: `shared/map-view/map-view.ts`, OnPush, input `states`.
+- [x] **3.1 Map component.** Test first: `map-view.spec.ts` mocks `maplibre-gl`, and checks that the component creates the map once with the built style, and rebuilds the style when the scheme changes (scenario "World map is shown"). Code: `shared/map-view/map-view.ts`, OnPush, input `states`.
 - [ ] **3.2 Full page.** Test first: the host has `height: 100%` and the map container fills it (scenario "Map fills the page"). Code: `map-view.css`, and `.main-layout` with `height: 100dvh` in `main-layout.ts`.
 - [ ] **3.3 Main layout.** Test first: `main-layout.spec.ts` checks that `app-map-view` is the only child content of the layout. Code: `shared/main-layout/main-layout.ts`.
 - [ ] **3.4 Accessible name.** Test first: the map has `role="img"` and an `aria-label` from the catalogue key `map.world.label`. Code: the template, and the key in both catalogues (see 3.5).
