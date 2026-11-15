@@ -12,8 +12,8 @@ No API call changes in this change, so no contract check is needed before the ta
 
 ## 2. Mobile (`apps/mobile`)
 
-- [ ] **2.1 Failure position.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is rendered after `password-error` and before the submit button (scenarios "Failure message below the password field" and "Same position on mobile"). Code: move the `<text testID="failure">` in `sign-in.page.ts` into the password field group, after `testID="password-error"`.
-- [ ] **2.2 Reserved space and messages.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is always rendered and that the four failure messages show the same text (scenarios "Reserved space keeps the layout still" and "Position does not change the message"). Code: keep the reserved height of the element after the move.
+- [x] **2.1 Failure position.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is rendered after `password-error` and before the submit button (scenarios "Failure message below the password field" and "Same position on mobile"). Code: move the `<text testID="failure">` in `sign-in.page.ts` into the password field group, after `testID="password-error"`.
+- [x] **2.2 Reserved space and messages.** Test first: in `sign-in.page.test.ts`, check that the `failure` testID is always rendered and that the four failure messages show the same text (scenarios "Reserved space keeps the layout still" and "Position does not change the message"). Code: keep the reserved height of the element after the move.
 
 ## 3. Checks and review
 

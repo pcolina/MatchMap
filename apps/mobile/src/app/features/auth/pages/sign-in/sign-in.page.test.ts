@@ -256,6 +256,25 @@ test('shows the too-many-attempts message from the store', async () => {
   expect(screen.getByText('Too many attempts. Wait a few minutes and try again.')).toBeTruthy();
 });
 
+test('shows the sign-in failure in the password group, not in the group of the submit button', async () => {
+  const store = fakeStore();
+  store.failure.set('unknown');
+  await setup(store);
+
+  const failure = screen.getByTestId('failure');
+
+  expect(failure.parent).toBe(screen.getByTestId('password-error').parent);
+  expect(failure.parent).toBe(screen.getByLabelText('Password').parent!.parent);
+  expect(failure.parent).not.toBe(screen.getByRole('button', { name: 'Sign in' }).parent);
+});
+
+test('keeps the sign-in failure element rendered when there is no failure', async () => {
+  await setup(fakeStore());
+
+  expect(screen.getByTestId('failure')).toBeTruthy();
+  expect(screen.queryByText('Something went wrong. Try again.')).toBeNull();
+});
+
 test('shows the unknown failure message from the store', async () => {
   const store = fakeStore();
   store.failure.set('unknown');

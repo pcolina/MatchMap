@@ -52,35 +52,37 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
             </view>
             <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ emailError() }}</text>
 
-            <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.passwordLabel') }}</text>
-            <view class="field">
-              <ng-icon name="tablerLock" [color]="palette().textSecondary" />
-              <text-input
-                class="input"
-                [accessibilityLabel]="t('login.signIn.passwordLabel')"
-                [secureTextEntry]="!showPassword()"
-                autoCapitalize="none"
-                autoComplete="current-password"
-                [formField]="form.password"
-                [style.color]="palette().text"
-                [style.borderColor]="form.password().touched() && form.password().invalid() ? palette().danger : palette().borderStrong"
-                [style.backgroundColor]="palette().surface"
-              />
-              <pressable
-                accessibilityRole="button"
-                [accessibilityLabel]="t(showPassword() ? 'login.signIn.hidePassword' : 'login.signIn.showPassword')"
-                (press)="togglePassword()"
-              >
-                <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
-              </pressable>
+            <view>
+              <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.passwordLabel') }}</text>
+              <view class="field">
+                <ng-icon name="tablerLock" [color]="palette().textSecondary" />
+                <text-input
+                  class="input"
+                  [accessibilityLabel]="t('login.signIn.passwordLabel')"
+                  [secureTextEntry]="!showPassword()"
+                  autoCapitalize="none"
+                  autoComplete="current-password"
+                  [formField]="form.password"
+                  [style.color]="palette().text"
+                  [style.borderColor]="form.password().touched() && form.password().invalid() ? palette().danger : palette().borderStrong"
+                  [style.backgroundColor]="palette().surface"
+                />
+                <pressable
+                  accessibilityRole="button"
+                  [accessibilityLabel]="t(showPassword() ? 'login.signIn.hidePassword' : 'login.signIn.showPassword')"
+                  (press)="togglePassword()"
+                >
+                  <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
+                </pressable>
+              </view>
+              <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ passwordError() }}</text>
+              <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
             </view>
-            <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ passwordError() }}</text>
-
-            <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
 
             <pressable
               accessibilityRole="button"
               [disabled]="store.isLoading()"
+              [style.marginTop]="space[4]"
               [style.height]="size.buttonHeight"
               [style.borderRadius]="radius.md"
               [style.backgroundColor]="palette().accent"
