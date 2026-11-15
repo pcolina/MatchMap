@@ -395,6 +395,8 @@ describe('RegisterPage', () => {
 
     expect(errorText(element)).toContain('Passwords do not match.');
     expect(field(element, 'repeat-password').nextElementSibling?.getAttribute('data-error')).not.toBeNull();
+    expect(element.querySelector('#repeat-password-error ng-icon')?.getAttribute('name')).toBe('tablerAlertCircle');
+    expect(getComputedStyle(element.querySelector<HTMLElement>('#repeat-password-error')!).getPropertyValue('margin-top')).toBe('5px');
     expect(gateway.register).not.toHaveBeenCalled();
   });
 

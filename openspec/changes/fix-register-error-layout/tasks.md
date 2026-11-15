@@ -31,3 +31,5 @@ No API call changes, so no contract check is needed.
 
 - [x] **4.1 Web distances.** Test first: in `register.page.spec.ts`, the field error lines have margin-top `5px` and margin-bottom `calc(var(--mm-space-4) - 5px)`, the submit button has margin-top `var(--mm-space-2)`, and the error icon is lowered 3 px as on sign-in. Code: `register.page.css`.
 - [x] **4.2 Mobile distances.** Test first: in `register.page.test.ts`, the labels have bottom margin `-space[2]`, the error rows have margins 5 and -5, the failure row has margins `-space[2]` and 0, the submit button has top margin `space[10]`, and the form has `gap` `space[5]`. Code: `register.page.ts`.
+
+- [x] **4.3 Icon registration and mismatch message.** Test first: a mobile test checks that `tablerAlertCircle` is in the `provideIcons` list of `main.ts` (without it the icon renders nothing in the app), and a web test checks that the repeat-password mismatch message has the icon and the same 5 px offset as the other errors. Code: `apps/mobile/src/main.ts`.
