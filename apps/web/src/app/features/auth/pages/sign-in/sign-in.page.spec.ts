@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
-import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
+import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
@@ -16,7 +16,7 @@ const setup = (gateway: Gateway) => {
     ({ matches: false, media: query, addEventListener: () => undefined, removeEventListener: () => undefined }) as unknown as MediaQueryList;
   TestBed.configureTestingModule({
     providers: [
-      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
+      provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
       provideRouter([]),
       provideTranslateService({ fallbackLang: 'en' }),
       { provide: SIGN_IN_GATEWAY, useValue: gateway as unknown as SignInGateway },
@@ -161,6 +161,43 @@ describe('SignInPage', () => {
     const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
     expect(field(element, 'password').parentElement!.contains(alert)).toBe(true);
     expect(alert.textContent?.trim()).toBe('Something went wrong. Try again.');
+  });
+
+  it('shows a decorative alert icon before the failure message', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'unknown')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+
+    const icon = element.querySelector('[role="alert"] ng-icon')!;
+    expect(icon.getAttribute('name')).toBe('tablerAlertCircle');
+    expect(icon.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('shows the alert icon before a field error message', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    await submit(element, fixture);
+
+    const icon = element.querySelector('#email-error ng-icon')!;
+    expect(icon.getAttribute('name')).toBe('tablerAlertCircle');
+    expect(icon.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('colours the error icon with the danger token and sizes it with the icon token', () => {
+    setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
+
+    expect(rules.some((text) => text.includes('.error-icon') && text.includes('color: var(--mm-color-danger)') && text.includes('width: var(--mm-size-icon-md)'))).toBe(true);
+  });
+
+  it('shows no alert icon in an empty error space', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    expect(element.querySelector('#email-error ng-icon')).toBeNull();
+    expect(element.querySelector('#password-error ng-icon')).toBeNull();
+    expect(element.querySelector('[role="alert"] ng-icon')).toBeNull();
   });
 
   it('shows the sign-in failure directly below the password field and above the submit button', () => {

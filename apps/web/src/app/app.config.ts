@@ -1,6 +1,6 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideIcons } from '@ng-icons/core';
-import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
+import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideRouter } from '@angular/router';
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
       link: inject(HttpLink).create({ uri: '/graphql' }),
       cache: new InMemoryCache(),
     })),
-    provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
+    provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
     provideRouter(routes),
     provideTranslateService({ fallbackLang: 'en' }),
     provideAppInitializer(() => setupTranslations(inject(TranslateService), navigator.language)),

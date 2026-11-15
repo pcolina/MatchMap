@@ -25,9 +25,9 @@
         />
         <p id="email-error" class="error" data-error>
           @if (form.email().touched() && form.email().invalid()) {
-            {{ form.email().errors()[0]?.kind | translate }}
+            <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ form.email().errors()[0]?.kind | translate }}
           } @else if (emailLimitMessage(); as message) {
-            {{ message | translate }}
+            <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ message | translate }}
           }
         </p>
       </div>
@@ -57,14 +57,14 @@
         </button>
         <p id="password-error" class="error" data-error>
           @if (form.password().touched() && form.password().invalid()) {
-            {{ form.password().errors()[0]?.kind | translate }}
+            <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ form.password().errors()[0]?.kind | translate }}
           } @else if (passwordLimitMessage(); as message) {
-            {{ message | translate }}
+            <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ message | translate }}
           }
         </p>
         <p class="error" data-error role="alert">
           @if (failureMessage(); as message) {
-            {{ message | translate }}
+            <ng-icon name="tablerAlertCircle" class="error-icon" aria-hidden="true" /> {{ message | translate }}
           }
         </p>
       </div>

@@ -138,6 +138,13 @@ input {
   border-color: var(--mm-color-danger);
 }
 
+.error-icon {
+  width: var(--mm-size-icon-md);
+  height: var(--mm-size-icon-md);
+  vertical-align: text-bottom;
+  color: var(--mm-color-danger);
+}
+
 #email-error,
 #password-error {
   margin-top: 5px;
