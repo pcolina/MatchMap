@@ -13,6 +13,7 @@ The web app needs a world map: the first step toward the personal map that `CLAU
 - **Colour per country:** an input maps a country code to a colour state. The map colours the country with a data-driven fill by `iso_a2`. The colours come from the existing map tokens (`mapColors`), not from hard-coded values.
 - **Colour states are not only colour:** each coloured country also has a visible outline, as `docs/design.md` §2.2 requires.
 - **Background:** the ocean and land colours from `mapColors`. No external tile server is used, so the map needs no network service.
+- **Placement:** the map is the content of the main route (`''` in `app.routes.ts`), which is the first page the user sees after registration or sign-in. `MainLayout` renders `MapView` as its only content, filling 100% of the page area: full width and full height of the viewport. The layout has no header or tab bar yet, so there is nothing to share space with. When a navigation bar is added, it needs its own change.
 - **Dependency:** `maplibre-gl`, pinned to an exact version at least two weeks old, added to `apps/web/package.json`.
 
 ## Capabilities
@@ -27,7 +28,7 @@ None.
 
 ## Impact
 
-- **Code:** `apps/web/src/app/shared/map-view/` (new), `apps/web/package.json` (new dependency), the map data under `apps/web/public/geo/` (new).
+- **Code:** `apps/web/src/app/shared/map-view/` (new), `apps/web/src/app/shared/main-layout/main-layout.ts` (renders the map), `apps/web/package.json` (new dependency), the map data under `apps/web/public/geo/` (new).
 - **Data:** two Natural Earth files, public domain. Their size is measured before implementation and checked against the performance budget in `CLAUDE.md` §9.
 - **APIs:** none.
 - **Mobile:** not changed. The mobile map needs a development build and is a separate change.
