@@ -35,7 +35,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
           <app-skeleton [shapes]="shapes" />
         } @else {
           <view class="form" [style.gap]="space[5]">
-            <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.emailLabel') }}</text>
+            <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[1]">{{ t('login.signIn.emailLabel') }}</text>
             <view class="field">
               <ng-icon name="tablerUser" [color]="palette().textSecondary" />
               <text-input
@@ -53,7 +53,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
             <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ emailError() }}</text>
 
             <view>
-              <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.signIn.passwordLabel') }}</text>
+              <text [style]="ts('label')" [style.color]="palette().text" [style.marginBottom]="-space[1]">{{ t('login.signIn.passwordLabel') }}</text>
               <view class="field">
                 <ng-icon name="tablerLock" [color]="palette().textSecondary" />
                 <text-input
@@ -82,7 +82,7 @@ const toError = (key: string | null) => (key === null ? undefined : { kind: key 
             <pressable
               accessibilityRole="button"
               [disabled]="store.isLoading()"
-              [style.marginTop]="space[4]"
+              [style.marginTop]="space[8]"
               [style.height]="size.buttonHeight"
               [style.borderRadius]="radius.md"
               [style.backgroundColor]="palette().accent"
