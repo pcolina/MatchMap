@@ -16,6 +16,8 @@ Generated from `tokens.json` (v1.0.0).
 | Warning (text) (`warning` / `surface`) | 4.5:1 | 5.02:1 ✅ | 10.41:1 ✅ | text |
 | Error (text) (`danger` / `surface`) | 4.5:1 | 6.47:1 ✅ | 6.28:1 ✅ | text |
 | Info (text) (`info` / `surface`) | 4.5:1 | 6.70:1 ✅ | 6.84:1 ✅ | text |
+| Input border (`borderInput` / `surface`) | 3:1 | 4.71:1 ✅ | 1.85:1 ❌ (issue #7) | non-text |
+| Input border (`borderInput` / `bg`) | 3:1 | 4.27:1 ✅ | 2.03:1 ❌ (issue #7) | non-text |
 | `map.visited` fill vs land (`map.land`) | 3:1 | 4.20:1 ✅ | 8.14:1 ✅ | non-text |
 | `map.lived` fill vs land (`map.land`) | 3:1 | 7.31:1 ✅ | 12.01:1 ✅ | non-text |
 | `map.compareBoth` fill vs land (`map.land`) | 3:1 | 4.20:1 ✅ | 8.14:1 ✅ | non-text |

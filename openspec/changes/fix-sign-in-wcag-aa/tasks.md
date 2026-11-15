@@ -6,8 +6,8 @@ No API call changes in this change, so no contract check is needed.
 
 ## 1. Tokens (`tokens/`)
 
-- [ ] **1.1 Token consistency.** Test first: a test reads `tokens.json`, `tokens.ts` and `tokens.css` and fails because `borderInput` does not exist yet. It checks that `borderInput` has light value `#6B7485` in all three files and that `borderStrong` is still `#C3CCD9` light. Code: add `borderInput` to `tokens/tokens.json` (light `#6B7485`, dark `#3B4660`), `tokens/tokens.ts` and `tokens/tokens.css`.
-- [ ] **1.2 Contrast report.** Test first: a test checks that `tokens/contrast-report.md` has a row for `borderInput` against `surface` and `bg`, day and night, with a ratio of at least 3:1. Code: add the rows to `tokens/contrast-report.md`.
+- [x] **1.1 Token consistency.** Test first: a test reads `tokens.json`, `tokens.ts` and `tokens.css` and fails because `borderInput` does not exist yet. It checks that `borderInput` has light value `#6B7485` in all three files and that `borderStrong` is still `#C3CCD9` light. Code: add `borderInput` to `tokens/tokens.json` (light `#6B7485`, dark `#3B4660`), `tokens/tokens.ts` and `tokens/tokens.css`.
+- [x] **1.2 Contrast report.** Test first: a test checks that `tokens/contrast-report.md` has a row for `borderInput` against `surface` and `bg`, day and night, with a ratio of at least 3:1. Code: add the rows to `tokens/contrast-report.md`.
 
 ## 2. Web (`apps/web`)
 
