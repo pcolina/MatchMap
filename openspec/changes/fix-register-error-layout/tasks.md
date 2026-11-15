@@ -14,15 +14,15 @@ No API call changes, so no contract check is needed.
 
 ## 2. Mobile (`apps/mobile`)
 
-- [ ] **2.1 Check the ng-native scroll API.** Before any mobile code, read the `scroll-view` section of https://ng-native.com/llms-full.txt and record in the PR which call scrolls a view into view. If the API differs from this design, stop and report.
-- [ ] **2.2 Failure below the button.** Test first: in `register.page.test.ts`, the failure row comes after the Create account button in the render order (scenario "Same behaviour on mobile"). Code: move the row in the register page.
-- [ ] **2.3 Icon row and reserved height.** Test first: each error row has the danger-coloured icon at `size.iconMd`, and the rows have `minHeight` 32 (scenarios "Error state on a field" and "Two-line error keeps the layout"). Code: the rows in the register page.
-- [ ] **2.4 Scroll view.** Test first: the register form is inside a `scroll-view` (scenario "Form scrolls when the message does not fit"). Code: wrap the form in the register page.
-- [ ] **2.5 Scroll to the failure.** Test first: after a failed request the failure row is scrolled into view, using the call confirmed in 2.1. Code: the call in the register page.
+- [x] **2.1 Check the ng-native scroll API.** Before any mobile code, read the `scroll-view` section of https://ng-native.com/llms-full.txt and record in the PR which call scrolls a view into view. If the API differs from this design, stop and report.
+- [x] **2.2 Failure below the button.** Test first: in `register.page.test.ts`, the failure row comes after the Create account button in the render order (scenario "Same behaviour on mobile"). Code: move the row in the register page.
+- [x] **2.3 Icon row and reserved height.** Test first: each error row has the danger-coloured icon at `size.iconMd`, and the rows have `minHeight` 32 (scenarios "Error state on a field" and "Two-line error keeps the layout"). Code: the rows in the register page.
+- [ ] **2.4 Scroll view (deferred).** Deferred by the owner, who assumes the register form fits on the phone. Revisit in the mobile correction session, together with the keyboard case. The `<scroll-view>` wrap is not done. Test first: the register form is inside a `scroll-view` (scenario "Form scrolls when the message does not fit"). Code: wrap the form in the register page.
+- [ ] **2.5 Scroll to the failure (deferred).** Depends on 2.4. ng-native `scroll-view` has no `scrollIntoView`; the only option is `scrollTo({ y })` with a measured offset, to decide in the correction session. Test first: after a failed request the failure row is scrolled into view, using the call confirmed in 2.1. Code: the call in the register page.
 
 ## 3. Checks and review
 
-- [ ] **3.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check. Paste the summary in the PR.
+- [x] **3.1 Full check.** Run `pnpm test` in `apps/web` and `apps/mobile`, the mobile typecheck, and the web `ngc` check. Paste the summary in the PR.
 - [ ] **3.2 Visual check, web.** At phone width in Chrome or Edge, with the dev server restarted: check the icon alignment (2 px), the two-line space, and that the message is visible after a failed submit.
 - [ ] **3.3 Visual check, mobile.** On the Android emulator: the same checks. Done by the user.
-- [ ] **3.4 Translations.** No new keys: the PR description says "Translations to review: none".
+- [x] **3.4 Translations.** No new keys: the PR description says "Translations to review: none".

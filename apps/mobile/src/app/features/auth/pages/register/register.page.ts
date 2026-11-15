@@ -53,7 +53,12 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
                 [style.backgroundColor]="palette().surface"
               />
             </view>
-            <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.email().touched() && form.email().invalid() ? t(form.email().errors()[0]?.kind ?? '') : '' }}</text>
+            <view class="error-row" [style.minHeight]="errorMinHeight">
+              @if (form.email().touched() && form.email().invalid()) {
+                <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
+              }
+              <text testID="email-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.email().touched() && form.email().invalid() ? t(form.email().errors()[0]?.kind ?? '') : '' }}</text>
+            </view>
 
             <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.register.passwordLabel') }}</text>
             <view class="field">
@@ -77,7 +82,12 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
                 <ng-icon [name]="showPassword() ? 'tablerEye' : 'tablerEyeOff'" [color]="palette().textSecondary" />
               </pressable>
             </view>
-            <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.password().touched() && form.password().invalid() ? t(form.password().errors()[0]?.kind ?? '') : '' }}</text>
+            <view class="error-row" [style.minHeight]="errorMinHeight">
+              @if (form.password().touched() && form.password().invalid()) {
+                <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
+              }
+              <text testID="password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.password().touched() && form.password().invalid() ? t(form.password().errors()[0]?.kind ?? '') : '' }}</text>
+            </view>
 
             <text [style]="ts('label')" [style.color]="palette().text">{{ t('login.register.repeatPasswordLabel') }}</text>
             <view class="field">
@@ -94,9 +104,12 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
                 [style.backgroundColor]="palette().surface"
               />
             </view>
-            <text testID="repeat-password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.repeatPassword().touched() && form.repeatPassword().invalid() ? t(form.repeatPassword().errors()[0]?.kind ?? '') : '' }}</text>
-
-            <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
+            <view class="error-row" [style.minHeight]="errorMinHeight">
+              @if (form.repeatPassword().touched() && form.repeatPassword().invalid()) {
+                <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
+              }
+              <text testID="repeat-password-error" [style]="ts('caption')" [style.color]="palette().danger">{{ form.repeatPassword().touched() && form.repeatPassword().invalid() ? t(form.repeatPassword().errors()[0]?.kind ?? '') : '' }}</text>
+            </view>
 
             <pressable
               accessibilityRole="button"
@@ -110,6 +123,12 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
             >
               <text [style]="ts('button')" [style.color]="palette().onAccent">{{ t('login.register.submit') }}</text>
             </pressable>
+            <view class="error-row" [style.minHeight]="errorMinHeight">
+              @if (failureText()) {
+                <ng-icon name="tablerAlertCircle" [color]="palette().danger" [style.width]="size.iconMd" [style.height]="size.iconMd" />
+              }
+              <text testID="failure" accessibilityRole="alert" [style]="ts('caption')" [style.color]="palette().danger">{{ failureText() }}</text>
+            </view>
           </view>
         }
 
@@ -148,6 +167,10 @@ const signInFailures: ReadonlySet<AuthFailure> = new Set<AuthFailure>(['invalidC
       width: 100%;
       max-width: 360px;
     }
+    .error-row {
+      flex-direction: row;
+      align-items: center;
+    }
     .field {
       flex-direction: row;
       align-items: center;
@@ -172,6 +195,7 @@ export class RegisterPage {
   protected readonly radius = radius;
   protected readonly size = size;
   protected readonly space = space;
+  protected readonly errorMinHeight = typography.caption.lineHeight * 2;
   protected readonly shapes: readonly SkeletonShape[] = ['field', 'field', 'button'];
   protected readonly showPassword = signal(false);
 
