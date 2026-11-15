@@ -12,6 +12,7 @@ The store clears the failure only when the form is submitted or the session is c
 - The typed email and password are kept, as the spec already requires.
 - Field error messages (client validation) are not changed: they still show when a field is invalid and touched.
 - The failure message is shown again only after a new submit that fails.
+- The sign-in failure message is centred between the password input and the Sign in button: the space above it and the space below it are equal. The total space between the password input and the button does not grow. This modifies the requirement `Sign-in failure position` of `client-sign-in`, which today places the message closer to the button.
 
 ## Capabilities
 
@@ -22,6 +23,7 @@ None.
 ### Modified Capabilities
 
 - `client-sign-in`: the sign-in failure message is cleared when the user edits the email or the password.
+- `client-sign-in`: the sign-in failure message is centred between the password input and the Sign in button.
 
 ## Impact
 
@@ -39,6 +41,7 @@ None.
 ## Depends on
 
 - **Spec `client-sign-in`** in `openspec/specs/client-sign-in/`, requirement "Sign-in errors".
+- **Spec `client-sign-in`**, requirement "Sign-in failure position" (modified by this change).
 
 ## Open questions
 

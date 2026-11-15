@@ -29,3 +29,21 @@ The sign-in page SHALL hide the sign-in failure message when the user changes th
 #### Scenario: Failure cleared before a submit with empty fields
 - **WHEN** a sign-in failure message is shown and the user submits with an empty email
 - **THEN** the sign-in failure message is hidden before the field errors are shown, and no request is sent
+
+## MODIFIED Requirements
+
+### Requirement: Sign-in failure position
+
+The sign-in page SHALL show the sign-in failure message centred between the password input and the Sign in button: the space above the message and the space below it are equal. The total space between the password input and the button SHALL NOT grow, and the space for the message SHALL stay reserved.
+
+#### Scenario: Equal space above and below the failure message
+- **WHEN** a sign-in failure message is shown on the web layout
+- **THEN** the space between the password input and the message equals the space between the message and the Sign in button
+
+#### Scenario: Total space unchanged
+- **WHEN** the layout is compared with the layout before this change
+- **THEN** the distance from the password input to the Sign in button is the same
+
+#### Scenario: Reserved space stays
+- **WHEN** the sign-in failure message is shown or hidden
+- **THEN** the Sign in button and the social buttons do not move
