@@ -99,6 +99,28 @@ describe('SignInPage', () => {
     expect(getComputedStyle(emailError).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
   });
 
+  it('keeps the space of the sign-in failure reserved so that showing it does not move the layout', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+
+    const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
+
+    expect(alert).not.toBeNull();
+    expect(alert.textContent?.trim()).toBe('');
+    expect(getComputedStyle(alert).getPropertyValue('min-height')).toBe('var(--mm-type-caption-line-height)');
+  });
+
+  it('shows every sign-in failure text inside the password field group', async () => {
+    const { fixture, element } = setup({ signIn: vi.fn(() => throwError(() => 'unknown')) });
+
+    await typeInto(element, fixture, 'email', 'user@example.com');
+    await typeInto(element, fixture, 'password', '123456');
+    await submit(element, fixture);
+
+    const alert = element.querySelector<HTMLElement>('[role="alert"]')!;
+    expect(field(element, 'password').parentElement!.contains(alert)).toBe(true);
+    expect(alert.textContent?.trim()).toBe('Something went wrong. Try again.');
+  });
+
   it('shows the sign-in failure directly below the password field and above the submit button', () => {
     const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
 

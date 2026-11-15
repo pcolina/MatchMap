@@ -7,8 +7,8 @@ No API call changes in this change, so no contract check is needed before the ta
 ## 1. Web (`apps/web`)
 
 - [x] **1.1 Failure position.** Test first: in `sign-in.page.spec.ts`, check that the element with `role="alert"` is inside the password `.field` div, comes after `#password-error`, and comes before the submit button (scenarios "Failure message below the password field" and "Failure message closer to the password field than to the button"). Code: move the `<p class="error" data-error role="alert">` in `sign-in.page.html` into the password `.field` div, after `#password-error`.
-- [ ] **1.2 Reserved space.** Test first: in `sign-in.page.spec.ts`, check that the failure element is always rendered, even with no failure, so showing or hiding it does not move the button or the social buttons (scenario "Reserved space keeps the layout still"). Code: keep the `min-height` of the failure element in `sign-in.page.css` after the move.
-- [ ] **1.3 Messages unchanged.** Test first: in `sign-in.page.spec.ts`, check that the credentials, too-many-attempts, network and unknown messages show the same text in the new position (scenario "Position does not change the message"). The existing tests in this file must still pass. Code: none expected; if a test fails, fix the template only.
+- [x] **1.2 Reserved space.** Test first: in `sign-in.page.spec.ts`, check that the failure element is always rendered, even with no failure, so showing or hiding it does not move the button or the social buttons (scenario "Reserved space keeps the layout still"). Code: keep the `min-height` of the failure element in `sign-in.page.css` after the move.
+- [x] **1.3 Messages unchanged.** Test first: in `sign-in.page.spec.ts`, check that the credentials, too-many-attempts, network and unknown messages show the same text in the new position (scenario "Position does not change the message"). The existing tests in this file must still pass. Code: none expected; if a test fails, fix the template only.
 
 ## 2. Mobile (`apps/mobile`)
 
