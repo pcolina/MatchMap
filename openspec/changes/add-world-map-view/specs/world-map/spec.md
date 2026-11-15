@@ -36,7 +36,7 @@ The map SHALL colour each country that has a colour state supplied by its page, 
 
 #### Scenario: Country without a colour state
 - **WHEN** a country has no colour state
-- **THEN** it keeps the map land colour
+- **THEN** it keeps the `map.land` colour, the default for unmarked countries; no colour state uses this colour, and `WANT_TO_GO` is told apart from it by its dashed border
 
 #### Scenario: Colour is not the only cue
 - **WHEN** a country is coloured
