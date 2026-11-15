@@ -34,16 +34,16 @@ The sign-in page SHALL hide the sign-in failure message when the user changes th
 
 ### Requirement: Sign-in failure position
 
-The sign-in page SHALL show the sign-in failure message centred between the password input and the Sign in button: the space above the message and the space below it are equal. The total space between the password input and the button SHALL NOT grow, and the space for the message SHALL stay reserved.
+The sign-in page SHALL show the sign-in failure message directly below the Sign in button, on the web app at every supported width and on the mobile app. The space for the message SHALL stay reserved, so that showing or hiding the message does not move the Sign in button, the divider or the social buttons.
 
-#### Scenario: Equal space above and below the failure message
-- **WHEN** a sign-in failure message is shown on the web layout
-- **THEN** the space between the password input and the message equals the space between the message and the Sign in button
+#### Scenario: Failure message below the Sign in button
+- **WHEN** a sign-in failure message is shown
+- **THEN** the message is directly below the Sign in button and above the divider
 
-#### Scenario: Total space unchanged
-- **WHEN** the layout is compared with the layout before this change
-- **THEN** the distance from the password input to the Sign in button is the same
-
-#### Scenario: Reserved space stays
+#### Scenario: Social buttons do not move
 - **WHEN** the sign-in failure message is shown or hidden
-- **THEN** the Sign in button and the social buttons do not move
+- **THEN** the Sign in button, the divider and the social buttons keep their position
+
+#### Scenario: Same position on mobile
+- **WHEN** a sign-in failure message is shown in the mobile app
+- **THEN** the message is shown in the same position as on the web layout
