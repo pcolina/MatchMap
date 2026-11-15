@@ -9,7 +9,7 @@ import { ColorScheme } from '@ng-native/device';
 import { render, screen, userEvent } from '@ng-native/testing';
 import { beforeEach, expect, test, vi } from 'vitest';
 import en from '../../../../../../../../packages/shared/i18n/en.json';
-import { colors, space } from '../../../../core/theme/tokens.ts';
+import { colors, size, space } from '../../../../core/theme/tokens.ts';
 import { AuthStore, type AuthState } from '../../state/auth.store.ts';
 import { SignInPage } from './sign-in.page.ts';
 
@@ -263,23 +263,56 @@ test('shows the sign-in failure in the password group, not in the group of the s
 
   const failure = screen.getByTestId('failure');
 
-  expect(failure.parent).toBe(screen.getByTestId('password-error').parent);
-  expect(failure.parent).toBe(screen.getByLabelText('Password').parent!.parent);
+  expect(failure.parent!.parent).toBe(screen.getByTestId('password-error').parent!.parent);
+  expect(failure.parent!.parent).toBe(screen.getByLabelText('Password').parent!.parent);
   expect(failure.parent).not.toBe(screen.getByRole('button', { name: 'Sign in' }).parent);
 });
 
 test('spaces the form components with the wider gap and no extra space above the form', async () => {
   await setup(fakeStore());
 
-  const form = screen.getByTestId('password-error').parent!.parent!;
+  const form = screen.getByTestId('password-error').parent!.parent!.parent!;
 
   expect(form.props).toMatchObject({ gap: space[5] });
   expect(form.parent!.props).toMatchObject({ paddingTop: space[0] });
   expect(screen.getByText('Email').props).toMatchObject({ marginBottom: -space[2] });
   expect(screen.getByText('Password').props).toMatchObject({ marginBottom: -space[2] });
   expect(screen.getByRole('button', { name: 'Sign in' }).props).toMatchObject({ marginTop: space[10] });
-  expect(screen.getByTestId('email-error').props).toMatchObject({ marginTop: 5, marginBottom: -5 });
-  expect(screen.getByTestId('password-error').props).toMatchObject({ marginTop: 5, marginBottom: -5 });
+  expect(screen.getByTestId('email-error').parent!.props).toMatchObject({ marginTop: 5, marginBottom: -5 });
+  expect(screen.getByTestId('password-error').parent!.props).toMatchObject({ marginTop: 5, marginBottom: -5 });
+});
+
+const hasAlertIcon = (testId: string) =>
+  screen
+    .getByTestId(testId)
+    .parent!.children.some((child) => child.viewName === 'RNSVGSvgView' && child.props['color'] === colors.light.danger && child.props['width'] === size.iconMd);
+
+test('reserves the height of the icon in every error row so that errors do not move the layout', async () => {
+  const store = fakeStore();
+  store.failure.set('unknown');
+  const { user } = await setup(store);
+  await user.press(screen.getByRole('button', { name: 'Sign in' }));
+
+  for (const testId of ['email-error', 'password-error', 'failure']) {
+    expect(screen.getByTestId(testId).parent!.props).toMatchObject({ minHeight: size.iconMd });
+  }
+});
+
+test('shows a decorative alert icon in the same row as each field error', async () => {
+  const { user } = await setup();
+
+  await user.press(screen.getByRole('button', { name: 'Sign in' }));
+
+  expect(hasAlertIcon('email-error')).toBe(true);
+  expect(hasAlertIcon('password-error')).toBe(true);
+});
+
+test('shows a decorative alert icon in the same row as the sign-in failure', async () => {
+  const store = fakeStore();
+  store.failure.set('unknown');
+  await setup(store);
+
+  expect(hasAlertIcon('failure')).toBe(true);
 });
 
 test('keeps the sign-in failure element rendered when there is no failure', async () => {
