@@ -13,8 +13,8 @@ No API call changes, so no contract check is needed.
 
 ## 2. Style (`apps/web`)
 
-- [ ] **2.1 Ocean and land background.** Test first: `map-view.style.spec.ts` checks that `buildMapStyle(states, 'day')` uses the `ocean` colour as background, and that `'night'` uses the night value (scenarios "Background colours" and "Night colours"). Code: `shared/map-view/map-view.style.ts`.
-- [ ] **2.2 Default and state colours.** Test first: the fill expression gives each state its `mapColors` colour, and every other country the `land` colour (scenarios "Country with a colour state" and "Country without a colour state"). Code: the `match` expression in `buildMapStyle`.
+- [x] **2.1 Ocean and land background.** Test first: `map-view.style.spec.ts` checks that `buildMapStyle(states, 'day')` uses the `ocean` colour as background, and that `'night'` uses the night value (scenarios "Background colours" and "Night colours"). Code: `shared/map-view/map-view.style.ts`.
+- [x] **2.2 Default and state colours.** Test first: the fill expression gives each state its `mapColors` colour, and every other country the `land` colour (scenarios "Country with a colour state" and "Country without a colour state"). Code: the `match` expression in `buildMapStyle`.
 - [ ] **2.3 State outline.** Test first: the outline layer exists, covers only the coloured countries, and is 1.5 px in the `text` colour (scenario "Colour is not the only cue"). Code: the `countries-state-outline` layer.
 - [ ] **2.4 Capitals and no tiles.** Test first: the style has a `capitals-point` circle layer, no raster or vector source, and no `glyphs` (scenarios "Map needs no network service" and "Capital points are shown"). Code: the capitals source and layer, with the countries and capitals as GeoJSON sources only.
 
