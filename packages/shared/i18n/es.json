@@ -39,5 +39,10 @@
       "repeatPasswordLabel": "Repetir contraseña",
       "errorPasswordMismatch": "Las contraseñas no coinciden."
     }
+  },
+  "map": {
+    "world": {
+      "label": "Mapa del mundo"
+    }
   }
 }

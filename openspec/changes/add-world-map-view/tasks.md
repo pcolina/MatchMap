@@ -24,7 +24,7 @@ No API call changes, so no contract check is needed.
 - [x] **3.2 Full page.** Test first: the host has `height: 100%` and the map container fills it (scenario "Map fills the page"). Code: `map-view.css`, and `.main-layout` with `height: 100dvh` in `main-layout.ts`.
 - [x] **3.3 Main layout.** Test first: `main-layout.spec.ts` checks that `app-map-view` is the only child content of the layout. Code: `shared/main-layout/main-layout.ts`.
 - [x] **3.4 Accessible name.** Test first: the map has `role="img"` and an `aria-label` from the catalogue key `map.world.label`. Code: the template, and the key in both catalogues (see 3.5).
-- [ ] **3.5 Translations.** Add `map.world.label` to `packages/shared/i18n/en.json` ("World map") and `es.json` ("Mapa del mundo"). The PR lists both under "Translations to review".
+- [x] **3.5 Translations.** Add `map.world.label` to `packages/shared/i18n/en.json` ("World map") and `es.json` ("Mapa del mundo"). The PR lists both under "Translations to review".
 
 ## 4. Checks and review
 
