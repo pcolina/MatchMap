@@ -14,16 +14,10 @@ This check covers colour tokens only. It does not run axe, a screen reader or a 
 
 ## What Changes
 
-- **Input border:** the border of the email and password inputs reaches 3:1 against `surface` and against `bg`, in day mode.
-  - [NEEDS CLARIFICATION: which value should `borderStrong` take in day mode? Candidates measured against `surface` `#FFFFFF` and `bg` `#F2F4F8`: `#7C8699` gives 3.67:1 and 3.33:1; `#737D8F` gives 4.15:1 and 3.77:1; `#6B7485` gives 4.71:1 and 4.27:1. Or another value you choose.]
-- **Social button outline:** the outline of the Google, Facebook and Apple buttons.
-  - [NEEDS CLARIFICATION: these buttons are disabled in the MVP. Should their outline also reach 3:1, or does the disabled state exempt it from criterion 1.4.11? If it must, which colour?]
-- **Dark mode:** the same token in dark mode is 1.85:1.
-  - [NEEDS CLARIFICATION: should dark mode be fixed in this change, or stay with `docs/design.md` GitHub issue `matchMap` #7, as the archived `add-login-input-errors` proposal said?]
+- **Input border:** the border of the email and password inputs reaches 3:1 against `surface` and against `bg`, in day mode. A new token, `borderInput`, takes the value `#6B7485` (4.71:1 on `surface` `#FFFFFF`, 4.27:1 on `bg` `#F2F4F8`). The token is defined in `tokens/tokens.json` and used only for input borders. `borderStrong` keeps its current value and its other uses.
+- **Social button outline:** the outline of the Google, Facebook and Apple buttons uses `borderInput`, so it reaches 3:1 too, even though the buttons are disabled in the MVP.
+- **Dark mode:** not part of this change. The dark-mode border (1.85:1) is tracked by GitHub issue `matchMap` #7, which reviews dark mode for the auth pages as a whole.
 - **Tokens:** the change goes in `tokens/tokens.json` (the source), then `tokens.ts` and `tokens.css` are regenerated. No hard-coded colour.
-- **Scope of the token:** `borderStrong` is also used for inactive focus. The change must keep the focus style of `docs/design.md` §Focus (3 px `accent` ring) as the focus indicator.
-  - [NEEDS CLARIFICATION: is changing `borderStrong` for every use acceptable, or should a separate `input.border` token be added for input borders only?]
-
 - **Keyboard and mouse focus:** the keyboard focus (Tab) keeps the current style: a 3 px `accent` ring with the halo, as `docs/design.md` §Focus requires. Mouse focus is different: no halo (no gradient), and a ring half the width of the keyboard ring, so 1.5 px (`calc((var(--mm-border-width-focus) + 1px) / 2)`, derived from the existing tokens).
   - Chrome shows `:focus-visible` on text inputs after a mouse click, so CSS alone cannot tell the two apart. The change tracks the input modality in JavaScript: a `pointerdown` marks the page as pointer, and a Tab `keydown` marks it as keyboard. The mouse style applies only in pointer mode, through a rule on `:root[data-input='pointer']`.
   - Scope: web only. The mobile app has no halo.
@@ -61,4 +55,4 @@ None.
 
 ## Open questions
 
-- The four `[NEEDS CLARIFICATION]` items above. Nothing is implemented until they are answered.
+- None. The contrast and focus decisions are recorded above. Nothing is implemented until the proposal is approved.
