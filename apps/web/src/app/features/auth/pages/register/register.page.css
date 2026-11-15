@@ -138,7 +138,10 @@ input {
 }
 
 .error {
-  min-height: var(--mm-type-caption-line-height);
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-1);
+  min-height: calc(2 * var(--mm-type-caption-line-height));
   margin: 0;
   color: var(--mm-color-danger);
   font-family: var(--mm-font-body);
@@ -152,7 +155,7 @@ button[type='submit'] {
   position: relative;
   top: -10px;
   height: var(--mm-size-button-height);
-  margin-top: calc(var(--mm-space-2) - var(--mm-space-8) + var(--mm-space-2) + 7px);
+  margin-top: var(--mm-space-2);
   border: none;
   border-radius: var(--mm-radius-md);
   background-color: var(--mm-color-accent);
@@ -183,4 +186,22 @@ button[type='submit'] {
   font-family: var(--mm-font-body);
   font-size: var(--mm-type-body-size);
   font-weight: var(--mm-type-body-strong-weight);
+}
+
+.error-icon {
+  flex-shrink: 0;
+  width: var(--mm-size-icon-md);
+  height: var(--mm-size-icon-md);
+  color: var(--mm-color-danger);
+}
+
+#email-error,
+#password-error,
+#repeat-password-error {
+  margin-top: 5px;
+  margin-bottom: calc(var(--mm-space-4) - 5px);
+}
+
+[role='alert'] {
+  margin-top: calc(var(--mm-space-3) - var(--mm-space-5));
 }

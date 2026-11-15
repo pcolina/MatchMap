@@ -9,7 +9,7 @@ import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
-import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
+import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
 import { provideNativeRouter } from '@ng-native/router';
 import { mount } from '@ng-native/platform';
 import { provideNativeHttpClient } from '@ng-native/platform/http';
@@ -34,7 +34,7 @@ const appProviders = [
   provideNativeHttpClient(withInterceptors([authInterceptor])),
   provideApollo(() => apolloOptions(inject(HttpLink), environment.apiBaseUrl)),
   provideTranslateService({ fallbackLang: 'en' }),
-  provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
+  provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
   provideAppInitializer(() => Font.loadAsync(appFonts)),
   provideAppInitializer(() => {
     const translate = inject(TranslateService);
