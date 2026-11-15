@@ -21,6 +21,13 @@ After the failure message moved under the password field, the form felt cramped.
 
 The same change applies to the mobile form. Its gap was 0 and becomes `space[5]` (20 px). The top padding of its content container goes from `space[4]` (16 px) to `space[0]` (0), which removes the 16 px above the form. The mobile header keeps its own 16 px padding, because it has no 64 px bottom padding to reduce.
 
+## Label and button spacing update
+
+Requested after review, on both platforms:
+
+- Each label sits 4 px closer to its input: the label bottom margin is `-space-1` on web and mobile.
+- The space between the password field and the Sign in button grows by about half. The scale has no exact 50% step, so the change uses the nearest tokens. Web: the button top margin goes from about −9 px to `-space-1` (−4 px), so the effective space goes from 11 px to 16 px (about +45%). Mobile: the button top margin goes from `space-4` (16 px) to `space-8` (32 px), so the effective space with the 20 px form gap goes from 36 px to 52 px (about +44%).
+
 ## Tests
 
 Each test is written first and must fail before the change (`CLAUDE.md` §2, TDD).

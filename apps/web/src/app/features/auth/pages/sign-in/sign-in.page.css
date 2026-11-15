@@ -63,6 +63,7 @@ form {
 }
 
 label {
+  margin-bottom: calc(-1 * var(--mm-space-1));
   color: var(--mm-color-text);
   font-family: var(--mm-font-body);
 }
@@ -152,7 +153,7 @@ button[type='submit'] {
   position: relative;
   top: -10px;
   height: var(--mm-size-button-height);
-  margin-top: calc(var(--mm-space-2) - var(--mm-space-8) + var(--mm-space-2) + 7px);
+  margin-top: calc(-1 * var(--mm-space-1));
   border: none;
   border-radius: var(--mm-radius-md);
   background-color: var(--mm-color-accent);

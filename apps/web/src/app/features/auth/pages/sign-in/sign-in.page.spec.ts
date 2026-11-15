@@ -87,6 +87,20 @@ describe('SignInPage', () => {
     expect(rules.some((text) => text.includes('.hero') && text.includes('var(--mm-space-12)'))).toBe(true);
   });
 
+  it('pulls each label slightly closer to its input', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const label = element.querySelector<HTMLElement>('label[for="email"]')!;
+
+    expect(getComputedStyle(label).getPropertyValue('margin-bottom')).toBe('calc(-1 * var(--mm-space-1))');
+  });
+
+  it('adds about half as much again of space between the password field and the sign-in button', () => {
+    const { element } = setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
+    const submit = element.querySelector<HTMLElement>('button[type="submit"]')!;
+
+    expect(getComputedStyle(submit).getPropertyValue('margin-top')).toBe('calc(-1 * var(--mm-space-1))');
+  });
+
   it('sets the tagline in the handwritten font and slants it upwards', () => {
     setup({ signIn: vi.fn(() => of({ accessToken: 'token' })) });
     const rules = Array.from(document.styleSheets).flatMap((sheet) => Array.from(sheet.cssRules).map((rule) => rule.cssText));
