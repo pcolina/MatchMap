@@ -14,13 +14,31 @@ The mobile app now has its main layout after sign-in: a map area that takes the 
 - **Mobile first:** the base CSS is the phone layout, which applies up to 600 px of viewport width. Above that width the current layout stays unchanged.
 - **Safe area:** the bottom of the panel respects the device bottom inset (`env(safe-area-inset-bottom)`), so it does not sit under the home indicator on phones that have one.
 
+## Laptop layout (added by the owner)
+
+Added to this change by the owner. `CLAUDE.md` §6 asks for the laptop layout to have its own spec and change; the owner decided to keep it here, so the decision is recorded in this proposal.
+
+- **Laptop width:** above 600 px, the laptop layout applies, from the lower limit set in the open question below.
+- **Header:** a full-width empty component at the top, in a corporate colour. It is a placeholder for a wide header like the ones on social networks; its content comes later.
+- **Map area:** 50 % of the viewport height at the start. The owner will adjust the value by looking at it.
+- **Stats panel:** takes the rest of the height, below the map area. It is the same `stats-resume` component.
+- **Footer:** a full-width empty component at the bottom, in a corporate colour. Later it will hold legal text, versions, the map and contact information.
+- **Placeholder colour:** the owner asked for "another corporate colour" to see the space. The colour is not yet chosen.
+
+## Open questions
+
+- [NEEDS CLARIFICATION: which colour do the header and the footer use? The tokens only define `accent` as the brand colour. Options: `accent`, `accentSubtle`, or a colour from `docs/brand.md` that is not in the tokens yet.]
+- [NEEDS CLARIFICATION: from which viewport width does the laptop layout start? The phone layout ends at 600 px, and the web supports up to wide desktop. Options: 601 px, 900 px, or 1024 px.]
+
 ## Capabilities
 
 - `web-mobile-layout` (new): the web main screen on phone-sized screens, its `StatsResume` panel with its fixed height and tap target, and the map area that fills the remaining height.
+- `web-laptop-layout` (new, added by the owner): the laptop main screen with an empty header, a 50 % map area, the stats panel with the rest of the height, and an empty footer.
 
 ## Out of scope
 
-- The iPad and laptop layouts. `CLAUDE.md` §6 gives each of them its own spec and change.
+- The iPad layout. It keeps its own spec and change (`CLAUDE.md` §6).
+- The contents of the header and the footer. This change creates them empty.
 - The fuller statistics view and its route. The panel is tappable only; the route comes in a later change (as in mobile).
 - The login and register pages. Their layout is not changed.
 - Any API call, store or data for the statistics.
