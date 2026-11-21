@@ -32,20 +32,39 @@ describe('MainLayout', () => {
     vi.unstubAllGlobals();
   });
 
-  it('renders the world map as its only content', async () => {
+  it('shows the map area above the stats-resume panel', async () => {
     const fixture = TestBed.createComponent(MainLayout);
     fixture.detectChanges();
     await fixture.whenStable();
 
     const section = (fixture.nativeElement as HTMLElement).querySelector('section.main-layout');
     expect(section).not.toBeNull();
-    expect(Array.from(section?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual(['app-map-view']);
+    expect(Array.from(section?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual(['app-map-view', 'app-stats-resume']);
   });
 
   it('gives the layout the full viewport height', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
     expect(css).toMatch(/\.main-layout\s*\{[^}]*height:\s*100dvh;/);
+  });
+
+  it('gives the map area the leftover height, so the panel is never covered', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/app-map-view\s*\{[^}]*flex:\s*1/);
+  });
+
+  it('shows the 250 px panel only in the phone layout, up to 600 px', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/@media\s*\(max-width:\s*600px\)\s*\{[\s\S]*app-stats-resume\s*\{[^}]*display:\s*block/);
+    expect(css).toMatch(/app-stats-resume\s*\{[^}]*display:\s*none/);
+  });
+
+  it('keeps the phone panel above the bottom safe-area inset', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/env\(safe-area-inset-bottom\)/);
   });
 });
 

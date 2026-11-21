@@ -1,3 +1,25 @@
 .main-layout {
   height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+app-map-view {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+app-stats-resume {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .main-layout {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  app-stats-resume {
+    display: block;
+    flex: 0 0 250px;
+  }
 }

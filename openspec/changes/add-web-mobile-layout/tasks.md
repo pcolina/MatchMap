@@ -11,10 +11,10 @@ Each task writes its failing test first, runs it and shows it failing, then writ
 
 ## 2. Main layout (`apps/web/src/app/shared/main-layout/`)
 
-- [ ] **2.1 Two areas at phone width.** Test first: `main-layout.spec.ts` checks that the main screen has the map area above `app-stats-resume` (scenario "Both areas are shown"). Code: the column in `main-layout.ts` with `app-map-view` and the panel.
-- [ ] **2.2 Map area takes the leftover height.** Test first: the map area has `flex: 1` and the panel has the fixed height, so the map area's height equals the viewport minus the panel (scenario "Map area takes the leftover height"). Code: `main-layout.css`.
-- [ ] **2.3 Phone breakpoint.** Test first: the stylesheet applies the phone layout in a `@media (max-width: 600px)` rule and keeps the current layout otherwise (scenarios "Phone layout at 600 px", "Current layout above 600 px", "Phone layout at 320 px"). Code: the media rule in `main-layout.css`. jsdom does not evaluate media queries, so this test reads the stylesheet rule text.
-- [ ] **2.4 Safe area.** Test first: the bottom of the panel is padded with `env(safe-area-inset-bottom)` (scenario "Panel sits above the bottom inset"). Code: the padding rule in `main-layout.css`.
+- [x] **2.1 Two areas at phone width.** Test first: `main-layout.spec.ts` checks that the main screen has the map area above `app-stats-resume` (scenario "Both areas are shown"). Code: the column in `main-layout.ts` with `app-map-view` and the panel.
+- [x] **2.2 Map area takes the leftover height.** Test first: the map area has `flex: 1` and the panel has the fixed height, so the map area's height equals the viewport minus the panel (scenario "Map area takes the leftover height"). Code: `main-layout.css`.
+- [x] **2.3 Phone breakpoint.** Test first: the stylesheet applies the phone layout in a `@media (max-width: 600px)` rule and keeps the current layout otherwise (scenarios "Phone layout at 600 px", "Current layout above 600 px", "Phone layout at 320 px"). Code: the media rule in `main-layout.css`. jsdom does not evaluate media queries, so this test reads the stylesheet rule text.
+- [x] **2.4 Safe area.** Test first: the bottom of the panel is padded with `env(safe-area-inset-bottom)` (scenario "Panel sits above the bottom inset"). Code: the padding rule in `main-layout.css`.
 
 ## 3. Checks and review
 
