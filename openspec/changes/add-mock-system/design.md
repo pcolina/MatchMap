@@ -43,7 +43,9 @@ The data files are `packages/shared/src/mocks/data/users.json` (the two mock use
 
 Each app has two thin adapters, and only they touch the framework:
 
-- Web: `apps/web/src/app/core/mocks/mock-http.interceptor.ts` (an `HttpInterceptorFn`) and `mock-apollo.link.ts` (an Apollo link). Both are registered in `app.config.ts` only when `mockEnabled` is `true`.
+- Web: `apps/web/src/app/core/mocks/mock-http.interceptor.ts` (an `HttpInterceptorFn`) and `mock-apollo.link.ts` (an Apollo link). They are loaded only when `mockEnabled` is `true`, by a dynamic `import()` in `main.ts` (`mock-install.ts`), so the production build does not contain their code or the mock data.
+- A small dispatcher, `mock-dispatch.ts`, is always registered in `app.config.ts` (in front of the real interceptor and link, and only when `mockEnabled` is `true`). It delegates to the installed mock handlers, and passes through when none is installed. The static bundle therefore holds only the dispatcher, which contains no mock data.
+- Production: the `production` build configuration in `angular.json` sets `MATCHMAP_MOCKS` to `false`.
 - Mobile: the same two adapters in `apps/mobile/src/app/core/mocks/`, in the mobile change, after the web one is verified.
 
 An adapter reads the request, calls the shared function, and returns the response in the transport's shape. It does not contain rules.
