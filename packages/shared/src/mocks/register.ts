@@ -1,5 +1,6 @@
 import { normalizeEmail, validateRegisterPassword, validateSignInEmail } from '../auth/validators.ts';
 import type { MockContext, MockState, MockUser } from './types.ts';
+import { deriveUsername } from './username.ts';
 
 export type RegisterInput = {
   email: string;
@@ -37,7 +38,7 @@ export const register = (
   const user: MockUser = {
     id: `${context.random(8)}-${context.random(4)}-${context.random(4)}-${context.random(12)}`,
     email,
-    username: email.split('@')[0],
+    username: deriveUsername(email, (username) => state.users.some((user) => user.username === username), context.random),
     password: input.password,
     createdAt: new Date(context.now).toISOString(),
   };
