@@ -16,6 +16,16 @@ describe('signIn success', () => {
     expect(result.refreshToken).toBeDefined();
   });
 
+  it('answers a wrong password and an unknown email with the same invalid_credentials response', () => {
+    const wrongPassword = signIn(createState(), { client: 'web', email: 'mock@matchmap.test', password: 'Wrong-pass1' }, context);
+    const unknownEmail = signIn(createState(), { client: 'web', email: 'nobody@matchmap.test', password: 'Mock-pass1' }, context);
+
+    expect(wrongPassword.status).toBe(401);
+    expect(wrongPassword.body).toEqual({ error: 'invalid_credentials' });
+    expect(unknownEmail.status).toBe(401);
+    expect(unknownEmail.body).toEqual({ error: 'invalid_credentials' });
+  });
+
   it('normalises the email before the comparison', () => {
     const result = signIn(createState(), { client: 'web', email: '  Mock@MatchMap.test ', password: 'Mock-pass1' }, context);
 
