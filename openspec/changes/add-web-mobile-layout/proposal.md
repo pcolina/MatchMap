@@ -18,7 +18,7 @@ The mobile app now has its main layout after sign-in: a map area that takes the 
 
 Added to this change by the owner. `CLAUDE.md` §6 asks for the laptop layout to have its own spec and change; the owner decided to keep it here, so the decision is recorded in this proposal.
 
-- **Laptop width:** above 600 px, the laptop layout applies, from the lower limit set in the open question below.
+- **Laptop width:** from 601 px of viewport width upwards, the laptop layout applies (decided by the owner).
 - **Header:** a full-width empty component at the top, in a corporate colour. It is a placeholder for a wide header like the ones on social networks; its content comes later.
 - **Map area:** 50 % of the viewport height at the start. The owner will adjust the value by looking at it.
 - **Stats panel:** takes the rest of the height, below the map area. It is the same `stats-resume` component.
