@@ -42,7 +42,7 @@ Sign-in, refresh, logout, registration, `me` and `apiVersion` answer from the sh
 ## 4. Documentation and checks (web)
 
 - [x] **4.1 Mock table.** Test first: `apps/web/src/app/core/mocks/mock-table.spec.ts` reads `Mock-system.md` and checks that each mocked operation has a row with its data file and contract, and that `signInWithGoogle` has the status "not mocked" (scenarios "Every mocked operation has a row", "Google sign-in has a row"). Code: `Mock-system.md` at the repository root.
-- [ ] **4.2 README.** Test first: the README test checks that the web section names both users and their passwords, and explains the reset (scenarios "README lists the mock users", "README explains the reset"). Code: the README section, already written with `pnpm web mock`.
+- [x] **4.2 README.** Test first: the README test checks that the web section names both users and their passwords, and explains the reset (scenarios "README lists the mock users", "README explains the reset"). Code: the README section, already written with `pnpm web mock`.
 - [ ] **4.3 Production bundle.** Check that `pnpm build:web` produces a bundle without the mock user passwords (design decision 2). Record the check in the PR. No test file; the check command is in the PR.
 - [ ] **4.4 Full check (web).** Run `pnpm test` for `packages/shared` and `apps/web`, the web `ngc` check, and `pnpm build:web`. Paste the summary in the PR.
 - [ ] **4.5 Visual check (web).** Done by the user: `pnpm web mock`, sign in with each mock user, register a user, reload, and check the error messages.
