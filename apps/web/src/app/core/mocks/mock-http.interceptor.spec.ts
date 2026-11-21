@@ -2,7 +2,8 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { mockHttpInterceptor, resetMockHttpState } from './mock-http.interceptor';
+import { mockHttpInterceptor } from './mock-http.interceptor';
+import { resetMockState } from './mock-state';
 
 describe('mockHttpInterceptor', () => {
   let http: HttpClient;
@@ -17,7 +18,7 @@ describe('mockHttpInterceptor', () => {
     });
     http = TestBed.inject(HttpClient);
     backend = TestBed.inject(HttpTestingController);
-    resetMockHttpState();
+    resetMockState();
   });
 
   afterEach(() => {
