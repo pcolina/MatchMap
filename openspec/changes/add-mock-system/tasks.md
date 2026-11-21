@@ -49,7 +49,7 @@ Sign-in, refresh, logout, registration, `me` and `apiVersion` answer from the sh
 
 ## 5. Mobile (after 4.5 and the mobile storage decision)
 
-- [ ] **5.1 Mobile start command.** Decide the mobile command with the user, following `pnpm web mock`, before the task starts. Test first: the same launcher tests as 1.1 and 1.3 for the mobile start. Code: the mobile launcher.
+- [x] **5.1 Mobile start command.** Decide the mobile command with the user, following `pnpm web mock`, before the task starts. Test first: the same launcher tests as 1.1 and 1.3 for the mobile start. Code: the mobile launcher.
 - [ ] **5.2 Mobile flag.** Test first: the same `mockEnabled` test as 1.4 for `apps/mobile`. Code: `apps/mobile/src/app/core/mocks/mock-flag.ts`.
 - [ ] **5.3 Mobile interceptor and link.** Test first: the same tests as 3.1, 3.2 and 3.3, for the mobile transport. Code: the mobile adapters in `apps/mobile/src/app/core/mocks/`.
 - [ ] **5.4 Mobile storage.** Test first: the stored state of 2.16 works with the storage mechanism the mobile app already uses. The mechanism is named in the PR and decided before this task. Code: the storage adapter for mobile.
