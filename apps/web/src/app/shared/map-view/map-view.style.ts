@@ -20,6 +20,12 @@ export const buildMapStyle = (states: Record<string, MapState>, scheme: MapSchem
       { id: 'background', type: 'background', paint: { 'background-color': palette.ocean } },
       { id: 'countries-fill', type: 'fill', source: 'countries', paint: { 'fill-color': fillColor as never } },
       {
+        id: 'countries-border',
+        type: 'line',
+        source: 'countries',
+        paint: { 'line-color': palette.countryBorder, 'line-width': 0.5 },
+      },
+      {
         id: 'countries-state-outline',
         type: 'line',
         source: 'countries',

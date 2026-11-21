@@ -18,6 +18,7 @@ No API call changes, so no contract check is needed.
 - [x] **2.2 Default and state colours.** Test first: the fill expression gives each state its `mapColors` colour, and every other country the `land` colour (scenarios "Country with a colour state" and "Country without a colour state"). Code: the `match` expression in `buildMapStyle`.
 - [x] **2.3 State outline.** Test first: the outline layer exists, covers only the coloured countries, and is 1.5 px in the `text` colour (scenario "Colour is not the only cue"). Code: the `countries-state-outline` layer.
 - [x] **2.4 Capitals and no tiles.** Test first: the style has a `capitals-point` circle layer, no raster or vector source, and no `glyphs` (scenarios "Map needs no network service" and "Capital points are shown"). Code: the capitals source and layer, with the countries and capitals as GeoJSON sources only.
+- [x] **2.5 Country borders.** Test first: `map-view.style.spec.ts` checks that the `countries-border` line layer draws every country border at 0.5 px in `mapColors[scheme].countryBorder` (day and night), above the fill and below the state outline (design "Layers", item 3). Code: the `countries-border` layer in `buildMapStyle`. Found in the visual check of 4.2: the layer was in the design but missing from the code.
 
 ## 3. Component and page (`apps/web`)
 

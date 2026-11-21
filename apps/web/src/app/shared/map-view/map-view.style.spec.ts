@@ -101,6 +101,33 @@ describe('buildMapStyle', () => {
     });
   });
 
+  describe('country borders', () => {
+    it('draws a 0.5 px border between every country in the day border colour', () => {
+      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
+      const border = layerById(style, 'countries-border');
+
+      expect(border.type).toBe('line');
+      expect(border.source).toBe('countries');
+      expect(border.paint?.['line-color']).toBe(mapColors.light.countryBorder);
+      expect(border.paint?.['line-width']).toBe(0.5);
+      expect(border.filter).toBeUndefined();
+    });
+
+    it('uses the night border colour in night mode', () => {
+      const style = buildMapStyle({}, 'night') as unknown as Style;
+
+      expect(layerById(style, 'countries-border').paint?.['line-color']).toBe(mapColors.dark.countryBorder);
+    });
+
+    it('draws the borders above the country fill and below the state outline', () => {
+      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
+      const ids = style.layers.map((layer) => layer.id);
+
+      expect(ids.indexOf('countries-border')).toBeGreaterThan(ids.indexOf('countries-fill'));
+      expect(ids.indexOf('countries-border')).toBeLessThan(ids.indexOf('countries-state-outline'));
+    });
+  });
+
   describe('state outline', () => {
     it('draws a 1.5 px text-coloured outline only around the coloured countries in day mode', () => {
       const style = buildMapStyle({ FR: 'visited', JP: 'wantToGo' }, 'day') as unknown as Style;
