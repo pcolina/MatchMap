@@ -26,6 +26,32 @@ describe('signIn success', () => {
     expect(unknownEmail.body).toEqual({ error: 'invalid_credentials' });
   });
 
+  it('rejects an email that is not in standard format with invalid_email', () => {
+    const result = signIn(createState(), { client: 'web', email: 'not-an-email', password: 'Mock-pass1' }, context);
+
+    expect(result.status).toBe(400);
+    expect(result.body).toEqual({ error: 'invalid_email' });
+  });
+
+  it('rejects an email longer than 254 characters with email_too_long', () => {
+    const email = `${'a'.repeat(250)}@m.test`;
+
+    const result = signIn(createState(), { client: 'web', email, password: 'Mock-pass1' }, context);
+
+    expect(result.status).toBe(400);
+    expect(result.body).toEqual({ error: 'email_too_long' });
+  });
+
+  it('rejects a missing or unknown client with invalid_client', () => {
+    const missing = signIn(createState(), { client: undefined, email: 'mock@matchmap.test', password: 'Mock-pass1' }, context);
+    const unknown = signIn(createState(), { client: 'desktop', email: 'mock@matchmap.test', password: 'Mock-pass1' }, context);
+
+    expect(missing.status).toBe(400);
+    expect(missing.body).toEqual({ error: 'invalid_client' });
+    expect(unknown.status).toBe(400);
+    expect(unknown.body).toEqual({ error: 'invalid_client' });
+  });
+
   it('normalises the email before the comparison', () => {
     const result = signIn(createState(), { client: 'web', email: '  Mock@MatchMap.test ', password: 'Mock-pass1' }, context);
 

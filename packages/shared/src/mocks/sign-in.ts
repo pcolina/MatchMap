@@ -1,4 +1,4 @@
-import { normalizeEmail } from '../auth/validators.ts';
+import { normalizeEmail, validateSignInEmail } from '../auth/validators.ts';
 import type { MockContext, MockClient, MockState, MockUser } from './types.ts';
 
 export type SignInInput = {
@@ -50,6 +50,14 @@ export const issueTokens = (
 };
 
 export const signIn = (state: MockState, input: SignInInput, context: MockContext): MockHttpResult => {
+  if (input.client !== 'web' && input.client !== 'mobile') {
+    return { status: 400, body: { error: 'invalid_client' }, state };
+  }
+  const emailError = validateSignInEmail(input.email);
+  if (emailError) {
+    const error = emailError === 'login.signIn.errorEmailTooLong' ? 'email_too_long' : 'invalid_email';
+    return { status: 400, body: { error }, state };
+  }
   const email = normalizeEmail(input.email);
   const user = state.users.find((candidate) => candidate.email === email && candidate.password === input.password);
   if (!user) {
