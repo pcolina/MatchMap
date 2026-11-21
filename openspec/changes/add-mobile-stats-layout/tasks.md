@@ -15,9 +15,9 @@ Each task writes its failing test first, runs it and shows it failing, then writ
 
 ## 3. Main layout (`apps/mobile/src/app/shared/main-layout/`)
 
-- [ ] **3.1 Two areas.** Test first: `main-layout.test.ts` checks that the screen has a map area followed by `app-stats-resume` at the bottom (scenario "Main screen shows both areas"). Code: the column in `main-layout.ts` with a map area and the panel.
-- [ ] **3.2 Map area.** Test first: the map area has `flex: 1` and the `bg` token as background in light and dark scheme (scenarios "Map area takes the leftover height" and "Map area background is the neutral token"). Code: the map area style in `main-layout.ts`.
-- [ ] **3.3 Safe area.** Test first: the panel is inside a `safe-area-view` so its bottom is above the bottom inset (scenario "Panel sits above the home indicator"). Code: wrap the layout in `safe-area-view`.
+- [x] **3.1 Two areas.** Test first: `main-layout.test.ts` checks that the screen has a map area followed by `app-stats-resume` at the bottom (scenario "Main screen shows both areas"). Code: the column in `main-layout.ts` with a map area and the panel.
+- [x] **3.2 Map area.** Test first: the map area has `flex: 1` and the `bg` token as background in light and dark scheme (scenarios "Map area takes the leftover height" and "Map area background is the neutral token"). Code: the map area style in `main-layout.ts`.
+- [x] **3.3 Safe area.** Test first: the panel is inside a `safe-area-view` so its bottom is above the bottom inset (scenario "Panel sits above the home indicator"). Code: wrap the layout in `safe-area-view`.
 
 ## 4. Checks and review
 
