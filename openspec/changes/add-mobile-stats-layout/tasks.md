@@ -22,4 +22,4 @@ Each task writes its failing test first, runs it and shows it failing, then writ
 ## 4. Checks and review
 
 - [x] **4.1 Full check (mobile).** Run `pnpm test` and `pnpm typecheck` in `apps/mobile`, and `pnpm test` in `packages/shared`. Paste the summary in the PR.
-- [ ] **4.2 Visual check (mobile).** Done by the user on the Android emulator, with `pnpm mobile mock` and `pnpm android`: the map area is the neutral background above the 250 px green panel, the panel does not scroll, it stays above the home indicator, and it is tappable. Trial and error on the spacing is done here.
+- [x] **4.2 Visual check (mobile).** Accepted by the owner without running the emulator; not verified on a device. Done by the user on the Android emulator, with `pnpm mobile mock` and `pnpm android`: the map area is the neutral background above the 250 px green panel, the panel does not scroll, it stays above the home indicator, and it is tappable. Trial and error on the spacing is done here.
