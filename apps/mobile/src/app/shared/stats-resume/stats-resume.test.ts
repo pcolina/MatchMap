@@ -45,7 +45,7 @@ describe('StatsResume panel', () => {
     await renderWithScheme('light');
 
     expect(screenPanel().props).toMatchObject({ overflow: 'hidden' });
-    expect(screenPanel().type).not.toBe('scroll-view');
+    expect(screenPanel().viewName).not.toMatch(/scroll/i);
   });
 
   test('is announced as a button with the translated label', async () => {
