@@ -32,20 +32,63 @@ describe('MainLayout', () => {
     vi.unstubAllGlobals();
   });
 
-  it('renders the world map as its only content', async () => {
+  it('shows the map area above the stats-resume panel', async () => {
     const fixture = TestBed.createComponent(MainLayout);
     fixture.detectChanges();
     await fixture.whenStable();
 
     const section = (fixture.nativeElement as HTMLElement).querySelector('section.main-layout');
     expect(section).not.toBeNull();
-    expect(Array.from(section?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual(['app-map-view']);
+    expect(Array.from(section?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual([
+      'app-layout-header',
+      'app-map-view',
+      'app-stats-resume',
+      'app-layout-footer',
+    ]);
   });
 
   it('gives the layout the full viewport height', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
     expect(css).toMatch(/\.main-layout\s*\{[^}]*height:\s*100dvh;/);
+  });
+
+  it('gives the map area the leftover height, so the panel is never covered', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/app-map-view\s*\{[^}]*flex:\s*1/);
+  });
+
+  it('shows the 250 px panel only in the phone layout, up to 600 px', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/app-stats-resume\s*\{[^}]*display:\s*block;\s*flex:\s*0 0 250px/);
+    expect(css).toMatch(/app-layout-header,\s*app-layout-footer\s*\{[^}]*display:\s*none/);
+  });
+
+  it('starts the laptop layout at 601 px', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/@media\s*\(min-width:\s*601px\)/);
+  });
+
+  it('gives the map area half the viewport height in the laptop layout', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/@media\s*\(min-width:\s*601px\)\s*\{[\s\S]*app-map-view\s*\{[^}]*flex:\s*0 0 50%/);
+  });
+
+  it('gives the stats panel the remaining height in the laptop layout, without scroll', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/@media\s*\(min-width:\s*601px\)\s*\{[\s\S]*app-stats-resume\s*\{[^}]*flex:\s*1/);
+    expect(css).toMatch(/@media\s*\(min-width:\s*601px\)\s*\{[\s\S]*app-stats-resume\s*\{[^}]*overflow:\s*hidden/);
+  });
+
+  it('keeps the phone panel above the bottom safe-area inset', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/env\(safe-area-inset-bottom\)/);
   });
 });
 

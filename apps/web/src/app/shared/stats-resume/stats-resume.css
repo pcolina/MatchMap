@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.stats-resume {
+  display: block;
+  width: 100%;
+  height: 250px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background-color: var(--mm-color-accent);
+  cursor: pointer;
+}
