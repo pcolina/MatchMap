@@ -19,4 +19,4 @@ Each task writes its failing test first, runs it and shows it failing, then writ
 ## 3. Checks and review
 
 - [x] **3.1 Full check (web).** Run `pnpm test` in `apps/web`, the web `ngc` check, and `pnpm build:web`. Paste the summary in the PR.
-- [ ] **3.2 Visual check (web).** Done by the owner in the browser at phone width with `pnpm web mock` (http://localhost:4333), and above 600 px to confirm the current layout. This is the definitive acceptance of the spec.
+- [x] **3.2 Visual check (web).** Accepted by the owner in the browser at phone width and above 600 px. Done by the owner in the browser at phone width with `pnpm web mock` (http://localhost:4333), and above 600 px to confirm the current layout. This is the definitive acceptance of the spec.
