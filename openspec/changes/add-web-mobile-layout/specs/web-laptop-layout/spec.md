@@ -20,7 +20,11 @@ The web main screen SHALL use the laptop layout when the viewport width is 601 p
 
 ### Requirement: Header is an empty full-width accent bar
 
-The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, uses the `accent` colour token as its background, and has no content. Its height is not fixed by this spec; it is set during the visual check.
+The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, uses the `accent` colour token as its background, and has no content. Its height SHALL be 56 px at every laptop width.
+
+#### Scenario: Header is 56 px high at every width
+- **WHEN** the laptop layout is shown at any width from 601 px upwards
+- **THEN** the header is 56 px high
 
 #### Scenario: Header spans the full width
 - **WHEN** the laptop layout is shown
