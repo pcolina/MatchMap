@@ -10,6 +10,10 @@ test('no mock does not pass the define flag', () => {
   assert.ok(!buildServeArgs({ mock: false }).some((arg) => arg.startsWith('--define')));
 });
 
-test('the dev server keeps port 4300', () => {
+test('the dev server keeps port 4300 without mocks', () => {
   assert.deepEqual(buildServeArgs({ mock: false }), ['serve', '--port', '4300']);
+});
+
+test('the dev server uses port 4333 with mocks', () => {
+  assert.deepEqual(buildServeArgs({ mock: true }), ['serve', '--port', '4333', '--define=MATCHMAP_MOCKS=true']);
 });

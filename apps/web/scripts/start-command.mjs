@@ -1,6 +1,4 @@
-export const buildServeArgs = ({ mock }) => [
-  'serve',
-  '--port',
-  '4300',
-  ...(mock ? ['--define=MATCHMAP_MOCKS=true'] : []),
-];
+export const buildServeArgs = ({ mock }) =>
+  mock
+    ? ['serve', '--port', '4333', '--define=MATCHMAP_MOCKS=true']
+    : ['serve', '--port', '4300'];

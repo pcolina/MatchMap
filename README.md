@@ -151,14 +151,14 @@ Use this option when the API is not running. The app answers sign-in, registrati
 pnpm web mock
 ```
 
-Opens on http://localhost:4300 and reloads on save. Sign in with one of these mock users:
+Opens on http://localhost:4333 and reloads on save. Sign in with one of these mock users:
 
 | Email | Password |
 |---|---|
 | `one@matchmap.test` | `One-pass1` |
 | `two@matchmap.test` | `Two-pass2` |
 
-Users you register in the mock are kept in the browser and survive a reload. To reset them to the two users above, clear the site data for http://localhost:4300 in the browser and reload. Google sign-in is not mocked. The full list of mocks is in [Mock-system.md](Mock-system.md).
+Users you register in the mock are kept in the browser and survive a reload. To reset them to the two users above, clear the site data for http://localhost:4333 in the browser and reload. Google sign-in is not mocked. The full list of mocks is in [Mock-system.md](Mock-system.md).
 
 To run without mocks, start `pnpm web` without the `mock` argument.
 
