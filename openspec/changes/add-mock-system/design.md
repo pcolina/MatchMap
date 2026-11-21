@@ -11,7 +11,7 @@ The web and mobile apps call the API for sign-in, refresh, logout, registration,
 `pnpm web mock` starts the web app with mocks. `apps/web/package.json` changes its `start` script to `node scripts/start.mjs`. The launcher reads its arguments:
 
 - no argument: starts `ng serve --port 4300`, as today;
-- `mock`: starts the same command with the mock flag on;
+- `mock`: starts `ng serve --port 4333` with the mock flag on. The mock has its own port so it can run next to the normal dev server;
 - any other argument: exits with status 1 and prints the usage.
 
 The root script `web` already forwards extra arguments to `start`, so `pnpm web mock` reaches the launcher. Verified: today `pnpm web mock` reaches `ng serve` as a positional argument, which is why the launcher is needed.
@@ -46,7 +46,7 @@ Each app has two thin adapters, and only they touch the framework:
 - Web: `apps/web/src/app/core/mocks/mock-http.interceptor.ts` (an `HttpInterceptorFn`) and `mock-apollo.link.ts` (an Apollo link). They are loaded only when `mockEnabled` is `true`, by a dynamic `import()` in `main.ts` (`mock-install.ts`), so the production build does not contain their code or the mock data.
 - A small dispatcher, `mock-dispatch.ts`, is always registered in `app.config.ts` (in front of the real interceptor and link, and only when `mockEnabled` is `true`). It delegates to the installed mock handlers, and passes through when none is installed. The static bundle therefore holds only the dispatcher, which contains no mock data.
 - Production: the `production` build configuration in `angular.json` sets `MATCHMAP_MOCKS` to `false`.
-- Mobile: the same two adapters in `apps/mobile/src/app/core/mocks/`, in the mobile change, after the web one is verified.
+- Mobile: the same adapters in `apps/mobile/src/app/core/mocks/` (interceptor, Apollo link, state, flag and wiring), done in tasks 5.1 to 5.8. The mobile flag is `EXPO_PUBLIC_MATCHMAP_MOCKS`, set by `pnpm mobile mock` (`apps/mobile/scripts/start.mjs`). The mobile wiring is a static import in `main.ts`, not the dynamic import of the web, so the mobile bundle contains the mock code even with the flag off. Its behaviour with the flag off is unchanged.
 
 An adapter reads the request, calls the shared function, and returns the response in the transport's shape. It does not contain rules.
 
@@ -64,12 +64,13 @@ The throttle counts failed logins per email, with the API's values: 5 failures i
 
 ### 7. Mock table and documentation
 
-`Mock-system.md` lists every row as in the spec. The README sections for each app document `pnpm web mock` (web) and the mobile equivalent, the two users with their passwords, the reset by clearing the site data, and how to start without mocks. The web README section already uses `pnpm web mock`, as decision 1 defines it.
+`Mock-system.md` lists every row as in the spec. The README sections for each app document the mock start command (`pnpm web mock` on http://localhost:4333, `pnpm mobile mock`), the two users with their passwords, the reset, and how to start without mocks.
 
 ## Open points
 
-- **Mobile storage:** the mobile app keeps state in the device, not in `localStorage`. The mobile change chooses the storage with the app's existing storage mechanism. It is confirmed in the mobile change, before its tasks start.
-- **`define` syntax:** verified in the first task, as said in decision 2.
+- **Mobile storage:** decided: `expo-secure-store`, the storage the app already uses for the refresh token. A synchronous cache sits in front of it (task 5.4). Whether the size of a stored value is enough for many registered users is not yet verified; it is checked on the emulator in task 5.7.
+- **`define` syntax:** verified in task 1.2, as said in decision 2.
+- **Mobile bundle:** the mock code is in the mobile bundle even with the flag off (see decision 4). Whether to make it a lazy load is open.
 
 ## Risks
 
