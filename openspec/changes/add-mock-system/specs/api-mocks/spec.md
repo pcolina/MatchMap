@@ -38,6 +38,10 @@ The mock SHALL build every response of a mocked operation from a data file in th
 
 With the mock flag on, the mock SHALL answer the operations `login`, `refresh`, `logout`, `register`, `me` and `apiVersion`. The mock works with email and password only. The operation `signInWithGoogle` SHALL NOT be mocked. Its row in the mock table SHALL have the status "not mocked".
 
+#### Scenario: Email sign-in is answered by the mock
+- **WHEN** the mock flag is on and the user signs in with email and password
+- **THEN** the sign-in is answered by the mock and no request for it reaches the API
+
 ### Requirement: Sign-in with email and password
 
 The mock login SHALL accept the email and password of a user in the users data file, and SHALL return the same token response shape as the contract: `tokenType` `Bearer`, `accessToken` and `expiresIn`. The email SHALL be trimmed and lower-cased before the comparison, as the API does. For the web client, the mock SHALL NOT return `refreshToken` in the body. For the mobile client, the mock SHALL return `refreshToken` in the body.
