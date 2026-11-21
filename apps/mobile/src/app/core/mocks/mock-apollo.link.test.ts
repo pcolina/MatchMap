@@ -1,8 +1,10 @@
 import { ApolloLink, gql } from '@apollo/client';
-import { beforeEach, expect, test } from 'vitest';
+import { beforeEach, expect, test, vi } from 'vitest';
 import { apiVersion as apiVersionOperation, registerMutation, signIn } from '@matchmap/shared';
 import { mockApolloLink } from './mock-apollo.link.ts';
 import { getMockState, mockContext, resetMockState } from './mock-state.ts';
+
+vi.mock('expo-secure-store', () => ({ setItemAsync: vi.fn(), getItemAsync: vi.fn(async () => null), deleteItemAsync: vi.fn() }));
 
 const meQuery = gql`
   query Me {

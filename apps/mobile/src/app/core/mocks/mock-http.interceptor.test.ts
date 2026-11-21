@@ -4,9 +4,11 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { View } from '@ng-native/components';
 import { render } from '@ng-native/testing';
-import { beforeEach, expect, test } from 'vitest';
+import { beforeEach, expect, test, vi } from 'vitest';
 import { mockHttpInterceptor } from './mock-http.interceptor.ts';
 import { resetMockState } from './mock-state.ts';
+
+vi.mock('expo-secure-store', () => ({ setItemAsync: vi.fn(), getItemAsync: vi.fn(async () => null), deleteItemAsync: vi.fn() }));
 
 @Component({
   selector: 'app-mock-host',
