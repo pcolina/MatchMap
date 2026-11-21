@@ -1,8 +1,8 @@
 import '@angular/compiler';
 import { Accessibility, ColorScheme } from '@ng-native/device';
-import { render, screen } from '@ng-native/testing';
+import { render, screen, userEvent } from '@ng-native/testing';
 import { TranslateService } from '@ngx-translate/core';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import en from '../../../../../../packages/shared/i18n/en.json';
 import { colors } from '../../core/theme/tokens.ts';
 import { StatsResume } from './stats-resume.ts';
@@ -39,6 +39,29 @@ describe('StatsResume panel', () => {
     await renderWithScheme('light');
 
     expect(screenPanel().props).toMatchObject({ backgroundColor: colors.light.accent });
+  });
+
+  test('clips its content and is not a scroll view', async () => {
+    await renderWithScheme('light');
+
+    expect(screenPanel().props).toMatchObject({ overflow: 'hidden' });
+    expect(screenPanel().type).not.toBe('scroll-view');
+  });
+
+  test('is announced as a button with the translated label', async () => {
+    await renderWithScheme('light');
+
+    expect(screen.getByRole('button', { name: 'Statistics summary' })).toBeTruthy();
+  });
+
+  test('emits one press when tapped and nothing else', async () => {
+    const { componentRef } = await renderWithScheme('light');
+    const presses = vi.fn();
+    componentRef.instance.press.subscribe(presses);
+
+    await userEvent.setup().press(screen.getByRole('button', { name: 'Statistics summary' }));
+
+    expect(presses).toHaveBeenCalledTimes(1);
   });
 
   test('uses the accent token in the dark scheme', async () => {
