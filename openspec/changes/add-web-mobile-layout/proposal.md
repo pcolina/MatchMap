@@ -27,7 +27,9 @@ Added to this change by the owner. `CLAUDE.md` §6 asks for the laptop layout to
 
 ## Open questions
 
-- [NEEDS CLARIFICATION: which colour do the header and the footer use? The tokens only define `accent` as the brand colour. Options: `accent`, `accentSubtle`, or a colour from `docs/brand.md` that is not in the tokens yet.]
+## Decided
+
+- The header and the footer use the `accent` token, the green used before.
 - [NEEDS CLARIFICATION: from which viewport width does the laptop layout start? The phone layout ends at 600 px, and the web supports up to wide desktop. Options: 601 px, 900 px, or 1024 px.]
 
 ## Capabilities
