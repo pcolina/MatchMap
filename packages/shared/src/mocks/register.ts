@@ -31,6 +31,9 @@ export const register = (
     return { errors: [{ message: 'Invalid password', extensions: { code: 'PASSWORD_INVALID', field: 'password' } }], state };
   }
   const email = normalizeEmail(input.email);
+  if (state.users.some((candidate) => candidate.email === email)) {
+    return { errors: [{ message: 'Email already in use', extensions: { code: 'EMAIL_TAKEN' } }], state };
+  }
   const user: MockUser = {
     id: `${context.random(8)}-${context.random(4)}-${context.random(4)}-${context.random(12)}`,
     email,

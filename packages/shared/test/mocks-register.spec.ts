@@ -33,6 +33,13 @@ describe('register', () => {
     expect(result.errors?.[0].extensions).toEqual({ code: 'PASSWORD_INVALID', field: 'password' });
   });
 
+  it('returns EMAIL_TAKEN when the email belongs to an existing user', () => {
+    const result = register(createState(), { email: 'MOCK@matchmap.test', password: 'Fresh-pass1' }, context);
+
+    expect(result.data).toBeUndefined();
+    expect(result.errors?.[0].extensions).toEqual({ code: 'EMAIL_TAKEN' });
+  });
+
   it('stores the email trimmed and lower-cased', () => {
     const result = register(createState(), { email: 'New.User@MatchMap.test', password: 'Fresh-pass1' }, context);
 
