@@ -15,7 +15,7 @@ const context: MockContext = {
 };
 
 const signedIn = () => {
-  const result = signIn(createState(), { client: 'mobile', email: 'mock@matchmap.test', password: 'Mock-pass1' }, context);
+  const result = signIn(createState(), { client: 'mobile', email: 'one@matchmap.test', password: 'One-pass1' }, context);
   return { state: result.state, refreshToken: (result.body as { refreshToken: string }).refreshToken };
 };
 

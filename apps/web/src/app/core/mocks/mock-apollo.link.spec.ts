@@ -42,7 +42,7 @@ describe('mockApolloLink', () => {
   });
 
   it('returns EMAIL_TAKEN for an email in use', async () => {
-    const result = await run(gql(registerMutation), { input: { email: 'mock@matchmap.test', password: 'Fresh-pass1' } });
+    const result = await run(gql(registerMutation), { input: { email: 'one@matchmap.test', password: 'Fresh-pass1' } });
 
     expect(result.errors?.[0].extensions).toEqual({ code: 'EMAIL_TAKEN' });
   });
@@ -54,12 +54,12 @@ describe('mockApolloLink', () => {
   });
 
   it('returns me for a valid access token', async () => {
-    const signedIn = signIn(getMockState(), { client: 'web', email: 'mock@matchmap.test', password: 'Mock-pass1' }, mockContext());
+    const signedIn = signIn(getMockState(), { client: 'web', email: 'one@matchmap.test', password: 'One-pass1' }, mockContext());
     const token = (signedIn.body as { accessToken: string }).accessToken;
 
     const result = await run(meQuery, {}, { authorization: `Bearer ${token}` });
 
-    expect(result.data?.['me']).toMatchObject({ email: 'mock@matchmap.test', username: 'mock' });
+    expect(result.data?.['me']).toMatchObject({ email: 'one@matchmap.test', username: 'one' });
   });
 
   it('fails with 401 for me without an access token', async () => {

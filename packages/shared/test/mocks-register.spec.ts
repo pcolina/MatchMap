@@ -34,7 +34,7 @@ describe('register', () => {
   });
 
   it('returns EMAIL_TAKEN when the email belongs to an existing user', () => {
-    const result = register(createState(), { email: 'MOCK@matchmap.test', password: 'Fresh-pass1' }, context);
+    const result = register(createState(), { email: 'ONE@matchmap.test', password: 'Fresh-pass1' }, context);
 
     expect(result.data).toBeUndefined();
     expect(result.errors?.[0].extensions).toEqual({ code: 'EMAIL_TAKEN' });

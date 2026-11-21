@@ -32,7 +32,7 @@ describe('mockHttpInterceptor', () => {
     http
       .post<{ accessToken: string }>(
         '/api/auth/login',
-        { email: 'mock@matchmap.test', password: 'Mock-pass1' },
+        { email: 'one@matchmap.test', password: 'One-pass1' },
         { headers: { 'X-Client': 'web' } },
       )
       .subscribe((body) => (accessToken = body.accessToken));
@@ -41,7 +41,7 @@ describe('mockHttpInterceptor', () => {
   });
 
   it('keeps the web refresh token in the cookie emulation and rotates it on refresh', () => {
-    http.post('/api/auth/login', { email: 'mock@matchmap.test', password: 'Mock-pass1' }, { headers: { 'X-Client': 'web' } }).subscribe();
+    http.post('/api/auth/login', { email: 'one@matchmap.test', password: 'One-pass1' }, { headers: { 'X-Client': 'web' } }).subscribe();
 
     let firstBody: Record<string, unknown> | undefined;
     http.post<Record<string, unknown>>('/api/auth/refresh', null, { headers: { 'X-Client': 'web' } }).subscribe((body) => (firstBody = body));

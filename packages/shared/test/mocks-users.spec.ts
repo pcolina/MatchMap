@@ -6,8 +6,8 @@ describe('mock users', () => {
   it('contains the two mock users with their passwords', () => {
     const byEmail = Object.fromEntries(users.map((user) => [user.email, user.password]));
 
-    expect(byEmail['mock@matchmap.test']).toBe('Mock-pass1');
-    expect(byEmail['second@matchmap.test']).toBe('Second-pass2');
+    expect(byEmail['one@matchmap.test']).toBe('One-pass1');
+    expect(byEmail['two@matchmap.test']).toBe('Two-pass2');
   });
 
   it('has passwords that meet the password rule', () => {

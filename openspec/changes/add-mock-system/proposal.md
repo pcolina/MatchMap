@@ -21,8 +21,8 @@ The apps must run without the API, so the front end can be started and used, on 
   - GraphQL: an Apollo link in each app, for the operations sent through Apollo.
   - The mock logic is a set of pure functions, with no DOM and no Apollo, so it can be unit-tested. Where it lives (`packages/shared` or each app) is decided in the design.
 - **Mock users:** two users in the users file, with passwords chosen for this change. Each one meets the password rule of the contract:
-  - `mock@matchmap.test`, password `Mock-pass1`.
-  - `second@matchmap.test`, password `Second-pass2`.
+  - `one@matchmap.test`, password `One-pass1`.
+  - `two@matchmap.test`, password `Two-pass2`.
 - **Mock table:** a file `Mock-system.md` at the repository root lists every mock in one table: ID, app (web, mobile or both), transport, operation or endpoint, data file, contract (file, or "none"), and status. Operations that are not mocked stay in the table with the status "not mocked". To remove a mock, its row and its entry are removed.
 - **README:** a section for each app on how to start it with mocks, the mock users and their passwords, how to reset the mock users, and how to switch mocks off.
 

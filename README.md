@@ -155,8 +155,8 @@ Opens on http://localhost:4300 and reloads on save. Sign in with one of these mo
 
 | Email | Password |
 |---|---|
-| `mock@matchmap.test` | `Mock-pass1` |
-| `second@matchmap.test` | `Second-pass2` |
+| `one@matchmap.test` | `One-pass1` |
+| `two@matchmap.test` | `Two-pass2` |
 
 Users you register in the mock are kept in the browser and survive a reload. To reset them to the two users above, clear the site data for http://localhost:4300 in the browser and reload. Google sign-in is not mocked. The full list of mocks is in [Mock-system.md](Mock-system.md).
 

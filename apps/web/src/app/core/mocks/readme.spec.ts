@@ -15,10 +15,10 @@ const webMocksSection = readme.slice(readme.indexOf('#### With mocks'), readme.i
 
 describe('README mocks section', () => {
   it('names both mock users and their passwords', () => {
-    expect(webMocksSection).toContain('mock@matchmap.test');
-    expect(webMocksSection).toContain('Mock-pass1');
-    expect(webMocksSection).toContain('second@matchmap.test');
-    expect(webMocksSection).toContain('Second-pass2');
+    expect(webMocksSection).toContain('one@matchmap.test');
+    expect(webMocksSection).toContain('One-pass1');
+    expect(webMocksSection).toContain('two@matchmap.test');
+    expect(webMocksSection).toContain('Two-pass2');
   });
 
   it('explains how to reset the mock users', () => {

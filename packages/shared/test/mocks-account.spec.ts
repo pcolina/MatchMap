@@ -14,15 +14,15 @@ const accessTokenOf = (email: string, password: string) => {
 describe('me', () => {
   it('returns the id, email, username and createdAt of the signed-in user', () => {
     const state = createState();
-    const token = accessTokenOf('mock@matchmap.test', 'Mock-pass1');
+    const token = accessTokenOf('one@matchmap.test', 'One-pass1');
 
     const result = me(state, token);
 
     expect(result.status).toBe(200);
     expect(result.data?.me).toEqual({
       id: state.users[0].id,
-      email: 'mock@matchmap.test',
-      username: 'mock',
+      email: 'one@matchmap.test',
+      username: 'one',
       createdAt: state.users[0].createdAt,
     });
   });

@@ -38,7 +38,7 @@ describe('stored mock state', () => {
 
   it('does not store any access token', () => {
     const storage = memoryStorage();
-    const result = signIn(createState(), { client: 'web', email: 'mock@matchmap.test', password: 'Mock-pass1' }, context);
+    const result = signIn(createState(), { client: 'web', email: 'one@matchmap.test', password: 'One-pass1' }, context);
     saveState(storage, key, result.state);
 
     expect(storage.getItem(key)).not.toContain('accessToken');

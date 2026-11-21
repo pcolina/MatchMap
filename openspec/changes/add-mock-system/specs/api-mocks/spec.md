@@ -11,7 +11,7 @@ Lets the web and mobile apps run without the API, behaving as the real API does 
 The web and mobile apps SHALL read a mock flag when they start. When the flag is on, the app SHALL answer the mocked operations from the mock data and SHALL send no request to the API for them. When the flag is off, the app SHALL behave as it does without this capability. The flag SHALL be off by default.
 
 #### Scenario: Flag on answers from the mock
-- **WHEN** the app starts with the mock flag on and the user signs in with `mock@matchmap.test`
+- **WHEN** the app starts with the mock flag on and the user signs in with `one@matchmap.test`
 - **THEN** the sign-in succeeds and no request for the sign-in reaches the API
 
 #### Scenario: Flag off keeps the real API
@@ -47,15 +47,15 @@ With the mock flag on, the mock SHALL answer the operations `login`, `refresh`, 
 The mock login SHALL accept the email and password of a user in the users data file, and SHALL return the same token response shape as the contract: `tokenType` `Bearer`, `accessToken` and `expiresIn`. The email SHALL be trimmed and lower-cased before the comparison, as the API does. For the web client, the mock SHALL NOT return `refreshToken` in the body. For the mobile client, the mock SHALL return `refreshToken` in the body.
 
 #### Scenario: Correct credentials for the web client
-- **WHEN** the web client sends `mock@matchmap.test` with the correct password
+- **WHEN** the web client sends `one@matchmap.test` with the correct password
 - **THEN** the response is 200 with `tokenType` `Bearer`, an `accessToken` and an `expiresIn`, and no `refreshToken` in the body
 
 #### Scenario: Correct credentials for the mobile client
-- **WHEN** the mobile client sends `mock@matchmap.test` with the correct password
+- **WHEN** the mobile client sends `one@matchmap.test` with the correct password
 - **THEN** the response is 200 and includes a `refreshToken` in the body
 
 #### Scenario: Email is normalised before the comparison
-- **WHEN** the user sends `  Mock@MatchMap.test ` with the correct password
+- **WHEN** the user sends `  One@MatchMap.test ` with the correct password
 - **THEN** the sign-in succeeds
 
 ### Requirement: Sign-in credential error
@@ -63,7 +63,7 @@ The mock login SHALL accept the email and password of a user in the users data f
 The mock login SHALL return 401 with the body `{ "error": "invalid_credentials" }` for a wrong password and for an unknown email, with the same response in both cases.
 
 #### Scenario: Wrong password
-- **WHEN** the user sends `mock@matchmap.test` with a wrong password
+- **WHEN** the user sends `one@matchmap.test` with a wrong password
 - **THEN** the response is 401 with `{ "error": "invalid_credentials" }`
 
 #### Scenario: Unknown email
@@ -99,7 +99,7 @@ The mock login SHALL return `invalid_password` (400) when the password has fewer
 The mock SHALL count failed logins per email. After 5 failed logins within 15 minutes, the next login for that email SHALL return 429 with `{ "error": "too_many_attempts" }` and a `Retry-After` header with the seconds left in the window. The window SHALL start at the first failure. A successful login SHALL reset the count for that email.
 
 #### Scenario: Sixth attempt is throttled
-- **WHEN** the user sends five wrong passwords for `mock@matchmap.test` and then the correct password within 15 minutes
+- **WHEN** the user sends five wrong passwords for `one@matchmap.test` and then the correct password within 15 minutes
 - **THEN** the sixth response is 429 with `{ "error": "too_many_attempts" }` and a `Retry-After` header
 
 #### Scenario: Window expires
@@ -220,7 +220,7 @@ Users registered through the mock SHALL be kept in the browser storage, so they 
 
 ### Requirement: Mock users
 
-The users data file SHALL contain two users, `mock@matchmap.test` with password `Mock-pass1` and `second@matchmap.test` with password `Second-pass2`. Both passwords SHALL meet the password rule of the contract.
+The users data file SHALL contain two users, `one@matchmap.test` with password `One-pass1` and `two@matchmap.test` with password `Two-pass2`. Both passwords SHALL meet the password rule of the contract.
 
 #### Scenario: Both mock users can sign in
 - **WHEN** a user signs in with each mock user and its password

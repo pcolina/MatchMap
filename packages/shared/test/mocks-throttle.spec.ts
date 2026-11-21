@@ -5,7 +5,7 @@ import type { MockContext, MockState } from '../src/mocks/types';
 
 const minute = 60_000;
 const contextAt = (now: number): MockContext => ({ now, random: (length) => 'x'.repeat(length) });
-const email = 'mock@matchmap.test';
+const email = 'one@matchmap.test';
 
 const failWith = (state: MockState, password: string, now: number) =>
   signIn(state, { client: 'web', email, password }, contextAt(now));
@@ -17,7 +17,7 @@ describe('login throttling', () => {
       state = failWith(state, 'Wrong-pass1', 0).state;
     }
 
-    const sixth = signIn(state, { client: 'web', email, password: 'Mock-pass1' }, contextAt(0));
+    const sixth = signIn(state, { client: 'web', email, password: 'One-pass1' }, contextAt(0));
 
     expect(sixth.status).toBe(429);
     expect(sixth.body).toEqual({ error: 'too_many_attempts' });
@@ -30,7 +30,7 @@ describe('login throttling', () => {
       state = failWith(state, 'Wrong-pass1', 0).state;
     }
 
-    const afterWindow = signIn(state, { client: 'web', email, password: 'Mock-pass1' }, contextAt(15 * minute));
+    const afterWindow = signIn(state, { client: 'web', email, password: 'One-pass1' }, contextAt(15 * minute));
 
     expect(afterWindow.status).toBe(200);
   });
@@ -40,7 +40,7 @@ describe('login throttling', () => {
     for (let attempt = 0; attempt < 4; attempt++) {
       state = failWith(state, 'Wrong-pass1', 0).state;
     }
-    const success = signIn(state, { client: 'web', email, password: 'Mock-pass1' }, contextAt(0));
+    const success = signIn(state, { client: 'web', email, password: 'One-pass1' }, contextAt(0));
     state = success.state;
 
     const statuses: number[] = [];
