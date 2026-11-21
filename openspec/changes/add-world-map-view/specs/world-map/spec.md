@@ -1,5 +1,9 @@
 # Spec: world-map
 
+## Purpose
+
+Shows the world map of the web app, with each country's border, a capital point and a colour for its state, as the base of the personal map. It shows no data from the API yet.
+
 ## ADDED Requirements
 
 ### Requirement: World map view
