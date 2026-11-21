@@ -4,22 +4,41 @@
   flex-direction: column;
 }
 
+app-layout-header,
+app-layout-footer {
+  display: none;
+}
+
 app-map-view {
   flex: 1 1 0;
   min-height: 0;
 }
 
 app-stats-resume {
-  display: none;
+  display: block;
+  flex: 0 0 250px;
 }
 
 @media (max-width: 600px) {
   .main-layout {
     padding-bottom: env(safe-area-inset-bottom);
   }
+}
+
+@media (min-width: 601px) {
+  app-layout-header,
+  app-layout-footer {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  app-map-view {
+    flex: 0 0 50%;
+  }
 
   app-stats-resume {
-    display: block;
-    flex: 0 0 250px;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
   }
 }
