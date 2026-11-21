@@ -26,13 +26,20 @@ import { deviceLocale, resolveLanguage } from './app/core/i18n/language.ts';
 import { appFonts } from './app/core/fonts/fonts.ts';
 import { AuthApi } from './app/features/auth/data/auth.api.ts';
 import { AuthStore, SIGN_IN_GATEWAY } from './app/features/auth/state/auth.store.ts';
+import { mockEnabled } from './app/core/mocks/mock-flag.ts';
+import { initMockState } from './app/core/mocks/mock-state.ts';
+import { apolloLinkFor, httpInterceptorsFor } from './app/core/mocks/mock-wiring.ts';
 
 registerPlatformComponents(Platform.OS);
 
 const appProviders = [
   provideNativeRouter(routes),
-  provideNativeHttpClient(withInterceptors([authInterceptor])),
-  provideApollo(() => apolloOptions(inject(HttpLink), environment.apiBaseUrl)),
+  provideNativeHttpClient(withInterceptors(httpInterceptorsFor(mockEnabled, authInterceptor))),
+  provideApollo(() => {
+    const options = apolloOptions(inject(HttpLink), environment.apiBaseUrl);
+    return { ...options, link: apolloLinkFor(mockEnabled, options.link) };
+  }),
+  ...(mockEnabled ? [provideAppInitializer(() => initMockState())] : []),
   provideTranslateService({ fallbackLang: 'en' }),
   provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
   provideAppInitializer(() => Font.loadAsync(appFonts)),
