@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import en from '../i18n/en.json';
 import es from '../i18n/es.json';
 
-const specPath = resolve(__dirname, '../../../openspec/changes/add-login-input-errors/specs/client-sign-in/spec.md');
+const specPath = resolve(__dirname, '../../../openspec/changes/archive/2026-11-14-add-login-input-errors/specs/client-sign-in/spec.md');
 
 const messages = Object.fromEntries(
   readFileSync(specPath, 'utf8')
