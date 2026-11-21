@@ -10,7 +10,7 @@
     "build": "ng build",
     "prewatch": "node scripts/copy-maplibre-worker.mjs",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --watch=false"
+    "test": "ng test --watch=false && node --test \"scripts/**/*.test.mjs\""
   },
   "private": true,
   "dependencies": {
