@@ -1,4 +1,5 @@
 import { normalizeEmail, validateSignInEmail, validateSignInPassword } from '../auth/validators.ts';
+import { recordFailure, resetFailures, retryAfterSeconds } from './throttle.ts';
 import type { MockContext, MockClient, MockState, MockUser } from './types.ts';
 
 export type SignInInput = {
@@ -62,10 +63,14 @@ export const signIn = (state: MockState, input: SignInInput, context: MockContex
     return { status: 400, body: { error: 'invalid_password' }, state };
   }
   const email = normalizeEmail(input.email);
+  const retry = retryAfterSeconds(state, email, context.now);
+  if (retry !== null) {
+    return { status: 429, body: { error: 'too_many_attempts' }, retryAfterSeconds: retry, state };
+  }
   const user = state.users.find((candidate) => candidate.email === email && candidate.password === input.password);
   if (!user) {
-    return { status: 401, body: { error: 'invalid_credentials' }, state };
+    return { status: 401, body: { error: 'invalid_credentials' }, state: recordFailure(state, email, context.now) };
   }
-  const issued = issueTokens(state, user, input.client as MockClient, context);
+  const issued = issueTokens(resetFailures(state, email), user, input.client as MockClient, context);
   return { status: 200, body: issued.body, refreshToken: issued.refreshToken, state: issued.state };
 };
