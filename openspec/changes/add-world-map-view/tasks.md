@@ -31,7 +31,7 @@ No API call changes, so no contract check is needed.
 ## 4. Checks and review
 
 - [x] **4.1 Full check.** Run `pnpm test` in `apps/web`, and the web `ngc -p tsconfig.app.json --noEmit` check. Paste the summary in the PR.
-- [ ] **4.2 Visual check.** In Chrome or Edge at phone width and at laptop width: the map fills the page, the borders and capital points show, a coloured country has its outline, and the background follows the system scheme. Done by the user, recorded in the PR.
+- [x] **4.2 Visual check.** In Chrome or Edge at phone width and at laptop width: the map fills the page, the borders and capital points show, a coloured country has its outline, and the background follows the system scheme. Done by the user, recorded in the PR.
 
 ## Measured sizes
 
