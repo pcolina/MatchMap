@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "prestart": "node scripts/copy-maplibre-worker.mjs",
-    "start": "ng serve --port 4300",
+    "start": "node scripts/start.mjs",
     "prebuild": "node scripts/copy-maplibre-worker.mjs",
     "build": "ng build",
     "prewatch": "node scripts/copy-maplibre-worker.mjs",
