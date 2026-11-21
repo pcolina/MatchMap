@@ -16,6 +16,12 @@ describe('signIn success', () => {
     expect(result.refreshToken).toBeDefined();
   });
 
+  it('normalises the email before the comparison', () => {
+    const result = signIn(createState(), { client: 'web', email: '  Mock@MatchMap.test ', password: 'Mock-pass1' }, context);
+
+    expect(result.status).toBe(200);
+  });
+
   it('returns the refresh token in the body for the mobile client', () => {
     const result = signIn(createState(), { client: 'mobile', email: 'mock@matchmap.test', password: 'Mock-pass1' }, context);
 
