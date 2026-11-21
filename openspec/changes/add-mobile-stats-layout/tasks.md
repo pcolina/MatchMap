@@ -1,10 +1,10 @@
-﻿# Tasks: add-mobile-stats-layout
+# Tasks: add-mobile-stats-layout
 
 Each task writes its failing test first, runs it and shows it failing, then writes the minimum code to make it pass. Each task is one commit, with `Task: <id>` in the body. No API call changes, so no contract check is needed.
 
 ## 1. Translations
 
-- [x] **1.1 Stats label keys.** Test first: `packages/shared/test/stats-resume-i18n.spec.ts` checks that `stats.resume.label` has a non-empty value in `en` and in `es` (scenario "Label exists in both languages"). Code: add the key to `packages/shared/i18n/en.json` ("Statistics summary") and `packages/shared/i18n/es.json` ("Resumen de estadÃ­sticas"). Both texts go to "Translations to review" in the PR.
+- [x] **1.1 Stats label keys.** Test first: `packages/shared/test/stats-resume-i18n.spec.ts` checks that `stats.resume.label` has a non-empty value in `en` and in `es` (scenario "Label exists in both languages"). Code: add the key to `packages/shared/i18n/en.json` ("Statistics summary") and `packages/shared/i18n/es.json` ("Resumen de estadísticas"). Both texts go to "Translations to review" in the PR.
 
 ## 2. StatsResume component (`apps/mobile/src/app/shared/stats-resume/`)
 
