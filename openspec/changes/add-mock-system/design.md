@@ -25,7 +25,7 @@ The flag is a build constant, `MATCHMAP_MOCKS`. The launcher passes it to the de
 - Dev server with `mock`: `mockEnabled` is `true`.
 - Dev server without `mock`, and `pnpm build:web`: `mockEnabled` is `false`. Angular's minifier then removes the mock code from the bundle.
 
-The exact `ng serve` syntax for `--define` is verified in the first task of `tasks.md`, before the launcher is written.
+The exact `ng serve` syntax for `--define` is verified in the first task of `tasks.md`, before the launcher is written. Verified in task 1.2 with `pnpm exec ng serve --help`: `--define` is an array option, and the value is used as written, so the flag is passed as `--define=MATCHMAP_MOCKS=true`. String values need quotes; a boolean does not. The effect in the browser is checked in task 3.6.
 
 ### 3. Shared mock logic
 
