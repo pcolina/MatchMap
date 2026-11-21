@@ -1,0 +1,16 @@
+[
+  {
+    "id": "6f1c1a2e-3b4d-4e5f-8a9b-0c1d2e3f4a51",
+    "email": "one@matchmap.test",
+    "username": "one",
+    "password": "One-pass1",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "6f1c1a2e-3b4d-4e5f-8a9b-0c1d2e3f4a52",
+    "email": "two@matchmap.test",
+    "username": "two",
+    "password": "Two-pass2",
+    "createdAt": "2026-01-01T00:00:00Z"
+  }
+]

@@ -43,6 +43,9 @@
                   "maximumError": "8kB"
                 }
               ],
+              "define": {
+                "MATCHMAP_MOCKS": "false"
+              },
               "outputHashing": "all"
             },
             "development": {

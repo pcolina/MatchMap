@@ -3,4 +3,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [ngNative({ inline: [/\/node_modules\/@ngrx\/signals/] })],
+  test: {
+    exclude: ['**/node_modules/**', '**/dist/**', 'scripts/**'],
+  },
 });

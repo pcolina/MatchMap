@@ -143,6 +143,29 @@ pnpm install
 
 ### Run the web app
 
+#### With mocks (without the backend)
+
+Use this option when the API is not running. The app answers sign-in, registration and the account operations from mock data files.
+
+```powershell
+pnpm web mock
+```
+
+Opens on http://localhost:4333 and reloads on save. Sign in with one of these mock users:
+
+| Email | Password |
+|---|---|
+| `one@matchmap.test` | `One-pass1` |
+| `two@matchmap.test` | `Two-pass2` |
+
+Users you register in the mock are kept in the browser and survive a reload. To reset them to the two users above, clear the site data for http://localhost:4333 in the browser and reload. Google sign-in is not mocked. The full list of mocks is in [Mock-system.md](Mock-system.md).
+
+To run without mocks, start `pnpm web` without the `mock` argument.
+
+#### With the API
+
+Start the backend API first, then run:
+
 ```powershell
 pnpm web
 ```
@@ -152,6 +175,28 @@ Opens on http://localhost:4300 and reloads on save.
 ### Run the mobile app
 
 The map uses a native module that Expo Go does not include, so the mobile app runs as a **development build**, not in Expo Go.
+
+#### With mocks (without the backend)
+
+Use this option when the API is not running. The app answers sign-in, registration and the account operations from mock data files.
+
+```powershell
+pnpm mobile mock  # Metro server, with mocks on
+pnpm android      # build and open the app on an Android emulator or device
+```
+
+Sign in with one of these mock users:
+
+| Email | Password |
+|---|---|
+| `one@matchmap.test` | `One-pass1` |
+| `two@matchmap.test` | `Two-pass2` |
+
+Users you register in the mock are kept on the device and survive a restart. To reset them to the two users above, clear the app data in the device settings and open the app again. Google sign-in is not mocked.
+
+#### With the API
+
+Start the backend API first, then run:
 
 ```powershell
 pnpm mobile       # Metro server

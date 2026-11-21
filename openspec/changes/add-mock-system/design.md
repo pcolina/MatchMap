@@ -1,0 +1,78 @@
+# Design: add-mock-system
+
+## Context
+
+The web and mobile apps call the API for sign-in, refresh, logout, registration, `me` and `apiVersion`. The mock must answer those calls without the API, with the same results and error codes, from data files, and it must keep registered users across page reloads. The contract covers the operations; the API code defines the behaviour the contract does not describe (throttling, username derivation, `me`, `apiVersion`), as recorded in the proposal.
+
+## Decisions
+
+### 1. Start command
+
+`pnpm web mock` starts the web app with mocks. `apps/web/package.json` changes its `start` script to `node scripts/start.mjs`. The launcher reads its arguments:
+
+- no argument: starts `ng serve --port 4300`, as today;
+- `mock`: starts `ng serve --port 4333` with the mock flag on. The mock has its own port so it can run next to the normal dev server;
+- any other argument: exits with status 1 and prints the usage.
+
+The root script `web` already forwards extra arguments to `start`, so `pnpm web mock` reaches the launcher. Verified: today `pnpm web mock` reaches `ng serve` as a positional argument, which is why the launcher is needed.
+
+The launcher has no dependencies and uses only Node's built-in modules.
+
+### 2. Passing the flag to the browser code
+
+The flag is a build constant, `MATCHMAP_MOCKS`. The launcher passes it to the dev server with the `define` option (`@angular/build` dev-server schema: "Defines global identifiers that will be replaced with a specified constant value"). The application reads it through one module, `apps/web/src/app/core/mocks/mock-flag.ts`, which exports `mockEnabled`.
+
+- Dev server with `mock`: `mockEnabled` is `true`.
+- Dev server without `mock`, and `pnpm build:web`: `mockEnabled` is `false`. Angular's minifier then removes the mock code from the bundle.
+
+The exact `ng serve` syntax for `--define` is verified in the first task of `tasks.md`, before the launcher is written. Verified in task 1.2 with `pnpm exec ng serve --help`: `--define` is an array option, and the value is used as written, so the flag is passed as `--define=MATCHMAP_MOCKS=true`. String values need quotes; a boolean does not. The effect in the browser is checked in task 3.6.
+
+### 3. Shared mock logic
+
+The mock logic lives in `packages/shared/src/mocks/`: pure functions and JSON data, with no DOM, no Apollo and no app code. The pure functions:
+
+- take a request description (transport, operation or path, headers, body, and the current stored state) and return the response (status, headers, body) or the error;
+- reuse the validators in `packages/shared/src/auth/` for the input rules;
+- compute the throttle, the username and the `me` and `apiVersion` results as the API does (`UsernameGenerator`, `LoginThrottle`, `AccountGraphqlController`, `ApiVersionController` in `matchmap-api`).
+
+The data files are `packages/shared/src/mocks/data/users.json` (the two mock users, with password and id) and `packages/shared/src/mocks/data/responses.json` (fixed values such as the error bodies and `apiVersion`).
+
+`packages/shared` already holds the GraphQL types and the i18n catalogues, so it is the place for the mock logic that both apps need.
+
+### 4. App adapters
+
+Each app has two thin adapters, and only they touch the framework:
+
+- Web: `apps/web/src/app/core/mocks/mock-http.interceptor.ts` (an `HttpInterceptorFn`) and `mock-apollo.link.ts` (an Apollo link). They are loaded only when `mockEnabled` is `true`, by a dynamic `import()` in `main.ts` (`mock-install.ts`), so the production build does not contain their code or the mock data.
+- A small dispatcher, `mock-dispatch.ts`, is always registered in `app.config.ts` (in front of the real interceptor and link, and only when `mockEnabled` is `true`). It delegates to the installed mock handlers, and passes through when none is installed. The static bundle therefore holds only the dispatcher, which contains no mock data.
+- Production: the `production` build configuration in `angular.json` sets `MATCHMAP_MOCKS` to `false`.
+- Mobile: the same adapters in `apps/mobile/src/app/core/mocks/` (interceptor, Apollo link, state, flag and wiring), done in tasks 5.1 to 5.8. The mobile flag is `EXPO_PUBLIC_MATCHMAP_MOCKS`, set by `pnpm mobile mock` (`apps/mobile/scripts/start.mjs`). The mobile wiring is a static import in `main.ts`, not the dynamic import of the web, so the mobile bundle contains the mock code even with the flag off. Its behaviour with the flag off is unchanged.
+
+An adapter reads the request, calls the shared function, and returns the response in the transport's shape. It does not contain rules.
+
+### 5. Persistence and sessions
+
+- Registered users and the throttle counters are stored in `localStorage` under the key `matchmap.mock.state` as one JSON document. Reads and writes are wrapped in `try/catch`.
+- When `localStorage` is not available, the state is kept in memory for the page session. The app still works, and the users are lost on reload.
+- The access tokens are kept in memory only. Each token maps to a user id, and an unknown token gives the API's authentication error.
+- Refresh tokens are kept in the stored state, with the user id and whether they are revoked, so they survive a reload as the API's sessions do.
+- The web client receives the refresh token in a cookie in the real API. A page cannot set an HttpOnly cookie, so the web mock keeps the refresh token in the stored state and the web adapter sends it back to the shared function as the cookie value. This emulates the cookie inside the browser; the request and response shapes are the contract's.
+
+### 6. Throttling
+
+The throttle counts failed logins per email, with the API's values: 5 failures in a 15-minute window, reset on success, `Retry-After` set to the seconds left (`matchmap-api` `application.yml`). The counters live in the stored state, so they survive a reload, as the API's counters do. The mock has no client IP, so it counts per email only.
+
+### 7. Mock table and documentation
+
+`Mock-system.md` lists every row as in the spec. The README sections for each app document the mock start command (`pnpm web mock` on http://localhost:4333, `pnpm mobile mock`), the two users with their passwords, the reset, and how to start without mocks.
+
+## Open points
+
+- **Mobile storage:** decided: `expo-secure-store`, the storage the app already uses for the refresh token. A synchronous cache sits in front of it (task 5.4). Whether the size of a stored value is enough for many registered users is not yet verified; it is checked on the emulator in task 5.7.
+- **`define` syntax:** verified in task 1.2, as said in decision 2.
+- **Mobile bundle:** the mock code is in the mobile bundle even with the flag off (see decision 4). Whether to make it a lazy load is open.
+
+## Risks
+
+- A page cannot set an HttpOnly cookie. Decision 5 avoids it by keeping the refresh token in the stored state; the web adapter, not the browser, handles the cookie.
+- Mock logic that drifts from the API. The mock table names the API file each rule comes from, and the tests in `packages/shared` cover each rule from the spec.
