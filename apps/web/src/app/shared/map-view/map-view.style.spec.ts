@@ -91,6 +91,14 @@ describe('buildMapStyle', () => {
       }
       expect(style.glyphs).toBeUndefined();
     });
+
+    it('loads each GeoJSON source from an absolute URL, because the worker cannot resolve a relative one', () => {
+      const style = buildMapStyle({}, 'day') as unknown as Style;
+
+      for (const source of Object.values(style.sources)) {
+        expect(() => new URL((source as { data: string }).data)).not.toThrow();
+      }
+    });
   });
 
   describe('state outline', () => {

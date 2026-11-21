@@ -13,8 +13,8 @@ export const buildMapStyle = (states: Record<string, MapState>, scheme: MapSchem
   return {
     version: 8,
     sources: {
-      countries: { type: 'geojson', data: '/geo/countries.geojson' },
-      capitals: { type: 'geojson', data: '/geo/capitals.geojson' },
+      countries: { type: 'geojson', data: new URL('/geo/countries.geojson', window.location.origin).href },
+      capitals: { type: 'geojson', data: new URL('/geo/capitals.geojson', window.location.origin).href },
     },
     layers: [
       { id: 'background', type: 'background', paint: { 'background-color': palette.ocean } },

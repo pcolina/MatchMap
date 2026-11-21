@@ -10,6 +10,7 @@ No API call changes, so no contract check is needed.
 - [x] **1.2 Countries data.** Test first: a spec checks that `apps/web/public/geo/countries.geojson` exists, is a FeatureCollection of polygons, and every feature has an `iso_a2` string. Code: convert the Natural Earth 1:50m `admin_0_countries` file, keep `iso_a2`, and simplify it.
 - [x] **1.3 Capitals data.** Test first: a spec checks that `apps/web/public/geo/capitals.geojson` exists, every feature is a point, and every feature has `iso_a2` and `name`. Code: filter the Natural Earth 1:50m `populated_places` file to `FEATURECLASS = "Admin-0 capital"`.
 - [x] **1.4 Measured sizes.** Measure both files after conversion and write the sizes in this file under "Measured sizes". If the total exceeds the budget in `CLAUDE.md` §9, the justification goes in `design.md` before the change continues. No test; recorded in the PR.
+- [x] **1.5 Serve the map worker and data.** Test first: `map-worker.spec.ts` checks that `prestart`, `prebuild` and `prewatch` in `apps/web/package.json` run `scripts/copy-maplibre-worker.mjs`, that `angular.json` excludes `maplibre-gl` from the dev-server prebundle, and that `.gitignore` keeps the copied `public/maplibre-gl-worker.mjs` out of git. `map-view.style.spec.ts` checks that each GeoJSON source uses an absolute URL. Code: the copy script, the scripts and config in `apps/web`, and absolute URLs in `map-view.style.ts`. Without the worker the map stays empty in the browser, so this task is needed for scenario "World map is shown". The red step was not run: the config was already applied when the spec was written.
 
 ## 2. Style (`apps/web`)
 
@@ -28,7 +29,7 @@ No API call changes, so no contract check is needed.
 
 ## 4. Checks and review
 
-- [ ] **4.1 Full check.** Run `pnpm test` in `apps/web`, and the web `ngc -p tsconfig.app.json --noEmit` check. Paste the summary in the PR.
+- [x] **4.1 Full check.** Run `pnpm test` in `apps/web`, and the web `ngc -p tsconfig.app.json --noEmit` check. Paste the summary in the PR.
 - [ ] **4.2 Visual check.** In Chrome or Edge at phone width and at laptop width: the map fills the page, the borders and capital points show, a coloured country has its outline, and the background follows the system scheme. Done by the user, recorded in the PR.
 
 ## Measured sizes
