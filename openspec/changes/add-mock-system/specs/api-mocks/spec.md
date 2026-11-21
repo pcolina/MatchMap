@@ -36,11 +36,7 @@ The mock SHALL build every response of a mocked operation from a data file in th
 
 ### Requirement: Mocked operations
 
-With the mock flag on, the mock SHALL answer the operations `login`, `refresh`, `logout`, `register`, `me` and `apiVersion`. The operation `signInWithGoogle` SHALL NOT be mocked. Its row in the mock table SHALL have the status "not mocked".
-
-#### Scenario: Google sign-in is not mocked
-- **WHEN** the mock flag is on and the user chooses to sign in with Google
-- **THEN** the app reports that the Google sign-in is not mocked and sends no request that the mock answers
+With the mock flag on, the mock SHALL answer the operations `login`, `refresh`, `logout`, `register`, `me` and `apiVersion`. The mock works with email and password only. The operation `signInWithGoogle` SHALL NOT be mocked. Its row in the mock table SHALL have the status "not mocked".
 
 ### Requirement: Sign-in with email and password
 
