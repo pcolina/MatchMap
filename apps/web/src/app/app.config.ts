@@ -9,6 +9,8 @@ import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
 import { authInterceptor } from './core/auth/auth.interceptor';
+import { mockEnabled } from './core/mocks/mock-flag';
+import { apolloLinkFor, httpInterceptorsFor } from './core/mocks/mock-wiring';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { setupTranslations } from './core/i18n/language';
 import { trackInputModality } from './core/input-modality';
@@ -21,9 +23,9 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors(httpInterceptorsFor(mockEnabled, authInterceptor))),
     provideApollo(() => ({
-      link: inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) }),
+      link: apolloLinkFor(mockEnabled, inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) })),
       cache: new InMemoryCache(),
     })),
     provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
