@@ -1,5 +1,18 @@
 export { loginLimitErrorKey } from './auth/limit-errors.ts';
 export { normalizeEmail, validateRegisterPassword, validateSignInEmail, validateSignInPassword } from './auth/validators.ts';
+export { createState } from './mocks/state.ts';
+export { signIn } from './mocks/sign-in.ts';
+export type { MockHttpResult, SignInInput } from './mocks/sign-in.ts';
+export { refresh } from './mocks/refresh.ts';
+export type { RefreshInput } from './mocks/refresh.ts';
+export { logout } from './mocks/logout.ts';
+export type { LogoutInput } from './mocks/logout.ts';
+export { register } from './mocks/register.ts';
+export type { GraphqlError, GraphqlResult, PublicUser, RegisterInput as MockRegisterInput } from './mocks/register.ts';
+export { apiVersion, me } from './mocks/account.ts';
+export { loadState, saveState } from './mocks/storage.ts';
+export type { KeyValueStorage } from './mocks/storage.ts';
+export type { MockClient, MockContext, MockState, MockUser } from './mocks/types.ts';
 export type { components, paths } from './generated/openapi.ts';
 export type { RegisterInput } from './generated/schema.ts';
 export type { RegisterMutation, RegisterMutationVariables } from './generated/operations.ts';
