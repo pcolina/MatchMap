@@ -44,5 +44,10 @@
     "world": {
       "label": "Mapa del mundo"
     }
+  },
+  "stats": {
+    "resume": {
+      "label": "Resumen de estadísticas"
+    }
   }
 }

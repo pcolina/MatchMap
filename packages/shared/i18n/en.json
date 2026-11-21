@@ -44,5 +44,10 @@
     "world": {
       "label": "World map"
     }
+  },
+  "stats": {
+    "resume": {
+      "label": "Statistics summary"
+    }
   }
 }
