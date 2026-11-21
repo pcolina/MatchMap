@@ -8,7 +8,7 @@ Each task writes its failing test first, runs it and shows it failing, then writ
 
 ## 2. StatsResume component (`apps/mobile/src/app/shared/stats-resume/`)
 
-- [ ] **2.1 Fixed height and accent background.** Test first: `stats-resume.test.ts` renders the component and checks that its height is 250 px (scenario "Panel height is 250 px"), and that its background is the `accent` token in light and dark scheme (scenarios "Panel background in light scheme" and "Panel background in dark scheme"). Code: `stats-resume.ts` with `:host` height 250 px and the `accent` token from `tokens.ts`.
+- [x] **2.1 Fixed height and accent background.** Test first: `stats-resume.test.ts` renders the component and checks that its height is 250 px (scenario "Panel height is 250 px"), and that its background is the `accent` token in light and dark scheme (scenarios "Panel background in light scheme" and "Panel background in dark scheme"). Code: `stats-resume.ts` with `:host` height 250 px and the `accent` token from `tokens.ts`.
 - [ ] **2.2 No scroll.** Test first: the rendered tree has no `scroll-view` element and the content is clipped (scenarios "Panel does not scroll" and "Panel keeps its height in landscape"). Code: a `view` with `overflow: hidden`; no `scroll-view`.
 - [ ] **2.3 Accessible pressable.** Test first: the panel is found with `getByRole('button', { name })` where the name is the translated `stats.resume.label` (scenario "Panel has an accessible name"). Code: a `pressable` with `accessibilityRole="button"` and `accessibilityLabel` from the translation key.
 - [ ] **2.4 Press output.** Test first: tapping the panel emits one `press` event and nothing else (scenario "Panel emits a press"). Code: an output `press` wired to the pressable's `(press)`.
