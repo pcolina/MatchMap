@@ -1,3 +1,4 @@
+import responses from './data/responses.json';
 import type { GraphqlResult, PublicUser } from './register.ts';
 import type { MockState } from './types.ts';
 
@@ -25,5 +26,5 @@ export const me = (state: MockState, accessToken: string | undefined): HttpLikeR
 
 export const apiVersion = (): { status: number; data: { apiVersion: string } } => ({
   status: 200,
-  data: { apiVersion: '0.1.0-SNAPSHOT' },
+  data: { apiVersion: responses.apiVersion },
 });
