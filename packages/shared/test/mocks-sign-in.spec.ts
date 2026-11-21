@@ -52,6 +52,13 @@ describe('signIn success', () => {
     expect(unknown.body).toEqual({ error: 'invalid_client' });
   });
 
+  it('rejects a password outside its limits with invalid_password', () => {
+    const result = signIn(createState(), { client: 'web', email: 'mock@matchmap.test', password: 'Abc12' }, context);
+
+    expect(result.status).toBe(400);
+    expect(result.body).toEqual({ error: 'invalid_password' });
+  });
+
   it('normalises the email before the comparison', () => {
     const result = signIn(createState(), { client: 'web', email: '  Mock@MatchMap.test ', password: 'Mock-pass1' }, context);
 
