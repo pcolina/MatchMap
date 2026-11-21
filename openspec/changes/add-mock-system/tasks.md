@@ -9,7 +9,7 @@ Sign-in, refresh, logout, registration, `me` and `apiVersion` answer from the sh
 - [x] **1.1 Argument handling.** Test first: `apps/web/scripts/start-args.spec.ts` checks that no argument gives no flag, `mock` gives the flag, and any other argument gives an error that names the usage (requirement "Mock switch at start-up", scenarios "Flag on answers from the mock", "Flag off keeps the real API", "Flag is off by default"). Code: `apps/web/scripts/start-args.mjs`.
 - [x] **1.2 Define syntax spike.** No production code. Check the `ng serve` syntax for the dev-server `define` option (design decision 2) with a throwaway constant, and record the result in `design.md` before task 1.3.
 - [x] **1.3 Launcher.** Test first: `apps/web/scripts/start-command.spec.ts` checks that the command built for `mock` contains the `define` for `MATCHMAP_MOCKS` set to `true`, and the command for no argument does not (scenario "Flag on answers from the mock"). Code: `apps/web/scripts/start.mjs`, and the `start` script of `apps/web/package.json` becomes `node scripts/start.mjs`.
-- [ ] **1.4 Mock flag module.** Test first: `apps/web/src/app/core/mocks/mock-flag.spec.ts` checks that `mockEnabled` is `false` when the define is absent (scenario "Flag is off by default") and `true` when it is set. Code: `apps/web/src/app/core/mocks/mock-flag.ts`.
+- [x] **1.4 Mock flag module.** Test first: `apps/web/src/app/core/mocks/mock-flag.spec.ts` checks that `mockEnabled` is `false` when the define is absent (scenario "Flag is off by default") and `true` when it is set. Code: `apps/web/src/app/core/mocks/mock-flag.ts`.
 
 ## 2. Shared mock logic (`packages/shared/src/mocks`)
 
