@@ -19,6 +19,20 @@ describe('register', () => {
     expect(result.state.users.map((user) => user.email)).toContain('fresh@matchmap.test');
   });
 
+  it('returns VALIDATION_FAILED on the email field for an empty email', () => {
+    const result = register(createState(), { email: '', password: 'Fresh-pass1' }, context);
+
+    expect(result.data).toBeUndefined();
+    expect(result.errors?.[0].extensions).toEqual({ code: 'VALIDATION_FAILED', field: 'email' });
+  });
+
+  it('returns PASSWORD_INVALID on the password field for a password that breaks the rule', () => {
+    const result = register(createState(), { email: 'fresh@matchmap.test', password: 'abcdef' }, context);
+
+    expect(result.data).toBeUndefined();
+    expect(result.errors?.[0].extensions).toEqual({ code: 'PASSWORD_INVALID', field: 'password' });
+  });
+
   it('stores the email trimmed and lower-cased', () => {
     const result = register(createState(), { email: 'New.User@MatchMap.test', password: 'Fresh-pass1' }, context);
 

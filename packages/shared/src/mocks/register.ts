@@ -1,4 +1,4 @@
-import { normalizeEmail } from '../auth/validators.ts';
+import { normalizeEmail, validateRegisterPassword, validateSignInEmail } from '../auth/validators.ts';
 import type { MockContext, MockState, MockUser } from './types.ts';
 
 export type RegisterInput = {
@@ -24,6 +24,12 @@ export const register = (
   input: RegisterInput,
   context: MockContext,
 ): GraphqlResult<{ register: PublicUser }> => {
+  if (validateSignInEmail(input.email)) {
+    return { errors: [{ message: 'Invalid email', extensions: { code: 'VALIDATION_FAILED', field: 'email' } }], state };
+  }
+  if (validateRegisterPassword(input.password)) {
+    return { errors: [{ message: 'Invalid password', extensions: { code: 'PASSWORD_INVALID', field: 'password' } }], state };
+  }
   const email = normalizeEmail(input.email);
   const user: MockUser = {
     id: `${context.random(8)}-${context.random(4)}-${context.random(4)}-${context.random(12)}`,
