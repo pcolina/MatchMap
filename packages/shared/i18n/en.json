@@ -39,5 +39,10 @@
       "repeatPasswordLabel": "Repeat password",
       "errorPasswordMismatch": "Passwords do not match."
     }
+  },
+  "map": {
+    "world": {
+      "label": "World map"
+    }
   }
 }

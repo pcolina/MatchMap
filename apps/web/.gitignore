@@ -2,6 +2,7 @@
 
 # Compiled output
 /dist
+/public/maplibre-gl-worker.mjs
 /tmp
 /out-tsc
 /bazel-out

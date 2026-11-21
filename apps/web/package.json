@@ -4,8 +4,11 @@
   "license": "PolyForm-Noncommercial-1.0.0",
   "scripts": {
     "ng": "ng",
+    "prestart": "node scripts/copy-maplibre-worker.mjs",
     "start": "ng serve --port 4300",
+    "prebuild": "node scripts/copy-maplibre-worker.mjs",
     "build": "ng build",
+    "prewatch": "node scripts/copy-maplibre-worker.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false"
   },
@@ -25,6 +28,7 @@
     "@ngx-translate/core": "^18.0.0",
     "apollo-angular": "^14.2.0",
     "graphql": "^16.14.2",
+    "maplibre-gl": "6.16.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
