@@ -10,10 +10,10 @@ describe('LayoutFooter bar', () => {
     return fixture.nativeElement.querySelector('.layout-footer') as HTMLElement;
   };
 
-  it('uses the accent token, which switches between the light and the dark scheme', () => {
+  it('uses the surfaceRaised token, which switches between the light and the dark scheme', () => {
     const footer = setup();
 
-    expect(getComputedStyle(footer).getPropertyValue('background-color')).toBe('var(--mm-color-accent)');
+    expect(getComputedStyle(footer).getPropertyValue('background-color')).toBe('var(--mm-color-surfaceRaised)');
   });
 
   it('spans the full viewport width at the bottom', () => {
