@@ -42,10 +42,6 @@ The map SHALL colour each country that has a colour state supplied by its page, 
 - **WHEN** a country has the `WANT_TO_GO` colour state
 - **THEN** it is filled with the `wantToGo` colour from the map tokens, with no dashed border
 
-#### Scenario: Countries not recognised by all countries
-- **WHEN** a country that is not recognised by all other countries is shown (for example Palestine or Kosovo)
-- **THEN** its border is dashed [NEEDS CLARIFICATION: confirm the full list of countries to dash (Palestine, Kosovo, and which others?), the dash pattern, and its colour (`text` or another token?)]
-
 #### Scenario: Colour is not the only cue
 - **WHEN** a country is coloured
 - **THEN** it also has a visible outline, so the state can be told apart without colour (`docs/design.md` §2.2)
