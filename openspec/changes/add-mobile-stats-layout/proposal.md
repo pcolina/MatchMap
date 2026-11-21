@@ -33,7 +33,10 @@ After sign-in, the mobile app shows the main layout, which is empty today. This 
 
 ## Open questions
 
-- [NEEDS CLARIFICATION: when the panel is tapped, what opens? Option A: this change also adds the route for the fuller statistics, with an empty page for now, so the navigation works end to end. Option B: this change only makes the panel tappable and the route comes in a later change. Which one?]
 - [NEEDS CLARIFICATION: until the map change, the map area is empty. Is that right, or should it show the neutral `bg` token so the layout is visible on the emulator?]
-- [NEEDS CLARIFICATION: where does `StatsResume` live? Options: `apps/mobile/src/app/features/stats-resume/` (a feature folder) or `apps/mobile/src/app/shared/stats-resume/` (a presentational component).]
-- [NEEDS CLARIFICATION: is the component name `stats-resume` / `StatsResume` the one you want? I used it as written, with the spelling of `stats`.]
+- [NEEDS CLARIFICATION: where does `StatsResume` live? Recommended: `apps/mobile/src/app/shared/stats-resume/`, because it is presentational (no store, no Apollo). The fuller statistics view, when it comes, is a feature with its own store. Which folder?]
+
+## Decided
+
+- When the panel is tapped, this change only makes it tappable. The route for the fuller statistics comes in a later change (option B).
+- `StatsResume` is not reused for the fuller statistics view: the two show different data.
