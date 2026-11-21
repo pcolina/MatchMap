@@ -2,7 +2,7 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { mockHttpInterceptor } from './mock-http.interceptor';
+import { mockHttpInterceptor, resetWebRefreshCookie } from './mock-http.interceptor';
 import { resetMockState } from './mock-state';
 
 describe('mockHttpInterceptor', () => {
@@ -19,6 +19,7 @@ describe('mockHttpInterceptor', () => {
     http = TestBed.inject(HttpClient);
     backend = TestBed.inject(HttpTestingController);
     resetMockState();
+    resetWebRefreshCookie();
   });
 
   afterEach(() => {
@@ -37,6 +38,22 @@ describe('mockHttpInterceptor', () => {
       .subscribe((body) => (accessToken = body.accessToken));
 
     expect(accessToken).toBeDefined();
+  });
+
+  it('keeps the web refresh token in the cookie emulation and rotates it on refresh', () => {
+    http.post('/api/auth/login', { email: 'mock@matchmap.test', password: 'Mock-pass1' }, { headers: { 'X-Client': 'web' } }).subscribe();
+
+    let firstBody: Record<string, unknown> | undefined;
+    http.post<Record<string, unknown>>('/api/auth/refresh', null, { headers: { 'X-Client': 'web' } }).subscribe((body) => (firstBody = body));
+    let secondStatus: number | undefined;
+    http.post('/api/auth/refresh', null, { headers: { 'X-Client': 'web' } }).subscribe({
+      next: () => (secondStatus = 200),
+      error: (error: { status: number }) => (secondStatus = error.status),
+    });
+
+    expect(firstBody).toMatchObject({ tokenType: 'Bearer' });
+    expect(firstBody).not.toHaveProperty('refreshToken');
+    expect(secondStatus).toBe(200);
   });
 
   it('lets other requests reach the API', () => {
