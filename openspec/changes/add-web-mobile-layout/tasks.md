@@ -4,7 +4,7 @@ Each task writes its failing test first, runs it and shows it failing, then writ
 
 ## 1. StatsResume component (`apps/web/src/app/shared/stats-resume/`)
 
-- [ ] **1.1 Fixed height and accent background.** Test first: `stats-resume.spec.ts` checks that the panel is 250 px high (scenario "Panel height is 250 px") and that its background is the `accent` token in light and dark scheme (scenarios "Panel background in light scheme" and "Panel background in dark scheme"). Code: `stats-resume.ts` and `stats-resume.css` with the `--mm-*` accent variable from `tokens.css`.
+- [x] **1.1 Fixed height and accent background.** Test first: `stats-resume.spec.ts` checks that the panel is 250 px high (scenario "Panel height is 250 px") and that its background is the `accent` token in light and dark scheme (scenarios "Panel background in light scheme" and "Panel background in dark scheme"). Code: `stats-resume.ts` and `stats-resume.css` with the `--mm-*` accent variable from `tokens.css`.
 - [ ] **1.2 No scroll.** Test first: the panel has `overflow: hidden` and is not a scrollable element (scenario "Panel does not scroll"). Code: the `overflow: hidden` rule.
 - [ ] **1.3 Accessible button.** Test first: the panel is found with `getByRole('button', { name })` where the name is the translated `stats.resume.label` (scenario "Panel has an accessible name"). Code: a native `<button>` with `aria-label` from the translation key.
 - [ ] **1.4 Press output.** Test first: a click emits one `press` event (scenario "Panel emits a press"), and Enter on the focused panel emits one `press` event (scenario "Panel is activated with the keyboard"). Code: the `press` output, wired to `(click)`; the native button handles Enter.
