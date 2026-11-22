@@ -6,6 +6,8 @@ import { ApplicationConfig, inject, Injector, provideAppInitializer, provideBrow
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideRouter } from '@angular/router';
 import { InMemoryCache } from '@apollo/client/cache';
+import { ApolloLink } from '@apollo/client';
+import { apolloAuthLink } from './core/auth/apollo-auth.link';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
@@ -30,10 +32,16 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors(httpInterceptorsFor(mockEnabled, authInterceptor))),
-    provideApollo(() => ({
-      link: apolloLinkFor(mockEnabled, inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) })),
-      cache: new InMemoryCache(),
-    })),
+    provideApollo(() => {
+      const store = inject(AuthStore);
+      return {
+        link: ApolloLink.from([
+          apolloAuthLink(() => store.accessToken()),
+          apolloLinkFor(mockEnabled, inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) })),
+        ]),
+        cache: new InMemoryCache(),
+      };
+    }),
     provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerMap, tablerInfoCircle, tablerLogout, tablerSunMoon, tablerX, ...mapControlIcons }),
     provideRouter(routes),
     provideTranslateService({ fallbackLang: 'en' }),
