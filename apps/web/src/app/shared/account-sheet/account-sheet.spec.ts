@@ -112,4 +112,17 @@ describe('AccountSheet', () => {
   it('changes the row background on hover only for a mouse with a fine pointer', () => {
     expect(css()).toMatch(/@media \(hover: hover\) and \(pointer: fine\)\s*\{[\s\S]*\.row:hover\s*\{[^}]*background(-color)?:\s*var\(--mm-color-accentSubtle\)/);
   });
+
+  it('caps the dialog width at 320 px', () => {
+    expect(css()).toMatch(/\.sheet\s*\{[^}]*max-width:\s*320px/);
+  });
+
+  it('fades the dialog and its backdrop over 200 ms', () => {
+    expect(css()).toMatch(/\.sheet\s*\{[^}]*transition:[^;]*opacity\s+200ms/);
+    expect(css()).toMatch(/\.sheet::backdrop\s*\{[^}]*transition:[^;]*200ms/);
+  });
+
+  it('removes the transition when reduced motion is requested', () => {
+    expect(css()).toMatch(/@media \(prefers-reduced-motion: reduce\)\s*\{[\s\S]*\.sheet[\s\S]*transition:\s*none/);
+  });
 });
