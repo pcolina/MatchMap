@@ -4,8 +4,8 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 1. Shared map style
 
-- [ ] **1.1 Test first.** `packages/shared/test/map-style.spec.ts`: `buildMapStyle(states, scheme, sources)` returns the layers `background`, `countries-fill`, `countries-border`, `countries-state-outline` and `capitals-point`, in that order. The fill uses `mapColors` for each state and `land` for the rest, in day and night. The sources are the ones passed as arguments. Run it and show it failing.
-- [ ] **1.2 Code.** `packages/shared/src/map/map-style.ts` with a plain return type. Export it from the shared index. Run the test and show it passing.
+- [x] **1.1 Test first.** `packages/shared/test/map-style.spec.ts`: `buildMapStyle(states, scheme, sources)` returns the layers `background`, `countries-fill`, `countries-border`, `countries-state-outline` and `capitals-point`, in that order. The fill uses `mapColors` for each state and `land` for the rest, in day and night. The sources are the ones passed as arguments. Run it and show it failing.
+- [x] **1.2 Code.** `packages/shared/src/map/map-style.ts` with a plain return type. Export it from the shared index. Run the test and show it passing.
 
 ## 2. Web uses the shared style
 
