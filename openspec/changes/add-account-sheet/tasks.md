@@ -15,18 +15,18 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 3. Sheet styles
 
-- [ ] **3.1 Test first.** The same spec file, style checks read from `account-sheet.css`: the dialog has `max-width: 320px`; the opacity transition is 200 ms; a `prefers-reduced-motion` rule removes the transition. Run it and show it failing.
-- [ ] **3.2 Code.** Position at the right edge, `max-height: calc(100dvh - 32px)`, `overflow-y: auto`, the fade on the dialog and its `::backdrop`, `@starting-style` for the opening frame, the reduced-motion rule, and the tokens of the design (`--mm-color-surface`, `--mm-color-borderStrong`, `--mm-elevation-card`). Run the test and show it passing.
+- [x] **3.1 Test first.** The same spec file, style checks read from `account-sheet.css`: the dialog has `max-width: 320px`; the opacity transition is 200 ms; a `prefers-reduced-motion` rule removes the transition. Run it and show it failing.
+- [x] **3.2 Code.** Position at the right edge, `max-height: calc(100dvh - 32px)`, `overflow-y: auto`, the fade on the dialog and its `::backdrop`, `@starting-style` for the opening frame, the reduced-motion rule, and the tokens of the design (`--mm-color-surface`, `--mm-color-borderStrong`, `--mm-elevation-card`). Run the test and show it passing.
 
 ## 4. Wiring in the main layout
 
-- [ ] **4.1 Test first.** `apps/web/src/app/shared/main-layout/main-layout.spec.ts`: pressing the account button opens the sheet, and the sheet's `closed` output closes it. Run it and show it failing.
-- [ ] **4.2 Code.** `MapTopControls` emits an account press output; `MainLayout` holds `accountOpen = signal(false)`, sets it on the press and clears it on `closed`, and passes `displayName` null. Place `app-account-sheet` in the layout. Run the test and show it passing.
+- [x] **4.1 Test first.** `apps/web/src/app/shared/main-layout/main-layout.spec.ts`: pressing the account button opens the sheet, and the sheet's `closed` output closes it. Run it and show it failing.
+- [x] **4.2 Code.** `MapTopControls` emits an account press output; `MainLayout` holds `accountOpen = signal(false)`, sets it on the press and clears it on `closed`, and passes `displayName` null. Place `app-account-sheet` in the layout. Run the test and show it passing.
 
 ## 5. Accessibility
 
-- [ ] **5.1 Test first.** `apps/web/src/app/features/auth/pages/accessibility.spec.ts`: add the account sheet, open, to the axe list. Run it and show it failing if there is a violation, or show it passing with the entry added first.
-- [ ] **5.2 Code.** Fix any violation axe reports. Run the test and show it passing.
+- [x] **5.1 Test first.** `apps/web/src/app/features/auth/pages/accessibility.spec.ts`: add the account sheet, open, to the axe list. Run it and show it failing if there is a violation, or show it passing with the entry added first.
+- [x] **5.2 Code.** Fix any violation axe reports. Run the test and show it passing.
 
 ## 6. Checks
 
