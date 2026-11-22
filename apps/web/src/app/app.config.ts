@@ -1,6 +1,6 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideIcons } from '@ng-icons/core';
-import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerInfoCircle, tablerLanguage, tablerLock, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerCircle } from '@ng-icons/tabler-icons';
+import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerInfoCircle, tablerLanguage, tablerLock, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerSphere } from '@ng-icons/tabler-icons';
 import { ApplicationConfig, inject, Injector, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideRouter } from '@angular/router';
@@ -31,7 +31,7 @@ export const appConfig: ApplicationConfig = {
       link: apolloLinkFor(mockEnabled, inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) })),
       cache: new InMemoryCache(),
     })),
-    provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerInfoCircle, tablerMap, tablerCircle }),
+    provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerInfoCircle, tablerMap, tablerSphere }),
     provideRouter(routes),
     provideTranslateService({ fallbackLang: 'en' }),
     provideAppInitializer(() => setupTranslations(inject(TranslateService), navigator.language)),
