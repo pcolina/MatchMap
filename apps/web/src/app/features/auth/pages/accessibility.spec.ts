@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { mapControlIcons } from '../../../shared/map-controls/map-icons';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
@@ -25,7 +26,7 @@ const render = (component: Type<unknown>): HTMLElement => {
     ({ matches: false, media: query, addEventListener: () => undefined, removeEventListener: () => undefined }) as unknown as MediaQueryList;
   TestBed.configureTestingModule({
     providers: [
-      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerInfoCircle, tablerMap, tablerWorld }),
+      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerInfoCircle, tablerMap, tablerWorld, ...mapControlIcons }),
       provideRouter([]),
       provideTranslateService({ fallbackLang: 'en' }),
       {

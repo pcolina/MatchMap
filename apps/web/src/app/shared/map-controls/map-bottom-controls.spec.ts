@@ -1,7 +1,8 @@
 import '@angular/compiler';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { tablerInfoCircle, tablerMap, tablerSphere } from '@ng-icons/tabler-icons';
+import { tablerInfoCircle, tablerMap } from '@ng-icons/tabler-icons';
+import { mapControlIcons } from './map-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { describe, expect, it } from 'vitest';
 import en from '../../../../../../packages/shared/i18n/en.json';
@@ -10,7 +11,7 @@ import { MapBottomControls } from './map-bottom-controls';
 const create = (globeActive: boolean) => {
   TestBed.configureTestingModule({
     imports: [MapBottomControls],
-    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerInfoCircle, tablerMap, tablerSphere })],
+    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerInfoCircle, tablerMap, ...mapControlIcons })],
   });
   const translate = TestBed.inject(TranslateService);
   translate.setTranslation('en', en);
@@ -52,6 +53,6 @@ describe('MapBottomControls', () => {
   it('shows the globe icon when the mercator view is active, the destination is globe', () => {
     const root = create(false);
 
-    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('tablerSphere');
+    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('globeMeridians');
   });
 });
