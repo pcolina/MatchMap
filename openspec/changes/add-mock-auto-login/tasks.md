@@ -9,10 +9,10 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 2. Web start command
 
-- [ ] **2.1 Test first.** `apps/web/scripts/start-args.test.mjs`: `['mock', '-l']` gives `autoLogin: true`; `['mock']` and `[]` give `false`; `['-l']` and `['-l', 'mock']` throw the usage error `Usage: pnpm web [mock [-l]]`. Run and show failing.
-- [ ] **2.2 Code.** `apps/web/scripts/start-args.mjs`.
-- [ ] **2.3 Test first.** `apps/web/scripts/start-command.test.mjs`: `buildServeArgs` adds `--define=MATCHMAP_AUTO_LOGIN=true` only when `autoLogin` is true. Run and show failing.
-- [ ] **2.4 Code.** `apps/web/scripts/start-command.mjs`, and the `MATCHMAP_AUTO_LOGIN` define set to `"false"` in `apps/web/angular.json`, next to `MATCHMAP_MOCKS`.
+- [x] **2.1 Test first.** `apps/web/scripts/start-args.test.mjs`: `['mock', '-l']` gives `autoLogin: true`; `['mock']` and `[]` give `false`; `['-l']` and `['-l', 'mock']` throw the usage error `Usage: pnpm web [mock [-l]]`. Run and show failing.
+- [x] **2.2 Code.** `apps/web/scripts/start-args.mjs`.
+- [x] **2.3 Test first.** `apps/web/scripts/start-command.test.mjs`: `buildServeArgs` adds `--define=MATCHMAP_AUTO_LOGIN=true` only when `autoLogin` is true. Run and show failing.
+- [x] **2.4 Code.** `apps/web/scripts/start-command.mjs`, and the `MATCHMAP_AUTO_LOGIN` define set to `"false"` in `apps/web/angular.json`, next to `MATCHMAP_MOCKS`.
 
 ## 3. Mobile start command
 
