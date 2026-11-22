@@ -47,7 +47,7 @@ Each task starts with its failing test, which is run and shown failing before th
 
 - [ ] **8.1 Full check.** `pnpm check` for all touched packages and apps (`packages/shared`, `apps/web`, `apps/mobile`). Paste the summary in the PR.
 - [ ] **8.2 Manual check, web.** `pnpm web mock -l` opens signed in as `one@matchmap.test`. Reload keeps the session. Sign out, reload, and the session is back. Record the result in the PR. Done by the user.
-- [ ] **8.3 Manual check, mobile.** `pnpm mobile mock -l` on the Android emulator opens signed in. Record the result in the PR. Done by the user.
+- [x] **8.3 Manual check, mobile.** `pnpm mobile mock -l` on the Android emulator opens signed in. Record the result in the PR. Done by the user. Checked on the emulator `MPOS_PAX_77`: with `-l` the app opens on the signed-in main screen without an error; without `-l` it opens on the sign-in page. The physical phone was not tested.
 
 ## 9. Mobile start-up error (scope addition, spec `mobile-startup`)
 
