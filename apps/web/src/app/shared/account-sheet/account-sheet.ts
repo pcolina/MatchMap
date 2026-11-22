@@ -34,10 +34,10 @@ import { hideDialog, showDialog } from '../native-dialog';
     <hr class="divider" />
     <button type="button" class="row" data-row><ng-icon name="tablerUser" />{{ 'account.sheet.profile' | translate }}</button>
     <button type="button" class="row" data-row><ng-icon name="tablerLanguage" />{{ 'account.sheet.language' | translate }}</button>
-    <button type="button" class="row" data-row role="switch" [attr.aria-checked]="darkMode()"><ng-icon name="tablerSunMoon" />{{ 'account.sheet.theme' | translate }}<span class="track" aria-hidden="true"></span></button>
-    <button type="button" class="row" data-row><ng-icon name="tablerInfoCircle" />{{ 'account.sheet.aboutItem' | translate }}</button>
+    <button type="button" class="row" data-row role="switch" [attr.aria-checked]="darkMode()" (click)="themeToggled.emit()"><ng-icon name="tablerSunMoon" />{{ 'account.sheet.theme' | translate }}<span class="track" aria-hidden="true"></span></button>
+    <button type="button" class="row" data-row (click)="aboutPressed.emit()"><ng-icon name="tablerInfoCircle" />{{ 'account.sheet.aboutItem' | translate }}</button>
     <hr class="divider" />
-    <button type="button" class="row" data-row><ng-icon name="tablerLogout" />{{ 'account.sheet.signOut' | translate }}</button>
+    <button type="button" class="row" data-row (click)="signOutPressed.emit()"><ng-icon name="tablerLogout" />{{ 'account.sheet.signOut' | translate }}</button>
   </dialog>`,
   styleUrl: './account-sheet.css',
 })
@@ -47,6 +47,9 @@ export class AccountSheet {
   readonly email = input<string | null>(null);
   readonly darkMode = input(false);
   readonly closed = output<void>();
+  readonly signOutPressed = output<void>();
+  readonly themeToggled = output<void>();
+  readonly aboutPressed = output<void>();
 
   private readonly dialog = viewChild<ElementRef<HTMLDialogElement>>('dialog');
 
