@@ -1,4 +1,6 @@
 .main-layout {
+  --stats-height: 250px;
+  position: relative;
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -9,6 +11,14 @@ app-layout-footer {
   display: none;
 }
 
+.map-area {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 app-map-view {
   flex: 1 1 0;
   min-height: 0;
@@ -16,7 +26,11 @@ app-map-view {
 
 app-stats-resume {
   display: block;
-  flex: 0 0 250px;
+  flex: 0 0 var(--stats-height);
+}
+
+.main-layout > app-map-bottom-controls {
+  bottom: calc(var(--stats-height) + 16px + env(safe-area-inset-bottom));
 }
 
 @media (max-width: 600px) {
@@ -32,7 +46,12 @@ app-stats-resume {
     flex: 0 0 auto;
   }
 
-  app-map-view {
+  app-map-top-controls,
+  app-map-bottom-controls {
+    display: none;
+  }
+
+  .map-area {
     flex: 0 0 50%;
   }
 

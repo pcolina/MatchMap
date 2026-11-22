@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { provideIcons } from '@ng-icons/core';
 import { provideTranslateService } from '@ngx-translate/core';
+import { tablerInfoCircle, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerWorld } from '@ng-icons/tabler-icons';
 import { MainLayout } from './main-layout';
 
 vi.mock('maplibre-gl', () => ({
@@ -21,7 +23,12 @@ const { resolve } = nodeProcess.getBuiltinModule('node:path');
 
 describe('MainLayout', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [provideTranslateService({ fallbackLang: 'en' })] });
+    TestBed.configureTestingModule({
+      providers: [
+        provideTranslateService({ fallbackLang: 'en' }),
+        provideIcons({ tablerInfoCircle, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerWorld }),
+      ],
+    });
     vi.stubGlobal(
       'matchMedia',
       vi.fn(() => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() })),
@@ -32,19 +39,44 @@ describe('MainLayout', () => {
     vi.unstubAllGlobals();
   });
 
-  it('shows the map area above the stats-resume panel', async () => {
+  it('keeps the focus order: top controls, map, stats panel, bottom controls', async () => {
     const fixture = TestBed.createComponent(MainLayout);
     fixture.detectChanges();
     await fixture.whenStable();
 
     const section = (fixture.nativeElement as HTMLElement).querySelector('section.main-layout');
-    expect(section).not.toBeNull();
     expect(Array.from(section?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual([
       'app-layout-header',
-      'app-map-view',
+      'div',
       'app-stats-resume',
+      'app-map-bottom-controls',
       'app-layout-footer',
     ]);
+  });
+
+  it('places the top controls before the map inside the map area', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const mapArea = (fixture.nativeElement as HTMLElement).querySelector('.map-area');
+    expect(Array.from(mapArea?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual([
+      'app-map-top-controls',
+      'app-map-view',
+    ]);
+  });
+
+  it('makes the map area a positioning context for the top controls', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/\.map-area\s*\{[^}]*position:\s*relative;/);
+  });
+
+  it('defines the stats panel height once and uses it to place the bottom controls', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/--stats-height:\s*250px;/);
+    expect(css).toMatch(/app-map-bottom-controls\s*\{[^}]*bottom:\s*calc\(var\(--stats-height\)\s*\+\s*16px\s*\+\s*env\(safe-area-inset-bottom\)\)/);
   });
 
   it('gives the layout the full viewport height', () => {
@@ -62,7 +94,7 @@ describe('MainLayout', () => {
   it('shows the 250 px panel only in the phone layout, up to 600 px', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
-    expect(css).toMatch(/app-stats-resume\s*\{[^}]*display:\s*block;\s*flex:\s*0 0 250px/);
+    expect(css).toMatch(/app-stats-resume\s*\{[^}]*display:\s*block;\s*flex:\s*0 0 var\(--stats-height\)/);
     expect(css).toMatch(/app-layout-header,\s*app-layout-footer\s*\{[^}]*display:\s*none/);
   });
 
@@ -75,7 +107,7 @@ describe('MainLayout', () => {
   it('gives the map area half the viewport height in the laptop layout', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
-    expect(css).toMatch(/@media\s*\(min-width:\s*601px\)\s*\{[\s\S]*app-map-view\s*\{[^}]*flex:\s*0 0 50%/);
+    expect(css).toMatch(/@media\s*\(min-width:\s*601px\)\s*\{[\s\S]*\.map-area\s*\{[^}]*flex:\s*0 0 50%/);
   });
 
   it('gives the stats panel the remaining height in the laptop layout, without scroll', () => {

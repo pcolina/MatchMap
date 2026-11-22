@@ -19,8 +19,8 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 4. Layout and focus order
 
-- [ ] **4.1 Test first.** `apps/web/src/app/shared/main-layout/main-layout.spec.ts`: on a phone viewport the DOM order is top controls, map, stats panel, bottom controls, so keyboard focus follows the spec. The map area is a relative container that holds the top and bottom controls as overlays. Run it and show it failing.
-- [ ] **4.2 Code.** `main-layout.ts` and `main-layout.css`: wrap `app-map-view` in `.map-area` (relative, flex 1). Place `app-map-top-controls` before the map and `app-map-bottom-controls` after the stats panel, both absolutely positioned inside the map area. Run the test and show it passing.
+- [x] **4.1 Test first.** `apps/web/src/app/shared/main-layout/main-layout.spec.ts`: on a phone viewport the DOM order is top controls, map, stats panel, bottom controls, so keyboard focus follows the spec. The map area is a relative container that holds the top and bottom controls as overlays. Run it and show it failing.
+- [x] **4.2 Code.** `main-layout.ts` and `main-layout.css`: wrap `app-map-view` in `.map-area` (relative, flex 1). Place `app-map-top-controls` before the map and `app-map-bottom-controls` after the stats panel, both absolutely positioned inside the map area. Run the test and show it passing.
 
 ## 5. Attribution without the MapLibre logo
 
