@@ -1,9 +1,9 @@
-import { Type } from '@angular/core';
+import { ApplicationRef, Type } from '@angular/core';
 import { mapControlIcons } from '../../../shared/map-controls/map-icons';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
-import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerWorld } from '@ng-icons/tabler-icons';
+import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerInfoCircle, tablerLanguage, tablerLock, tablerLogout, tablerMap, tablerPlus, tablerSunMoon, tablerUser, tablerUsers, tablerWorld, tablerX } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import axe from 'axe-core';
 import { of, throwError } from 'rxjs';
@@ -26,7 +26,7 @@ const render = (component: Type<unknown>): HTMLElement => {
     ({ matches: false, media: query, addEventListener: () => undefined, removeEventListener: () => undefined }) as unknown as MediaQueryList;
   TestBed.configureTestingModule({
     providers: [
-      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerMap, tablerWorld, ...mapControlIcons }),
+      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerMap, tablerWorld, tablerInfoCircle, tablerLogout, tablerSunMoon, tablerX, ...mapControlIcons }),
       provideRouter([]),
       provideTranslateService({ fallbackLang: 'en' }),
       {
@@ -59,6 +59,17 @@ describe('accessibility of the auth pages', () => {
     const results = await axe.run(element);
 
     expect(results.passes.length).toBeGreaterThan(0);
+    expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
+  });
+
+  it('the main screen with the account sheet open has no axe violations', async () => {
+    const element = render(MainLayout);
+    (element.querySelector('[data-column="top-right"] button') as HTMLButtonElement).click();
+    TestBed.inject(ApplicationRef).tick();
+
+    const results = await axe.run(element);
+
+    expect(element.querySelector('app-account-sheet dialog')?.hasAttribute('open')).toBe(true);
     expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
   });
 });
