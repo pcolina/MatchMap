@@ -109,7 +109,7 @@ export interface components {
         };
         Error: {
             /** @enum {string} */
-            error: "invalid_client" | "invalid_credentials" | "too_many_attempts" | "invalid_google_token" | "google_email_not_verified" | "invalid_refresh_token" | "invalid_email" | "invalid_password";
+            error: "invalid_client" | "invalid_credentials" | "too_many_attempts" | "invalid_google_token" | "google_email_not_verified" | "invalid_refresh_token" | "invalid_email" | "invalid_password" | "email_too_long";
         };
     };
     responses: never;
@@ -154,17 +154,12 @@ export interface operations {
                     "application/json": components["schemas"]["TokenResponse"];
                 };
             };
-            /** @description The X-Client header is missing or unknown (invalid_client), or the email or the password breaks its input limits (invalid_email or invalid_password). */
+            /** @description The X-Client header is missing or unknown (invalid_client), or the email or the password breaks its input limits. An empty or non-standard email returns invalid_email. An email longer than 254 characters after trimming and lower-casing returns email_too_long, whatever its format. A password that breaks its limits returns invalid_password. */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /**
-                     * @example {
-                     *       "error": "invalid_email"
-                     *     }
-                     */
                     "application/json": components["schemas"]["Error"];
                 };
             };
