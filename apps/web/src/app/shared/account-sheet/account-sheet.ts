@@ -40,32 +40,20 @@ const hideDialog = (element: HTMLDialogElement): void => {
       </button>
     </header>
 
-    <section class="block">
-      <h3 class="block__heading">{{ 'account.sheet.blocks.account' | translate }}</h3>
-      <button type="button" class="row" data-row><ng-icon name="tablerUser" />{{ 'account.sheet.profile' | translate }}</button>
-    </section>
-
-    <section class="block">
-      <h3 class="block__heading">{{ 'account.sheet.blocks.settings' | translate }}</h3>
-      <button type="button" class="row" data-row><ng-icon name="tablerLanguage" />{{ 'account.sheet.language' | translate }}</button>
-      <button type="button" class="row" data-row><ng-icon name="tablerSunMoon" />{{ 'account.sheet.theme' | translate }}</button>
-    </section>
-
-    <section class="block">
-      <h3 class="block__heading">{{ 'account.sheet.blocks.about' | translate }}</h3>
-      <button type="button" class="row" data-row><ng-icon name="tablerInfoCircle" />{{ 'account.sheet.aboutItem' | translate }}</button>
-    </section>
-
-    <section class="block">
-      <h3 class="block__heading">{{ 'account.sheet.blocks.session' | translate }}</h3>
-      <button type="button" class="row" data-row><ng-icon name="tablerLogout" />{{ 'account.sheet.signOut' | translate }}</button>
-    </section>
+    <hr class="divider" />
+    <button type="button" class="row" data-row><ng-icon name="tablerUser" />{{ 'account.sheet.profile' | translate }}</button>
+    <button type="button" class="row" data-row><ng-icon name="tablerLanguage" />{{ 'account.sheet.language' | translate }}</button>
+    <button type="button" class="row" data-row role="switch" [attr.aria-checked]="darkMode()"><ng-icon name="tablerSunMoon" />{{ 'account.sheet.theme' | translate }}<span class="track" aria-hidden="true"></span></button>
+    <button type="button" class="row" data-row><ng-icon name="tablerInfoCircle" />{{ 'account.sheet.aboutItem' | translate }}</button>
+    <hr class="divider" />
+    <button type="button" class="row" data-row><ng-icon name="tablerLogout" />{{ 'account.sheet.signOut' | translate }}</button>
   </dialog>`,
   styleUrl: './account-sheet.css',
 })
 export class AccountSheet {
   readonly open = input(false);
   readonly displayName = input<string | null>(null);
+  readonly darkMode = input(false);
   readonly closed = output<void>();
 
   private readonly dialog = viewChild<ElementRef<HTMLDialogElement>>('dialog');

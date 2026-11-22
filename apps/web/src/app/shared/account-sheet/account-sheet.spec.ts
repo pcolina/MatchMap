@@ -21,11 +21,12 @@ import { AccountSheet } from './account-sheet';
 
 @Component({
   imports: [AccountSheet],
-  template: `<app-account-sheet [open]="open()" [displayName]="name()" (closed)="closes = closes + 1" />`,
+  template: `<app-account-sheet [open]="open()" [displayName]="name()" [darkMode]="dark()" (closed)="closes = closes + 1" />`,
 })
 class Host {
   readonly open = signal(true);
   readonly name = signal<string | null>('Ana');
+  readonly dark = signal(false);
   closes = 0;
 }
 
@@ -54,11 +55,39 @@ describe('AccountSheet', () => {
     expect(root.querySelector(`#${labelId}`)?.textContent?.trim()).toBe('Ana');
   });
 
-  it('shows the four blocks in order, each with its heading', () => {
+  it('shows the rows as one list with no group headings', () => {
     const { root } = create();
-    const headings = Array.from(root.querySelectorAll('h3')).map((heading) => heading.textContent?.trim());
 
-    expect(headings).toEqual(['Account', 'Settings', 'About', 'Session']);
+    expect(root.querySelectorAll('h3').length).toBe(0);
+  });
+
+  it('shows sign out last, after a divider', () => {
+    const { root } = create();
+    const rows = Array.from(root.querySelectorAll('button[data-row]'));
+    const signOut = rows[rows.length - 1] as HTMLElement;
+
+    expect(signOut.textContent?.trim()).toBe('Sign out');
+    expect(signOut.previousElementSibling?.tagName).toBe('HR');
+  });
+
+  it('shows the rows in order: profile, language, day or night mode, about, sign out', () => {
+    const { root } = create();
+    const names = Array.from(root.querySelectorAll('button[data-row]')).map((button) => button.textContent?.trim());
+
+    expect(names).toEqual(['View profile', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
+  });
+
+  it('makes day or night mode a switch that shows whether dark mode is on', () => {
+    const { fixture, root, host } = create();
+    const toggle = root.querySelector('button[role="switch"]') as HTMLButtonElement;
+
+    expect(toggle.textContent?.trim()).toBe('Light or dark mode');
+    expect(toggle.getAttribute('aria-checked')).toBe('false');
+
+    host.dark.set(true);
+    fixture.detectChanges();
+
+    expect(toggle.getAttribute('aria-checked')).toBe('true');
   });
 
   it('gives every row a button with its accessible name', () => {

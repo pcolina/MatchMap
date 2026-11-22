@@ -55,7 +55,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .sheet,
-  .sheet::backdrop {
+  .sheet::backdrop,
+  .track::after {
     transition: none;
   }
 }
@@ -78,6 +79,42 @@
 .row ng-icon {
   font-size: 20px;
   color: var(--mm-color-textSecondary);
+}
+
+.divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--mm-color-borderStrong);
+}
+
+.track {
+  position: relative;
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  width: 40px;
+  height: 24px;
+  border-radius: var(--mm-radius-pill);
+  background: var(--mm-color-borderStrong);
+}
+
+.track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--mm-color-surface);
+  transition: transform 200ms;
+}
+
+.row[aria-checked="true"] .track {
+  background: var(--mm-color-accent);
+}
+
+.row[aria-checked="true"] .track::after {
+  transform: translateX(16px);
 }
 
 @media (hover: hover) and (pointer: fine) {
