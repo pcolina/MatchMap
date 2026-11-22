@@ -21,11 +21,12 @@ import { AccountSheet } from './account-sheet';
 
 @Component({
   imports: [AccountSheet],
-  template: `<app-account-sheet [open]="open()" [displayName]="name()" [darkMode]="dark()" (closed)="closes = closes + 1" />`,
+  template: `<app-account-sheet [open]="open()" [displayName]="name()" [email]="email()" [darkMode]="dark()" (closed)="closes = closes + 1" />`,
 })
 class Host {
   readonly open = signal(true);
   readonly name = signal<string | null>('Ana');
+  readonly email = signal<string | null>(null);
   readonly dark = signal(false);
   closes = 0;
 }
@@ -116,6 +117,25 @@ describe('AccountSheet', () => {
     (root.querySelector('dialog') as HTMLDialogElement).click();
 
     expect(host.closes).toBe(1);
+  });
+
+  it('shows the email in smaller text under the username when it is known', () => {
+    const { fixture, root, host } = create('ana');
+    host.email.set('ana@example.test');
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="email"]')?.textContent?.trim()).toBe('ana@example.test');
+  });
+
+  it('shows no email while it is unknown', () => {
+    const { root } = create('ana');
+
+    expect(root.querySelector('[data-testid="email"]')).toBeNull();
+  });
+
+  it('shows the username in the accent colour and the email in smaller secondary text', () => {
+    expect(css()).toMatch(/\.name\s*\{[^}]*color:\s*var\(--mm-color-accent\)/);
+    expect(css()).toMatch(/\.email\s*\{[^}]*color:\s*var\(--mm-color-textSecondary\)[^}]*font-size:/);
   });
 
   it('shows the user circle with the same icon as the account control on the map', () => {
