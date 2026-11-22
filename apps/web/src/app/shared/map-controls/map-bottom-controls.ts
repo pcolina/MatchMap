@@ -9,13 +9,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   template: `<button
       type="button"
       class="control"
-      [attr.aria-label]="'map.controls.attribution' | translate"
-    >
-      <ng-icon name="tablerInfoCircle" [attr.data-icon]="'tablerInfoCircle'" />
-    </button>
-    <button
-      type="button"
-      class="control"
       [attr.aria-label]="(globeActive() ? 'map.controls.globe' : 'map.controls.mercator') | translate"
       [attr.aria-pressed]="globeActive()"
     >

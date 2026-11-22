@@ -16,7 +16,7 @@ describe('map controls are visible', () => {
   it('registers every icon the map controls use in the app config', () => {
     const config = read(resolvePath(appDir, 'app.config.ts'));
 
-    for (const icon of ['tablerPlus', 'tablerUsers', 'tablerUser', 'tablerInfoCircle', 'tablerMap', '']) {
+    for (const icon of ['tablerPlus', 'tablerUsers', 'tablerUser', '', 'tablerMap', '']) {
       expect(config).toContain(icon);
     }
   });

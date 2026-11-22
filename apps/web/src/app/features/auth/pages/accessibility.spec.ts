@@ -3,7 +3,7 @@ import { mapControlIcons } from '../../../shared/map-controls/map-icons';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
-import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerInfoCircle, tablerLanguage, tablerLock, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerWorld } from '@ng-icons/tabler-icons';
+import { tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerWorld } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import axe from 'axe-core';
 import { of, throwError } from 'rxjs';
@@ -26,7 +26,7 @@ const render = (component: Type<unknown>): HTMLElement => {
     ({ matches: false, media: query, addEventListener: () => undefined, removeEventListener: () => undefined }) as unknown as MediaQueryList;
   TestBed.configureTestingModule({
     providers: [
-      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerInfoCircle, tablerMap, tablerWorld, ...mapControlIcons }),
+      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerMap, tablerWorld, ...mapControlIcons }),
       provideRouter([]),
       provideTranslateService({ fallbackLang: 'en' }),
       {

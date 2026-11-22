@@ -26,17 +26,17 @@ The web main screen on phone-sized viewports SHALL show one avatar control at th
 - **WHEN** the phone layout is shown
 - **THEN** no other control is at the top right of the map
 
-### Requirement: Bottom-right attribution and view toggle
+### Requirement: Bottom-right view toggle
 
-The web main screen on phone-sized viewports SHALL show, at the bottom right over the map, one row with two controls from left to right: the attribution info control and the globe/mercator view toggle. The map SHALL NOT show the MapLibre logo; the MapLibre credit is shown inside the attribution info control. The matchMap brand mark SHALL NOT be shown in this row.
+The web main screen on phone-sized viewports SHALL show, at the bottom right over the map, one view toggle that switches between the globe and the flat view. The map SHALL NOT show the MapLibre logo or its attribution, and the matchMap brand mark SHALL NOT be shown in this row.
 
-#### Scenario: Row order
+#### Scenario: Toggle at the bottom right
 - **WHEN** the phone layout is shown
-- **THEN** the attribution info control is to the left of the view toggle, both at the bottom right
+- **THEN** the view toggle is at the bottom right of the map, and it is the only control in that row
 
-#### Scenario: No MapLibre logo on the map
+#### Scenario: No MapLibre logo or attribution on the map
 - **WHEN** the map is shown
-- **THEN** the MapLibre logo is not visible and the attribution is collapsed to the info control
+- **THEN** neither the MapLibre logo nor the attribution credit is visible on the map
 
 ### Requirement: Icon-only controls have accessible names
 
@@ -44,7 +44,7 @@ Every control of this change that shows only an icon SHALL have an accessible na
 
 #### Scenario: Icon-only controls have names
 - **WHEN** the phone layout is shown
-- **THEN** the add-place, friends, avatar, attribution and view toggle controls each have an accessible name
+- **THEN** the add-place, friends, avatar and view toggle controls each have an accessible name
 
 #### Scenario: Touch targets are at least 44 px
 - **WHEN** the phone layout is shown

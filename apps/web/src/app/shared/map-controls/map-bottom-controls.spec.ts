@@ -1,7 +1,7 @@
 import '@angular/compiler';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { tablerInfoCircle, tablerMap } from '@ng-icons/tabler-icons';
+import { tablerMap } from '@ng-icons/tabler-icons';
 import { mapControlIcons } from './map-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { describe, expect, it } from 'vitest';
@@ -11,7 +11,7 @@ import { MapBottomControls } from './map-bottom-controls';
 const create = (globeActive: boolean) => {
   TestBed.configureTestingModule({
     imports: [MapBottomControls],
-    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerInfoCircle, tablerMap, ...mapControlIcons })],
+    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerMap, ...mapControlIcons })],
   });
   const translate = TestBed.inject(TranslateService);
   translate.setTranslation('en', en);
@@ -23,11 +23,11 @@ const create = (globeActive: boolean) => {
 };
 
 describe('MapBottomControls', () => {
-  it('shows the attribution button before the view toggle', () => {
+  it('shows only the view toggle, with no attribution button', () => {
     const root = create(false);
     const buttons = Array.from(root.querySelectorAll('button'));
 
-    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(['Map attribution', 'Mercator view']);
+    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(['Mercator view']);
   });
 
   it('exposes the globe state with aria-pressed', () => {
@@ -47,12 +47,12 @@ describe('MapBottomControls', () => {
   it('shows the flat map icon when the globe view is active, the destination is mercator', () => {
     const root = create(true);
 
-    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('tablerMap');
+    expect(root.querySelector('[data-icon]')?.getAttribute('data-icon')).toBe('tablerMap');
   });
 
   it('shows the globe icon when the mercator view is active, the destination is globe', () => {
     const root = create(false);
 
-    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('globeWorld');
+    expect(root.querySelector('[data-icon]')?.getAttribute('data-icon')).toBe('globeWorld');
   });
 });

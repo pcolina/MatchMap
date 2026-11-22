@@ -51,11 +51,9 @@ Reason: the bottom row must come after `app-stats-resume` in the DOM, so that ke
 - Surface: each control has the `--mm-color-surface` background with a border, so the icon contrast over the map stays above 4.5:1. In day mode it also has the `elevation.card` shadow (`--mm-elevation-card`), so it stands out from the land colour; in night mode the token is `none` and the border gives the separation. The contrast is checked with `axe-core` on the page.
 - The view toggle sets `aria-pressed` from `globeActive`.
 
-### 5. Attribution and the MapLibre logo
+### 5. No attribution on the map
 
-In `map-view.ts`, the MapLibre constructor receives `attributionControl: false`. This removes the MapLibre logo and its credit from the map. The ⓘ button has no action in this change. Its modal comes with the avatar change, as agreed.
-
-Consequence: until that change, the attribution credit is not visible on the web map. This is accepted for this step and flagged in the PR.
+In `map-view.ts`, the MapLibre constructor receives `attributionControl: false`, so neither the MapLibre logo nor its credit is shown. The attribution info button was removed on the owner's decision: MapLibre (BSD-3) and Natural Earth (public domain) do not require it on screen. If third-party tiles are added later, their attribution must be shown again.
 
 ### 6. Parity with the phone
 
