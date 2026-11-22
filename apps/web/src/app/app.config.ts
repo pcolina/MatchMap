@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideIcons } from '@ng-icons/core';
 import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
-import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, Injector, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideRouter } from '@angular/router';
 import { InMemoryCache } from '@apollo/client/cache';
@@ -10,6 +10,9 @@ import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { mockEnabled } from './core/mocks/mock-flag';
+import { autoLoginEnabled } from './core/mocks/mock-auto-login';
+import { autoSignIn } from './core/mocks/auto-sign-in';
+import { autoLoginCredentials, createState } from '@matchmap/shared';
 import { apolloLinkFor, httpInterceptorsFor } from './core/mocks/mock-wiring';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { setupTranslations } from './core/i18n/language';
@@ -37,8 +40,11 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(() => {
       const store = inject(AuthStore);
+      const injector = inject(Injector);
       store.restore();
-      return firstValueFrom(toObservable(store.sessionChecked).pipe(filter(Boolean)));
+      return firstValueFrom(toObservable(store.sessionChecked).pipe(filter(Boolean))).then(() =>
+        autoSignIn(store, autoLoginCredentials(createState().users), autoLoginEnabled, injector),
+      );
     }),
     { provide: SIGN_IN_GATEWAY, useExisting: AuthApi }
   ]

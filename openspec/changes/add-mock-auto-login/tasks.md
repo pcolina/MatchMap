@@ -28,7 +28,7 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 5. Web wiring
 
-- [ ] **5.1 Code.** In `apps/web/src/app/app.config.ts`, the restore initializer runs `autoSignIn(store, autoLoginCredentials(usersData), autoLoginEnabled, injector)` after `sessionChecked`. `usersData` is the users file imported from `packages/shared`. Covered by 4.3 (branching) and 1.1 (credentials). Run `pnpm check` for `apps/web` and show the summary.
+- [x] **5.1 Code.** In `apps/web/src/app/app.config.ts`, the restore initializer runs `autoSignIn(store, autoLoginCredentials(usersData), autoLoginEnabled, injector)` after `sessionChecked`. `usersData` is the users file imported from `packages/shared`. Covered by 4.3 (branching) and 1.1 (credentials). Run `pnpm check` for `apps/web` and show the summary.
 
 ## 6. Mobile flag and auto sign-in
 
