@@ -2,7 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { mapControlIcons } from '../map-controls/map-icons';
 import { provideIcons } from '@ng-icons/core';
 import { provideTranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import { AuthStore, SIGN_IN_GATEWAY } from '../../features/auth/state/auth.store';
 import { ACCOUNT_GATEWAY } from '../../features/account/state/account.store';
 import { tablerInfoCircle, tablerLanguage, tablerLogout, tablerMap, tablerPlus, tablerSunMoon, tablerUser, tablerUsers, tablerX } from '@ng-icons/tabler-icons';
 import { MainLayout } from './main-layout';
@@ -30,6 +32,10 @@ describe('MainLayout', () => {
       providers: [
         provideTranslateService({ fallbackLang: 'en' }),
         { provide: ACCOUNT_GATEWAY, useValue: { me: () => of({ username: 'ana', email: 'ana@example.test' }) } },
+        {
+          provide: SIGN_IN_GATEWAY,
+          useValue: { signIn: () => of({ accessToken: 'token' }), refresh: () => throwError(() => 'invalidRefreshToken'), logout: () => of(undefined), register: () => of(undefined) },
+        },
         provideIcons({
           tablerInfoCircle,
           tablerLanguage,
@@ -52,6 +58,9 @@ describe('MainLayout', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+    localStorage.clear();
+    document.documentElement.removeAttribute('data-theme');
   });
 
   it('keeps the focus order: top controls, map, stats panel, bottom controls', async () => {
@@ -177,6 +186,59 @@ describe('MainLayout', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
     expect(css).toMatch(/env\(safe-area-inset-bottom\)/);
+  });
+
+  const press = (root: HTMLElement, name: string) => {
+    const row = Array.from(root.querySelectorAll<HTMLButtonElement>('app-account-sheet button[data-row]')).find((button) => button.textContent?.trim() === name);
+    (row as HTMLButtonElement).click();
+  };
+
+  const openAccountSheet = (fixture: { detectChanges(): void; nativeElement: unknown }) => {
+    ((fixture.nativeElement as HTMLElement).querySelector('[data-column="top-right"] button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+  };
+
+  it('opens the about dialog from the about row and closes it again', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    openAccountSheet(fixture);
+
+    press(root, 'About matchMap');
+    fixture.detectChanges();
+    expect(root.querySelector('app-about-dialog dialog')?.hasAttribute('open')).toBe(true);
+
+    (root.querySelector('app-about-dialog dialog') as HTMLDialogElement).dispatchEvent(new Event('cancel', { cancelable: true }));
+    fixture.detectChanges();
+    expect(root.querySelector('app-about-dialog dialog')?.hasAttribute('open')).toBe(false);
+  });
+
+  it('the day or night row switches the whole app to dark mode', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    openAccountSheet(fixture);
+
+    press(fixture.nativeElement as HTMLElement, 'Light or dark mode');
+    fixture.detectChanges();
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+  });
+
+  it('sign out clears the session and goes to the sign-in page', async () => {
+    TestBed.inject(AuthStore).setAccessToken('token');
+    const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    openAccountSheet(fixture);
+
+    press(fixture.nativeElement as HTMLElement, 'Sign out');
+    fixture.detectChanges();
+
+    expect(TestBed.inject(AuthStore).accessToken()).toBeNull();
+    expect(navigate).toHaveBeenCalledWith('/login');
   });
 });
 
