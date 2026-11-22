@@ -10,6 +10,7 @@ import { mapViewProps } from './map-view.props.ts';
   changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `<maplibre-map
+    [style.flex]="1"
     accessibilityRole="image"
     [accessibilityLabel]="t('map.world.label')"
     [mapStyle]="props().mapStyle"
