@@ -1,19 +1,25 @@
 import { spawn } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
-const usage = 'Usage: pnpm mobile [mock]';
+const usage = 'Usage: pnpm mobile [mock [-l]]';
 
 export const parseStartArgs = (argv) => {
   if (argv.length === 0) {
-    return { mock: false };
+    return { mock: false, autoLogin: false };
   }
   if (argv.length === 1 && argv[0] === 'mock') {
-    return { mock: true };
+    return { mock: true, autoLogin: false };
+  }
+  if (argv.length === 2 && argv[0] === 'mock' && argv[1] === '-l') {
+    return { mock: true, autoLogin: true };
   }
   throw new Error(usage);
 };
 
-export const buildExpoEnv = ({ mock }) => (mock ? { EXPO_PUBLIC_MATCHMAP_MOCKS: 'true' } : {});
+export const buildExpoEnv = ({ mock, autoLogin }) => ({
+  ...(mock ? { EXPO_PUBLIC_MATCHMAP_MOCKS: 'true' } : {}),
+  ...(autoLogin ? { EXPO_PUBLIC_MATCHMAP_AUTO_LOGIN: 'true' } : {}),
+});
 
 const main = () => {
   let options;

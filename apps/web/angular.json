@@ -44,7 +44,8 @@
                 }
               ],
               "define": {
-                "MATCHMAP_MOCKS": "false"
+                "MATCHMAP_MOCKS": "false",
+                "MATCHMAP_AUTO_LOGIN": "false"
               },
               "outputHashing": "all"
             },

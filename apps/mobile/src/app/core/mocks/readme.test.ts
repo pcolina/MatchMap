@@ -20,4 +20,13 @@ describe('README mobile mocks section', () => {
   it('explains how to reset the mock users', () => {
     expect(mobileSection).toContain('clear the app data');
   });
+
+  it('documents the -l flag that signs in as one@matchmap.test', () => {
+    expect(mobileSection).toContain('pnpm mobile mock -l');
+    expect(mobileSection).toContain('signs in as `one@matchmap.test`');
+  });
+
+  it('says the -l flag needs mock', () => {
+    expect(mobileSection).toContain('only together with `mock`');
+  });
 });
