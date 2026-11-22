@@ -2,6 +2,7 @@
   position: fixed;
   top: calc(16px + env(safe-area-inset-top));
   right: 16px;
+  left: auto;
   margin: 0;
   padding: 0;
   width: fit-content;

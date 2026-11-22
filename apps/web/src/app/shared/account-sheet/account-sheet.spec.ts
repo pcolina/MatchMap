@@ -154,6 +154,10 @@ describe('AccountSheet', () => {
     expect(css()).toMatch(/\.sheet\s*\{[^}]*right:\s*16px/);
   });
 
+  it('does not stick the sheet to the left edge', () => {
+    expect(css()).toMatch(/\.sheet\s*\{[^}]*left:\s*auto/);
+  });
+
   it('rounds all four corners of the sheet', () => {
     expect(css()).toMatch(/\.sheet\s*\{[^}]*border-radius:\s*var\(--mm-radius-xl\);/);
   });
