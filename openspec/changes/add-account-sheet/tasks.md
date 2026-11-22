@@ -59,6 +59,15 @@ After registration the owner asked to see the username and the email in the head
 - [x] **8.8 Layout test and wiring.** `main-layout.spec.ts`: with a gateway returning a user, the sheet shows the username and the email. `MainLayout` loads the store and passes `displayName` and `email`. Run the test first, then the wiring.
 - [x] **8.9 Checks.** Axe with the sheet open (5.x), `pnpm check` and `pnpm build:web` from the repo root, and the summary in the PR.
 
+## 9. Signed-in user in the mock and the Apollo token
+
+Found while checking section 8: Apollo operations never sent the access token, so the `me` query answered unauthorised in the mock and in the real API. The mock user is also named as the owner asked.
+
+- [x] **9.1 Test first.** `apps/web/src/app/core/auth/apollo-auth.link.spec.ts`: the link sends `Authorization: Bearer <token>` when there is a token, and no header without one.
+- [x] **9.2 Code.** `apollo-auth.link.ts` (`setContext`), placed before the mock dispatch and HTTP in `app.config.ts`.
+- [x] **9.3 Mock user name.** `Mock user One` as the username of the mock user `one` in `users.json`, with the three expectations (web, mobile, shared) and the state test updated first.
+- [x] **9.4 Checks.** `pnpm check` and `pnpm build:web` from the repo root, and the summary in the PR.
+
 ## Out of scope in these tasks
 
 - The actions of the rows (profile, about page, language, theme, sign-out).
