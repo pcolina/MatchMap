@@ -34,7 +34,7 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 7. Checks
 
-- [ ] **7.1 Full check.** `pnpm check` for `packages/shared` and `apps/web`, with the summary in the PR. Plus `pnpm build:web` and the output of the build.
+- [x] **7.1 Full check.** `pnpm check` for `packages/shared` and `apps/web`, with the summary in the PR. Plus `pnpm build:web` and the output of the build.
 - [ ] **7.2 Phone widths.** Check the layout at 320 px, 360 px and 600 px, in light and dark mode, in the browser (Chrome or Edge). Record the screenshots in the PR. Done by the owner, as with the earlier visual checks.
 
 ## Out of scope in these tasks
