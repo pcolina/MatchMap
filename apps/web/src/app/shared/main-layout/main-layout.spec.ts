@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { mapControlIcons } from '../map-controls/map-icons';
 import { provideIcons } from '@ng-icons/core';
 import { provideTranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { ACCOUNT_GATEWAY } from '../../features/account/state/account.store';
 import { tablerInfoCircle, tablerLanguage, tablerLogout, tablerMap, tablerPlus, tablerSunMoon, tablerUser, tablerUsers, tablerX } from '@ng-icons/tabler-icons';
 import { MainLayout } from './main-layout';
 
@@ -27,6 +29,7 @@ describe('MainLayout', () => {
     TestBed.configureTestingModule({
       providers: [
         provideTranslateService({ fallbackLang: 'en' }),
+        { provide: ACCOUNT_GATEWAY, useValue: { me: () => of({ username: 'ana', email: 'ana@example.test' }) } },
         provideIcons({
           tablerInfoCircle,
           tablerLanguage,
@@ -79,6 +82,17 @@ describe('MainLayout', () => {
 
     expect(root.querySelector('app-account-sheet dialog')?.hasAttribute('open')).toBe(true);
     expect(accountButton.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('shows the username and the email of the signed-in user in the account sheet', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+
+    expect(root.querySelector('app-account-sheet .name')?.textContent?.trim()).toBe('ana');
+    expect(root.querySelector('app-account-sheet [data-testid="email"]')?.textContent?.trim()).toBe('ana@example.test');
   });
 
   it('closes the account sheet when it emits closed', async () => {
