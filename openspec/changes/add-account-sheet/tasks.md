@@ -33,6 +33,14 @@ Each task starts with its failing test, run and shown failing before the code. E
 - [x] **6.1 Full check.** `pnpm check` for `packages/shared` and `apps/web`, with the summary in the PR. Plus `pnpm build:web`, with the output.
 - [ ] **6.2 Visual check.** At 320, 360 and 600 px, in light and dark mode, in the browser: the fade, the right-edge position, the closing, and the focus return. Done by the owner, as with the earlier visual checks.
 
+## 7. Flat list (change to the approved spec)
+
+The owner asked, after the first review, for one compact list with no group headings, the day or night mode row as a switch, and sign out last after a divider. This changes the spec requirement and the design (`design.md` decision 9, `docs/design.md` 7.10).
+
+- [ ] **7.1 Test first.** `apps/web/src/app/shared/account-sheet/account-sheet.spec.ts`: the sheet has no block headings (no `h3`); the rows come in the order view profile, language, day or night mode, about, sign out; one `hr` divider sits before the sign-out row; the day or night mode row has `role="switch"` and an `aria-checked` value that follows the `darkMode` input (default false). `packages/shared/test/account-sheet-i18n.spec.ts`: the keys are `close`, `profile`, `language`, `theme`, `aboutItem` and `signOut`, and no `blocks` key remains in `en.json` or `es.json`. Run them and show them failing.
+- [ ] **7.2 Code.** `account-sheet.ts`: remove the four blocks and their headings; render the rows in one list with an `hr` before sign out; make the day or night mode row a `role="switch"` button with `aria-checked` from a new input `darkMode` (default false). `account-sheet.css`: divider, switch track and knob with the tokens of `design.md` decision 5. Remove `account.sheet.blocks` from `en.json` and `es.json`. Run the tests and show them passing.
+- [ ] **7.3 Checks.** Re-run the axe check of the sheet open (5.x), `pnpm check` and `pnpm build:web` from the repo root, and add the summary to the PR.
+
 ## Out of scope in these tasks
 
 - The actions of the rows (profile, about page, language, theme, sign-out).

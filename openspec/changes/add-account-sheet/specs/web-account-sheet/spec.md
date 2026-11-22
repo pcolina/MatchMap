@@ -54,13 +54,21 @@ The header of the account sheet SHALL show the display name of the user. It SHAL
 - **WHEN** the account sheet is open
 - **THEN** no email address is shown in the sheet
 
-### Requirement: Rows are grouped in four blocks in order
+### Requirement: Rows form one list in order
 
-The account sheet SHALL show four blocks in this order, each with a heading: Account (view profile), Settings (language, and day or night mode), About (about), and Session (sign out). Each row SHALL be a button with an accessible name.
+The account sheet SHALL show its rows as one list, with no group headings, in this order: view profile, language, day or night mode, about, and sign out. A divider SHALL separate sign out from the rows above it. The day or night mode row SHALL be a switch that exposes whether dark mode is on. Each row SHALL be a button with an accessible name.
 
-#### Scenario: Blocks appear in order
+#### Scenario: Rows appear in order
 - **WHEN** the account sheet is open
-- **THEN** the blocks appear in the order Account, Settings, About, Session
+- **THEN** the rows appear in the order view profile, language, day or night mode, about, sign out
+
+#### Scenario: Sign out is last
+- **WHEN** the account sheet is open
+- **THEN** sign out is the last row and a divider comes before it
+
+#### Scenario: Day or night mode is a switch
+- **WHEN** the account sheet is open
+- **THEN** the day or night mode row is a switch and exposes whether dark mode is on
 
 #### Scenario: Rows are buttons with names
 - **WHEN** the account sheet is open

@@ -258,7 +258,8 @@ A panel attached to the right edge of the screen, for the account and the settin
 - **Fade:** the sheet and its backdrop fade in and out over **200 ms**. With reduced motion, no transition.
 - **Closing:** tap outside it, press Escape, or activate its close control. Focus returns to the control that opened it.
 - **Focus:** while open, focus stays inside the sheet and Tab cycles through its controls.
-- **Blocks:** groups of rows, each with a `label` heading in `textSecondary`. A row is 44 px high, with `bodyStrong` for its label and an optional value in `textSecondary`.
+- **List:** the rows form one list with no group headings. A row is 44 px high, with `bodyStrong` for its label. A 1 px `border` divider separates the header from the rows, and sign out from the rows above it.
+- **Switch:** a row can end with a switch (day or night mode): track 40 × 24 px, `borderStrong` when off and `accent` when on, knob in `surface`.
 - **Icons:** every row starts with an icon from the Tabler set, 20 px, in `textSecondary`.
 - **Hover:** on a laptop with a mouse (`hover: hover` and `pointer: fine`), a row takes the `accentSubtle` background while the pointer is over it. Touch devices have no hover.
 

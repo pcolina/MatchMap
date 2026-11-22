@@ -51,7 +51,7 @@ The component keeps the close control and the backdrop tap in code, because the 
 
 - Surface: `--mm-color-surface`, border `--mm-color-borderStrong` on the left and top edges.
 - Shadow: `--mm-elevation-card` in day mode; in night mode the token is `none` and the border separates the sheet. This follows `docs/design.md` 4 for cards.
-- The four blocks are separated by a 1 px `border` line and a heading in `label` (`docs/design.md` 3). Rows are 44 px high, with `bodyStrong` for the label and `textSecondary` for the value.
+- The rows form one list with no group headings. A 1 px `border` divider sits under the header and before sign out. Rows are 44 px high, with `bodyStrong` for the label (`docs/design.md` 3). The day or night mode row is a switch (`role="switch"`, `aria-checked`), a 40 × 24 px track in `borderStrong` when off and `accent` when on, with the knob in `surface`.
 - The display name is a `title3` heading (Sora 600).
 
 ### 6. Display name
@@ -69,10 +69,6 @@ Under `account.sheet` in `packages/shared/i18n/en.json` and `es.json`:
 | Key | en | es |
 |---|---|---|
 | `account.sheet.close` | Close | Cerrar |
-| `account.sheet.blocks.account` | Account | Cuenta |
-| `account.sheet.blocks.settings` | Settings | Ajustes |
-| `account.sheet.blocks.about` | About | Acerca de |
-| `account.sheet.blocks.session` | Session | Sesión |
 | `account.sheet.profile` | View profile | Ver perfil |
 | `account.sheet.language` | Language | Idioma |
 | `account.sheet.theme` | Light or dark mode | Modo claro u oscuro |
@@ -80,6 +76,10 @@ Under `account.sheet` in `packages/shared/i18n/en.json` and `es.json`:
 | `account.sheet.signOut` | Sign out | Cerrar sesión |
 
 The Spanish text is AI-generated and goes under "Translations to review" in the PR.
+
+### 9. One list, no group headings
+
+The first review asked for a compact menu, as in common account menus. Group headings took vertical space for no gain, so the rows form one list. The divider before sign out keeps the session action apart. The day or night mode row is a switch because it is a setting with two states.
 
 ## Files
 
@@ -92,7 +92,7 @@ The Spanish text is AI-generated and goes under "Translations to review" in the 
 
 ## Tests (TDD)
 
-- Account sheet: the dialog has an accessible name equal to the display name; `open` shows it; Escape emits `closed`; a tap on the backdrop emits `closed`; the close control emits `closed`; the blocks come in order; the rows are buttons with names; the skeleton shows when `displayName` is null and no email text is in the DOM.
+- Account sheet: the dialog has an accessible name equal to the display name; `open` shows it; Escape emits `closed`; a tap on the backdrop emits `closed`; the close control emits `closed`; the rows come in order with a divider before sign out; the rows are buttons with names; the day or night mode row is a switch; the skeleton shows when `displayName` is null and no email text is in the DOM.
 - Styles: `max-width: 320px` on the dialog; `transition` of 200 ms; a reduced-motion rule without transition.
 - Main layout: the account press opens the sheet, and `closed` closes it.
 - Axe: the sheet open, with no violations.

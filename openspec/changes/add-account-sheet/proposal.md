@@ -9,11 +9,7 @@ The web phone map has an account button at the top right (issue #43, delivered b
 - **Account button opens a side sheet.** Tapping the account button opens a sheet attached to the right edge of the screen. Its height and width fit its content, with a maximum width.
 - **Soft fade.** The sheet and its backdrop fade in and out. With reduced motion set, the sheet appears and disappears at once.
 - **Header.** The display name of the user, at the top of the sheet.
-- **Blocks, in this order:**
-  1. **Account:** view profile.
-  2. **Settings:** language, and day or night mode.
-  3. **About:** an about entry.
-  4. **Session:** sign out.
+- **One list, in this order, with no group headings:** view profile, language, day or night mode (a switch), an about entry, and sign out last, after a divider.
 - **Closing.** The sheet closes on tap outside it, on Escape, and with a close control in its header.
 - **Pattern in the design.** The side sheet is added to `docs/design.md` as a new pattern (width by content, maximum width, fade, how it closes), as agreed in issue #43.
 
@@ -36,4 +32,4 @@ The web phone map has an account button at the top right (issue #43, delivered b
 ## Decisions
 
 - The sheet shows the display name only, not the email. The email is personal data and is not needed here. Its place is the profile, in a later change.
-- The rows are grouped in blocks, so each block has one purpose and the sheet stays short.
+- The rows form one compact list with no group headings, as the owner asked after the first review. Day or night mode is a switch, and sign out is the last row.
