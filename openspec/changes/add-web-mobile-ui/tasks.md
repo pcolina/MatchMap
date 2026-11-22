@@ -4,8 +4,8 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 1. Translation keys
 
-- [ ] **1.1 Test first.** `packages/shared/test/map-controls-i18n.spec.ts`: `map.controls.addPlace`, `friends`, `account`, `attribution`, `globe` and `mercator` exist in `en.json` and `es.json`, with non-empty strings and the same keys in both languages. Run it and show it failing.
-- [ ] **1.2 Code.** Add the six keys to `packages/shared/i18n/en.json` and `es.json` with the texts of `design.md` section 7. Run the test and show it passing.
+- [x] **1.1 Test first.** `packages/shared/test/map-controls-i18n.spec.ts`: `map.controls.addPlace`, `friends`, `account`, `attribution`, `globe` and `mercator` exist in `en.json` and `es.json`, with non-empty strings and the same keys in both languages. Run it and show it failing.
+- [x] **1.2 Code.** Add the six keys to `packages/shared/i18n/en.json` and `es.json` with the texts of `design.md` section 7. Run the test and show it passing.
 
 ## 2. Bottom controls: attribution and view toggle
 

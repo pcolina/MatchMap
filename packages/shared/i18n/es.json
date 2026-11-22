@@ -43,6 +43,14 @@
   "map": {
     "world": {
       "label": "Mapa del mundo"
+    },
+    "controls": {
+      "addPlace": "Añadir lugar",
+      "friends": "Amigos",
+      "account": "Cuenta",
+      "attribution": "Atribución del mapa",
+      "globe": "Vista globo",
+      "mercator": "Vista Mercator"
     }
   },
   "stats": {
