@@ -248,6 +248,20 @@ On every screen of the app, while content loads or a request runs, the screen sh
 
 ---
 
+### 7.10 Side sheet (account)
+
+A panel attached to the right edge of the screen, for the account and the settings. It is the account pattern only: never use it for content the user must compare or for long lists.
+
+- **Anchor:** the right edge, from the top safe area down. Top corners rounded on the left side only, radius `xl`.
+- **Size:** the height is the height of its content, up to the screen height minus 32 px, then it scrolls. The width is the width of its content, up to a maximum of **320 px**, and never wider than the screen.
+- **Surface:** `surface` background, a 1 px `borderStrong` border on the left and top edges. In day mode `elevation.card`; in night mode no shadow, the border separates it.
+- **Fade:** the sheet and its backdrop fade in and out over **200 ms**. With reduced motion, no transition.
+- **Closing:** tap outside it, press Escape, or activate its close control. Focus returns to the control that opened it.
+- **Focus:** while open, focus stays inside the sheet and Tab cycles through its controls.
+- **Blocks:** groups of rows, each with a `label` heading in `textSecondary`. A row is 44 px high, with `bodyStrong` for its label and an optional value in `textSecondary`.
+
+---
+
 ## 8. Screen patterns
 
 - **Map (home):** full-screen map → compact floating `EgoCounter` at the top (`surface` card at 92 % opacity) → «Add destination» FAB at the bottom right (`accent`, 56 × 56, radius `xl`) → bottom sheet when a country is tapped.

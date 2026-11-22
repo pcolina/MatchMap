@@ -57,5 +57,21 @@
     "resume": {
       "label": "Statistics summary"
     }
+  },
+  "account": {
+    "sheet": {
+      "close": "Close",
+      "blocks": {
+        "account": "Account",
+        "settings": "Settings",
+        "about": "About",
+        "session": "Session"
+      },
+      "profile": "View profile",
+      "language": "Language",
+      "theme": "Light or dark mode",
+      "aboutItem": "About matchMap",
+      "signOut": "Sign out"
+    }
   }
 }

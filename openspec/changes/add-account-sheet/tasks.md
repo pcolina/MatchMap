@@ -4,9 +4,9 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 1. Design entry and translations
 
-- [ ] **1.1 Design entry.** Add section 7.10 "Side sheet (account)" to `docs/design.md`: the right-edge anchor, the width by content with a 320 px maximum, the 200 ms fade and the reduced-motion rule, the closing rules, and the rule that the sheet is for account and settings only. Check the section headings with a test first: `packages/shared/test/design-doc.spec.ts` (new) reads `docs/design.md` and expects a heading "7.10" with "Side sheet". Run it and show it failing, then add the section and show it passing.
-- [ ] **1.2 Translation keys test first.** `packages/shared/test/account-sheet-i18n.spec.ts`: the keys `account.sheet.close`, `blocks.account`, `blocks.settings`, `blocks.about`, `blocks.session`, `profile`, `language`, `theme`, `aboutItem` and `signOut` exist in `en.json` and `es.json`, non-empty. Run it and show it failing.
-- [ ] **1.3 Translation keys code.** Add the ten keys under `account.sheet` with the texts of `design.md` section 8. Run the test and show it passing.
+- [x] **1.1 Design entry.** Add section 7.10 "Side sheet (account)" to `docs/design.md`: the right-edge anchor, the width by content with a 320 px maximum, the 200 ms fade and the reduced-motion rule, the closing rules, and the rule that the sheet is for account and settings only. Check the section headings with a test first: `packages/shared/test/design-doc.spec.ts` (new) reads `docs/design.md` and expects a heading "7.10" with "Side sheet". Run it and show it failing, then add the section and show it passing.
+- [x] **1.2 Translation keys test first.** `packages/shared/test/account-sheet-i18n.spec.ts`: the keys `account.sheet.close`, `blocks.account`, `blocks.settings`, `blocks.about`, `blocks.session`, `profile`, `language`, `theme`, `aboutItem` and `signOut` exist in `en.json` and `es.json`, non-empty. Run it and show it failing.
+- [x] **1.3 Translation keys code.** Add the ten keys under `account.sheet` with the texts of `design.md` section 8. Run the test and show it passing.
 
 ## 2. Account sheet component
 

@@ -57,5 +57,21 @@
     "resume": {
       "label": "Resumen de estadísticas"
     }
+  },
+  "account": {
+    "sheet": {
+      "close": "Cerrar",
+      "blocks": {
+        "account": "Cuenta",
+        "settings": "Ajustes",
+        "about": "Acerca de",
+        "session": "Sesión"
+      },
+      "profile": "Ver perfil",
+      "language": "Idioma",
+      "theme": "Modo claro u oscuro",
+      "aboutItem": "Acerca de matchMap",
+      "signOut": "Cerrar sesión"
+    }
   }
 }
