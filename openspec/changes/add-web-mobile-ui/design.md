@@ -42,7 +42,7 @@ Reason: the bottom row must come after `app-stats-resume` in the DOM, so that ke
 - Friends: `tablerUsers`.
 - Account: `tablerUser` inside a circle. When `avatarLoading` is true, the circle is a grey skeleton with no pulse under reduced motion (`docs/design.md` 7.9).
 - Attribution: `tablerInfoCircle`.
-- View toggle: `tablerWorld` when `globeActive` is true, `tablerMap` otherwise. The shape changes, so the state is not only colour (spec requirement).
+- View toggle: the icon shows the view the button leads to. `tablerMap` (flat map) when `globeActive` is true, `tablerGlobe` (sphere) otherwise. The shape changes, so the state is not only colour (spec requirement).
 
 ### 4. Accessibility
 

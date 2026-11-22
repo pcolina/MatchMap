@@ -26,5 +26,5 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class MapBottomControls {
   readonly globeActive = input(false);
 
-  protected readonly icon = computed(() => (this.globeActive() ? 'tablerWorld' : 'tablerMap'));
+  protected readonly icon = computed(() => (this.globeActive() ? 'tablerMap' : 'tablerGlobe'));
 }

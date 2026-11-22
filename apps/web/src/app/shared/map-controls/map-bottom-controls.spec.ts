@@ -1,7 +1,7 @@
 import '@angular/compiler';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { tablerInfoCircle, tablerMap, tablerWorld } from '@ng-icons/tabler-icons';
+import { tablerGlobe, tablerInfoCircle, tablerMap } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { describe, expect, it } from 'vitest';
 import en from '../../../../../../packages/shared/i18n/en.json';
@@ -10,7 +10,7 @@ import { MapBottomControls } from './map-bottom-controls';
 const create = (globeActive: boolean) => {
   TestBed.configureTestingModule({
     imports: [MapBottomControls],
-    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerInfoCircle, tablerMap, tablerWorld })],
+    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerGlobe, tablerInfoCircle, tablerMap })],
   });
   const translate = TestBed.inject(TranslateService);
   translate.setTranslation('en', en);
@@ -43,15 +43,15 @@ describe('MapBottomControls', () => {
     expect(toggle?.getAttribute('aria-pressed')).toBe('false');
   });
 
-  it('shows the globe icon when the globe view is active', () => {
+  it('shows the flat map icon when the globe view is active, the destination is mercator', () => {
     const root = create(true);
 
-    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('tablerWorld');
+    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('tablerMap');
   });
 
-  it('shows the mercator icon when the mercator view is active', () => {
+  it('shows the globe icon when the mercator view is active, the destination is globe', () => {
     const root = create(false);
 
-    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('tablerMap');
+    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('tablerGlobe');
   });
 });
