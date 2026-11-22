@@ -10,7 +10,6 @@ import en from '../../../../../../../packages/shared/i18n/en.json';
 import es from '../../../../../../../packages/shared/i18n/es.json';
 import { SIGN_IN_GATEWAY, type SignInGateway } from '../state/auth.store';
 import { MainLayout } from '../../../shared/main-layout/main-layout';
-import { mapControlIcons } from '../../../shared/map-controls/map-icons';
 import { RegisterPage } from './register/register.page';
 import { SignInPage } from './sign-in/sign-in.page';
 
@@ -26,7 +25,7 @@ const render = (component: Type<unknown>): HTMLElement => {
     ({ matches: false, media: query, addEventListener: () => undefined, removeEventListener: () => undefined }) as unknown as MediaQueryList;
   TestBed.configureTestingModule({
     providers: [
-      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerInfoCircle, tablerMap, tablerWorld, ...mapControlIcons }),
+      provideIcons({ tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerInfoCircle, tablerMap, tablerWorld }),
       provideRouter([]),
       provideTranslateService({ fallbackLang: 'en' }),
       {

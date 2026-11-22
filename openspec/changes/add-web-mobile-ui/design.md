@@ -42,7 +42,7 @@ Reason: the bottom row must come after `app-stats-resume` in the DOM, so that ke
 - Friends: `tablerUsers`.
 - Account: `tablerUser` inside a circle. When `avatarLoading` is true, the circle is a grey skeleton with no pulse under reduced motion (`docs/design.md` 7.9).
 - Attribution: `tablerInfoCircle`.
-- View toggle: the icon shows the view the button leads to. `tablerMap` (flat map) when `globeActive` is true, `globeLine` otherwise. `globeLine` is a custom line icon (a circle with two continent outlines) in `apps/web/src/app/shared/map-controls/map-icons.ts`, registered with `provideIcons`. It is an approved exception to the rule that icons come from `@ng-icons/tabler-icons`, because the library has no plain globe that fits the project. The `apps/web/AGENTS.md` rule is not changed by this change. The shape changes, so the state is not only colour (spec requirement).
+- View toggle: the icon shows the view the button leads to. `tablerMap` (flat map) when `globeActive` is true, `tablerCircle` (plain circle, the ball) otherwise. The shape changes, so the state is not only colour (spec requirement).
 
 ### 4. Accessibility
 
