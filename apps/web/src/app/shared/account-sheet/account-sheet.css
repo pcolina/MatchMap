@@ -1,6 +1,7 @@
 .sheet {
   position: fixed;
-  inset: calc(16px + env(safe-area-inset-top)) 0 auto auto;
+  top: calc(16px + env(safe-area-inset-top));
+  right: 16px;
   margin: 0;
   padding: 0;
   width: fit-content;
@@ -9,11 +10,8 @@
   overflow-y: auto;
   background: var(--mm-color-surface);
   color: var(--mm-color-text);
-  border: 0;
-  border-style: solid;
-  border-color: var(--mm-color-borderStrong);
-  border-width: 1px 0 0 1px;
-  border-radius: var(--mm-radius-xl) 0 0 var(--mm-radius-xl);
+  border: 1px solid var(--mm-color-borderStrong);
+  border-radius: var(--mm-radius-xl);
   box-shadow: var(--mm-elevation-card);
   opacity: 1;
   transition:

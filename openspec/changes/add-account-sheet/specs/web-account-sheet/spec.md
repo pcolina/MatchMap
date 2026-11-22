@@ -14,13 +14,13 @@ On phone-sized viewports, activating the account button SHALL open the account s
 - **WHEN** the account sheet is open
 - **THEN** it is exposed as a dialog whose accessible name is the display name of the user
 
-### Requirement: Sheet is attached to the right edge and sized to its content
+### Requirement: Sheet sits 16 px from the right edge and is sized to its content
 
-The account sheet SHALL be attached to the right edge of the viewport, SHALL take the height of its content, and SHALL take the width of its content up to a maximum of 320 px. It SHALL never be wider than the viewport.
+The account sheet SHALL sit 16 px from the right edge of the viewport, with all four corners rounded. It SHALL take the height of its content, and SHALL take the width of its content up to a maximum of 320 px. It SHALL never be wider than the viewport.
 
-#### Scenario: Sheet is at the right edge
+#### Scenario: Sheet is near the right edge
 - **WHEN** the account sheet is open on a phone-sized viewport
-- **THEN** its right edge touches the right edge of the viewport
+- **THEN** its right edge is 16 px from the right edge of the viewport and its four corners are rounded
 
 #### Scenario: Width is capped at 320 px
 - **WHEN** the account sheet is open on a viewport wider than 320 px

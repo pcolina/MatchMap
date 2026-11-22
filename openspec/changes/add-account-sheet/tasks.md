@@ -43,6 +43,8 @@ The owner asked, after the first review, for one compact list with no group head
 
 - [x] **7.4 Header circle.** The owner asked for the circle with the user icon, as on the map, in the header. Test first: `account-sheet.spec.ts` expects `data-testid="avatar"` with the `tablerUser` icon and `aria-hidden`. Then the circle and header styles in `account-sheet.ts` and `.css`. Also recorded in `docs/design.md` 7.10.
 
+- [x] **7.5 Position and corners.** The owner asked to see the right corners, so the sheet sits 16 px from the right edge with all four corners rounded. Test first: `account-sheet.spec.ts` expects `right: 16px` and `border-radius: var(--mm-radius-xl)` in `account-sheet.css`. Then the CSS change. The spec requirement, `design.md` decision 3 and `docs/design.md` 7.10 are updated to match.
+
 ## Out of scope in these tasks
 
 - The actions of the rows (profile, about page, language, theme, sign-out).

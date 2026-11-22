@@ -35,10 +35,10 @@ The component keeps the close control and the backdrop tap in code, because the 
 
 ### 3. Position and size
 
-- `position: fixed; right: 0; top: calc(16px + env(safe-area-inset-top))`.
+- `position: fixed; right: 16px; top: calc(16px + env(safe-area-inset-top))`. The 16 px gap matches the map controls, and it lets the right corners show.
 - `width: fit-content; max-width: 320px` (spec). Inside, `max-width: 100vw` guards the 320 px viewport.
 - Height is the content height, with `max-height: calc(100dvh - 32px)` and `overflow-y: auto` for very short screens.
-- Radius on the left corners only, from the `radius` tokens (`xl`).
+- Radius on all four corners, from the `radius` tokens (`xl`).
 
 ### 4. Fade
 
@@ -49,7 +49,7 @@ The component keeps the close control and the backdrop tap in code, because the 
 
 ### 5. Look
 
-- Surface: `--mm-color-surface`, border `--mm-color-borderStrong` on the left and top edges.
+- Surface: `--mm-color-surface`, a 1 px border in `--mm-color-borderStrong` on all sides.
 - Shadow: `--mm-elevation-card` in day mode; in night mode the token is `none` and the border separates the sheet. This follows `docs/design.md` 4 for cards.
 - The rows form one list with no group headings. A 1 px `border` divider sits under the header and before sign out. Rows are 44 px high, with `bodyStrong` for the label (`docs/design.md` 3). The day or night mode row is a switch (`role="switch"`, `aria-checked`), a 40 × 24 px track in `borderStrong` when off and `accent` when on, with the knob in `surface`.
 - The display name is a `title3` heading (Sora 600).

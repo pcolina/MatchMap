@@ -150,6 +150,14 @@ describe('AccountSheet', () => {
     expect(css()).toMatch(/@media \(hover: hover\) and \(pointer: fine\)\s*\{[\s\S]*\.row:hover\s*\{[^}]*background(-color)?:\s*var\(--mm-color-accentSubtle\)/);
   });
 
+  it('keeps the sheet 16 px from the right edge', () => {
+    expect(css()).toMatch(/\.sheet\s*\{[^}]*right:\s*16px/);
+  });
+
+  it('rounds all four corners of the sheet', () => {
+    expect(css()).toMatch(/\.sheet\s*\{[^}]*border-radius:\s*var\(--mm-radius-xl\);/);
+  });
+
   it('caps the dialog width at 320 px', () => {
     expect(css()).toMatch(/\.sheet\s*\{[^}]*max-width:\s*320px/);
   });
