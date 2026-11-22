@@ -20,7 +20,7 @@ The account sheet SHALL show its rows as one list, with no group headings, in th
 - **WHEN** the account sheet is open
 - **THEN** each row is a button with an accessible name
 
-#### Scenario: Profile and language rows do nothing yet
+#### Scenario: Rows are presentational
 - **WHEN** the view profile or the language row is activated
 - **THEN** no request is sent to the API and no state of the session changes
 
