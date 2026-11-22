@@ -1,0 +1,54 @@
+.about {
+  width: min(320px, calc(100vw - 32px));
+  margin: auto;
+  padding: 16px;
+  background: var(--mm-color-surface);
+  color: var(--mm-color-text);
+  border: 1px solid var(--mm-color-borderStrong);
+  border-radius: var(--mm-radius-xl);
+  box-shadow: var(--mm-elevation-card);
+}
+
+.about::backdrop {
+  background: color-mix(in srgb, var(--mm-color-text) 40%, transparent);
+}
+
+.about__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.close {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mm-color-textSecondary);
+  cursor: pointer;
+}
+
+.about__version {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 0;
+  color: var(--mm-color-textSecondary);
+}
+
+.version {
+  color: var(--mm-color-accent);
+  font-weight: 600;
+}

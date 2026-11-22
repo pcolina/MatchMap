@@ -1,22 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '@ngx-translate/core';
-
-const showDialog = (element: HTMLDialogElement): void => {
-  if (typeof element.showModal === 'function') {
-    element.showModal();
-  } else {
-    element.setAttribute('open', '');
-  }
-};
-
-const hideDialog = (element: HTMLDialogElement): void => {
-  if (typeof element.close === 'function') {
-    element.close();
-  } else {
-    element.removeAttribute('open');
-  }
-};
+import { hideDialog, showDialog } from '../native-dialog';
 
 @Component({
   selector: 'app-account-sheet',
