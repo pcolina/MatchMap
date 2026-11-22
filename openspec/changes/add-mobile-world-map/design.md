@@ -42,12 +42,13 @@ The style builder becomes a pure function in `packages/shared`, used by both app
 
 The map reads `colorSchemeSource()` from `@ng-native/device` and uses `day` or `night`. The palette values come from `mapColors`, as on the web.
 
-### 5. Data bundled in the app
+### 5. One copy of the geo data for web and mobile
 
-`apps/mobile/src/assets/geo/countries.geojson` and `capitals.geojson` are copies of the web files. They are imported with Metro and passed as objects, so no request is made.
+The two datasets live once, in `packages/shared/geo/`, as `countries.json` and `capitals.json`. The files keep their GeoJSON content. The `.json` extension lets Metro import them with no change to its configuration.
 
-- The bundle grows by about 1.9 MB. This is flagged for the owner, and the performance budget check of `CLAUDE.md` §9 applies to it.
-- The web keeps its own copies under `apps/web/public/geo/`. The two copies are identical; a later change may share them.
+- **Mobile** imports them directly, as it already imports `packages/shared/i18n/*.json`, and passes them to the map as GeoJSON objects. No request is made. The bundle grows by about 1.9 MB, which is flagged for the owner, and the performance budget check of `CLAUDE.md` §9 applies to it.
+- **Web** serves them from the same folder with one entry in `apps/web/angular.json` under `assets`: the input is `packages/shared/geo` and the output is `geo`. The style URLs change from `/geo/countries.geojson` and `/geo/capitals.geojson` to `/geo/countries.json` and `/geo/capitals.json`. `apps/web/public/geo/` is removed, so no copy remains.
+- The move is a rename with `git mv`, so the history of the files is kept.
 
 ### 6. Dependency
 
