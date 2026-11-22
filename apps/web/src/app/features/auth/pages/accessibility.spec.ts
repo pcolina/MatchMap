@@ -72,4 +72,19 @@ describe('accessibility of the auth pages', () => {
     expect(element.querySelector('app-account-sheet dialog')?.hasAttribute('open')).toBe(true);
     expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
   });
+
+  it('the main screen with the about dialog open has no axe violations', async () => {
+    const element = render(MainLayout);
+    (element.querySelector('[data-column="top-right"] button') as HTMLButtonElement).click();
+    TestBed.inject(ApplicationRef).tick();
+    (Array.from(element.querySelectorAll<HTMLButtonElement>('app-account-sheet button[data-row]')).find(
+      (button) => button.textContent?.trim() === 'About matchMap',
+    ) as HTMLButtonElement).click();
+    TestBed.inject(ApplicationRef).tick();
+
+    const results = await axe.run(element);
+
+    expect(element.querySelector('app-about-dialog dialog')?.hasAttribute('open')).toBe(true);
+    expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
+  });
 });
