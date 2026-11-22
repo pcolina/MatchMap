@@ -93,6 +93,15 @@ export class AuthApi implements SignInGateway {
       );
   }
 
+  logout(): Observable<void> {
+    return this.http
+      .post<void>(apiUrl('/api/auth/logout', environment.apiBaseUrl), null, {
+        withCredentials: true,
+        headers: { 'X-Client': 'web' },
+      })
+      .pipe(map(() => undefined));
+  }
+
   refresh(): Observable<{ accessToken: string }> {
     return this.http
       .post<TokenResponse>(apiUrl('/api/auth/refresh', environment.apiBaseUrl), null, {

@@ -8,11 +8,11 @@ import {
   effect,
   inject,
   input,
-  signal,
   viewChild,
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Map as MapLibreMap } from 'maplibre-gl';
+import { ThemeStore } from '../../core/theme/theme.store';
 import { MapScheme, MapState, buildMapStyle } from './map-view.style';
 
 @Component({
@@ -27,16 +27,12 @@ export class MapView {
 
   private readonly container = viewChild.required<ElementRef<HTMLElement>>('container');
   private readonly destroyRef = inject(DestroyRef);
-  private readonly darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  private readonly dark = signal(this.darkQuery.matches);
-  private readonly scheme = computed<MapScheme>(() => (this.dark() ? 'night' : 'day'));
+  private readonly theme = inject(ThemeStore);
+  private readonly scheme = computed<MapScheme>(() => (this.theme.isDark() ? 'night' : 'day'));
   private map?: MapLibreMap;
 
   constructor() {
-    const onSchemeChange = (event: { matches: boolean }) => this.dark.set(event.matches);
-    this.darkQuery.addEventListener('change', onSchemeChange);
     this.destroyRef.onDestroy(() => {
-      this.darkQuery.removeEventListener('change', onSchemeChange);
       this.map?.remove();
     });
 

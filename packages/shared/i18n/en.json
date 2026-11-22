@@ -66,6 +66,10 @@
       "theme": "Light or dark mode",
       "aboutItem": "About matchMap",
       "signOut": "Sign out"
+    },
+    "about": {
+      "close": "Close",
+      "version": "Version"
     }
   }
 }

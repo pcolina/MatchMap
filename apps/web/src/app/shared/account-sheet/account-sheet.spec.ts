@@ -21,15 +21,21 @@ import { AccountSheet } from './account-sheet';
 
 @Component({
   imports: [AccountSheet],
-  template: `<app-account-sheet [open]="open()" [displayName]="name()" [email]="email()" [darkMode]="dark()" (closed)="closes = closes + 1" />`,
+  template: `<app-account-sheet [open]="open()" [displayName]="name()" [email]="email()" [darkMode]="dark()" (closed)="closes = closes + 1" (signOutPressed)="signOuts = signOuts + 1" (themeToggled)="toggles = toggles + 1" (aboutPressed)="abouts = abouts + 1" />`,
 })
 class Host {
+  signOuts = 0;
+  toggles = 0;
+  abouts = 0;
   readonly open = signal(true);
   readonly name = signal<string | null>('Ana');
   readonly email = signal<string | null>(null);
   readonly dark = signal(false);
   closes = 0;
 }
+
+const rowNamed = (root: HTMLElement, name: string): HTMLButtonElement =>
+  Array.from(root.querySelectorAll<HTMLButtonElement>('button[data-row]')).find((button) => button.textContent?.trim() === name) as HTMLButtonElement;
 
 const create = (name: string | null = 'Ana') => {
   TestBed.configureTestingModule({
@@ -136,6 +142,30 @@ describe('AccountSheet', () => {
   it('shows the username in the accent colour and the email in smaller secondary text', () => {
     expect(css()).toMatch(/\.name\s*\{[^}]*color:\s*var\(--mm-color-accent\)/);
     expect(css()).toMatch(/\.email\s*\{[^}]*color:\s*var\(--mm-color-textSecondary\)[^}]*font-size:/);
+  });
+
+  it('emits signOutPressed when sign out is pressed', () => {
+    const { root, host } = create();
+
+    rowNamed(root, 'Sign out').click();
+
+    expect(host.signOuts).toBe(1);
+  });
+
+  it('emits themeToggled when the day or night row is pressed', () => {
+    const { root, host } = create();
+
+    rowNamed(root, 'Light or dark mode').click();
+
+    expect(host.toggles).toBe(1);
+  });
+
+  it('emits aboutPressed when the about row is pressed', () => {
+    const { root, host } = create();
+
+    rowNamed(root, 'About matchMap').click();
+
+    expect(host.abouts).toBe(1);
   });
 
   it('shows the user circle with the same icon as the account control on the map', () => {
