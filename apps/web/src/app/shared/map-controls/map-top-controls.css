@@ -1,4 +1,5 @@
 :host {
+  z-index: 2;
   position: absolute;
   top: calc(16px + env(safe-area-inset-top));
   left: 16px;
