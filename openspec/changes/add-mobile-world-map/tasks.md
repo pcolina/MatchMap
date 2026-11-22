@@ -15,7 +15,7 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 3. Dependency
 
-- [ ] **3.1 Install.** `pnpm add --filter @matchmap/mobile --save-exact @maplibre/maplibre-react-native@11.5.1` from the repo root. The version has no `^` or `~`. Check that the peers resolve: `react-native` 0.86.3, `react` 19.2.3, `expo` ~57.0.26. Commit `package.json` and `pnpm-lock.yaml`, and show the result of `pnpm check`.
+- [x] **3.1 Install.** `pnpm add --filter @matchmap/mobile --save-exact @maplibre/maplibre-react-native@11.5.1` from the repo root. The version has no `^` or `~`. Check that the peers resolve: `react-native` 0.86.3, `react` 19.2.3, `expo` ~57.0.26. Commit `package.json` and `pnpm-lock.yaml`, and show the result of `pnpm check`.
 
 ## 4. Bundled geo data
 
