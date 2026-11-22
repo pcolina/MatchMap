@@ -10,7 +10,7 @@ First step: the controls are painted as static layout, to see how they feel on t
 
 - **Top right:** avatar. It opens a side sheet attached to the right edge, with the height and width its content needs. The sheet holds user info, language, day/night mode and sign-out.
 - **Top left, one column:** add a visited place, then friends.
-- **Bottom right, one row, left to right:** the brand mark, the attribution info icon (ⓘ), then the globe/mercator toggle.
+- **Bottom right, one row, left to right:** the attribution info icon (ⓘ, replaces the MapLibre logo and opens the credits), then the globe/mercator toggle. The matchMap brand mark is not in this row.
 - **Stats panel, bottom:** only stats. The full-screen button is not painted in this change: it is designed with the stats component.
 - **Loading:** the avatar shows a grey circle while its user info loads, and friends shows one only if its icon carries a count from the server. The other controls are not loading states and show no skeleton (`docs/design.md`, 7.9).
 - **Accessibility:** every icon-only control has an accessible name from i18n keys in `es` and `en`; touch targets are at least 44 px; controls over the map sit on a surface that keeps text contrast at 4.5:1; the globe toggle exposes its state with `aria-pressed`; focus follows the order top left, top right, map, panel, bottom right; transitions are instant with reduced motion.
