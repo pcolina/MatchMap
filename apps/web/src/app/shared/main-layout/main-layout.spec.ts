@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { mapControlIcons } from '../map-controls/map-icons';
 import { provideIcons } from '@ng-icons/core';
 import { provideTranslateService } from '@ngx-translate/core';
-import { tablerMap, tablerPlus, tablerUser, tablerUsers,  } from '@ng-icons/tabler-icons';
+import { tablerInfoCircle, tablerLanguage, tablerLogout, tablerMap, tablerPlus, tablerSunMoon, tablerUser, tablerUsers, tablerX } from '@ng-icons/tabler-icons';
 import { MainLayout } from './main-layout';
 
 vi.mock('maplibre-gl', () => ({
@@ -27,7 +27,18 @@ describe('MainLayout', () => {
     TestBed.configureTestingModule({
       providers: [
         provideTranslateService({ fallbackLang: 'en' }),
-        provideIcons({ tablerMap, tablerPlus, tablerUser, tablerUsers, ...mapControlIcons }),
+        provideIcons({
+          tablerInfoCircle,
+          tablerLanguage,
+          tablerLogout,
+          tablerMap,
+          tablerPlus,
+          tablerSunMoon,
+          tablerUser,
+          tablerUsers,
+          tablerX,
+          ...mapControlIcons,
+        }),
       ],
     });
     vi.stubGlobal(
@@ -52,7 +63,37 @@ describe('MainLayout', () => {
       'app-stats-resume',
       'app-map-bottom-controls',
       'app-layout-footer',
+      'app-account-sheet',
     ]);
+  });
+
+  it('opens the account sheet when the account button is pressed', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    const accountButton = root.querySelector('[data-column="top-right"] button') as HTMLButtonElement;
+    accountButton.click();
+    fixture.detectChanges();
+
+    expect(root.querySelector('app-account-sheet dialog')?.hasAttribute('open')).toBe(true);
+    expect(accountButton.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('closes the account sheet when it emits closed', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    (root.querySelector('[data-column="top-right"] button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    (root.querySelector('app-account-sheet dialog') as HTMLDialogElement).dispatchEvent(new Event('cancel', { cancelable: true }));
+    fixture.detectChanges();
+
+    expect(root.querySelector('app-account-sheet dialog')?.hasAttribute('open')).toBe(false);
+    expect((root.querySelector('[data-column="top-right"] button') as HTMLButtonElement).getAttribute('aria-expanded')).toBe('false');
   });
 
   it('places the top controls before the map inside the map area', async () => {
