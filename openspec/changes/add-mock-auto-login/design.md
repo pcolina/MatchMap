@@ -108,3 +108,47 @@ The `readme.test` files in web and mobile check the README text for `-l`, if the
 ## Performance
 
 No budget is affected. The sign-in runs once at start-up, against the in-memory mock.
+
+## Scope addition: mobile start-up error
+
+### Status
+
+The root cause is confirmed (see below). The fix is proposed, and needs approval before implementation.
+
+### Root cause (confirmed by the diagnostic)
+
+- The mobile bundle is compiled to Hermes bytecode with `transform.bytecode=1` and `excludeSource=true`.
+- In that bytecode, `Function.prototype.toString` of a class returns `function TranslateLoader() { [bytecode] }`, not `class TranslateLoader ...`. Logcat showed this for `TranslateLoader`, `TranslateService` and `MissingTranslationHandler`.
+- `@ngx-translate/core` 18.0.0 decides whether a default provider is a class with `isClass`, which checks `/^class\s/` on that text. The check is false, so the class is registered as `useFactory`.
+- Angular calls that factory as a plain function, and Hermes throws `Class constructor invoked without new`. The first token is `TranslateLoader`, inside the `TranslateService` field initializers, so the error is raised at `inject(TranslateService)` in `main.ts`.
+- The Node reproduction could not show this, because in Node `toString` returns the real source. That is why the earlier attempt did not reproduce it.
+
+### Fix options
+
+1. **Pass factory functions for the four plugin slots in `main.ts`** (recommended). The slots `loader`, `compiler`, `parser` and `missingTranslationHandler` receive `() => new ...()`. A function that is not a class is registered with `useFactory`, which is called correctly. No dependency changes, and the change is limited to `apps/mobile/src/main.ts`.
+2. Upgrade `@ngx-translate/core` to a version whose `isClass` does not depend on `toString`. This changes a dependency, so it needs your approval as `CLAUDE.md` §2 and §12 require. Its effect on Hermes bytecode is not checked yet.
+3. Disable bytecode in the Metro configuration. This changes the build pipeline for every app, so it is not proposed.
+
+Option 1 is approved. The providers move to `apps/mobile/src/app/core/i18n/translate-providers.ts`, so that a test can import them. `main.ts` keeps the same behaviour and only lists the module. The approach is confirmed by the test below before the code is written.
+
+### What has been checked
+
+- **Symptom.** The app shows the red screen `Uncaught Error: Class constructor invoked without new`. The error is thrown at `inject(TranslateService)` in the translation initializer of `apps/mobile/src/main.ts`. Logcat shows `ReactNativeJS: [TypeError: Class constructor invoked without new]` without a stack.
+- **Not caused by this change.** The same message is in logcat from 2026-11-09, before this change. It also appears when `main.ts` is the `main` branch version, with none of the changes of this change.
+- **Ruled out: `isClass` in `@ngx-translate/core` 18.0.0.** `provideTranslateService` chooses `useClass` or `useFactory` with `isClass`, which reads `Function.prototype.toString`. In the Metro bundle served on port 8081, `TranslateDefaultParser`, `TranslateNoOpLoader`, `TranslateNoOpCompiler`, `DefaultMissingTranslationHandler` and `TranslateStore` are all native `class` declarations, so `isClass` returns true for them.
+- **Not usable: a Node reproduction with Vitest.** Injecting `TranslateService` in a plain environment injector fails earlier with NG0203 (`inject()` outside an injection context). That is a fault of the probe, not the reported error, so it proves nothing about the reported error.
+
+### Next step: diagnostic, no commit
+
+1. In `apps/mobile/src/main.ts`, wrap `inject(TranslateService)` in a temporary `try/catch` that logs `error.stack` with `console.error`. Rebuild and read the stack with `adb logcat -s ReactNativeJS:E`.
+2. Revert the temporary change. It is never committed.
+3. Record the root cause in this section, with the file and line that call the class without `new`.
+
+No fix is chosen before step 3. The options will be written here once the cause is known.
+
+### Test strategy (depends on the cause)
+
+- The regression test is a Vitest test in `apps/mobile`. It runs the translation providers and the translation initializer in an injection context, with the component injector from `@ng-native/testing` `render`, as in the `autoSignIn` tests.
+- Node returns the real source for classes, so the test must simulate the Hermes behaviour: while it runs, `Function.prototype.toString` returns `function <name>() { [bytecode] }` for classes. Without that simulation the test cannot fail.
+- Before the fix, the test must fail with `Class constructor invoked without new`. This must be confirmed before writing the fix.
+- The scenarios of the `mobile-startup` spec are mapped to tests in `tasks.md` after this section is complete.

@@ -13,9 +13,22 @@ Running the web and mobile apps with the mock means typing an email and password
 - Without `-l`, start-up behaves exactly as now: the login screen is shown.
 - The root `README.md` documents the flag in both "With mocks" sections: "Run the web app" (around `pnpm web mock`) and "Run the mobile app" (around `pnpm mobile mock`). It states that `-l` signs in as `one@matchmap.test` and that it needs `mock`.
 
+## Scope addition: start-up error in the mobile app
+
+Testing `-l` on the Android emulator showed an uncaught error at start-up, before any sign-in. The app shows the red error screen "Class constructor invoked without new" at the translation initializer in `apps/mobile/src/main.ts` (`inject(TranslateService)`, which runs before the sign-in initializer). The same error appears when `main.ts` is replaced with the `main` branch version, so it already existed in `main` and this change does not cause it.
+
+This change adds:
+
+- Find the cause of the error. The cause is not known yet: `TranslateService` is injected the same way in the web app, where the error does not appear.
+- Fix it in `apps/mobile` so that the app starts without an uncaught error on the Android emulator. The fix is written in `design.md` once the cause is known, with a test that reproduces it.
+- A scenario in the mobile start-up spec: the app starts without an uncaught error and shows the sign-in page or, with `-l`, the signed-in screen.
+
+The approach is not chosen yet. It depends on the cause, and it will be proposed in `design.md` before any code changes.
+
 ## Capabilities
 
 - Modified: `api-mocks` (new requirement for auto sign-in at start-up).
+- New: `mobile-startup` (the mobile app starts without an uncaught error, for the start-up scenario added in this change). The choice is mine, since the scenario is not about the mock.
 
 ## Out of scope
 
