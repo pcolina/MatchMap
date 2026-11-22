@@ -33,10 +33,10 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors(httpInterceptorsFor(mockEnabled, authInterceptor))),
     provideApollo(() => {
-      const store = inject(AuthStore);
+      const injector = inject(Injector);
       return {
         link: ApolloLink.from([
-          apolloAuthLink(() => store.accessToken()),
+          apolloAuthLink(() => injector.get(AuthStore).accessToken()),
           apolloLinkFor(mockEnabled, inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) })),
         ]),
         cache: new InMemoryCache(),
