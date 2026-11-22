@@ -20,6 +20,7 @@ export type AuthFailure = SignInFailure | RegisterFailure | 'signInAfterRegister
 export interface SignInGateway {
   signIn(email: string, password: string): Observable<{ accessToken: string }>;
   refresh(): Observable<{ accessToken: string }>;
+  logout(): Observable<void>;
   register(email: string, password: string): Observable<void>;
 }
 
