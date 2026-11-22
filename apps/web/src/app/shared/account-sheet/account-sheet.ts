@@ -30,6 +30,7 @@ const hideDialog = (element: HTMLDialogElement): void => {
     (click)="onBackdropClick($event)"
   >
     <header class="sheet__header">
+      <span class="avatar" data-testid="avatar" aria-hidden="true"><ng-icon name="tablerUser" /></span>
       @if (displayName() === null) {
         <span class="name-skeleton" data-testid="name-skeleton" aria-hidden="true"></span>
       } @else {

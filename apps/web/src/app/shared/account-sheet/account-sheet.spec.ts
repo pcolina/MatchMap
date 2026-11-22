@@ -118,6 +118,14 @@ describe('AccountSheet', () => {
     expect(host.closes).toBe(1);
   });
 
+  it('shows the user circle with the same icon as the account control on the map', () => {
+    const { root } = create();
+    const avatar = root.querySelector('[data-testid="avatar"]');
+
+    expect(avatar?.querySelector('ng-icon')?.getAttribute('name')).toBe('tablerUser');
+    expect(avatar?.getAttribute('aria-hidden')).toBe('true');
+  });
+
   it('shows a loading line instead of the name while the display name is unknown', () => {
     const { root } = create(null);
 

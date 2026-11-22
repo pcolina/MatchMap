@@ -41,6 +41,8 @@ The owner asked, after the first review, for one compact list with no group head
 - [x] **7.2 Code.** `account-sheet.ts`: remove the four blocks and their headings; render the rows in one list with an `hr` before sign out; make the day or night mode row a `role="switch"` button with `aria-checked` from a new input `darkMode` (default false). `account-sheet.css`: divider, switch track and knob with the tokens of `design.md` decision 5. Remove `account.sheet.blocks` from `en.json` and `es.json`. Run the tests and show them passing.
 - [x] **7.3 Checks.** Re-run the axe check of the sheet open (5.x), `pnpm check` and `pnpm build:web` from the repo root, and add the summary to the PR.
 
+- [x] **7.4 Header circle.** The owner asked for the circle with the user icon, as on the map, in the header. Test first: `account-sheet.spec.ts` expects `data-testid="avatar"` with the `tablerUser` icon and `aria-hidden`. Then the circle and header styles in `account-sheet.ts` and `.css`. Also recorded in `docs/design.md` 7.10.
+
 ## Out of scope in these tasks
 
 - The actions of the rows (profile, about page, language, theme, sign-out).

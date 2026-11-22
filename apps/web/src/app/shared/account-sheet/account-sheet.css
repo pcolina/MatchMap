@@ -81,6 +81,62 @@
   color: var(--mm-color-textSecondary);
 }
 
+.sheet__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.avatar {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--mm-color-borderStrong);
+  background: var(--mm-color-surface);
+  box-shadow: var(--mm-elevation-card);
+  color: var(--mm-color-text);
+}
+
+.avatar ng-icon {
+  font-size: 24px;
+}
+
+.name {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.name-skeleton {
+  flex: 1 1 auto;
+  height: 16px;
+  border-radius: 8px;
+  background: var(--mm-color-borderStrong);
+}
+
+.close {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mm-color-textSecondary);
+  cursor: pointer;
+}
+
 .divider {
   margin: 0;
   border: 0;
