@@ -9,8 +9,8 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 2. Bottom controls: attribution and view toggle
 
-- [ ] **2.1 Test first.** `apps/web/src/app/shared/map-controls/map-bottom-controls.spec.ts`: the attribution button comes before the view toggle in the DOM; both are native `<button>` elements with the accessible names from `map.controls.attribution` and `map.controls.globe`/`mercator`; the toggle has `aria-pressed` equal to `globeActive`; the icon changes shape when `globeActive` changes. Run it and show it failing.
-- [ ] **2.2 Code.** `map-bottom-controls.ts`, `.css` and the template: a row with the info button and the toggle, 44 × 44 px hit areas, `--mm-color-surface` background, `--mm-color-borderStrong` border. Icons `tablerInfoCircle`, `tablerWorld` and `tablerMap` through `NgIcon`. Run the test and show it passing.
+- [x] **2.1 Test first.** `apps/web/src/app/shared/map-controls/map-bottom-controls.spec.ts`: the attribution button comes before the view toggle in the DOM; both are native `<button>` elements with the accessible names from `map.controls.attribution` and `map.controls.globe`/`mercator`; the toggle has `aria-pressed` equal to `globeActive`; the icon changes shape when `globeActive` changes. Run it and show it failing.
+- [x] **2.2 Code.** `map-bottom-controls.ts`, `.css` and the template: a row with the info button and the toggle, 44 × 44 px hit areas, `--mm-color-surface` background, `--mm-color-borderStrong` border. Icons `tablerInfoCircle`, `tablerWorld` and `tablerMap` through `NgIcon`. Run the test and show it passing.
 
 ## 3. Top controls: add, friends and account
 
