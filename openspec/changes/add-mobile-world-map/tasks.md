@@ -33,7 +33,7 @@ Each task starts with its failing test, which is run and shown failing before th
 - [x] **6.2 Code.** `apps/mobile/src/app/shared/map-view/map-view.ts`, a presentational component with the `states` input and `:host { flex: 1 }`. Run the test and show it passing.
 - [x] **6.3 Test first.** The same file: when `colorSchemeSource()` reports dark mode, the `mapStyle` uses the night palette. Run it and show it failing.
 - [x] **6.4 Code.** Read the colour scheme from `colorSchemeSource()` in `@ng-native/device` and pass `day` or `night`. Run the test and show it passing.
-- [ ] **6.5 Wire the map.** The main screen of `mobile-main-layout` shows `<maplibre-map>` in its map area. Run `pnpm check` for `apps/mobile` and show the result.
+- [x] **6.5 Wire the map.** The main screen of `mobile-main-layout` shows `<maplibre-map>` in its map area. Run `pnpm check` for `apps/mobile` and show the result.
 
 ## 7. Props and build checks on the emulator
 

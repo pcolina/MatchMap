@@ -33,6 +33,12 @@ describe('MainLayout', () => {
     expect(screen.getByTestId('stats-resume')).toBeTruthy();
   });
 
+  test('the map area holds the world map', async () => {
+    await renderWithScheme('light');
+
+    expect(screen.getByRole('image', { name: 'World map' })).toBeTruthy();
+  });
+
   test('the map area takes the leftover height', async () => {
     await renderWithScheme('light');
 
