@@ -1,0 +1,97 @@
+import { ChangeDetectionStrategy, Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
+import { NgIcon } from '@ng-icons/core';
+import { TranslatePipe } from '@ngx-translate/core';
+
+const showDialog = (element: HTMLDialogElement): void => {
+  if (typeof element.showModal === 'function') {
+    element.showModal();
+  } else {
+    element.setAttribute('open', '');
+  }
+};
+
+const hideDialog = (element: HTMLDialogElement): void => {
+  if (typeof element.close === 'function') {
+    element.close();
+  } else {
+    element.removeAttribute('open');
+  }
+};
+
+@Component({
+  selector: 'app-account-sheet',
+  imports: [NgIcon, TranslatePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<dialog
+    #dialog
+    class="sheet"
+    aria-labelledby="account-sheet-title"
+    (cancel)="onCancel($event)"
+    (click)="onBackdropClick($event)"
+  >
+    <header class="sheet__header">
+      @if (displayName() === null) {
+        <span class="name-skeleton" data-testid="name-skeleton" aria-hidden="true"></span>
+      } @else {
+        <h2 id="account-sheet-title" class="name">{{ displayName() }}</h2>
+      }
+      <button type="button" class="close" [attr.aria-label]="'account.sheet.close' | translate" (click)="closed.emit()">
+        <ng-icon name="tablerX" />
+      </button>
+    </header>
+
+    <section class="block">
+      <h3 class="block__heading">{{ 'account.sheet.blocks.account' | translate }}</h3>
+      <button type="button" class="row" data-row><ng-icon name="tablerUser" />{{ 'account.sheet.profile' | translate }}</button>
+    </section>
+
+    <section class="block">
+      <h3 class="block__heading">{{ 'account.sheet.blocks.settings' | translate }}</h3>
+      <button type="button" class="row" data-row><ng-icon name="tablerLanguage" />{{ 'account.sheet.language' | translate }}</button>
+      <button type="button" class="row" data-row><ng-icon name="tablerSunMoon" />{{ 'account.sheet.theme' | translate }}</button>
+    </section>
+
+    <section class="block">
+      <h3 class="block__heading">{{ 'account.sheet.blocks.about' | translate }}</h3>
+      <button type="button" class="row" data-row><ng-icon name="tablerInfoCircle" />{{ 'account.sheet.aboutItem' | translate }}</button>
+    </section>
+
+    <section class="block">
+      <h3 class="block__heading">{{ 'account.sheet.blocks.session' | translate }}</h3>
+      <button type="button" class="row" data-row><ng-icon name="tablerLogout" />{{ 'account.sheet.signOut' | translate }}</button>
+    </section>
+  </dialog>`,
+  styleUrl: './account-sheet.css',
+})
+export class AccountSheet {
+  readonly open = input(false);
+  readonly displayName = input<string | null>(null);
+  readonly closed = output<void>();
+
+  private readonly dialog = viewChild<ElementRef<HTMLDialogElement>>('dialog');
+
+  constructor() {
+    effect(() => {
+      const element = this.dialog()?.nativeElement;
+      if (!element) {
+        return;
+      }
+      if (this.open() && !element.open) {
+        showDialog(element);
+      } else if (!this.open() && element.open) {
+        hideDialog(element);
+      }
+    });
+  }
+
+  protected onCancel(event: Event): void {
+    event.preventDefault();
+    this.closed.emit();
+  }
+
+  protected onBackdropClick(event: MouseEvent): void {
+    if (event.target === this.dialog()?.nativeElement) {
+      this.closed.emit();
+    }
+  }
+}

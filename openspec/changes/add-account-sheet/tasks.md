@@ -10,8 +10,8 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 2. Account sheet component
 
-- [ ] **2.1 Test first.** `apps/web/src/app/shared/account-sheet/account-sheet.spec.ts`: the dialog has an accessible name equal to the display name; with `open` true it is shown as a modal; Escape emits `closed`; a click on the backdrop emits `closed`; the close control emits `closed`; the four blocks appear in the order account, settings, about, session, each with its heading; the rows are buttons with accessible names; with `displayName` null a skeleton line is shown and no email text is in the DOM. Run it and show it failing.
-- [ ] **2.2 Code.** `account-sheet.ts`, `.css` and template: a `<dialog>` element, opened with `showModal()` and closed with `close()` from an effect on `open`. Inputs `open` and `displayName`, output `closed`. Icons from `@ng-icons/tabler-icons`, with the rule in `apps/web/AGENTS.md`. Run the test and show it passing.
+- [x] **2.1 Test first.** `apps/web/src/app/shared/account-sheet/account-sheet.spec.ts`: the dialog has an accessible name equal to the display name; with `open` true it is shown as a modal; Escape emits `closed`; a click on the backdrop emits `closed`; the close control emits `closed`; the four blocks appear in the order account, settings, about, session, each with its heading; the rows are buttons with accessible names; with `displayName` null a skeleton line is shown and no email text is in the DOM. Run it and show it failing.
+- [x] **2.2 Code.** `account-sheet.ts`, `.css` and template: a `<dialog>` element, opened with `showModal()` and closed with `close()` from an effect on `open`. Inputs `open` and `displayName`, output `closed`. Icons from `@ng-icons/tabler-icons`, with the rule in `apps/web/AGENTS.md`. Run the test and show it passing.
 
 ## 3. Sheet styles
 

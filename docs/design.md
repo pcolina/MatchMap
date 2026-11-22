@@ -259,6 +259,8 @@ A panel attached to the right edge of the screen, for the account and the settin
 - **Closing:** tap outside it, press Escape, or activate its close control. Focus returns to the control that opened it.
 - **Focus:** while open, focus stays inside the sheet and Tab cycles through its controls.
 - **Blocks:** groups of rows, each with a `label` heading in `textSecondary`. A row is 44 px high, with `bodyStrong` for its label and an optional value in `textSecondary`.
+- **Icons:** every row starts with an icon from the Tabler set, 20 px, in `textSecondary`.
+- **Hover:** on a laptop with a mouse (`hover: hover` and `pointer: fine`), a row takes the `accentSubtle` background while the pointer is over it. Touch devices have no hover.
 
 ---
 
