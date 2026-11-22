@@ -44,7 +44,7 @@ Each task starts with its failing test, run and shown failing before the code. E
 ## 8. Checks
 
 - [x] **8.1 Full check.** `pnpm check` and `pnpm build:web` from the repo root, with the summary in the PR.
-- [ ] **8.2 Owner visual check.** Light and dark mode, the switch, the about dialog and sign out at 320, 360 and 600 px. Done by the owner.
+- [x] **8.2 Owner visual check.** Light and dark mode, the switch, the about dialog and sign out at 320, 360 and 600 px. Done by the owner.
 
 ## 10. The map follows the app mode (added after the owner asked)
 
@@ -53,7 +53,7 @@ The owner asked that the day or night switch also changes the map and the whole 
 - [x] **10.1 Test first.** `apps/web/src/app/shared/map-view/map-view.theme.spec.ts`: the map is drawn in night colours after the app switches to dark, and in day colours in light mode even when the system is dark. Run and shown failing.
 - [x] **10.2 Code.** `map-view.ts` reads `ThemeStore.isDark()` instead of its own system query.
 - [x] **10.3 System mode.** `theme.store.ts` listens to the system change and keeps `systemDark` as state, so the system choice still follows the system.
-- [ ] **10.4 Checks.** `pnpm check` and `pnpm build:web` from the repo root, and the summary in the PR.
+- [x] **10.4 Checks.** `pnpm check` and `pnpm build:web` from the repo root, and the summary in the PR.
 
 ## Out of scope in these tasks
 

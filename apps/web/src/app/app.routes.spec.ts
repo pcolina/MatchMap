@@ -60,6 +60,7 @@ describe('application routes', () => {
     expect(layout).not.toBeNull();
     const withoutSheet = layout?.cloneNode(true) as HTMLElement;
     withoutSheet.querySelector('app-account-sheet')?.remove();
+    withoutSheet.querySelector('app-about-dialog')?.remove();
     expect(withoutSheet.textContent?.trim()).toBe('');
   });
 });

@@ -29,7 +29,6 @@ const stubSystemDark = (matches: boolean) =>
 
 describe('MapView follows the day or night mode of the app', () => {
   beforeEach(() => {
-    TestBed.resetTestingModule();
     localStorage.clear();
     document.documentElement.removeAttribute('data-theme');
     recorded.created.length = 0;
