@@ -15,6 +15,7 @@
   border-radius: 50%;
   border: 1px solid var(--mm-color-borderStrong);
   background: var(--mm-color-surface);
+  box-shadow: var(--mm-elevation-card);
   color: var(--mm-color-text);
   display: inline-flex;
   align-items: center;

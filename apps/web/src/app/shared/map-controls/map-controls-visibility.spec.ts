@@ -32,4 +32,16 @@ describe('map controls are visible', () => {
 
     expect(css).toMatch(/:host\s*\{[^}]*z-index:\s*\d+/);
   });
+
+  it('gives the top control buttons the card elevation so they stand out from the map', () => {
+    const css = read(resolvePath(appDir, 'shared', 'map-controls', 'map-top-controls.css'));
+
+    expect(css).toMatch(/\.control\s*\{[^}]*box-shadow:\s*var\(--mm-elevation-card\)/);
+  });
+
+  it('gives the bottom control buttons the card elevation so they stand out from the map', () => {
+    const css = read(resolvePath(appDir, 'shared', 'map-controls', 'map-bottom-controls.css'));
+
+    expect(css).toMatch(/\.control\s*\{[^}]*box-shadow:\s*var\(--mm-elevation-card\)/);
+  });
 });
