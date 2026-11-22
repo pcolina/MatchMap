@@ -40,8 +40,8 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 7. Documentation
 
-- [ ] **7.1 Test first.** Extend `apps/web/src/app/core/mocks/readme.spec.ts` and `apps/mobile/src/app/core/mocks/readme.test.ts` so that the root `README.md` has `pnpm web mock -l` and `pnpm mobile mock -l`, and states `one@matchmap.test` and that the flag needs `mock`. Run and show failing.
-- [ ] **7.2 Code.** Update the two "With mocks" sections of the root `README.md`.
+- [x] **7.1 Test first.** Extend `apps/web/src/app/core/mocks/readme.spec.ts` and `apps/mobile/src/app/core/mocks/readme.test.ts` so that the root `README.md` has `pnpm web mock -l` and `pnpm mobile mock -l`, and states `one@matchmap.test` and that the flag needs `mock`. Run and show failing.
+- [x] **7.2 Code.** Update the two "With mocks" sections of the root `README.md`.
 
 ## 8. Full check and manual check
 

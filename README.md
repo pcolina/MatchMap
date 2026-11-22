@@ -162,6 +162,8 @@ Users you register in the mock are kept in the browser and survive a reload. To 
 
 To run without mocks, start `pnpm web` without the `mock` argument.
 
+To skip the sign-in page, start the mocks with the `-l` flag: `pnpm web mock -l`. With `-l`, the app signs in as `one@matchmap.test` at start-up. The flag is accepted only together with `mock`.
+
 #### With the API
 
 Start the backend API first, then run:
@@ -193,6 +195,8 @@ Sign in with one of these mock users:
 | `two@matchmap.test` | `Two-pass2` |
 
 Users you register in the mock are kept on the device and survive a restart. To reset them to the two users above, clear the app data in the device settings and open the app again. Google sign-in is not mocked.
+
+To skip the sign-in page, start Metro with `pnpm mobile mock -l`. With `-l`, the app signs in as `one@matchmap.test` at start-up. The flag is accepted only together with `mock`.
 
 #### With the API
 

@@ -28,4 +28,13 @@ describe('README mocks section', () => {
   it('starts the mocks with pnpm web mock', () => {
     expect(webMocksSection).toContain('pnpm web mock');
   });
+
+  it('documents the -l flag that signs in as one@matchmap.test', () => {
+    expect(webMocksSection).toContain('pnpm web mock -l');
+    expect(webMocksSection).toContain('signs in as `one@matchmap.test`');
+  });
+
+  it('says the -l flag needs mock', () => {
+    expect(webMocksSection).toContain('only together with `mock`');
+  });
 });
