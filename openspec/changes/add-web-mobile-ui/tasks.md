@@ -24,8 +24,8 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 5. Attribution without the MapLibre logo
 
-- [ ] **5.1 Test first.** `apps/web/src/app/shared/map-view/map-view.spec.ts`: the MapLibre constructor receives `attributionControl: false`, so the MapLibre logo and its credit are not added to the map. Run it and show it failing.
-- [ ] **5.2 Code.** `map-view.ts`: pass `attributionControl: false`. Run the test and show it passing. The existing web map tests keep passing.
+- [x] **5.1 Test first.** `apps/web/src/app/shared/map-view/map-view.spec.ts`: the MapLibre constructor receives `attributionControl: false`, so the MapLibre logo and its credit are not added to the map. Run it and show it failing.
+- [x] **5.2 Code.** `map-view.ts`: pass `attributionControl: false`. Run the test and show it passing. The existing web map tests keep passing.
 
 ## 6. Accessibility
 
