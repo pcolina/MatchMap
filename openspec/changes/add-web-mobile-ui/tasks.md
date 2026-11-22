@@ -29,8 +29,8 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 6. Accessibility
 
-- [ ] **6.1 Test first.** `apps/web/src/app/features/auth/pages/accessibility.spec.ts` (or the file that lists the page checks): add `MainLayout` with the phone controls to the axe list, so that axe reports no violations for the top controls, the bottom controls and the main screen. Run it and show it failing if any violation exists, or show it passing with the list entry added first.
-- [ ] **6.2 Code.** Fix any violation axe reports, without changing the design. Run the test and show it passing.
+- [x] **6.1 Test first.** `apps/web/src/app/features/auth/pages/accessibility.spec.ts` (or the file that lists the page checks): add `MainLayout` with the phone controls to the axe list, so that axe reports no violations for the top controls, the bottom controls and the main screen. Run it and show it failing if any violation exists, or show it passing with the list entry added first.
+- [x] **6.2 Code.** Fix any violation axe reports, without changing the design. Run the test and show it passing.
 
 ## 7. Checks
 
