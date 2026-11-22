@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { AccountSheet } from '../account-sheet/account-sheet';
+import { AccountStore } from '../../features/account/state/account.store';
 import { LayoutFooter } from '../layout-footer/layout-footer';
 import { LayoutHeader } from '../layout-header/layout-header';
 import { MapBottomControls } from '../map-controls/map-bottom-controls';
@@ -19,11 +20,16 @@ import { StatsResume } from '../stats-resume/stats-resume';
     <app-stats-resume />
     <app-map-bottom-controls />
     <app-layout-footer />
-    <app-account-sheet [open]="accountOpen()" [displayName]="null" (closed)="accountOpen.set(false)" />
+    <app-account-sheet [open]="accountOpen()" [displayName]="account.username()" [email]="account.email()" (closed)="accountOpen.set(false)" />
   </section>`,
   styleUrl: './main-layout.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayout {
   readonly accountOpen = signal(false);
+  protected readonly account = inject(AccountStore);
+
+  constructor() {
+    this.account.load();
+  }
 }
