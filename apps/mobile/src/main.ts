@@ -7,7 +7,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
-import { provideTranslateService, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
+import { initializeTranslations, translateProviders } from './app/core/i18n/translate-providers.ts';
 import { provideIcons } from '@ng-icons/core';
 import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerUser } from '@ng-icons/tabler-icons';
 import { provideNativeRouter } from '@ng-native/router';
@@ -15,14 +16,12 @@ import { mount } from '@ng-native/platform';
 import { provideNativeHttpClient } from '@ng-native/platform/http';
 import { currentConditions, deviceTokens, watchConditions } from '@ng-native/device';
 import { getFabricUIManager, registerPlatformComponents } from '@ng-native/fabric';
-import en from '../../../packages/shared/i18n/en.json';
-import es from '../../../packages/shared/i18n/es.json';
 import { App } from './app/app.ts';
 import { routes } from './app/app.routes.ts';
 import { authInterceptor } from './app/core/auth/auth.interceptor.ts';
 import { apolloOptions } from './app/core/apollo.ts';
 import { environment } from './environments/environment.ts';
-import { deviceLocale, resolveLanguage } from './app/core/i18n/language.ts';
+import { deviceLocale } from './app/core/i18n/language.ts';
 import { appFonts } from './app/core/fonts/fonts.ts';
 import { AuthApi } from './app/features/auth/data/auth.api.ts';
 import { AuthStore, SIGN_IN_GATEWAY } from './app/features/auth/state/auth.store.ts';
@@ -43,14 +42,12 @@ const appProviders = [
     return { ...options, link: apolloLinkFor(mockEnabled, options.link) };
   }),
   ...(mockEnabled ? [provideAppInitializer(() => initMockState())] : []),
-  provideTranslateService({ fallbackLang: 'en' }),
+  translateProviders(),
   provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff }),
   provideAppInitializer(() => Font.loadAsync(appFonts)),
   provideAppInitializer(() => {
     const translate = inject(TranslateService);
-    translate.setTranslation('en', en);
-    translate.setTranslation('es', es);
-    translate.use(resolveLanguage(deviceLocale()));
+    initializeTranslations(translate, deviceLocale());
   }),
   { provide: SIGN_IN_GATEWAY, useExisting: AuthApi },
   provideAppInitializer(() => {

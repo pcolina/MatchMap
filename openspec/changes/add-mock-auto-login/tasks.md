@@ -48,3 +48,13 @@ Each task starts with its failing test, which is run and shown failing before th
 - [ ] **8.1 Full check.** `pnpm check` for all touched packages and apps (`packages/shared`, `apps/web`, `apps/mobile`). Paste the summary in the PR.
 - [ ] **8.2 Manual check, web.** `pnpm web mock -l` opens signed in as `one@matchmap.test`. Reload keeps the session. Sign out, reload, and the session is back. Record the result in the PR. Done by the user.
 - [ ] **8.3 Manual check, mobile.** `pnpm mobile mock -l` on the Android emulator opens signed in. Record the result in the PR. Done by the user.
+
+## 9. Mobile start-up error (scope addition, spec `mobile-startup`)
+
+The translation providers move from `apps/mobile/src/main.ts` to a module next to the i18n code, so that a test can import them. `main.ts` keeps the same behaviour and only calls the module.
+
+- [x] **9.1 Test first.** `apps/mobile/src/app/core/i18n/translate-providers.test.ts`: in an injection context from `@ng-native/testing` `render`, with `Function.prototype.toString` replaced for the duration of the test so that classes return `function <name>() { [bytecode] }` (the Hermes behaviour), injecting `TranslateService` does not throw, and the initializer sets `en` and `es` and selects the device language when it is `en` or `es`, `en` otherwise. Run it and show it failing with `Class constructor invoked without new`.
+- [x] **9.2 Code.** `apps/mobile/src/app/core/i18n/translate-providers.ts` exports `translateProviders()`, with `provideTranslateService({ fallbackLang: 'en', loader: () => new TranslateNoOpLoader(), compiler: () => new TranslateNoOpCompiler(), parser: () => new TranslateDefaultParser(), missingTranslationHandler: () => new DefaultMissingTranslationHandler() })`. Replace the `provideTranslateService` call in `apps/mobile/src/main.ts` with it. Run the test from 9.1 and show it passing.
+- [x] **9.3 Test first.** The same file: `translate.currentLang` is `es` for a device language of `es`, and `en` for `fr`. Run and show failing, because the initializer is not yet in the module.
+- [x] **9.4 Code.** Move the translation initializer into the module, so that `main.ts` only lists it. Run the test from 9.3 and show it passing.
+- [x] **9.5 Full check.** `pnpm check` for all touched packages, summary in the PR. Run `pnpm mobile mock -l` on the Android emulator and confirm the app opens without the red error screen and signed in as `one@matchmap.test`. Record the result in the PR.
