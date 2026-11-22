@@ -31,11 +31,16 @@ const hideDialog = (element: HTMLDialogElement): void => {
   >
     <header class="sheet__header">
       <span class="avatar" data-testid="avatar" aria-hidden="true"><ng-icon name="tablerUser" /></span>
-      @if (displayName() === null) {
-        <span class="name-skeleton" data-testid="name-skeleton" aria-hidden="true"></span>
-      } @else {
-        <h2 id="account-sheet-title" class="name">{{ displayName() }}</h2>
-      }
+      <div class="identity">
+        @if (displayName() === null) {
+          <span class="name-skeleton" data-testid="name-skeleton" aria-hidden="true"></span>
+        } @else {
+          <h2 id="account-sheet-title" class="name">{{ displayName() }}</h2>
+          @if (email()) {
+            <p class="email" data-testid="email">{{ email() }}</p>
+          }
+        }
+      </div>
       <button type="button" class="close" [attr.aria-label]="'account.sheet.close' | translate" (click)="closed.emit()">
         <ng-icon name="tablerX" />
       </button>
@@ -54,6 +59,7 @@ const hideDialog = (element: HTMLDialogElement): void => {
 export class AccountSheet {
   readonly open = input(false);
   readonly displayName = input<string | null>(null);
+  readonly email = input<string | null>(null);
   readonly darkMode = input(false);
   readonly closed = output<void>();
 

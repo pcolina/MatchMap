@@ -105,17 +105,32 @@
   font-size: 24px;
 }
 
-.name {
+.identity {
+  display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
   min-width: 0;
   margin: 0;
   overflow-wrap: anywhere;
+  color: var(--mm-color-accent);
   font-size: inherit;
   font-weight: 600;
 }
 
+.email {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--mm-color-textSecondary);
+  font-size: 0.875rem;
+}
+
 .name-skeleton {
-  flex: 1 1 auto;
   height: 16px;
   border-radius: 8px;
   background: var(--mm-color-borderStrong);
