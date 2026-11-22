@@ -4,11 +4,11 @@
   "license": "PolyForm-Noncommercial-1.0.0",
   "scripts": {
     "ng": "ng",
-    "prestart": "node scripts/copy-maplibre-worker.mjs",
+    "prestart": "node scripts/copy-geo.mjs && node scripts/copy-maplibre-worker.mjs",
     "start": "node scripts/start.mjs",
-    "prebuild": "node scripts/copy-maplibre-worker.mjs",
+    "prebuild": "node scripts/copy-geo.mjs && node scripts/copy-maplibre-worker.mjs",
     "build": "ng build",
-    "prewatch": "node scripts/copy-maplibre-worker.mjs",
+    "prewatch": "node scripts/copy-geo.mjs && node scripts/copy-maplibre-worker.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false && node --test \"scripts/**/*.test.mjs\""
   },

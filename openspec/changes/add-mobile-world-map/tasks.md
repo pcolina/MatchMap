@@ -9,9 +9,9 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 2. Web uses the shared style
 
-- [ ] **2.0 Single geo source.** Move `apps/web/public/geo/countries.geojson` and `capitals.geojson` to `packages/shared/geo/countries.json` and `capitals.json` with `git mv`, then add the `assets` entry in `apps/web/angular.json` (input `packages/shared/geo`, output `geo`). Run `pnpm build:web` and show that `geo/countries.json` is in the output.
-- [ ] **2.1 Parity test first.** `apps/web/src/app/shared/map-view/map-view.style.spec.ts`: the style built by the web function, with its `/geo/` URLs, equals the style built by the shared function with the same URLs, for day and night and for an empty and a filled state set. Run it and show the result before the refactor (it passes, because the logic is the same).
-- [ ] **2.2 Code.** `apps/web/src/app/shared/map-view/map-view.style.ts` calls the shared function with the URLs. Run the parity test and the existing web map tests, and show them passing.
+- [x] **2.0 Single geo source.** Move `apps/web/public/geo/countries.geojson` and `capitals.geojson` to `packages/shared/geo/countries.json` and `capitals.json` with `git mv`. The web copies them to `public/geo/` with `apps/web/scripts/copy-geo.mjs`, run in `prestart`, `prebuild` and `prewatch`, because Angular `assets` cannot point outside the web workspace. `public/geo/` is git-ignored. Run `pnpm build:web` and show that `geo/countries.json` is in the output.
+- [x] **2.1 Parity test first.** `apps/web/src/app/shared/map-view/map-view.style.spec.ts`: the style built by the web function, with its `/geo/` URLs, equals the style built by the shared function with the same URLs, for day and night and for an empty and a filled state set. Run it and show the result before the refactor (it passes, because the logic is the same).
+- [x] **2.2 Code.** `apps/web/src/app/shared/map-view/map-view.style.ts` calls the shared function with the URLs. Run the parity test and the existing web map tests, and show them passing.
 
 ## 3. Dependency
 
@@ -19,8 +19,8 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 4. Bundled geo data
 
-- [ ] **4.1 Test first.** `packages/shared/test/geo-data.spec.ts`: `packages/shared/geo/countries.json` and `capitals.json` exist, parse as GeoJSON, and every country feature has an `iso_a2` property. Run it and show it failing before task 2.0 moves the files.
-- [ ] **4.2 Code.** The files are the ones moved in task 2.0. The mobile map imports them from `packages/shared/geo/`. Run the test and show it passing.
+- [x] **4.1 Test first.** `packages/shared/test/geo-data.spec.ts`: `packages/shared/geo/countries.json` and `capitals.json` exist, parse as GeoJSON, and every country feature has an `iso_a2` property. Run it and show it failing before task 2.0 moves the files.
+- [x] **4.2 Code.** The files are the ones moved in task 2.0. The mobile map imports them from `packages/shared/geo/`. Run the test and show it passing.
 
 ## 5. Native view registration
 
