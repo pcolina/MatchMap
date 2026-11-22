@@ -42,7 +42,7 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 8. Full check and parity
 
-- [ ] **8.1 Full check.** `pnpm check` for `packages/shared`, `apps/web` and `apps/mobile`. Paste the summary in the PR.
+- [x] **8.1 Full check.** `pnpm check` for `packages/shared`, `apps/web` and `apps/mobile`. Paste the summary in the PR.
 - [x] **8.2 Visual parity on the phone.** Checked on the physical phone by the owner: the map matches the web in day and in dark mode. The emulator `MPOS_PAX_77` (Android 11, x86) cannot draw MapLibre: `Mbgl-EGLConfigChooser` finds no EGL configuration, with GPU auto or software. The check moves to the physical phone. Compare the phone map with the web map in day and night: country borders, capital points, one country for each colour state, and the background. Record the result, with screenshots, in the PR.
 - [x] **8.3 Gestures on the phone.** Checked by the owner: pan with one finger and pinch zoom work, and two-finger rotation does not rotate the map. One-finger pan and pinch zoom move and scale the map, with no rotation. Record the result in the PR.
 - [x] **8.4 Manual check by the owner.** Done by the owner on the phone and in the browser. Compare the map on the physical phone and on the web in the browser. Done by the owner.
