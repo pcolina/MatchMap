@@ -14,8 +14,8 @@ Each task starts with its failing test, run and shown failing before the code. E
 
 ## 3. Top controls: add, friends and account
 
-- [ ] **3.1 Test first.** `apps/web/src/app/shared/map-controls/map-top-controls.spec.ts`: the add-place button is above the friends button in the same column; the account button is the only control at the top right; each control is a native button with its accessible name; the account shows a grey placeholder when `avatarLoading` is true and the user icon otherwise. Run it and show it failing.
-- [ ] **3.2 Code.** `map-top-controls.ts`, `.css` and the template: a column at the top left and one account button at the top right, with `safe-area-inset-top` added to the offset. Icons `tablerPlus`, `tablerUsers` and `tablerUser`. Run the test and show it passing.
+- [x] **3.1 Test first.** `apps/web/src/app/shared/map-controls/map-top-controls.spec.ts`: the add-place button is above the friends button in the same column; the account button is the only control at the top right; each control is a native button with its accessible name; the account shows a grey placeholder when `avatarLoading` is true and the user icon otherwise. Run it and show it failing.
+- [x] **3.2 Code.** `map-top-controls.ts`, `.css` and the template: a column at the top left and one account button at the top right, with `safe-area-inset-top` added to the offset. Icons `tablerPlus`, `tablerUsers` and `tablerUser`. Run the test and show it passing.
 
 ## 4. Layout and focus order
 

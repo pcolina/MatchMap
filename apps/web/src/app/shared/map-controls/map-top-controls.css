@@ -1,0 +1,45 @@
+:host {
+  position: absolute;
+  top: calc(16px + env(safe-area-inset-top));
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--mm-color-borderStrong);
+  background: var(--mm-color-surface);
+  color: var(--mm-color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.control ng-icon {
+  font-size: 24px;
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--mm-color-accent);
+  outline-offset: 2px;
+}
+
+.skeleton {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--mm-color-borderStrong);
+}
