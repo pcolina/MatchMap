@@ -26,8 +26,6 @@ const writeChoice = (choice: ThemeChoice): void => {
   }
 };
 
-const systemPrefersDark = (): boolean => globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
-
 const applyChoice = (choice: ThemeChoice): void => {
   const root = document.documentElement;
   if (choice === 'system') {
@@ -37,11 +35,13 @@ const applyChoice = (choice: ThemeChoice): void => {
   }
 };
 
+const systemQuery = (): MediaQueryList => globalThis.matchMedia('(prefers-color-scheme: dark)');
+
 export const ThemeStore = signalStore(
   { providedIn: 'root' },
-  withState(() => ({ choice: readChoice() })),
-  withComputed(({ choice }) => ({
-    isDark: computed(() => choice() === 'dark' || (choice() === 'system' && systemPrefersDark())),
+  withState(() => ({ choice: readChoice(), systemDark: systemQuery().matches })),
+  withComputed(({ choice, systemDark }) => ({
+    isDark: computed(() => choice() === 'dark' || (choice() === 'system' && systemDark())),
   })),
   withMethods((store) => ({
     toggle: (): void => {
@@ -54,6 +54,7 @@ export const ThemeStore = signalStore(
   withHooks({
     onInit(store) {
       applyChoice(store.choice());
+      systemQuery().addEventListener('change', (event) => patchState(store, { systemDark: event.matches }));
     },
   }),
 );
