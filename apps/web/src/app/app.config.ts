@@ -22,6 +22,8 @@ import { graphqlUrl } from './core/api-url';
 import { environment } from '../environments/environment';
 import { AuthApi } from './features/auth/data/auth.api';
 import { AuthStore, SIGN_IN_GATEWAY } from './features/auth/state/auth.store';
+import { ACCOUNT_GATEWAY } from './features/account/state/account.store';
+import { AccountApi } from './features/account/data/account.api';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -47,6 +49,7 @@ export const appConfig: ApplicationConfig = {
         autoSignIn(store, autoLoginCredentials(createState().users), autoLoginEnabled, injector),
       );
     }),
-    { provide: SIGN_IN_GATEWAY, useExisting: AuthApi }
+    { provide: SIGN_IN_GATEWAY, useExisting: AuthApi },
+    { provide: ACCOUNT_GATEWAY, useExisting: AccountApi }
   ]
 };

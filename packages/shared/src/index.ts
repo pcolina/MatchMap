@@ -20,3 +20,5 @@ export { registerMutation } from './graphql/register.ts';
 export { autoLoginCredentials } from './mocks/auto-login.ts';
 export { buildMapStyle } from './map/map-style.ts';
 export type { BuildMapStyleInput, GeoSource, MapPalette, MapState, MapStyle } from './map/map-style.ts';
+export { meQuery } from './graphql/me.ts';
+export type { MeQuery } from './generated/operations.ts';
