@@ -21,14 +21,14 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 4. Web flag and auto sign-in
 
-- [ ] **4.1 Test first.** `apps/web/src/app/core/mocks/mock-auto-login.spec.ts`: `autoLoginEnabled` is false without the mock flag, and true only when both `MATCHMAP_MOCKS` and `MATCHMAP_AUTO_LOGIN` are true. Run and show failing.
-- [ ] **4.2 Code.** `apps/web/src/app/core/mocks/mock-auto-login.ts`.
-- [ ] **4.3 Test first.** `apps/web/src/app/core/mocks/auto-sign-in.spec.ts`: `autoSignIn(store, credentials, enabled)` does nothing when `enabled` is false. When enabled and `accessToken` is set, it does not call `signIn`. When enabled and no token, it calls `signIn` with the credentials and resolves when `status` leaves `loading`, with or without a failure. Use a fake store. Run and show failing.
-- [ ] **4.4 Code.** `apps/web/src/app/core/mocks/auto-sign-in.ts`.
+- [x] **4.1 Test first.** `apps/web/src/app/core/mocks/mock-auto-login.spec.ts`: `autoLoginEnabled` is false without the mock flag, and true only when both `MATCHMAP_MOCKS` and `MATCHMAP_AUTO_LOGIN` are true. Run and show failing.
+- [x] **4.2 Code.** `apps/web/src/app/core/mocks/mock-auto-login.ts`.
+- [x] **4.3 Test first.** `apps/web/src/app/core/mocks/auto-sign-in.spec.ts`: `autoSignIn(store, credentials, enabled, injector)` does nothing when `enabled` is false. When enabled and `accessToken` is set, it does not call `signIn`. When enabled and no token, it calls `signIn` with the credentials and resolves when `status` leaves `loading`, with or without a failure. Use a fake store. Run and show failing.
+- [x] **4.4 Code.** `apps/web/src/app/core/mocks/auto-sign-in.ts`.
 
 ## 5. Web wiring
 
-- [ ] **5.1 Code.** In `apps/web/src/app/app.config.ts`, the restore initializer runs `autoSignIn(store, autoLoginCredentials(usersData), autoLoginEnabled)` after `sessionChecked`. `usersData` is the users file imported from `packages/shared`. Covered by 4.3 (branching) and 1.1 (credentials). Run `pnpm check` for `apps/web` and show the summary.
+- [ ] **5.1 Code.** In `apps/web/src/app/app.config.ts`, the restore initializer runs `autoSignIn(store, autoLoginCredentials(usersData), autoLoginEnabled, injector)` after `sessionChecked`. `usersData` is the users file imported from `packages/shared`. Covered by 4.3 (branching) and 1.1 (credentials). Run `pnpm check` for `apps/web` and show the summary.
 
 ## 6. Mobile flag and auto sign-in
 

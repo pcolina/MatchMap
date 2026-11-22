@@ -42,7 +42,7 @@ The web and mobile initialisers already call `store.restore()` and wait for `ses
 2. Otherwise call `store.signIn(autoLoginCredentials(users))`.
 3. Resolve the initializer when `status` leaves `'loading'`, so the router does not show the sign-in page while the sign-in runs.
 
-The step is a function `autoSignIn(store, credentials)` in each app's `core/mocks/`. It returns a promise and is unit-tested with a fake store. The initialisers call it only when `autoLoginEnabled` is true. Without the flag, the initialiser code is the same as today.
+The step is a function `autoSignIn(store, credentials, enabled, injector)` in each app's `core/mocks/`. It returns a promise and is unit-tested with a fake store. The `injector` argument is needed by `toObservable`, which waits for the status to leave `loading`; the signature was extended with it during task 4. The initialisers call it only when `autoLoginEnabled` is true. Without the flag, the initialiser code is the same as today.
 
 This keeps the approved behaviour:
 
