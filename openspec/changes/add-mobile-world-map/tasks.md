@@ -37,12 +37,12 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 7. Props and build checks on the emulator
 
-- [ ] **7.1 Props reach the native view.** Start `pnpm mobile mock -l`, run the app on the Android emulator, and check that the map is drawn. If the props do not reach `MLRNMapView` without `declareNativeProps`, stop and report before changing the component.
-- [ ] **7.2 Build.** The native build for the emulator's ABI succeeds (`pnpm android`). Record the result. The `arm64-v8a` build for a physical phone is a known issue and is not part of this check.
+- [x] **7.1 Props reach the native view.** Checked on the physical Android phone: the map draws with the style and the gesture props. Found on the emulator: the first run failed with `ReadableNativeMap cannot be cast to java.lang.String`, fixed by sending the style as JSON text. Start `pnpm mobile mock -l`, run the app on the Android emulator, and check that the map is drawn. If the props do not reach `MLRNMapView` without `declareNativeProps`, stop and report before changing the component.
+- [x] **7.2 Build.** The native build for the emulator's ABI succeeds (`pnpm android`). Record the result. The `arm64-v8a` build for a physical phone is a known issue and is not part of this check.
 
 ## 8. Full check and parity
 
 - [ ] **8.1 Full check.** `pnpm check` for `packages/shared`, `apps/web` and `apps/mobile`. Paste the summary in the PR.
-- [ ] **8.2 Visual parity on the emulator.** Compare the phone map with the web map in day and night: country borders, capital points, one country for each colour state, and the background. Record the result, with screenshots, in the PR.
-- [ ] **8.3 Gestures on the emulator.** One-finger pan and pinch zoom move and scale the map, with no rotation. Record the result in the PR.
+- [ ] **8.2 Visual parity on the phone.** The emulator `MPOS_PAX_77` (Android 11, x86) cannot draw MapLibre: `Mbgl-EGLConfigChooser` finds no EGL configuration, with GPU auto or software. The check moves to the physical phone. Compare the phone map with the web map in day and night: country borders, capital points, one country for each colour state, and the background. Record the result, with screenshots, in the PR.
+- [ ] **8.3 Gestures on the phone.** One-finger pan and pinch zoom move and scale the map, with no rotation. Record the result in the PR.
 - [ ] **8.4 Manual check by the owner.** Compare the map on the physical phone and on the web in the browser. Done by the owner.
