@@ -1,4 +1,5 @@
 import { computed, inject, InjectionToken } from '@angular/core';
+import { Router } from '@angular/router';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, EMPTY, finalize, Observable, pipe, switchMap, tap } from 'rxjs';
@@ -46,7 +47,7 @@ export const AuthStore = signalStore(
   withComputed(({ status }) => ({
     isLoading: computed(() => status() === 'loading'),
   })),
-  withMethods((store, gateway = inject(SIGN_IN_GATEWAY)) => ({
+  withMethods((store, gateway = inject(SIGN_IN_GATEWAY), router = inject(Router)) => ({
     signIn: rxMethod<{ email: string; password: string }>(
       pipe(
         tap(() => patchState(store, { status: 'loading', failure: null })),
@@ -97,6 +98,19 @@ export const AuthStore = signalStore(
     ),
     setAccessToken: (accessToken: string) => patchState(store, { accessToken }),
     signOut: () => patchState(store, { status: 'idle', accessToken: null, failure: null }),
+    signOutRemote: rxMethod<void>(
+      pipe(
+        switchMap(() =>
+          gateway.logout().pipe(
+            catchError(() => EMPTY),
+            finalize(() => {
+              patchState(store, { status: 'idle', accessToken: null, failure: null });
+              void router.navigateByUrl('/login');
+            }),
+          ),
+        ),
+      ),
+    ),
     clearFailure: () => patchState(store, { failure: null }),
   })),
 );
