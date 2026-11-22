@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import en from '../../../../../../packages/shared/i18n/en.json';
 import { mapControlIcons } from '../map-controls/map-icons';
 import { provideIcons } from '@ng-icons/core';
-import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AuthStore, SIGN_IN_GATEWAY } from '../../features/auth/state/auth.store';
@@ -50,6 +51,9 @@ describe('MainLayout', () => {
         }),
       ],
     });
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('en', en);
+    translate.use('en');
     vi.stubGlobal(
       'matchMedia',
       vi.fn(() => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() })),
@@ -76,6 +80,7 @@ describe('MainLayout', () => {
       'app-map-bottom-controls',
       'app-layout-footer',
       'app-account-sheet',
+      'app-about-dialog',
     ]);
   });
 
