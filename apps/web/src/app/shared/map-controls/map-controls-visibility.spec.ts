@@ -13,10 +13,18 @@ const appDir = resolvePath(nodeProcess.cwd(), 'src', 'app');
 const read = (path: string): string => readFileSync(path, 'utf8');
 
 describe('map controls are visible', () => {
-  it('registers every icon the map controls use in the app config', () => {
+  it('registers the custom globe icon used by the view toggle', () => {
+    const config = read(resolvePath(appDir, 'app.config.ts'));
+    const icons = read(resolvePath(appDir, 'shared', 'map-controls', 'map-icons.ts'));
+
+    expect(config).toContain('mapControlIcons');
+    expect(icons).toContain('globeLine');
+  });
+
+  it('registers every Tabler icon the map controls use in the app config', () => {
     const config = read(resolvePath(appDir, 'app.config.ts'));
 
-    for (const icon of ['tablerPlus', 'tablerUsers', 'tablerUser', 'tablerInfoCircle', 'tablerMap', 'tablerCircle']) {
+    for (const icon of ['tablerPlus', 'tablerUsers', 'tablerUser', 'tablerInfoCircle', 'tablerMap']) {
       expect(config).toContain(icon);
     }
   });

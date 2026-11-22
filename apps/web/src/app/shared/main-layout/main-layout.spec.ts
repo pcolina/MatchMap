@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
 import { provideTranslateService } from '@ngx-translate/core';
-import { tablerInfoCircle, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerCircle } from '@ng-icons/tabler-icons';
+import { tablerInfoCircle, tablerMap, tablerPlus, tablerUser, tablerUsers,  } from '@ng-icons/tabler-icons';
+import { mapControlIcons } from '../map-controls/map-icons';
 import { MainLayout } from './main-layout';
 
 vi.mock('maplibre-gl', () => ({
@@ -26,7 +27,7 @@ describe('MainLayout', () => {
     TestBed.configureTestingModule({
       providers: [
         provideTranslateService({ fallbackLang: 'en' }),
-        provideIcons({ tablerInfoCircle, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerCircle }),
+        provideIcons({ tablerInfoCircle, tablerMap, tablerPlus, tablerUser, tablerUsers, ...mapControlIcons }),
       ],
     });
     vi.stubGlobal(
