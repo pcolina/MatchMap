@@ -24,8 +24,8 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 5. Native view registration
 
-- [ ] **5.1 Test first.** `apps/mobile/src/app/shared/map-view/register-map-view.test.ts`: `registerMapView()` calls `registerViewName('maplibre-map', 'MLRNMapView')` from `@ng-native/fabric`, with the library mocked. Run it and show it failing.
-- [ ] **5.2 Code.** `apps/mobile/src/app/shared/map-view/register-map-view.ts`. `apps/mobile/src/main.ts` calls `registerMapView()` after `registerPlatformComponents(Platform.OS)`. Run the test and show it passing.
+- [x] **5.1 Test first.** `apps/mobile/src/app/shared/map-view/register-map-view.test.ts`: `registerMapView()` calls `registerViewName('maplibre-map', 'MLRNMapView')` from `@ng-native/fabric`, with the library mocked. Run it and show it failing.
+- [x] **5.2 Code.** `apps/mobile/src/app/shared/map-view/register-map-view.ts`. `apps/mobile/src/main.ts` calls `registerMapView()` after `registerPlatformComponents(Platform.OS)`. Run the test and show it passing.
 
 ## 6. Phone map component
 
