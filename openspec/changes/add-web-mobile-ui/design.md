@@ -26,12 +26,15 @@ Keyboard focus follows the DOM order, not the screen position. The required orde
 - `MapTopControls` is rendered before `app-map-view` in the map area. It holds the top-left column and the top-right avatar.
 - `MapBottomControls` is rendered after `app-stats-resume`. It holds the attribution info control and the view toggle.
 
-### 2. Overlay on the map area
+### 2. Overlay positioning
 
-`main-layout` wraps `app-map-view` in a `.map-area` element with `position: relative` and `flex: 1`. Both control components are absolutely positioned inside it:
+`main-layout` stays a column. `.map-area` wraps `app-map-view`, with `position: relative` and `flex: 1`:
 
-- top controls: `top: 16px` (plus `env(safe-area-inset-top)`), `left: 16px` and `right: 16px`.
-- bottom controls: `bottom: 16px`, `right: 16px`. The map area ends where the stats panel starts, so no fixed offset from the panel is needed.
+- the top controls are absolutely positioned inside `.map-area`: `top: calc(16px + env(safe-area-inset-top))`, `left: 16px`, `right: 16px`.
+- the bottom row is absolutely positioned against the section (`position: relative`), above the stats panel: `bottom: calc(var(--stats-height) + 16px)`, `right: 16px`.
+- `--stats-height: 250px` is defined once in `main-layout.css`. The stats panel uses it for its height, and the bottom row uses it for its offset.
+
+Reason: the bottom row must come after `app-stats-resume` in the DOM, so that keyboard focus follows the order of the spec (decision 1). It cannot be inside `.map-area`, which comes before the panel. The visual result is the same as placing it over the map area.
 
 ### 3. Icons and states
 
