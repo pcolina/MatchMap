@@ -8,7 +8,7 @@ The web phone map has an account button at the top right (issue #43, delivered b
 
 - **Account button opens a side sheet.** Tapping the account button opens a sheet attached to the right edge of the screen. Its height and width fit its content, with a maximum width.
 - **Soft fade.** The sheet and its backdrop fade in and out. With reduced motion set, the sheet appears and disappears at once.
-- **Header.** The display name of the user, at the top of the sheet.
+- **Header.** The username of the user in the app's accent colour, with the email in smaller text under it, at the top of the sheet. Both come from the `me` query of the API and show a loading line until it answers.
 - **One list, in this order, with no group headings:** view profile, language, day or night mode (a switch), an about entry, and sign out last, after a divider.
 - **Closing.** The sheet closes on tap outside it, on Escape, and with a close control in its header.
 - **Pattern in the design.** The side sheet is added to `docs/design.md` as a new pattern (width by content, maximum width, fade, how it closes), as agreed in issue #43.
@@ -27,9 +27,10 @@ The web phone map has an account button at the top right (issue #43, delivered b
 ## Depends on
 
 - `web-mobile-layout` (main spec, the account button in the top-right control group).
+- The `me` query in `matchmap-api/contracts/graphql/account.graphqls` (baseline `ca97e41`, unchanged since the baseline).
 - Issue #43.
 
 ## Decisions
 
-- The sheet shows the display name only, not the email. The email is personal data and is not needed here. Its place is the profile, in a later change.
+- The sheet shows the username and the email, as the owner asked after registration. The email is personal data: it is shown only to the signed-in user, in smaller text under the name, and it is not sent to any other service.
 - The rows form one compact list with no group headings, as the owner asked after the first review. Day or night mode is a switch, and sign out is the last row.

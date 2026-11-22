@@ -42,17 +42,21 @@ The account sheet and its backdrop SHALL fade in when opened and fade out when c
 - **WHEN** the account sheet is opened or closed with reduced motion set
 - **THEN** it appears or disappears without a transition
 
-### Requirement: Header shows the display name only
+### Requirement: Header shows the username and the email
 
-The header of the account sheet SHALL show the display name of the user. It SHALL NOT show the email address of the user.
+The header of the account sheet SHALL show the username of the signed-in user in the accent colour, with the email of the user in smaller text under it. Both SHALL come from the `me` query. While the query has not answered, the header SHALL show a loading line in place of the username and no email.
 
-#### Scenario: Display name is shown
-- **WHEN** the account sheet is open
-- **THEN** the header shows the display name of the user
+#### Scenario: Username is shown
+- **WHEN** the account sheet is open and the `me` query has answered
+- **THEN** the header shows the username of the user in the accent colour
 
-#### Scenario: Email is not shown
-- **WHEN** the account sheet is open
-- **THEN** no email address is shown in the sheet
+#### Scenario: Email is shown under the username
+- **WHEN** the account sheet is open and the `me` query has answered
+- **THEN** the header shows the email of the user in smaller text under the username
+
+#### Scenario: Loading line while the query is pending
+- **WHEN** the account sheet is open and the `me` query has not answered
+- **THEN** the header shows a loading line in place of the username and no email
 
 ### Requirement: Rows form one list in order
 

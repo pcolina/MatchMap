@@ -52,11 +52,11 @@ The component keeps the close control and the backdrop tap in code, because the 
 - Surface: `--mm-color-surface`, a 1 px border in `--mm-color-borderStrong` on all sides.
 - Shadow: `--mm-elevation-card` in day mode; in night mode the token is `none` and the border separates the sheet. This follows `docs/design.md` 4 for cards.
 - The rows form one list with no group headings. A 1 px `border` divider sits under the header and before sign out. Rows are 44 px high, with `bodyStrong` for the label (`docs/design.md` 3). The day or night mode row is a switch (`role="switch"`, `aria-checked`), a 40 × 24 px track in `borderStrong` when off and `accent` when on, with the knob in `surface`.
-- The display name is a `title3` heading (Sora 600).
+- The username is a `title3` heading (Sora 600) in the `accent` colour, as the owner asked. The email is smaller text in `textSecondary` under it.
 
 ### 6. Display name
 
-The sheet takes `displayName: string | null`. `null` means the user information is still loading: the header shows a grey skeleton line (`docs/design.md` 7.9). The web has no user store yet, so `MainLayout` passes `null` until that change exists. The email is not used.
+The sheet takes `displayName: string | null`. `null` means the user information is still loading: the header shows a grey skeleton line (`docs/design.md` 7.9). A small SignalStore in `features/account/state` holds the username and the email, filled by the `Me` query through the `ACCOUNT_GATEWAY` token (the same pattern as `SIGN_IN_GATEWAY`). `MainLayout` passes the username as `displayName` and the email as `email`. Both are `null` until the query answers.
 
 ### 7. The new side sheet pattern
 
