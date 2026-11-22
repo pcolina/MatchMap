@@ -14,8 +14,12 @@ const expectedStyle = (states: Record<string, 'visited' | 'lived' | 'wantToGo'>,
   });
 
 describe('mapViewProps', () => {
+  it('sends the style to the native view as JSON text, as the native view expects', () => {
+    expect(typeof mapViewProps({}, 'day').mapStyle).toBe('string');
+  });
+
   it('gives the phone map the same style as the web map in day mode', () => {
-    expect(mapViewProps({}, 'day').mapStyle).toEqual(expectedStyle({}, 'day'));
+    expect(mapViewProps({}, 'day').mapStyle).toBe(JSON.stringify(expectedStyle({}, 'day')));
   });
 
   it('turns the gestures on for pan and zoom and off for rotation and pitch', () => {
@@ -31,6 +35,6 @@ describe('mapViewProps', () => {
   it('uses the night palette in night mode', () => {
     const states = { FR: 'visited' as const, IT: 'wantToGo' as const };
 
-    expect(mapViewProps(states, 'night').mapStyle).toEqual(expectedStyle(states, 'night'));
+    expect(mapViewProps(states, 'night').mapStyle).toBe(JSON.stringify(expectedStyle(states, 'night')));
   });
 });
