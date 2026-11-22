@@ -22,7 +22,7 @@ describe('me', () => {
     expect(result.data?.me).toEqual({
       id: state.users[0].id,
       email: 'one@matchmap.test',
-      username: 'one',
+      username: 'Mock user One',
       createdAt: state.users[0].createdAt,
     });
   });

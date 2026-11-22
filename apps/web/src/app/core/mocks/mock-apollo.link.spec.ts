@@ -59,7 +59,7 @@ describe('mockApolloLink', () => {
 
     const result = await run(meQuery, {}, { authorization: `Bearer ${token}` });
 
-    expect(result.data?.['me']).toMatchObject({ email: 'one@matchmap.test', username: 'one' });
+    expect(result.data?.['me']).toMatchObject({ email: 'one@matchmap.test', username: 'Mock user One' });
   });
 
   it('fails with 401 for me without an access token', async () => {

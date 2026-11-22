@@ -54,7 +54,7 @@ test('returns me for a valid access token', async () => {
 
   const result = await run(meQuery, {}, { authorization: `Bearer ${token}` });
 
-  expect(result.data?.['me']).toMatchObject({ email: 'one@matchmap.test', username: 'one' });
+  expect(result.data?.['me']).toMatchObject({ email: 'one@matchmap.test', username: 'Mock user One' });
 });
 
 test('fails with 401 for me without an access token', async () => {
