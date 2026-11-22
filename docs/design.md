@@ -252,7 +252,7 @@ On every screen of the app, while content loads or a request runs, the screen sh
 
 A panel attached to the right edge of the screen, for the account and the settings. It is the account pattern only: never use it for content the user must compare or for long lists.
 
-- **Anchor:** 16 px from the right edge, from the top safe area down. All four corners rounded, radius `xl`.
+- **Anchor:** 4 px from the right edge, from the top safe area down. All four corners rounded, radius `xl`.
 - **Header:** a 44 px circle with the user icon, styled like the account control on the map, then the display name, then the close control.
 - **Size:** the height is the height of its content, up to the screen height minus 32 px, then it scrolls. The width is the width of its content, up to a maximum of **320 px**, and never wider than the screen.
 - **Surface:** `surface` background, a 1 px `borderStrong` border on all sides. In day mode `elevation.card`; in night mode no shadow, the border separates it.

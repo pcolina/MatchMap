@@ -35,7 +35,7 @@ The component keeps the close control and the backdrop tap in code, because the 
 
 ### 3. Position and size
 
-- `position: fixed; right: 16px; top: calc(16px + env(safe-area-inset-top))`. The 16 px gap matches the map controls, and it lets the right corners show.
+- `position: fixed; right: 4px; top: calc(16px + env(safe-area-inset-top))`. The owner chose 4 px: close to the right edge, while the right corners still show.
 - `width: fit-content; max-width: 320px` (spec). Inside, `max-width: 100vw` guards the 320 px viewport.
 - Height is the content height, with `max-height: calc(100dvh - 32px)` and `overflow-y: auto` for very short screens.
 - Radius on all four corners, from the `radius` tokens (`xl`).
