@@ -39,7 +39,7 @@ The owner asked, after the first review, for one compact list with no group head
 
 - [x] **7.1 Test first.** `apps/web/src/app/shared/account-sheet/account-sheet.spec.ts`: the sheet has no block headings (no `h3`); the rows come in the order view profile, language, day or night mode, about, sign out; one `hr` divider sits before the sign-out row; the day or night mode row has `role="switch"` and an `aria-checked` value that follows the `darkMode` input (default false). `packages/shared/test/account-sheet-i18n.spec.ts`: the keys are `close`, `profile`, `language`, `theme`, `aboutItem` and `signOut`, and no `blocks` key remains in `en.json` or `es.json`. Run them and show them failing.
 - [x] **7.2 Code.** `account-sheet.ts`: remove the four blocks and their headings; render the rows in one list with an `hr` before sign out; make the day or night mode row a `role="switch"` button with `aria-checked` from a new input `darkMode` (default false). `account-sheet.css`: divider, switch track and knob with the tokens of `design.md` decision 5. Remove `account.sheet.blocks` from `en.json` and `es.json`. Run the tests and show them passing.
-- [ ] **7.3 Checks.** Re-run the axe check of the sheet open (5.x), `pnpm check` and `pnpm build:web` from the repo root, and add the summary to the PR.
+- [x] **7.3 Checks.** Re-run the axe check of the sheet open (5.x), `pnpm check` and `pnpm build:web` from the repo root, and add the summary to the PR.
 
 ## Out of scope in these tasks
 
