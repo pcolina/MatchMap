@@ -27,19 +27,19 @@ describe('MapBottomControls', () => {
     const root = create(false);
     const buttons = Array.from(root.querySelectorAll('button'));
 
-    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(['Mercator view']);
+    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(['Globe view']);
   });
 
   it('exposes the globe state with aria-pressed', () => {
     const root = create(true);
-    const toggle = root.querySelector('button[aria-label="Globe view"]');
+    const toggle = root.querySelector('button[aria-label="Mercator view"]');
 
     expect(toggle?.getAttribute('aria-pressed')).toBe('true');
   });
 
   it('reports the mercator state with aria-pressed false', () => {
     const root = create(false);
-    const toggle = root.querySelector('button[aria-label="Mercator view"]');
+    const toggle = root.querySelector('button[aria-label="Globe view"]');
 
     expect(toggle?.getAttribute('aria-pressed')).toBe('false');
   });

@@ -49,7 +49,7 @@ Reason: the bottom row must come after `app-stats-resume` in the DOM, so that ke
 - Each icon-only control is a native `<button>` with `aria-label` from an i18n key.
 - Touch target: the button is 44 × 44 px; the icon is 24 px.
 - Surface: each control has the `--mm-color-surface` background with a border, so the icon contrast over the map stays above 4.5:1. In day mode it also has the `elevation.card` shadow (`--mm-elevation-card`), so it stands out from the land colour; in night mode the token is `none` and the border gives the separation. The contrast is checked with `axe-core` on the page.
-- The view toggle sets `aria-pressed` from `globeActive`.
+- The view toggle sets `aria-pressed` from `globeActive`. Its accessible name describes the destination view, the same as its icon: `map.controls.globe` when the flat view is active, `map.controls.mercator` when the globe is active.
 
 ### 5. No attribution on the map
 
