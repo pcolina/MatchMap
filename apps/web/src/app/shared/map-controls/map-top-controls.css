@@ -45,3 +45,9 @@
   border-radius: 50%;
   background: var(--mm-color-borderStrong);
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .control:hover {
+    background: var(--mm-color-accentSubtle);
+  }
+}

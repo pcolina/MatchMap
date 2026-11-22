@@ -44,4 +44,10 @@ describe('map controls are visible', () => {
 
     expect(css).toMatch(/\.control\s*\{[^}]*box-shadow:\s*var\(--mm-elevation-card\)/);
   });
+
+  it('gives the top control buttons a hover background for a mouse with a fine pointer', () => {
+    const css = read(resolvePath(appDir, 'shared', 'map-controls', 'map-top-controls.css'));
+
+    expect(css).toMatch(/@media \(hover: hover\) and \(pointer: fine\)\s*\{[\s\S]*\.control:hover\s*\{[^}]*background:\s*var\(--mm-color-accentSubtle\)/);
+  });
 });

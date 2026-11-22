@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -15,7 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
       </button>
     </div>
     <div class="column" data-column="top-right">
-      <button type="button" class="control" [attr.aria-label]="'map.controls.account' | translate">
+      <button type="button" class="control" [attr.aria-label]="'map.controls.account' | translate" [attr.aria-expanded]="accountOpen()" (click)="accountPressed.emit()">
         @if (avatarLoading()) {
           <span class="skeleton" data-testid="avatar-skeleton" aria-hidden="true"></span>
         } @else {
@@ -27,4 +27,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class MapTopControls {
   readonly avatarLoading = input(false);
+  readonly accountOpen = input(false);
+  readonly accountPressed = output<void>();
 }

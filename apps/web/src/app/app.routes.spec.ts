@@ -56,8 +56,10 @@ describe('application routes', () => {
 
     await harness.navigateByUrl('/');
 
-    const layout = harness.fixture.nativeElement.querySelector('app-main-layout');
+    const layout = harness.fixture.nativeElement.querySelector('app-main-layout') as HTMLElement | null;
     expect(layout).not.toBeNull();
-    expect(layout?.textContent?.trim()).toBe('');
+    const withoutSheet = layout?.cloneNode(true) as HTMLElement;
+    withoutSheet.querySelector('app-account-sheet')?.remove();
+    expect(withoutSheet.textContent?.trim()).toBe('');
   });
 });

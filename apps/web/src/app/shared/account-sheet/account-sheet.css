@@ -1,0 +1,194 @@
+.sheet {
+  position: fixed;
+  top: calc(16px + env(safe-area-inset-top));
+  right: 4px;
+  left: auto;
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  max-width: 320px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  background: var(--mm-color-surface);
+  color: var(--mm-color-text);
+  border: 1px solid var(--mm-color-borderStrong);
+  border-radius: var(--mm-radius-xl);
+  box-shadow: var(--mm-elevation-card);
+  opacity: 1;
+  transition:
+    opacity 200ms,
+    display 200ms allow-discrete,
+    overlay 200ms allow-discrete;
+}
+
+.sheet:not([open]) {
+  opacity: 0;
+}
+
+@starting-style {
+  .sheet[open] {
+    opacity: 0;
+  }
+}
+
+.sheet::backdrop {
+  background: color-mix(in srgb, var(--mm-color-text) 40%, transparent);
+  opacity: 1;
+  transition:
+    opacity 200ms,
+    display 200ms allow-discrete,
+    overlay 200ms allow-discrete;
+}
+
+@starting-style {
+  .sheet[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 319px) {
+  .sheet {
+    max-width: 100vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet,
+  .sheet::backdrop,
+  .track::after {
+    transition: none;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  color: var(--mm-color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row ng-icon {
+  font-size: 20px;
+  color: var(--mm-color-textSecondary);
+}
+
+.sheet__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.avatar {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--mm-color-borderStrong);
+  background: var(--mm-color-surface);
+  box-shadow: var(--mm-elevation-card);
+  color: var(--mm-color-text);
+}
+
+.avatar ng-icon {
+  font-size: 24px;
+}
+
+.identity {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--mm-color-accent);
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.email {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--mm-color-textSecondary);
+  font-size: 0.875rem;
+}
+
+.name-skeleton {
+  height: 16px;
+  border-radius: 8px;
+  background: var(--mm-color-borderStrong);
+}
+
+.close {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mm-color-textSecondary);
+  cursor: pointer;
+}
+
+.divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--mm-color-borderStrong);
+}
+
+.track {
+  position: relative;
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  width: 40px;
+  height: 24px;
+  border-radius: var(--mm-radius-pill);
+  background: var(--mm-color-borderStrong);
+}
+
+.track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--mm-color-surface);
+  transition: transform 200ms;
+}
+
+.row[aria-checked="true"] .track {
+  background: var(--mm-color-accent);
+}
+
+.row[aria-checked="true"] .track::after {
+  transform: translateX(16px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover {
+    background: var(--mm-color-accentSubtle);
+  }
+}

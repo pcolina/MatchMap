@@ -14,6 +14,6 @@ describe('mock state from data files', () => {
 
     const state = createState(changed);
 
-    expect(state.users[0].username).toBe('one-changed');
+    expect(state.users[0].username).toBe(`${usersData[0].username}-changed`);
   });
 });

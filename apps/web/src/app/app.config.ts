@@ -1,11 +1,13 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { mapControlIcons } from './shared/map-controls/map-icons';
 import { provideIcons } from '@ng-icons/core';
-import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerMap, tablerPlus, tablerUser, tablerUsers,  } from '@ng-icons/tabler-icons';
+import { tablerAlertCircle, tablerBrandApple, tablerBrandFacebook, tablerBrandGoogle, tablerEye, tablerEyeOff, tablerLanguage, tablerLock, tablerMap, tablerPlus, tablerUser, tablerUsers, tablerInfoCircle, tablerLogout, tablerSunMoon, tablerX } from '@ng-icons/tabler-icons';
 import { ApplicationConfig, inject, Injector, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideRouter } from '@angular/router';
 import { InMemoryCache } from '@apollo/client/cache';
+import { ApolloLink } from '@apollo/client';
+import { apolloAuthLink } from './core/auth/apollo-auth.link';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { filter, firstValueFrom } from 'rxjs';
@@ -22,17 +24,25 @@ import { graphqlUrl } from './core/api-url';
 import { environment } from '../environments/environment';
 import { AuthApi } from './features/auth/data/auth.api';
 import { AuthStore, SIGN_IN_GATEWAY } from './features/auth/state/auth.store';
+import { ACCOUNT_GATEWAY } from './features/account/state/account.store';
+import { AccountApi } from './features/account/data/account.api';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors(httpInterceptorsFor(mockEnabled, authInterceptor))),
-    provideApollo(() => ({
-      link: apolloLinkFor(mockEnabled, inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) })),
-      cache: new InMemoryCache(),
-    })),
-    provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerMap, ...mapControlIcons }),
+    provideApollo(() => {
+      const injector = inject(Injector);
+      return {
+        link: ApolloLink.from([
+          apolloAuthLink(() => injector.get(AuthStore).accessToken()),
+          apolloLinkFor(mockEnabled, inject(HttpLink).create({ uri: graphqlUrl(environment.apiBaseUrl) })),
+        ]),
+        cache: new InMemoryCache(),
+      };
+    }),
+    provideIcons({ tablerAlertCircle, tablerLanguage, tablerBrandGoogle, tablerBrandFacebook, tablerBrandApple, tablerUser, tablerLock, tablerEye, tablerEyeOff, tablerPlus, tablerUsers, tablerMap, tablerInfoCircle, tablerLogout, tablerSunMoon, tablerX, ...mapControlIcons }),
     provideRouter(routes),
     provideTranslateService({ fallbackLang: 'en' }),
     provideAppInitializer(() => setupTranslations(inject(TranslateService), navigator.language)),
@@ -47,6 +57,7 @@ export const appConfig: ApplicationConfig = {
         autoSignIn(store, autoLoginCredentials(createState().users), autoLoginEnabled, injector),
       );
     }),
-    { provide: SIGN_IN_GATEWAY, useExisting: AuthApi }
+    { provide: SIGN_IN_GATEWAY, useExisting: AuthApi },
+    { provide: ACCOUNT_GATEWAY, useExisting: AccountApi }
   ]
 };

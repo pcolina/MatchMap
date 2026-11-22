@@ -248,6 +248,24 @@ On every screen of the app, while content loads or a request runs, the screen sh
 
 ---
 
+### 7.10 Side sheet (account)
+
+A panel attached to the right edge of the screen, for the account and the settings. It is the account pattern only: never use it for content the user must compare or for long lists.
+
+- **Anchor:** 4 px from the right edge, from the top safe area down. All four corners rounded, radius `xl`.
+- **Header:** a 44 px circle with the user icon, styled like the account control on the map, then the username in `accent`, with the email in smaller `textSecondary` text under it, then the close control.
+- **Size:** the height is the height of its content, up to the screen height minus 32 px, then it scrolls. The width is the width of its content, up to a maximum of **320 px**, and never wider than the screen.
+- **Surface:** `surface` background, a 1 px `borderStrong` border on all sides. In day mode `elevation.card`; in night mode no shadow, the border separates it.
+- **Fade:** the sheet and its backdrop fade in and out over **200 ms**. With reduced motion, no transition.
+- **Closing:** tap outside it, press Escape, or activate its close control. Focus returns to the control that opened it.
+- **Focus:** while open, focus stays inside the sheet and Tab cycles through its controls.
+- **List:** the rows form one list with no group headings. A row is 44 px high, with `bodyStrong` for its label. A 1 px `border` divider separates the header from the rows, and sign out from the rows above it.
+- **Switch:** a row can end with a switch (day or night mode): track 40 × 24 px, `borderStrong` when off and `accent` when on, knob in `surface`.
+- **Icons:** every row starts with an icon from the Tabler set, 20 px, in `textSecondary`.
+- **Hover:** on a laptop with a mouse (`hover: hover` and `pointer: fine`), a row takes the `accentSubtle` background while the pointer is over it. Touch devices have no hover.
+
+---
+
 ## 8. Screen patterns
 
 - **Map (home):** full-screen map → compact floating `EgoCounter` at the top (`surface` card at 92 % opacity) → «Add destination» FAB at the bottom right (`accent`, 56 × 56, radius `xl`) → bottom sheet when a country is tapped.
