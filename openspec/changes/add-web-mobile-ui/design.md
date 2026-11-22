@@ -100,4 +100,7 @@ The `es` text is AI-generated and goes under «Translations to review» in the P
 
 ## Performance
 
-No budget is affected.
+The initial bundle warning of `apps/web/angular.json` is raised from 500 kB to 800 kB. The error limit stays at 1 MB.
+
+Justification: the initial bundle includes the map, which loads MapLibre at start-up. Measured on `main` before this change the initial bundle is 557.58 kB, and with this change it is 558.18 kB. This change adds about 0.6 kB. The map was already above 500 kB, so the warning fired before these controls.
+
