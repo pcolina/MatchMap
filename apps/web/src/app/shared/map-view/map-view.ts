@@ -44,6 +44,7 @@ export class MapView {
       this.map = new MapLibreMap({
         container: this.container().nativeElement,
         style: buildMapStyle(this.states(), this.scheme()),
+        attributionControl: false,
       });
     });
 

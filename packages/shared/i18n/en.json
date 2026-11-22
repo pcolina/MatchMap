@@ -43,6 +43,14 @@
   "map": {
     "world": {
       "label": "World map"
+    },
+    "controls": {
+      "addPlace": "Add place",
+      "friends": "Friends",
+      "account": "Account",
+      "attribution": "Map attribution",
+      "globe": "Globe view",
+      "mercator": "Mercator view"
     }
   },
   "stats": {
