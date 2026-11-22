@@ -6,6 +6,8 @@ The web main screen on phone-sized viewports shows the map and the stats panel, 
 
 ## What Changes
 
+First step: the controls are painted as static layout, to see how they feel on the phone. No logic and no behaviour in this step.
+
 - **Top right:** avatar. It opens a side sheet attached to the right edge, with the height and width its content needs. The sheet holds user info, language, day/night mode and sign-out.
 - **Top left, one column:** add a visited place, then friends.
 - **Bottom right, one row, left to right:** the brand mark, the attribution info icon (ⓘ), then the globe/mercator toggle.
@@ -32,7 +34,7 @@ The web main screen on phone-sized viewports shows the map and the stats panel, 
 
 ## Open questions
 
-- [NEEDS CLARIFICATION: the side sheet of the avatar is a new pattern and is not in `docs/design.md`. Confirm its name, its behaviour (closes on tap outside and on swipe to the right) and whether it goes into `docs/design.md` in this change.]
-- [NEEDS CLARIFICATION: is the attribution a centred modal or the bottom sheet of `docs/design.md` 7.6?]
-- [NEEDS CLARIFICATION: the wording of the attribution text, in `es` and `en`, with the MapLibre and Natural Earth credits. It is an i18n key to be reviewed.]
-- [NEEDS CLARIFICATION: what the full-screen button does exactly: hides the panel only, or also the header and the top controls?]
+- Side sheet of the avatar: the owner agreed to add the pattern to `docs/design.md` in this change. Its details (width, height, how it closes) are specified with the avatar change.
+- Attribution modal: decided with the avatar change, together with the sheet pattern.
+- Attribution language: the app language. Until the language change exists, the rule is: the saved user choice if any; otherwise the browser language if it is `es` or `en`; otherwise `en`.
+- Full-screen button: it hides the stats panel only (the top controls and the bottom row stay on the map). To be confirmed.
