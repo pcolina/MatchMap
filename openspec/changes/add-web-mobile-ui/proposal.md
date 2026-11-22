@@ -11,7 +11,7 @@ First step: the controls are painted as static layout, to see how they feel on t
 - **Top right:** avatar. It opens a side sheet attached to the right edge, with the height and width its content needs. The sheet holds user info, language, day/night mode and sign-out.
 - **Top left, one column:** add a visited place, then friends.
 - **Bottom right, one row, left to right:** the brand mark, the attribution info icon (ⓘ), then the globe/mercator toggle.
-- **Stats panel, bottom:** only stats. A full-screen button sits inside the panel, 40 px above the bottom edge, and is the only tappable element of the panel.
+- **Stats panel, bottom:** only stats. The full-screen button is not painted in this change: it is designed with the stats component.
 - **Loading:** the avatar shows a grey circle while its user info loads, and friends shows one only if its icon carries a count from the server. The other controls are not loading states and show no skeleton (`docs/design.md`, 7.9).
 - **Accessibility:** every icon-only control has an accessible name from i18n keys in `es` and `en`; touch targets are at least 44 px; controls over the map sit on a surface that keeps text contrast at 4.5:1; the globe toggle exposes its state with `aria-pressed`; focus follows the order top left, top right, map, panel, bottom right; transitions are instant with reduced motion.
 - **UX:** add and friends show a short label on long press; full screen leaves room for the system gesture area; with full screen on, the panel hides and the top controls stay over the map.
@@ -37,4 +37,4 @@ First step: the controls are painted as static layout, to see how they feel on t
 - Side sheet of the avatar: the owner agreed to add the pattern to `docs/design.md` in this change. Its details (width, height, how it closes) are specified with the avatar change.
 - Attribution modal: decided with the avatar change, together with the sheet pattern.
 - Attribution language: the app language. Until the language change exists, the rule is: the saved user choice if any; otherwise the browser language if it is `es` or `en`; otherwise `en`.
-- Full-screen button: it hides the stats panel only (the top controls and the bottom row stay on the map). To be confirmed.
+- Full-screen button: deferred to the stats component change. Not painted here.
