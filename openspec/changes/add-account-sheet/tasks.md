@@ -31,7 +31,7 @@ Each task starts with its failing test, run and shown failing before the code. E
 ## 6. Checks
 
 - [x] **6.1 Full check.** `pnpm check` for `packages/shared` and `apps/web`, with the summary in the PR. Plus `pnpm build:web`, with the output.
-- [ ] **6.2 Visual check.** At 320, 360 and 600 px, in light and dark mode, in the browser: the fade, the right-edge position, the closing, and the focus return. Done by the owner, as with the earlier visual checks.
+- [x] **6.2 Visual check.** At 320, 360 and 600 px, in light and dark mode, in the browser: the fade, the right-edge position, the closing, and the focus return. Done by the owner, as with the earlier visual checks.
 
 ## 7. Flat list (change to the approved spec)
 
