@@ -49,15 +49,15 @@ The owner asked, after the first review, for one compact list with no group head
 
 After registration the owner asked to see the username and the email in the header, the username in the accent colour and the email in smaller text under it. This replaces the display-name-only header and the email exclusion in the spec, and it adds a read of the `me` query.
 
-- [ ] **8.1 Shared query.** `packages/shared/src/graphql/me.graphql` (`query Me { me { id email username createdAt } }`) and `me.ts` exporting `meQuery`, as `register.ts` does. Run `pnpm codegen` for the `MeQuery` types. Check the contract is unchanged: `git -C C:\workspace\pablo\matchmap-api log --oneline ca97e41..HEAD -- contracts/` prints nothing.
-- [ ] **8.2 Store test first.** `apps/web/src/app/features/account/state/account.store.spec.ts`: `load()` fills `username` and `email` from the gateway; a failing gateway leaves both `null`. Run it and show it failing.
-- [ ] **8.3 Store code.** `account.store.ts` with the `ACCOUNT_GATEWAY` token (factory default: a gateway that never answers), `AccountStore` (`username`, `email`, `load`) through `rxMethod`. Run the test and show it passing.
-- [ ] **8.4 API test first.** `apps/web/src/app/features/account/data/account.api.spec.ts`: the `Me` query runs once through Apollo (`ApolloTestingModule`) and maps `me` to `{ username, email }`. Run it and show it failing.
-- [ ] **8.5 API code.** `account.api.ts` (`AccountApi`, Apollo `query` with `meQuery`), and `ACCOUNT_GATEWAY` bound to it in `app.config.ts`. Run the test and show it passing.
-- [ ] **8.6 Sheet test first.** `account-sheet.spec.ts`: the username is the accessible name and is styled with the `accent` colour; the email is shown in a small element under the name when given; no email when `email` is null. Run it and show it failing.
-- [ ] **8.7 Sheet code.** `account-sheet.ts` gets an `email` input; `account-sheet.css` styles the name in `--mm-color-accent` and the email in `--mm-color-textSecondary`, smaller. Run the test and show it passing.
-- [ ] **8.8 Layout test and wiring.** `main-layout.spec.ts`: with a gateway returning a user, the sheet shows the username and the email. `MainLayout` loads the store and passes `displayName` and `email`. Run the test first, then the wiring.
-- [ ] **8.9 Checks.** Axe with the sheet open (5.x), `pnpm check` and `pnpm build:web` from the repo root, and the summary in the PR.
+- [x] **8.1 Shared query.** `packages/shared/src/graphql/me.graphql` (`query Me { me { id email username createdAt } }`) and `me.ts` exporting `meQuery`, as `register.ts` does. Run `pnpm codegen` for the `MeQuery` types. Check the contract is unchanged: `git -C C:\workspace\pablo\matchmap-api log --oneline ca97e41..HEAD -- contracts/` prints nothing.
+- [x] **8.2 Store test first.** `apps/web/src/app/features/account/state/account.store.spec.ts`: `load()` fills `username` and `email` from the gateway; a failing gateway leaves both `null`. Run it and show it failing.
+- [x] **8.3 Store code.** `account.store.ts` with the `ACCOUNT_GATEWAY` token (factory default: a gateway that never answers), `AccountStore` (`username`, `email`, `load`) through `rxMethod`. Run the test and show it passing.
+- [x] **8.4 API test first.** `apps/web/src/app/features/account/data/account.api.spec.ts`: the `Me` query runs once through Apollo (`ApolloTestingModule`) and maps `me` to `{ username, email }`. Run it and show it failing.
+- [x] **8.5 API code.** `account.api.ts` (`AccountApi`, Apollo `query` with `meQuery`), and `ACCOUNT_GATEWAY` bound to it in `app.config.ts`. Run the test and show it passing.
+- [x] **8.6 Sheet test first.** `account-sheet.spec.ts`: the username is the accessible name and is styled with the `accent` colour; the email is shown in a small element under the name when given; no email when `email` is null. Run it and show it failing.
+- [x] **8.7 Sheet code.** `account-sheet.ts` gets an `email` input; `account-sheet.css` styles the name in `--mm-color-accent` and the email in `--mm-color-textSecondary`, smaller. Run the test and show it passing.
+- [x] **8.8 Layout test and wiring.** `main-layout.spec.ts`: with a gateway returning a user, the sheet shows the username and the email. `MainLayout` loads the store and passes `displayName` and `email`. Run the test first, then the wiring.
+- [x] **8.9 Checks.** Axe with the sheet open (5.x), `pnpm check` and `pnpm build:web` from the repo root, and the summary in the PR.
 
 ## Out of scope in these tasks
 
