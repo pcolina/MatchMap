@@ -53,6 +53,6 @@ describe('MapBottomControls', () => {
   it('shows the globe icon when the mercator view is active, the destination is globe', () => {
     const root = create(false);
 
-    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('globeMeridians');
+    expect(root.querySelector('[data-icon]:not([data-icon="tablerInfoCircle"])')?.getAttribute('data-icon')).toBe('globeWorld');
   });
 });
