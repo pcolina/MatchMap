@@ -22,7 +22,7 @@ The web app and the mobile app on phone-sized screens SHALL show a world map in 
 
 ### Requirement: Pan and zoom on phones
 
-The mobile app on phone-sized screens SHALL let the user pan the map with one finger and zoom it with a pinch gesture. The gestures SHALL move and scale the map from bundled data only.
+The mobile app on phone-sized screens SHALL let the user pan the map with one finger and zoom it with a pinch gesture. The gestures SHALL move and scale the map from bundled data only. The zoom range SHALL be the default minimum and maximum zoom of the MapLibre map view.
 
 #### Scenario: Pan with one finger
 - **WHEN** the user drags one finger across the map on a phone-sized screen
@@ -35,5 +35,3 @@ The mobile app on phone-sized screens SHALL let the user pan the map with one fi
 #### Scenario: Gestures need no network service
 - **WHEN** the user pans or zooms the map
 - **THEN** no tile request is sent to an external service
-
-[NEEDS CLARIFICATION: what are the minimum and maximum zoom levels of the phone map? The web spec defines no zoom, and a value is not guessed.]
