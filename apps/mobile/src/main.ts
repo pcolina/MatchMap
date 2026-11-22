@@ -1,7 +1,7 @@
 import 'expo';
 import { AppRegistry, Image, Platform, processColor } from 'react-native';
 import * as Font from 'expo-font';
-import { inject, provideAppInitializer } from '@angular/core';
+import { inject, Injector, provideAppInitializer } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideApollo } from 'apollo-angular';
@@ -29,6 +29,9 @@ import { AuthStore, SIGN_IN_GATEWAY } from './app/features/auth/state/auth.store
 import { mockEnabled } from './app/core/mocks/mock-flag.ts';
 import { initMockState } from './app/core/mocks/mock-state.ts';
 import { apolloLinkFor, httpInterceptorsFor } from './app/core/mocks/mock-wiring.ts';
+import { autoLoginEnabled } from './app/core/mocks/mock-auto-login.ts';
+import { autoSignIn } from './app/core/mocks/auto-sign-in.ts';
+import { autoLoginCredentials, createState } from '@matchmap/shared';
 
 registerPlatformComponents(Platform.OS);
 
@@ -52,8 +55,11 @@ const appProviders = [
   { provide: SIGN_IN_GATEWAY, useExisting: AuthApi },
   provideAppInitializer(() => {
     const store = inject(AuthStore);
+    const injector = inject(Injector);
     store.restore();
-    return firstValueFrom(toObservable(store.sessionChecked).pipe(filter(Boolean)));
+    return firstValueFrom(toObservable(store.sessionChecked).pipe(filter(Boolean))).then(() =>
+      autoSignIn(store, autoLoginCredentials(createState().users), autoLoginEnabled, injector),
+    );
   }),
 ];
 

@@ -32,11 +32,11 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 6. Mobile flag and auto sign-in
 
-- [ ] **6.1 Test first.** `apps/mobile/src/app/core/mocks/mock-auto-login.test.ts`: same cases as 4.1, reading `EXPO_PUBLIC_MATCHMAP_AUTO_LOGIN`. Run and show failing.
-- [ ] **6.2 Code.** `apps/mobile/src/app/core/mocks/mock-auto-login.ts`.
-- [ ] **6.3 Test first.** `apps/mobile/src/app/core/mocks/auto-sign-in.test.ts`: same cases as 4.3 with a fake store. Run and show failing.
-- [ ] **6.4 Code.** `apps/mobile/src/app/core/mocks/auto-sign-in.ts`.
-- [ ] **6.5 Code.** In `apps/mobile/src/main.ts`, the restore initializer calls `autoSignIn` as in 5.1. Run `pnpm check` for `apps/mobile` and show the summary.
+- [x] **6.1 Test first.** `apps/mobile/src/app/core/mocks/mock-auto-login.test.ts`: same cases as 4.1, reading `EXPO_PUBLIC_MATCHMAP_AUTO_LOGIN`. Run and show failing.
+- [x] **6.2 Code.** `apps/mobile/src/app/core/mocks/mock-auto-login.ts`.
+- [x] **6.3 Test first.** `apps/mobile/src/app/core/mocks/auto-sign-in.test.ts`: same cases as 4.3 with a fake store. Run and show failing.
+- [x] **6.4 Code.** `apps/mobile/src/app/core/mocks/auto-sign-in.ts`.
+- [x] **6.5 Code.** In `apps/mobile/src/main.ts`, the restore initializer calls `autoSignIn` as in 5.1. Run `pnpm check` for `apps/mobile` and show the summary.
 
 ## 7. Documentation
 
