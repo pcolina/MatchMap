@@ -16,8 +16,8 @@ Each task starts with its failing test, which is run and shown failing before th
 
 ## 3. Mobile start command
 
-- [ ] **3.1 Test first.** `apps/mobile/scripts/start.test.mjs`: the same parsing cases as 2.1, with the usage error `Usage: pnpm mobile [mock [-l]]`. `buildExpoEnv` adds `EXPO_PUBLIC_MATCHMAP_AUTO_LOGIN: 'true'` only with `autoLogin`. Run and show failing.
-- [ ] **3.2 Code.** `apps/mobile/scripts/start.mjs`.
+- [x] **3.1 Test first.** `apps/mobile/scripts/start.test.mjs`: the same parsing cases as 2.1, with the usage error `Usage: pnpm mobile [mock [-l]]`. `buildExpoEnv` adds `EXPO_PUBLIC_MATCHMAP_AUTO_LOGIN: 'true'` only with `autoLogin`. Run and show failing.
+- [x] **3.2 Code.** `apps/mobile/scripts/start.mjs`.
 
 ## 4. Web flag and auto sign-in
 
