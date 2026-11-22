@@ -16,9 +16,9 @@ describe('maplibre worker serving', () => {
   it('copies the worker before start, build and watch', () => {
     const pkg = JSON.parse(readWebFile('package.json')) as { scripts: Record<string, string> };
 
-    expect(pkg.scripts['prestart']).toBe('node scripts/copy-maplibre-worker.mjs');
-    expect(pkg.scripts['prebuild']).toBe('node scripts/copy-maplibre-worker.mjs');
-    expect(pkg.scripts['prewatch']).toBe('node scripts/copy-maplibre-worker.mjs');
+    expect(pkg.scripts['prestart']).toBe('node scripts/copy-geo.mjs && node scripts/copy-maplibre-worker.mjs');
+    expect(pkg.scripts['prebuild']).toBe('node scripts/copy-geo.mjs && node scripts/copy-maplibre-worker.mjs');
+    expect(pkg.scripts['prewatch']).toBe('node scripts/copy-geo.mjs && node scripts/copy-maplibre-worker.mjs');
   });
 
   it('excludes maplibre-gl from the dev server prebundle so its worker resolves', () => {

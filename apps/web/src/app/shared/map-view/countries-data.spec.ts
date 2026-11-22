@@ -13,9 +13,9 @@ const { resolve } = nodeProcess.getBuiltinModule('node:path');
 type Feature = { type: string; geometry: { type: string } | null; properties: Record<string, unknown> | null };
 type FeatureCollection = { type: string; features: Feature[] };
 
-describe('countries.geojson', () => {
+describe('countries.json', () => {
   const data = JSON.parse(
-    readFileSync(resolve(nodeProcess.cwd(), 'public', 'geo', 'countries.geojson'), 'utf8'),
+    readFileSync(resolve(nodeProcess.cwd(), '..', '..', 'packages', 'shared', 'geo', 'countries.json'), 'utf8'),
   ) as FeatureCollection;
 
   it('is a FeatureCollection', () => {

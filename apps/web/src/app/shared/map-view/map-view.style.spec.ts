@@ -1,156 +1,30 @@
+import { buildMapStyle as buildSharedMapStyle } from '@matchmap/shared';
+import { describe, expect, it } from 'vitest';
 import { colors, mapColors } from '../../../../../../tokens/tokens.ts';
 import { buildMapStyle } from './map-view.style';
 
-type Layer = { id: string; type: string; source?: string; paint?: Record<string, unknown>; filter?: unknown[] };
-type Style = { version: number; sources: Record<string, unknown>; layers: Layer[]; glyphs?: string };
+const urlOf = (path: string) => new URL(path, window.location.origin).href;
 
-const layerById = (style: Style, id: string): Layer => {
-  const layer = style.layers.find((candidate) => candidate.id === id);
-  if (!layer) {
-    throw new Error(`missing layer ${id}`);
-  }
-  return layer;
+const sharedStyle = (states: Record<string, 'visited' | 'lived' | 'wantToGo'>, scheme: 'day' | 'night') => {
+  const palette = scheme === 'day' ? mapColors.light : mapColors.dark;
+  const text = scheme === 'day' ? colors.light.text : colors.dark.text;
+
+  return buildSharedMapStyle({
+    states,
+    palette,
+    text,
+    sources: { countries: urlOf('/geo/countries.json'), capitals: urlOf('/geo/capitals.json') },
+  });
 };
 
-describe('buildMapStyle', () => {
-  describe('background colours', () => {
-    it('uses the day ocean colour as the background in day mode', () => {
-      const style = buildMapStyle({}, 'day') as unknown as Style;
+describe('web map style parity with the shared style', () => {
+  const states = { FR: 'visited' as const, IT: 'wantToGo' as const };
 
-      expect(layerById(style, 'background').paint?.['background-color']).toBe(mapColors.light.ocean);
-    });
-
-    it('uses the night ocean colour as the background in night mode', () => {
-      const style = buildMapStyle({}, 'night') as unknown as Style;
-
-      expect(layerById(style, 'background').paint?.['background-color']).toBe(mapColors.dark.ocean);
-    });
+  it.each(['day', 'night'] as const)('matches the shared style with no states in %s mode', (scheme) => {
+    expect(buildMapStyle({}, scheme)).toEqual(sharedStyle({}, scheme));
   });
 
-  describe('country fill', () => {
-    it('gives each state its map colour in day mode', () => {
-      const style = buildMapStyle({ FR: 'visited', NO: 'lived', JP: 'wantToGo' }, 'day') as unknown as Style;
-      const fill = layerById(style, 'countries-fill').paint?.['fill-color'] as unknown[];
-
-      expect(fill).toEqual([
-        'match',
-        ['get', 'iso_a2'],
-        'FR',
-        mapColors.light.visited,
-        'NO',
-        mapColors.light.lived,
-        'JP',
-        mapColors.light.wantToGo,
-        mapColors.light.land,
-      ]);
-    });
-
-    it('gives each state its map colour in night mode', () => {
-      const style = buildMapStyle({ FR: 'visited' }, 'night') as unknown as Style;
-      const fill = layerById(style, 'countries-fill').paint?.['fill-color'] as unknown[];
-
-      expect(fill).toEqual(['match', ['get', 'iso_a2'], 'FR', mapColors.dark.visited, mapColors.dark.land]);
-    });
-
-    it('gives every other country the land colour', () => {
-      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
-      const fill = layerById(style, 'countries-fill').paint?.['fill-color'] as unknown[];
-
-      expect(fill.at(-1)).toBe(mapColors.light.land);
-    });
-
-    it('uses the land colour for every country when no state is given', () => {
-      const style = buildMapStyle({}, 'day') as unknown as Style;
-
-      expect(layerById(style, 'countries-fill').paint?.['fill-color']).toBe(mapColors.light.land);
-    });
-  });
-
-  describe('capitals and network', () => {
-    it('draws one circle per capital from the capitals source in day mode', () => {
-      const style = buildMapStyle({}, 'day') as unknown as Style;
-      const capitals = layerById(style, 'capitals-point');
-
-      expect(capitals.type).toBe('circle');
-      expect(capitals.source).toBe('capitals');
-      expect(capitals.paint?.['circle-color']).toBe(colors.light.text);
-    });
-
-    it('uses the night text colour for capital points in night mode', () => {
-      const style = buildMapStyle({}, 'night') as unknown as Style;
-
-      expect(layerById(style, 'capitals-point').paint?.['circle-color']).toBe(colors.dark.text);
-    });
-
-    it('has only GeoJSON sources, with no raster or vector tile source and no glyphs', () => {
-      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
-
-      expect(Object.keys(style.sources).sort()).toEqual(['capitals', 'countries']);
-      for (const source of Object.values(style.sources)) {
-        expect((source as { type: string }).type).toBe('geojson');
-      }
-      expect(style.glyphs).toBeUndefined();
-    });
-
-    it('loads each GeoJSON source from an absolute URL, because the worker cannot resolve a relative one', () => {
-      const style = buildMapStyle({}, 'day') as unknown as Style;
-
-      for (const source of Object.values(style.sources)) {
-        expect(() => new URL((source as { data: string }).data)).not.toThrow();
-      }
-    });
-  });
-
-  describe('country borders', () => {
-    it('draws a 0.5 px border between every country in the day border colour', () => {
-      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
-      const border = layerById(style, 'countries-border');
-
-      expect(border.type).toBe('line');
-      expect(border.source).toBe('countries');
-      expect(border.paint?.['line-color']).toBe(mapColors.light.countryBorder);
-      expect(border.paint?.['line-width']).toBe(0.5);
-      expect(border.filter).toBeUndefined();
-    });
-
-    it('uses the night border colour in night mode', () => {
-      const style = buildMapStyle({}, 'night') as unknown as Style;
-
-      expect(layerById(style, 'countries-border').paint?.['line-color']).toBe(mapColors.dark.countryBorder);
-    });
-
-    it('draws the borders above the country fill and below the state outline', () => {
-      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
-      const ids = style.layers.map((layer) => layer.id);
-
-      expect(ids.indexOf('countries-border')).toBeGreaterThan(ids.indexOf('countries-fill'));
-      expect(ids.indexOf('countries-border')).toBeLessThan(ids.indexOf('countries-state-outline'));
-    });
-  });
-
-  describe('state outline', () => {
-    it('draws a 1.5 px text-coloured outline only around the coloured countries in day mode', () => {
-      const style = buildMapStyle({ FR: 'visited', JP: 'wantToGo' }, 'day') as unknown as Style;
-      const outline = layerById(style, 'countries-state-outline');
-
-      expect(outline.type).toBe('line');
-      expect(outline.source).toBe('countries');
-      expect(outline.paint?.['line-color']).toBe(colors.light.text);
-      expect(outline.paint?.['line-width']).toBe(1.5);
-      expect(outline.filter).toEqual(['in', ['get', 'iso_a2'], ['literal', ['FR', 'JP']]]);
-    });
-
-    it('uses the night text colour in night mode', () => {
-      const style = buildMapStyle({ FR: 'visited' }, 'night') as unknown as Style;
-
-      expect(layerById(style, 'countries-state-outline').paint?.['line-color']).toBe(colors.dark.text);
-    });
-
-    it('draws the outline above the country fill', () => {
-      const style = buildMapStyle({ FR: 'visited' }, 'day') as unknown as Style;
-      const ids = style.layers.map((layer) => layer.id);
-
-      expect(ids.indexOf('countries-state-outline')).toBeGreaterThan(ids.indexOf('countries-fill'));
-    });
+  it.each(['day', 'night'] as const)('matches the shared style with filled states in %s mode', (scheme) => {
+    expect(buildMapStyle(states, scheme)).toEqual(sharedStyle(states, scheme));
   });
 });

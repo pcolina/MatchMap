@@ -31,8 +31,10 @@ import { apolloLinkFor, httpInterceptorsFor } from './app/core/mocks/mock-wiring
 import { autoLoginEnabled } from './app/core/mocks/mock-auto-login.ts';
 import { autoSignIn } from './app/core/mocks/auto-sign-in.ts';
 import { autoLoginCredentials, createState } from '@matchmap/shared';
+import { registerMapView } from './app/shared/map-view/register-map-view.ts';
 
 registerPlatformComponents(Platform.OS);
+registerMapView();
 
 const appProviders = [
   provideNativeRouter(routes),

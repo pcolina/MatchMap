@@ -18,3 +18,5 @@ export type { RegisterInput } from './generated/schema.ts';
 export type { RegisterMutation, RegisterMutationVariables } from './generated/operations.ts';
 export { registerMutation } from './graphql/register.ts';
 export { autoLoginCredentials } from './mocks/auto-login.ts';
+export { buildMapStyle } from './map/map-style.ts';
+export type { BuildMapStyleInput, GeoSource, MapPalette, MapState, MapStyle } from './map/map-style.ts';

@@ -3,6 +3,7 @@
 # Compiled output
 /dist
 /public/maplibre-gl-worker.mjs
+/public/geo/
 /tmp
 /out-tsc
 /bazel-out

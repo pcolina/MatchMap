@@ -11,6 +11,7 @@
     "@expo-google-fonts/caveat": "~0.4.2",
     "@expo-google-fonts/inter": "~0.4.2",
     "@expo-google-fonts/sora": "~0.4.2",
+    "@maplibre/maplibre-react-native": "11.5.1",
     "@matchmap/shared": "workspace:*",
     "@ng-icons/core": "^36.1.0",
     "@ng-icons/tabler-icons": "^36.1.0",
