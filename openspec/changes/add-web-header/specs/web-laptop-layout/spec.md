@@ -34,7 +34,7 @@ The laptop layout SHALL show a header at the top of the screen that spans the fu
 
 ### Requirement: Header controls at the right
 
-On the right of the header the header SHALL show two buttons from left to right: a notifications button and a profile button. The notifications button SHALL show a red dot with the number of pending notifications inside it while at least one notification is pending, and no dot while none is pending. The notifications button does nothing when it is activated. The profile button SHALL be the same control as the account button of the phone layout (`app-account-button`), with the same style, the same accessible name, the same red dot while notifications are pending, and the same action: it opens the account sheet. Both buttons SHALL be keyboard reachable with a visible focus.
+On the right of the header the header SHALL show two buttons from left to right: a notifications button and a profile button. The notifications button SHALL show a red dot with the number of pending notifications inside it while at least one notification is pending, and no dot while none is pending. The notifications button does nothing when it is activated. The profile button SHALL be the account button of the phone layout (`app-account-button`), with the same style and the same action: it opens the account sheet. The profile button SHALL show no red dot, and its accessible name SHALL be the value of `map.controls.account`, whatever the pending count. Both buttons SHALL be keyboard reachable with a visible focus.
 
 #### Scenario: Bell and profile order
 - **WHEN** the laptop layout is shown
@@ -56,9 +56,9 @@ On the right of the header the header SHALL show two buttons from left to right:
 - **WHEN** the user activates the profile button
 - **THEN** the account sheet opens
 
-#### Scenario: Profile button shows the same dot as the phone account button
-- **WHEN** at least one notification is pending
-- **THEN** the profile button shows the same red dot as the account button of the phone layout, and its name states the number of pending notifications
+#### Scenario: Profile button shows no dot
+- **WHEN** at least one notification is pending and the laptop layout is shown
+- **THEN** the profile button shows no red dot and its name is the value of `map.controls.account`
 
 #### Scenario: Keyboard focus is visible
 - **WHEN** a header button has keyboard focus

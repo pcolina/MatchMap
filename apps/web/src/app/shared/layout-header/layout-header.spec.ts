@@ -17,14 +17,15 @@ type NodeProcess = {
 const nodeProcess = (globalThis as unknown as { process: NodeProcess }).process;
 const { readFileSync } = nodeProcess.getBuiltinModule('node:fs');
 const { resolve } = nodeProcess.getBuiltinModule('node:path');
-const css = () => readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'layout-header', 'layout-header.css'), 'utf8');
+const cssOf = (file: string) => readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', file), 'utf8');
 
 @Component({
   imports: [LayoutHeader],
-  template: `<app-layout-header [darkMode]="dark()" (accountPressed)="accounts = accounts + 1" />`,
+  template: `<app-layout-header [darkMode]="dark()" [pendingCount]="pending()" (accountPressed)="accounts = accounts + 1" />`,
 })
 class Host {
   readonly dark = signal(false);
+  readonly pending = signal(0);
   accounts = 0;
 }
 
@@ -42,13 +43,6 @@ const create = () => {
 };
 
 describe('LayoutHeader', () => {
-  it('shows the notifications button before the profile button', () => {
-    const { root } = create();
-    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('.layout-header button'));
-
-    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(['Notifications', 'Account']);
-  });
-
   it('shows the light logo in the light scheme and the dark logo in the dark scheme', () => {
     const { fixture, host, root } = create();
     const logo = root.querySelector('.layout-header img') as HTMLImageElement;
@@ -62,48 +56,75 @@ describe('LayoutHeader', () => {
     expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-dark.svg');
   });
 
-  it('paints a red dot on the notifications button, hidden from assistive tech', () => {
+  it('shows the notifications button before the profile button', () => {
     const { root } = create();
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('.layout-header button'));
+
+    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(['Notifications', 'Account']);
+  });
+
+  it('shows the pending count inside the red dot of the notifications button, hidden from assistive tech', () => {
+    const { fixture, host, root } = create();
+    host.pending.set(2);
+    fixture.detectChanges();
     const bell = root.querySelector('.layout-header button') as HTMLButtonElement;
     const dot = bell.querySelector('.notification-dot') as HTMLElement;
 
-    expect(dot).not.toBeNull();
+    expect(bell.getAttribute('aria-label')).toBe('Notifications, 2 unread');
+    expect(dot.textContent?.trim()).toBe('2');
     expect(dot.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('emits accountPressed once when the profile button is activated', () => {
-    const { host, root } = create();
-    const profile = root.querySelectorAll<HTMLButtonElement>('.layout-header button')[1];
+  it('shows no dot on the notifications button while nothing is pending', () => {
+    const { root } = create();
+    const bell = root.querySelector('.layout-header button') as HTMLButtonElement;
 
-    profile.click();
-
-    expect(host.accounts).toBe(1);
+    expect(bell.querySelector('.notification-dot')).toBeNull();
   });
 
   it('does nothing when the notifications button is activated', () => {
     const { host, root } = create();
-    const bell = root.querySelector('.layout-header button') as HTMLButtonElement;
-
-    bell.click();
+    (root.querySelector('.layout-header button') as HTMLButtonElement).click();
 
     expect(host.accounts).toBe(0);
   });
 
-  it('shows no notification dot on the profile button', () => {
-    const { root } = create();
-    const profile = root.querySelectorAll<HTMLButtonElement>('.layout-header button')[1];
+  it('shows no dot and the plain name on the profile button while notifications are pending', () => {
+    const { fixture, host, root } = create();
+    host.pending.set(3);
+    fixture.detectChanges();
+    const profile = root.querySelector('.layout-header app-account-button button') as HTMLButtonElement;
 
-    expect(profile.querySelector('.notification-dot')).toBeNull();
+    expect(profile.getAttribute('aria-label')).toBe('Account');
+    expect(profile.querySelector('[data-testid="notification-dot"]')).toBeNull();
+  });
+
+  it('emits accountPressed once when the profile button is activated', () => {
+    const { host, root } = create();
+    (root.querySelector('.layout-header app-account-button button') as HTMLButtonElement).click();
+
+    expect(host.accounts).toBe(1);
   });
 
   it('is 50 px high with the surface background and no scroll', () => {
-    expect(css()).toMatch(/\.layout-header\s*\{[^}]*height:\s*50px;/);
-    expect(css()).toMatch(/\.layout-header\s*\{[^}]*background-color:\s*var\(--mm-color-surface\);/);
-    expect(css()).toMatch(/\.layout-header\s*\{[^}]*overflow:\s*hidden;/);
+    const css = cssOf('layout-header/layout-header.css');
+
+    expect(css).toMatch(/\.layout-header\s*\{[^}]*height:\s*50px;/);
+    expect(css).toMatch(/\.layout-header\s*\{[^}]*background-color:\s*var\(--mm-color-surface\);/);
+    expect(css).toMatch(/\.layout-header\s*\{[^}]*overflow:\s*hidden;/);
   });
 
-  it('shows a 2 px accent outline with a 2 px offset on keyboard focus', () => {
-    expect(css()).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--mm-color-accent\);/);
-    expect(css()).toMatch(/\.control:focus-visible\s*\{[^}]*outline-offset:\s*2px;/);
+  it('shows the notifications dot as a pill at the top right of the bell, using the danger token', () => {
+    const css = cssOf('layout-header/layout-header.css');
+
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*background:\s*var\(--mm-color-danger\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*border-radius:\s*var\(--mm-radius-pill\);/);
+  });
+
+  it('shows a 2 px accent outline with a 2 px offset on keyboard focus of the header buttons', () => {
+    const css = cssOf('layout-header/layout-header.css') + cssOf('account-button/account-button.css');
+
+    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--mm-color-accent\);/);
+    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*outline-offset:\s*2px;/);
   });
 });

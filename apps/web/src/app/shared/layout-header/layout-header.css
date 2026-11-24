@@ -51,14 +51,13 @@
   position: absolute;
   top: var(--mm-space-0);
   right: var(--mm-space-0);
-  width: var(--mm-space-3);
-  height: var(--mm-space-3);
-  border-radius: 50%;
+  min-width: var(--mm-space-4);
+  height: var(--mm-space-4);
+  padding: 0 var(--mm-space-1);
+  border-radius: var(--mm-radius-pill);
   background: var(--mm-color-danger);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .control:hover {
-    background: var(--mm-color-accentSubtle);
-  }
+  color: var(--mm-color-onDanger);
+  font-size: inherit;
+  line-height: var(--mm-space-4);
+  text-align: center;
 }
