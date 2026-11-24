@@ -39,3 +39,10 @@ None. The brand name `matchMap` is not translated, and the labels use keys that 
 - [ ] **6.4 Header.** Add the `pendingCount` input to `LayoutHeader`; the bell shows the count in its dot; the profile is `<app-account-button>`. `MainLayout` passes `[pendingCount]="notifications.count()"` to the header. Make 6.3 pass, with the main layout tests green.
 - [ ] **6.5 Full check.** `pnpm check` and `pnpm build:web`, with the summary in the PR.
 - Note from review: the notifications button is removed from the desktop header. Tasks 6.3 and 6.4 apply to the profile button only, and the bell count is not built.
+
+## 7. Desktop notifications button back, notifications row only on phone
+
+- [ ] **7.1 Header tests.** In `layout-header.spec.ts`: the notifications button is before the profile button; it is named with `account.sheet.notifications`; with 2 pending its red dot holds the text "2" and is `aria-hidden="true"`; with none there is no dot; activating it emits nothing. Run them and show the failure.
+- [ ] **7.2 Header.** Add the notifications button with its count dot back to `layout-header.ts`, and its `pendingCount` use. Make 7.1 pass.
+- [ ] **7.3 Sheet tests.** In `account-sheet.spec.ts` (CSS read from disk): the notifications row has the class `notifications-row`, and a media query for `min-width: 601px` sets it to `display: none`. Run them and show the failure.
+- [ ] **7.4 Sheet.** Add the class `notifications-row` and the media rule in `account-sheet.css`. Make 7.3 pass.
