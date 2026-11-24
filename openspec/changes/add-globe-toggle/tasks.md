@@ -35,7 +35,7 @@ Each task starts with its failing test, run and shown failing before the code. E
 ## 7. Checks
 
 - [x] **7.1 Full check.** `pnpm check` for `apps/web` (and `packages/shared` if touched), from the repo root, with the summary in the PR. Plus `pnpm build:web`, with the output.
-- [ ] **7.2 Browser check.** In Chrome, at 320, 360 and 600 px, in day and night mode: switch to the globe and back, check that the zoom is unchanged after each switch, that the colours and outlines match in both projections, that the choice survives a reload, and that the flicker on switching is not visible. Done by the owner, as with the earlier visual checks, with the steps in the PR.
+- [x] **7.2 Browser check.** In Chrome, at 320, 360 and 600 px, in day and night mode: switch to the globe and back, check that the zoom is unchanged after each switch, that the colours and outlines match in both projections, that the choice survives a reload, and that the flicker on switching is not visible. Done by the owner, as with the earlier visual checks, with the steps in the PR.
 
 ## Out of scope in these tasks
 
