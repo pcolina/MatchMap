@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { appVersion } from '../../core/app-version';
 import { MapProjectionStore } from '../../core/map-projection/map-projection.store';
+import { NotificationsStore } from '../../core/notifications/notifications.store';
 import { ThemeStore } from '../../core/theme/theme.store';
 import { AuthStore } from '../../features/auth/state/auth.store';
 import { AccountStore } from '../../features/account/state/account.store';
@@ -19,7 +20,7 @@ import { StatsResume } from '../stats-resume/stats-resume';
   template: `<section class="main-layout">
     <app-layout-header />
     <div class="map-area" [class.globe]="projection.globe()">
-      <app-map-top-controls [accountOpen]="accountOpen()" (accountPressed)="accountOpen.set(true)" />
+      <app-map-top-controls [accountOpen]="accountOpen()" [pendingCount]="notifications.count()" (accountPressed)="accountOpen.set(true)" />
       <app-map-view [projection]="projection.projection()" />
     </div>
     <app-stats-resume />
@@ -47,6 +48,7 @@ export class MainLayout {
   protected readonly auth = inject(AuthStore);
   protected readonly theme = inject(ThemeStore);
   protected readonly projection = inject(MapProjectionStore);
+  protected readonly notifications = inject(NotificationsStore);
   protected readonly version = appVersion;
 
   constructor() {

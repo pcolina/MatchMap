@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import en from '../../../../../../packages/shared/i18n/en.json';
 import { MapTopControls } from './map-top-controls';
 
-const create = (avatarLoading: boolean) => {
+const create = (avatarLoading: boolean, pendingCount = 0) => {
   TestBed.configureTestingModule({
     imports: [MapTopControls],
     providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerPlus, tablerUser, tablerUsers })],
@@ -17,6 +17,7 @@ const create = (avatarLoading: boolean) => {
   translate.use('en');
   const fixture = TestBed.createComponent(MapTopControls);
   fixture.componentRef.setInput('avatarLoading', avatarLoading);
+  fixture.componentRef.setInput('pendingCount', pendingCount);
   fixture.detectChanges();
   return fixture.nativeElement as HTMLElement;
 };
@@ -49,5 +50,28 @@ describe('MapTopControls', () => {
 
     expect(root.querySelector('[data-testid="avatar-skeleton"]')).not.toBeNull();
     expect(root.querySelector('[data-icon="tablerUser"]')).toBeNull();
+  });
+
+  it('shows a red dot on the avatar while notifications are pending', () => {
+    const root = create(false, 3);
+    const dot = root.querySelector('[data-testid="notification-dot"]') as HTMLElement;
+
+    expect(dot).not.toBeNull();
+    expect(dot.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('names the avatar with the number of pending notifications', () => {
+    const root = create(false, 3);
+    const account = root.querySelector('[data-column="top-right"] button') as HTMLButtonElement;
+
+    expect(account.getAttribute('aria-label')).toBe('Account, 3 unread notifications');
+  });
+
+  it('shows no dot and the plain account name when nothing is pending', () => {
+    const root = create(false, 0);
+    const account = root.querySelector('[data-column="top-right"] button') as HTMLButtonElement;
+
+    expect(root.querySelector('[data-testid="notification-dot"]')).toBeNull();
+    expect(account.getAttribute('aria-label')).toBe('Account');
   });
 });

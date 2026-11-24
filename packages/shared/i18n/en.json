@@ -59,6 +59,9 @@
     }
   },
   "account": {
+    "avatar": {
+      "labelWithPending": "Account, {{count}} unread notifications"
+    },
     "sheet": {
       "close": "Close",
       "profile": "View profile",
