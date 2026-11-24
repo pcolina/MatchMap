@@ -4,7 +4,7 @@
 
 ### Requirement: Pending notifications
 
-A notification is pending when it has been received on this device and has not been read. The pending count is the number of pending notifications kept on this device. This capability does not define how notifications arrive or how they become read.
+A notification SHALL be pending when it has been received on this device and has not been read. The pending count SHALL be the number of pending notifications kept on this device. This capability does not define how notifications arrive or how they become read.
 
 #### Scenario: No notifications
 - **WHEN** no notification is kept on this device
