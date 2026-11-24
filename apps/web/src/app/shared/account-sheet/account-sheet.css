@@ -205,3 +205,9 @@
     background: var(--mm-color-accentSubtle);
   }
 }
+
+@media (min-width: 601px) {
+  .notifications-row {
+    display: none;
+  }
+}
