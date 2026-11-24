@@ -26,7 +26,7 @@ Each task names its failing test first, then the code that makes it pass. One ta
 
 - [x] **4.1 Axe test.** In `apps/web/src/app/features/auth/pages/accessibility.spec.ts`, add: the main screen with a pending count has no axe violations, in day and in night mode (localStorage set for the mode). Run it and show the result.
 - [x] **4.2 Contrast check.** Measure the contrast of the `danger` dot (`#B91C1C` day, `#F87171` night) against the avatar surface in both modes. It must be at least 3:1 (WCAG 1.4.11). Record the values in the PR. If it is below 3:1, stop and ask for a different colour; do not pick one.
-- [ ] **4.3 Browser check.** In Chrome, at 320, 360 and 600 px, in day and night mode: the dot is at the top-right of the avatar, it is not clipped, it does not cover the avatar, and it is not shown when the stored count is 0. Done by the owner, with the steps in the PR.
+- [x] **4.3 Browser check.** Confirmed by the owner on the visual review ("lo veo bien").** In Chrome, at 320, 360 and 600 px, in day and night mode: the dot is at the top-right of the avatar, it is not clipped, it does not cover the avatar, and it is not shown when the stored count is 0. Done by the owner, with the steps in the PR.
 
 ## 5. Full check
 
