@@ -3,7 +3,9 @@ import en from '../../../../../../packages/shared/i18n/en.json';
 import { mapControlIcons } from '../map-controls/map-icons';
 import { provideIcons } from '@ng-icons/core';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
+import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { MapView } from '../map-view/map-view';
 import { of, throwError } from 'rxjs';
 import { AuthStore, SIGN_IN_GATEWAY } from '../../features/auth/state/auth.store';
 import { ACCOUNT_GATEWAY } from '../../features/account/state/account.store';
@@ -187,6 +189,25 @@ describe('MainLayout', () => {
     expect(css).toMatch(/@media\s*\(min-width:\s*601px\)\s*\{[\s\S]*app-stats-resume\s*\{[^}]*overflow:\s*hidden/);
   });
 
+  it('paints the map area with the accent colour in globe mode', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/\.map-area\.globe\s*\{[^}]*background-color:\s*var\(--mm-color-accent\);/);
+  });
+
+  it('marks the map area as globe when the globe projection is on', async () => {
+    localStorage.setItem('matchmap.mapProjection', 'globe');
+    try {
+      const fixture = TestBed.createComponent(MainLayout);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect((fixture.nativeElement as HTMLElement).querySelector('.map-area')?.classList.contains('globe')).toBe(true);
+    } finally {
+      localStorage.removeItem('matchmap.mapProjection');
+    }
+  });
+
   it('keeps the phone panel above the bottom safe-area inset', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
@@ -244,6 +265,29 @@ describe('MainLayout', () => {
 
     expect(TestBed.inject(AuthStore).accessToken()).toBeNull();
     expect(navigate).toHaveBeenCalledWith('/login');
+  });
+
+  it('the view toggle switches the map between Mercator and the globe, and back', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const toggle = () => root.querySelector('app-map-bottom-controls button') as HTMLButtonElement;
+    const mapProjection = () => fixture.debugElement.query(By.directive(MapView)).componentInstance.projection();
+
+    expect(toggle().getAttribute('aria-pressed')).toBe('false');
+    expect(mapProjection()).toBe('mercator');
+
+    toggle().click();
+    fixture.detectChanges();
+    expect(toggle().getAttribute('aria-pressed')).toBe('true');
+    expect(toggle().getAttribute('aria-label')).toBe('Mercator view');
+    expect(mapProjection()).toBe('globe');
+
+    toggle().click();
+    fixture.detectChanges();
+    expect(toggle().getAttribute('aria-pressed')).toBe('false');
+    expect(mapProjection()).toBe('mercator');
   });
 });
 

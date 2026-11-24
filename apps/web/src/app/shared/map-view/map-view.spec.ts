@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { mapColors } from '../../../../../../tokens/tokens.ts';
 import { MapView } from './map-view';
+import { buildMapStyle } from './map-view.style';
 
 type FakeStyle = { layers: { id: string; paint?: Record<string, unknown> }[] };
 type FakeMapInstance = { options: { style: FakeStyle; attributionControl?: boolean }; setStyle: ReturnType<typeof vi.fn>; remove: ReturnType<typeof vi.fn> };
@@ -99,5 +100,29 @@ describe('MapView', () => {
     fixture.destroy();
 
     expect(mapLibre.instances[0].remove).toHaveBeenCalledTimes(1);
+  });
+
+  it('creates the map with the globe projection when the projection input is globe', async () => {
+    const fixture = TestBed.createComponent(MapView);
+    fixture.componentRef.setInput('projection', 'globe');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect((mapLibre.instances[0].options.style as { projection?: unknown }).projection).toEqual({ type: 'globe' });
+  });
+
+  it('switches to the globe projection and keeps the states when the projection input changes', async () => {
+    const fixture = TestBed.createComponent(MapView);
+    fixture.componentRef.setInput('states', { FR: 'visited' });
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    fixture.componentRef.setInput('projection', 'globe');
+    fixture.detectChanges();
+    TestBed.flushEffects();
+
+    const map = mapLibre.instances[0];
+    expect(map.setStyle).toHaveBeenCalledTimes(1);
+    expect(map.setStyle.mock.calls[0][0]).toEqual(buildMapStyle({ FR: 'visited' }, 'day', 'globe'));
   });
 });

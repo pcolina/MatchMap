@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { appVersion } from '../../core/app-version';
+import { MapProjectionStore } from '../../core/map-projection/map-projection.store';
 import { ThemeStore } from '../../core/theme/theme.store';
 import { AuthStore } from '../../features/auth/state/auth.store';
 import { AccountStore } from '../../features/account/state/account.store';
@@ -17,12 +18,12 @@ import { StatsResume } from '../stats-resume/stats-resume';
   imports: [LayoutHeader, MapView, MapTopControls, MapBottomControls, StatsResume, LayoutFooter, AccountSheet, AboutDialog],
   template: `<section class="main-layout">
     <app-layout-header />
-    <div class="map-area">
+    <div class="map-area" [class.globe]="projection.globe()">
       <app-map-top-controls [accountOpen]="accountOpen()" (accountPressed)="accountOpen.set(true)" />
-      <app-map-view />
+      <app-map-view [projection]="projection.projection()" />
     </div>
     <app-stats-resume />
-    <app-map-bottom-controls />
+    <app-map-bottom-controls [globeActive]="projection.globe()" (pressed)="projection.toggle()" />
     <app-layout-footer />
     <app-account-sheet
       [open]="accountOpen()"
@@ -45,6 +46,7 @@ export class MainLayout {
   protected readonly account = inject(AccountStore);
   protected readonly auth = inject(AuthStore);
   protected readonly theme = inject(ThemeStore);
+  protected readonly projection = inject(MapProjectionStore);
   protected readonly version = appVersion;
 
   constructor() {

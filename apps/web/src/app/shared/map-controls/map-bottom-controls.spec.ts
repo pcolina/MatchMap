@@ -55,4 +55,22 @@ describe('MapBottomControls', () => {
 
     expect(root.querySelector('[data-icon]')?.getAttribute('data-icon')).toBe('globeWorld');
   });
+
+  it('emits pressed once when the view toggle is clicked', () => {
+    TestBed.configureTestingModule({
+      imports: [MapBottomControls],
+      providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerMap, ...mapControlIcons })],
+    });
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('en', en);
+    translate.use('en');
+    const fixture = TestBed.createComponent(MapBottomControls);
+    const pressed = vi.fn();
+    fixture.componentInstance.pressed.subscribe(pressed);
+    fixture.detectChanges();
+
+    (fixture.nativeElement as HTMLElement).querySelector('button')?.click();
+
+    expect(pressed).toHaveBeenCalledTimes(1);
+  });
 });
