@@ -18,7 +18,7 @@ import { StatsResume } from '../stats-resume/stats-resume';
   imports: [LayoutHeader, MapView, MapTopControls, MapBottomControls, StatsResume, LayoutFooter, AccountSheet, AboutDialog],
   template: `<section class="main-layout">
     <app-layout-header />
-    <div class="map-area">
+    <div class="map-area" [class.globe]="projection.globe()">
       <app-map-top-controls [accountOpen]="accountOpen()" (accountPressed)="accountOpen.set(true)" />
       <app-map-view [projection]="projection.projection()" />
     </div>

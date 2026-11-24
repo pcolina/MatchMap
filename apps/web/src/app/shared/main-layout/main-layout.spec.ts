@@ -189,6 +189,25 @@ describe('MainLayout', () => {
     expect(css).toMatch(/@media\s*\(min-width:\s*601px\)\s*\{[\s\S]*app-stats-resume\s*\{[^}]*overflow:\s*hidden/);
   });
 
+  it('paints the map area with the accent colour in globe mode', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/\.map-area\.globe\s*\{[^}]*background-color:\s*var\(--mm-color-accent\);/);
+  });
+
+  it('marks the map area as globe when the globe projection is on', async () => {
+    localStorage.setItem('matchmap.mapProjection', 'globe');
+    try {
+      const fixture = TestBed.createComponent(MainLayout);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect((fixture.nativeElement as HTMLElement).querySelector('.map-area')?.classList.contains('globe')).toBe(true);
+    } finally {
+      localStorage.removeItem('matchmap.mapProjection');
+    }
+  });
+
   it('keeps the phone panel above the bottom safe-area inset', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
