@@ -28,3 +28,17 @@ describe('web map style parity with the shared style', () => {
     expect(buildMapStyle(states, scheme)).toEqual(sharedStyle(states, scheme));
   });
 });
+
+describe('web map style projection', () => {
+  const states = { FR: 'visited' as const };
+
+  it('adds the globe projection to the style in both schemes', () => {
+    expect(buildMapStyle(states, 'day', 'globe')).toEqual({ ...sharedStyle(states, 'day'), projection: { type: 'globe' } });
+    expect(buildMapStyle(states, 'night', 'globe')).toEqual({ ...sharedStyle(states, 'night'), projection: { type: 'globe' } });
+  });
+
+  it('keeps the Mercator style equal to the shared style, with no projection field', () => {
+    expect(buildMapStyle(states, 'day', 'mercator')).toEqual(sharedStyle(states, 'day'));
+    expect(buildMapStyle(states, 'day')).toEqual(sharedStyle(states, 'day'));
+  });
+});
