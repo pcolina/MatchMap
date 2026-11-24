@@ -59,9 +59,14 @@
     }
   },
   "account": {
+    "avatar": {
+      "labelWithPending": "Cuenta, {{count}} notificaciones sin leer"
+    },
     "sheet": {
       "close": "Cerrar",
       "profile": "Ver perfil",
+      "notifications": "Notificaciones",
+      "notificationsWithPending": "Notificaciones, {{count}} sin leer",
       "language": "Idioma",
       "theme": "Modo claro u oscuro",
       "aboutItem": "Acerca de matchMap",

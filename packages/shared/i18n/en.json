@@ -59,9 +59,14 @@
     }
   },
   "account": {
+    "avatar": {
+      "labelWithPending": "Account, {{count}} unread notifications"
+    },
     "sheet": {
       "close": "Close",
       "profile": "View profile",
+      "notifications": "Notifications",
+      "notificationsWithPending": "Notifications, {{count}} unread",
       "language": "Language",
       "theme": "Light or dark mode",
       "aboutItem": "About matchMap",

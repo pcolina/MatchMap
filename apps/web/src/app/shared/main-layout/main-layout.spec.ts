@@ -289,6 +289,55 @@ describe('MainLayout', () => {
     expect(toggle().getAttribute('aria-pressed')).toBe('false');
     expect(mapProjection()).toBe('mercator');
   });
+
+
+  it('shows the red dot and the pending count on the avatar when notifications are pending', async () => {
+    localStorage.setItem('matchmap.notifications.pending', '2');
+    try {
+      const fixture = TestBed.createComponent(MainLayout);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const root = fixture.nativeElement as HTMLElement;
+      const accountButton = root.querySelector('[data-column="top-right"] button') as HTMLButtonElement;
+
+      expect(root.querySelector('[data-testid="notification-dot"]')).not.toBeNull();
+      expect(accountButton.getAttribute('aria-label')).toBe('Account, 2 unread notifications');
+    } finally {
+      localStorage.removeItem('matchmap.notifications.pending');
+    }
+  });
+
+  it('shows the Notifications row second in the account sheet', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    (root.querySelector('[data-column="top-right"] button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    const rows = Array.from(root.querySelectorAll('app-account-sheet button[data-row]')).map((row) => row.textContent?.trim());
+    expect(rows[1]).toBe('Notifications');
+  });
+
+  it('shows the pending count as a badge in the notifications row of the sheet', async () => {
+    localStorage.setItem('matchmap.notifications.pending', '2');
+    try {
+      const fixture = TestBed.createComponent(MainLayout);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const root = fixture.nativeElement as HTMLElement;
+      (root.querySelector('[data-column="top-right"] button') as HTMLButtonElement).click();
+      fixture.detectChanges();
+
+      const row = root.querySelectorAll<HTMLButtonElement>('app-account-sheet button[data-row]')[1];
+      expect(row.querySelector('[data-testid="notification-count"]')?.textContent?.trim()).toBe('2');
+    } finally {
+      localStorage.removeItem('matchmap.notifications.pending');
+    }
+  });
 });
 
 describe('map view page size', () => {

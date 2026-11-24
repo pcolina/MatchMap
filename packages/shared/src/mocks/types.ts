@@ -4,6 +4,7 @@ export type MockUser = {
   username: string;
   password: string;
   createdAt: string;
+  unreadNotifications?: number;
 };
 
 export type RefreshSession = {

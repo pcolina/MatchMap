@@ -1,9 +1,20 @@
 import { HttpErrorResponse, HttpHeaders, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
-import { logout, refresh, signIn, type MockHttpResult } from '@matchmap/shared';
+import { logout, refresh, signIn, type MockHttpResult, type MockState } from '@matchmap/shared';
 import { getMockState, mockContext, setMockState } from './mock-state';
 
 let webRefreshCookie: string | undefined;
+
+const notificationsStorageKey = 'matchmap.notifications.pending';
+
+const applyUnreadNotifications = (email: string, state: MockState): void => {
+  const user = state.users.find((candidate) => candidate.email === email.trim().toLowerCase());
+  try {
+    localStorage.setItem(notificationsStorageKey, String(user?.unreadNotifications ?? 0));
+  } catch {
+    return;
+  }
+};
 
 export const resetWebRefreshCookie = (): void => {
   webRefreshCookie = undefined;
@@ -26,7 +37,11 @@ export const mockHttpInterceptor: HttpInterceptorFn = (request, next) => {
   const client = request.headers.get('X-Client') ?? undefined;
   if (request.method === 'POST' && path === '/api/auth/login') {
     const body = request.body as { email: string; password: string };
-    return toHttpResponse(request, signIn(getMockState(), { client, email: body.email, password: body.password }, mockContext()), client);
+    const result = signIn(getMockState(), { client, email: body.email, password: body.password }, mockContext());
+    if (result.status === 200) {
+      applyUnreadNotifications(body.email, result.state);
+    }
+    return toHttpResponse(request, result, client);
   }
   if (request.method === 'POST' && path === '/api/auth/refresh') {
     const token = client === 'web' ? webRefreshCookie : (request.body as { refreshToken?: string } | null)?.refreshToken;

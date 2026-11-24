@@ -2,7 +2,7 @@ import '@angular/compiler';
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX } from '@ng-icons/tabler-icons';
+import { tablerBell, tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { describe, expect, it } from 'vitest';
 
@@ -21,7 +21,7 @@ import { AccountSheet } from './account-sheet';
 
 @Component({
   imports: [AccountSheet],
-  template: `<app-account-sheet [open]="open()" [displayName]="name()" [email]="email()" [darkMode]="dark()" (closed)="closes = closes + 1" (signOutPressed)="signOuts = signOuts + 1" (themeToggled)="toggles = toggles + 1" (aboutPressed)="abouts = abouts + 1" />`,
+  template: `<app-account-sheet [open]="open()" [displayName]="name()" [email]="email()" [darkMode]="dark()" [pendingCount]="pending()" (closed)="closes = closes + 1" (signOutPressed)="signOuts = signOuts + 1" (themeToggled)="toggles = toggles + 1" (aboutPressed)="abouts = abouts + 1" />`,
 })
 class Host {
   signOuts = 0;
@@ -31,6 +31,7 @@ class Host {
   readonly name = signal<string | null>('Ana');
   readonly email = signal<string | null>(null);
   readonly dark = signal(false);
+  readonly pending = signal(0);
   closes = 0;
 }
 
@@ -40,7 +41,7 @@ const rowNamed = (root: HTMLElement, name: string): HTMLButtonElement =>
 const create = (name: string | null = 'Ana') => {
   TestBed.configureTestingModule({
     imports: [Host],
-    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX })],
+    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerBell, tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX })],
   });
   const translate = TestBed.inject(TranslateService);
   translate.setTranslation('en', en);
@@ -77,11 +78,11 @@ describe('AccountSheet', () => {
     expect(signOut.previousElementSibling?.tagName).toBe('HR');
   });
 
-  it('shows the rows in order: profile, language, day or night mode, about, sign out', () => {
+  it('shows the rows in order: profile, notifications, language, day or night mode, about, sign out', () => {
     const { root } = create();
     const names = Array.from(root.querySelectorAll('button[data-row]')).map((button) => button.textContent?.trim());
 
-    expect(names).toEqual(['View profile', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
+    expect(names).toEqual(['View profile', 'Notifications', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
   });
 
   it('makes day or night mode a switch that shows whether dark mode is on', () => {
@@ -101,7 +102,7 @@ describe('AccountSheet', () => {
     const { root } = create();
     const names = Array.from(root.querySelectorAll('button[data-row]')).map((button) => button.textContent?.trim());
 
-    expect(names).toEqual(['View profile', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
+    expect(names).toEqual(['View profile', 'Notifications', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
   });
 
   it('emits closed when the close control is activated', () => {
@@ -142,6 +143,46 @@ describe('AccountSheet', () => {
   it('shows the username in the accent colour and the email in smaller secondary text', () => {
     expect(css()).toMatch(/\.name\s*\{[^}]*color:\s*var\(--mm-color-accent\)/);
     expect(css()).toMatch(/\.email\s*\{[^}]*color:\s*var\(--mm-color-textSecondary\)[^}]*font-size:/);
+  });
+
+  it('shows a badge with the number of pending notifications at the end of the notifications row', () => {
+    const { fixture, host, root } = create();
+    host.pending.set(2);
+    fixture.detectChanges();
+    const row = root.querySelectorAll<HTMLButtonElement>('button[data-row]')[1];
+    const badge = row.querySelector('[data-testid="notification-count"]') as HTMLElement;
+
+    expect(badge).not.toBeNull();
+    expect(badge.textContent?.trim()).toBe('2');
+    expect(badge.getAttribute('aria-hidden')).toBe('true');
+    expect(row.lastElementChild).toBe(badge);
+  });
+
+  it('names the notifications row with the number of pending notifications', () => {
+    const { fixture, host, root } = create();
+    host.pending.set(2);
+    fixture.detectChanges();
+    const row = root.querySelectorAll<HTMLButtonElement>('button[data-row]')[1];
+
+    expect(row.getAttribute('aria-label')).toBe('Notifications, 2 unread');
+  });
+
+  it('shows no badge and keeps the plain name of the notifications row when nothing is pending', () => {
+    const { root } = create();
+    const row = root.querySelectorAll<HTMLButtonElement>('button[data-row]')[1];
+
+    expect(row.querySelector('[data-testid="notification-count"]')).toBeNull();
+    expect(row.hasAttribute('aria-label')).toBe(false);
+  });
+
+  it('does nothing when the notifications row is pressed', () => {
+    const { root, host } = create();
+    const row = rowNamed(root, 'Notifications');
+
+    row.click();
+
+    expect(row.tagName).toBe('BUTTON');
+    expect(host.signOuts + host.toggles + host.abouts + host.closes).toBe(0);
   });
 
   it('emits signOutPressed when sign out is pressed', () => {
@@ -192,7 +233,7 @@ describe('AccountSheet', () => {
     const { root } = create();
     const rows = Array.from(root.querySelectorAll('button[data-row]'));
 
-    expect(rows.length).toBe(5);
+    expect(rows.length).toBe(6);
     expect(rows.every((row) => row.querySelector('ng-icon') !== null)).toBe(true);
   });
 
