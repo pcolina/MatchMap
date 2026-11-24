@@ -30,3 +30,12 @@ Each task names its failing test first, then the code that makes it pass. One ta
 ## Translations to review (for the PR)
 
 None. The brand name `matchMap` is not translated, and the labels use keys that already exist.
+
+## 6. Changes approved on review: pending count in the bell, shared account button
+
+- [ ] **6.1 Account button tests.** New `apps/web/src/app/shared/account-button/account-button.spec.ts`: the button is named "Account" with no pending notification and "Account, 2 unread notifications" with 2 pending; with pending notifications a `notification-dot` marked `aria-hidden="true"` is shown; with none no dot; while loading a skeleton replaces the icon; `aria-expanded` follows `accountOpen`; a click emits `accountPressed` once. Run them and show the failure.
+- [ ] **6.2 Account button.** Create `app-account-button` (`account-button.ts` and `account-button.css`) from the account button of `map-top-controls`, with the inputs `avatarLoading`, `accountOpen`, `pendingCount` and the output `accountPressed`. `MapTopControls` uses it. Make 6.1 pass, and keep the `map-top-controls` tests green.
+- [ ] **6.3 Header tests.** In `layout-header.spec.ts`, replace the dot tests with: the bell shows the pending count inside the red dot when `pendingCount` is 2 (text "2", `aria-hidden="true"`); no dot when it is 0; the profile button is the `app-account-button` and shows its dot while notifications are pending. Run them and show the failure.
+- [ ] **6.4 Header.** Add the `pendingCount` input to `LayoutHeader`; the bell shows the count in its dot; the profile is `<app-account-button>`. `MainLayout` passes `[pendingCount]="notifications.count()"` to the header. Make 6.3 pass, with the main layout tests green.
+- [ ] **6.5 Full check.** `pnpm check` and `pnpm build:web`, with the summary in the PR.
+- Note from review: the notifications button is removed from the desktop header. Tasks 6.3 and 6.4 apply to the profile button only, and the bell count is not built.
