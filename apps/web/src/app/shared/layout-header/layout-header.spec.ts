@@ -82,10 +82,18 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*background:\s*transparent;/);
   });
 
-  it('keeps only the 2 px outline on keyboard focus, without the large halo', () => {
+  it('shows the narrower halo on keyboard focus, not the large global one', () => {
     const css = cssOf('layout-header/layout-header.css');
 
-    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*none;/);
+    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
+    expect(css).not.toMatch(/\.control:focus-visible\s*\{[^}]*var\(--mm-space-10\)/);
+  });
+
+  it('places the notification count 1 px to the left and 1 px lower than the top right corner', () => {
+    const css = cssOf('layout-header/layout-header.css');
+
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*top:\s*1px;/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*right:\s*1px;/);
   });
 
   it('draws the hover circle smaller than the 44 px button, behind the icon', () => {

@@ -74,7 +74,8 @@
 }
 
 :host(.plain) .control:focus-visible {
-  box-shadow: none;
+  box-shadow: 0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent),
+    0 0 var(--mm-space-3) var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 35%, transparent);
 }
 
 :host(:not(.plain)) .control {

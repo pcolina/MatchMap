@@ -57,13 +57,14 @@
 .control:focus-visible {
   outline: 2px solid var(--mm-color-accent);
   outline-offset: 2px;
-  box-shadow: none;
+  box-shadow: 0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent),
+    0 0 var(--mm-space-3) var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 35%, transparent);
 }
 
 .notification-dot {
   position: absolute;
-  top: var(--mm-space-0);
-  right: var(--mm-space-0);
+  top: 1px;
+  right: 1px;
   box-sizing: border-box;
   width: var(--mm-space-3);
   height: var(--mm-space-3);

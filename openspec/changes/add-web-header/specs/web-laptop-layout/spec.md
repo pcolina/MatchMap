@@ -66,4 +66,4 @@ On the right of the header the header SHALL show two buttons from left to right:
 
 #### Scenario: Keyboard focus is visible
 - **WHEN** a header button has keyboard focus
-- **THEN** a 2 px accent outline with a 2 px offset is shown around it
+- **THEN** a 2 px accent outline with a 2 px offset is shown around it, with a narrow accent halo of the focus style
