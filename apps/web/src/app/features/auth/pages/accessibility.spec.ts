@@ -88,6 +88,23 @@ describe('accessibility of the auth pages', () => {
     expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
   });
 
+  it.each(['light', 'dark'])('the main screen with notifications pending has no axe violations in %s mode', async (mode) => {
+    localStorage.setItem('matchmap.notifications.pending', '2');
+    localStorage.setItem('matchmap.theme', mode);
+    try {
+      const element = render(MainLayout);
+      TestBed.inject(ApplicationRef).tick();
+
+      const results = await axe.run(element);
+
+      expect(element.querySelector('[data-testid="notification-dot"]')).not.toBeNull();
+      expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
+    } finally {
+      localStorage.removeItem('matchmap.notifications.pending');
+      localStorage.removeItem('matchmap.theme');
+    }
+  });
+
   it('the main screen with the globe view on has no axe violations', async () => {
     localStorage.setItem('matchmap.mapProjection', 'globe');
     try {
