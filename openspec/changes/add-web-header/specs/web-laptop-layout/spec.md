@@ -8,9 +8,9 @@ Replaced by "Header shows the brand, the notifications bell and the profile". Th
 
 ## ADDED Requirements
 
-### Requirement: Header is a full-width surface bar with the brand on the left
+### Requirement: Header is a full-width bar with the brand on the left
 
-The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, has no scroll, and uses the `surface` colour token as its background. Its height SHALL be 50 px at every laptop width. The header SHALL show the matchMap horizontal logo lockup with its text on the left: the light-background variant in the light scheme and the dark-background variant in the dark scheme.
+The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, has no scroll, and uses the `surface` colour token as its background in the light scheme and the `accent` colour token in the dark scheme, with the `onAccent` colour token for its text and icons in the dark scheme. Its height SHALL be 50 px at every laptop width. The header SHALL show the matchMap horizontal logo lockup with its text on the left, always the light-background variant, which reads on both the surface and the accent background.
 
 #### Scenario: Header is 50 px high at every width
 - **WHEN** the laptop layout is shown at any width from 601 px upwards
@@ -20,13 +20,17 @@ The laptop layout SHALL show a header at the top of the screen that spans the fu
 - **WHEN** the laptop layout is shown
 - **THEN** the header is at the top of the screen and its width equals the viewport width
 
-#### Scenario: Header has the surface background
-- **WHEN** the laptop layout is shown in the light and in the dark scheme
-- **THEN** the header background is the `surface` token of that scheme
-
-#### Scenario: Logo follows the scheme
+#### Scenario: Header has the surface background in light
 - **WHEN** the laptop layout is shown in the light scheme
-- **THEN** the logo is the light-background variant, and in the dark scheme it is the dark-background variant
+- **THEN** the header background is the `surface` token
+
+#### Scenario: Header has the accent background in dark
+- **WHEN** the laptop layout is shown in the dark scheme
+- **THEN** the header background is the `accent` token and its icons use the `onAccent` token
+
+#### Scenario: Logo is the same in both schemes
+- **WHEN** the laptop layout is shown in the light or in the dark scheme
+- **THEN** the logo is the light-background variant
 
 #### Scenario: Logo has an accessible name
 - **WHEN** the header is read by an accessibility tool

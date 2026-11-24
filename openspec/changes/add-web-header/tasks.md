@@ -46,3 +46,10 @@ None. The brand name `matchMap` is not translated, and the labels use keys that 
 - [x] **7.2 Header.** Add the notifications button with its count dot back to `layout-header.ts`, and its `pendingCount` use. Make 7.1 pass.
 - [x] **7.3 Sheet tests.** In `account-sheet.spec.ts` (CSS read from disk): the notifications row has the class `notifications-row`, and a media query for `min-width: 601px` sets it to `display: none`. Run them and show the failure.
 - [x] **7.4 Sheet.** Add the class `notifications-row` and the media rule in `account-sheet.css`. Make 7.3 pass.
+
+## 8. Dark header in the accent colour
+
+- [ ] **8.1 Header tests.** In `layout-header.spec.ts`: the logo is the light-background variant in both schemes; the header has the class `dark` when `darkMode` is true; the CSS gives `.layout-header.dark` the `accent` background and sets `--mm-color-text` to `var(--mm-color-onAccent)`. Run them and show the failure.
+- [ ] **8.2 Header.** In `layout-header.ts`, the logo is always the light-background variant and the host has the `dark` class from `darkMode`; in `layout-header.css`, `.layout-header.dark` sets the accent background and the `onAccent` text token. Make 8.1 pass.
+- [ ] **8.3 Contrast check.** Measure `onAccent` (`#04201C`) against `accent` (`#2DD4BF`) in the dark scheme, and the logo against the accent. Record the values in the PR. Stop and ask if one is below 4.5:1.
+- [ ] **8.4 Full check.** `pnpm check` and `pnpm build:web`, with the summary in the PR.
