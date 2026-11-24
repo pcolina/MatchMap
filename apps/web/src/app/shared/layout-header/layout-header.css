@@ -55,8 +55,10 @@
 }
 
 .control:focus-visible {
-  outline: 2px solid var(--mm-color-accent);
-  outline-offset: 2px;
+  outline: none;
+}
+
+.control:focus-visible::before {
   box-shadow: 0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent),
     0 0 var(--mm-space-3) var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 35%, transparent);
 }
