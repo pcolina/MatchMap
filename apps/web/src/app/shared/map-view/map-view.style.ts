@@ -1,4 +1,4 @@
-import type { StyleSpecification } from 'maplibre-gl';
+import type { LayerSpecification, StyleSpecification } from 'maplibre-gl';
 import { buildMapStyle as buildSharedMapStyle } from '@matchmap/shared';
 import { colors, mapColors } from '../../../../../../tokens/tokens.ts';
 import type { MapProjection } from '../../core/map-projection/map-projection.store';
@@ -24,5 +24,16 @@ export const buildMapStyle = (
     },
   }) as unknown as StyleSpecification;
 
-  return projection === 'globe' ? { ...style, projection: { type: 'globe' } } : style;
+  if (projection !== 'globe') {
+    return style;
+  }
+
+  const accent = scheme === 'day' ? colors.light.accent : colors.dark.accent;
+  return {
+    ...style,
+    projection: { type: 'globe' },
+    layers: style.layers.map((layer) =>
+      layer.id === 'background' ? ({ ...layer, paint: { 'background-color': accent } } as LayerSpecification) : layer,
+    ),
+  };
 };
