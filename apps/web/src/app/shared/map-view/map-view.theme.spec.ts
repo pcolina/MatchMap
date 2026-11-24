@@ -48,11 +48,12 @@ describe('MapView follows the day or night mode of the app', () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
     await fixture.whenStable();
+    await vi.waitFor(() => expect(recorded.created).toHaveLength(1));
 
     TestBed.inject(ThemeStore).toggle();
     fixture.detectChanges();
 
-    expect(recorded.setStyle.at(-1)).toEqual(buildMapStyle({}, 'night'));
+    await vi.waitFor(() => expect(recorded.setStyle.at(-1)).toEqual(buildMapStyle({}, 'night')));
   });
 
   it('draws the map in day colours when the app is in light mode, even if the system is dark', async () => {
@@ -61,7 +62,6 @@ describe('MapView follows the day or night mode of the app', () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
     await fixture.whenStable();
-
-    expect(recorded.created.at(-1)?.style).toEqual(buildMapStyle({}, 'day'));
+    await vi.waitFor(() => expect(recorded.created.at(-1)?.style).toEqual(buildMapStyle({}, 'day')));
   });
 });
