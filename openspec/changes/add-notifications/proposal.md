@@ -18,7 +18,7 @@ The main screen has an account button at the top right (`web-mobile-layout`, "To
 - **New:** `notifications`. The rule for what a pending notification is, and where the pending count is kept on the device.
 - **Modified:** `web-account-sheet`. The requirement "Rows form one list in order" gets the Notifications row between view profile and language.
 - **Modified:** `web-mobile-layout`. The requirement "Top-right avatar control" gets the red dot and the accessible name with the pending count.
-- **New, mobile:** the mobile app has no account sheet and no top-right avatar yet (checked in `openspec/specs/mobile-main-layout` and `openspec/specs/mobile-startup`, and in `apps/mobile/src`). The account button, the sheet and the avatar must exist on mobile before the Notifications row and the dot can be added. [NEEDS CLARIFICATION: should this change also create the mobile account button and sheet, with the rows that the web sheet has (view profile, language, day or night mode, about, sign out), or should mobile be a separate change that comes first?]
+- **Mobile:** the mobile account button, sheet and top-right avatar are a separate change (`add-mobile-account-sheet`, to be opened). The mobile part of this change starts only after that change is archived.
 
 ## Out of scope
 
@@ -32,7 +32,7 @@ The main screen has an account button at the top right (`web-mobile-layout`, "To
 
 - `web-account-sheet` (`openspec/specs/web-account-sheet`).
 - `web-mobile-layout` (`openspec/specs/web-mobile-layout`).
-- `mobile-main-layout` (`openspec/specs/mobile-main-layout`), for the mobile part.
+- `add-mobile-account-sheet` (separate change, not yet opened), for the mobile part.
 - No API contract: no notification operation exists in `matchmap-api/contracts/` (checked at commit `ca97e41`), and this change does not add one.
 
 ## Decisions
@@ -44,4 +44,4 @@ The main screen has an account button at the top right (`web-mobile-layout`, "To
 ## Open questions
 
 - [NEEDS CLARIFICATION: how does a notification arrive on the device, and how does it become read? The row does nothing and there is no API, so with the current answers a notification can never be created and the dot can never clear. Options: (a) a local list that this change seeds with fixed sample notifications so the dot can be seen; (b) a way to mark all as read from the account sheet, which would be an action on the row, so it contradicts "the row does nothing"; (c) the list and its read state come later, and this change only defines how the dot reads a pending count stored on the device.]
-- [NEEDS CLARIFICATION: the mobile account button and sheet, see "What Changes".]
+- Only one change can be open at a time (CLAUDE.md §2). `add-notifications` is open, so `add-mobile-account-sheet` cannot be opened until this change is archived or paused. [NEEDS CLARIFICATION: archive order. Pause this change and open `add-mobile-account-sheet` first, or finish the web part of this change first?]
