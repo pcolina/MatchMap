@@ -2,17 +2,20 @@
 
 ## Why
 
-The web main screen on laptop-sized viewports has a header that is only an empty accent bar (`web-laptop-layout`, "Header is an empty full-width accent bar"). The header has no content, so the screen has no place for the app's top-level navigation or for the account. This change defines what the header shows.
+The web main screen on laptop-sized viewports has a header that is only an empty accent bar (`web-laptop-layout`, "Header is an empty full-width accent bar"). The screen has no place for the brand or for the account and notifications controls. This change defines what the header shows.
 
 ## What Changes
 
-- [NEEDS CLARIFICATION: what does the header show? Options to choose from, or others: the matchMap logo, the page or section name, the account button that opens the account sheet, a language or theme switch, navigation links.]
-- [NEEDS CLARIFICATION: does the header keep its 50 px height at every laptop width, as the current spec says?]
-- [NEEDS CLARIFICATION: where does the account button go? Today it is the avatar at the top right of the map, and the phone layout keeps it there.]
+- **Left:** the matchMap logo with its text, the horizontal lockup. It uses `logo/lockup/svg-sora/horizontal-on-light.svg` in light mode and `logo/lockup/svg-sora/horizontal-on-dark.svg` in dark mode. The brand is written "matchMap", as in `docs/brand.md`.
+- **Right, at the far right:** the profile button. It looks and behaves like the account avatar of the map (`map.controls.account`): it opens the account sheet. It does not show the notification dot.
+- **Right, to the left of the profile button:** the notifications bell, with a red dot. The bell and its dot are painted only: the dot is always shown, and the bell has no logic (no count from the store and no action).
+- **Keyboard:** the bell and the profile button are native buttons with an accessible name from i18n keys (`account.sheet.notifications` and `map.controls.account`). Tab order goes left to right: bell, then profile. The focus style is the same as the map controls: a 2 px accent outline with a 2 px offset.
+- The logo is an image with the accessible name "matchMap" and is not a link, because the header has no target yet.
+- Light and dark mode: the logo follows the app mode, and the header colours come from the tokens.
 
 ## Capabilities
 
-- **Modified:** `web-laptop-layout`. The requirement "Header is an empty full-width accent bar" changes from an empty bar to the content defined here. Its scenarios for full width and the accent background stay unless the clarifications change them.
+- **Modified:** `web-laptop-layout`. The requirement "Header is an empty full-width accent bar" becomes the header with the content above. Its scenarios for full width stay.
 
 ## Out of scope
 
@@ -20,12 +23,19 @@ The web main screen on laptop-sized viewports has a header that is only an empty
 - The phone layout (`web-mobile-layout`). It has no header and does not change.
 - The tablet (iPad) layout, which needs its own change.
 - The mobile app.
+- Any action on the bell, and reading the notification count in the header.
 
 ## Depends on
 
 - `web-laptop-layout` (`openspec/specs/web-laptop-layout`).
-- `web-account-sheet` (`openspec/specs/web-account-sheet`), only if the account button moves to the header.
+- `web-account-sheet` (`openspec/specs/web-account-sheet`): the profile button opens the sheet.
+- `notifications` (`openspec/specs/notifications`): only for the visual dot, which is not connected to the store in this change.
 
 ## Decisions
 
-- None yet. Waiting for the clarifications above.
+- The header shows the logo at the left and the bell and profile at the right, in that order from the right: profile, then bell.
+
+## Open questions
+
+- [NEEDS CLARIFICATION: does the header keep its 50 px height at every laptop width, as the current spec says?]
+- [NEEDS CLARIFICATION: on laptop, does the avatar at the top right of the map stay, or does the profile button in the header replace it? Both would open the same sheet.]
