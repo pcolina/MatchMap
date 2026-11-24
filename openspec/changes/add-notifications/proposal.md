@@ -38,10 +38,11 @@ The main screen has an account button at the top right (`web-mobile-layout`, "To
 ## Decisions
 
 - Local only: notifications and their read state are kept on the device.
+- The source of notifications and their read state are deferred; this change reads only the stored pending count.
 - The Notifications row sits second in the account sheet, after view profile.
 - The red dot appears when at least one notification is pending, and the avatar's accessible name carries the count.
 
 ## Open questions
 
-- [NEEDS CLARIFICATION: how does a notification arrive on the device, and how does it become read? The row does nothing and there is no API, so with the current answers a notification can never be created and the dot can never clear. Options: (a) a local list that this change seeds with fixed sample notifications so the dot can be seen; (b) a way to mark all as read from the account sheet, which would be an action on the row, so it contradicts "the row does nothing"; (c) the list and its read state come later, and this change only defines how the dot reads a pending count stored on the device.]
+- Where notifications come from and how they become read is not defined in this change and will be decided later. This change only defines how the dot reads the pending count stored on the device.
 - Only one change can be open at a time (CLAUDE.md §2). `add-notifications` is open, so `add-mobile-account-sheet` cannot be opened until this change is archived or paused. [NEEDS CLARIFICATION: archive order. Pause this change and open `add-mobile-account-sheet` first, or finish the web part of this change first?]
