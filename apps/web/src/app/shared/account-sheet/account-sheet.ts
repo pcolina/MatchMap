@@ -33,6 +33,7 @@ import { hideDialog, showDialog } from '../native-dialog';
 
     <hr class="divider" />
     <button type="button" class="row" data-row><ng-icon name="tablerUser" />{{ 'account.sheet.profile' | translate }}</button>
+    <button type="button" class="row" data-row><ng-icon name="tablerBell" />{{ 'account.sheet.notifications' | translate }}</button>
     <button type="button" class="row" data-row><ng-icon name="tablerLanguage" />{{ 'account.sheet.language' | translate }}</button>
     <button type="button" class="row" data-row role="switch" [attr.aria-checked]="darkMode()" (click)="themeToggled.emit()"><ng-icon name="tablerSunMoon" />{{ 'account.sheet.theme' | translate }}<span class="track" aria-hidden="true"></span></button>
     <button type="button" class="row" data-row (click)="aboutPressed.emit()"><ng-icon name="tablerInfoCircle" />{{ 'account.sheet.aboutItem' | translate }}</button>

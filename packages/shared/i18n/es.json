@@ -62,6 +62,7 @@
     "sheet": {
       "close": "Cerrar",
       "profile": "Ver perfil",
+      "notifications": "Notificaciones",
       "language": "Idioma",
       "theme": "Modo claro u oscuro",
       "aboutItem": "Acerca de matchMap",

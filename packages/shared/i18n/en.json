@@ -62,6 +62,7 @@
     "sheet": {
       "close": "Close",
       "profile": "View profile",
+      "notifications": "Notifications",
       "language": "Language",
       "theme": "Light or dark mode",
       "aboutItem": "About matchMap",

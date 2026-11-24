@@ -2,7 +2,7 @@ import '@angular/compiler';
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX } from '@ng-icons/tabler-icons';
+import { tablerBell, tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX } from '@ng-icons/tabler-icons';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { describe, expect, it } from 'vitest';
 
@@ -40,7 +40,7 @@ const rowNamed = (root: HTMLElement, name: string): HTMLButtonElement =>
 const create = (name: string | null = 'Ana') => {
   TestBed.configureTestingModule({
     imports: [Host],
-    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX })],
+    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerBell, tablerInfoCircle, tablerLanguage, tablerLogout, tablerSunMoon, tablerUser, tablerX })],
   });
   const translate = TestBed.inject(TranslateService);
   translate.setTranslation('en', en);
@@ -77,11 +77,11 @@ describe('AccountSheet', () => {
     expect(signOut.previousElementSibling?.tagName).toBe('HR');
   });
 
-  it('shows the rows in order: profile, language, day or night mode, about, sign out', () => {
+  it('shows the rows in order: profile, notifications, language, day or night mode, about, sign out', () => {
     const { root } = create();
     const names = Array.from(root.querySelectorAll('button[data-row]')).map((button) => button.textContent?.trim());
 
-    expect(names).toEqual(['View profile', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
+    expect(names).toEqual(['View profile', 'Notifications', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
   });
 
   it('makes day or night mode a switch that shows whether dark mode is on', () => {
@@ -101,7 +101,7 @@ describe('AccountSheet', () => {
     const { root } = create();
     const names = Array.from(root.querySelectorAll('button[data-row]')).map((button) => button.textContent?.trim());
 
-    expect(names).toEqual(['View profile', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
+    expect(names).toEqual(['View profile', 'Notifications', 'Language', 'Light or dark mode', 'About matchMap', 'Sign out']);
   });
 
   it('emits closed when the close control is activated', () => {
@@ -142,6 +142,16 @@ describe('AccountSheet', () => {
   it('shows the username in the accent colour and the email in smaller secondary text', () => {
     expect(css()).toMatch(/\.name\s*\{[^}]*color:\s*var\(--mm-color-accent\)/);
     expect(css()).toMatch(/\.email\s*\{[^}]*color:\s*var\(--mm-color-textSecondary\)[^}]*font-size:/);
+  });
+
+  it('does nothing when the notifications row is pressed', () => {
+    const { root, host } = create();
+    const row = rowNamed(root, 'Notifications');
+
+    row.click();
+
+    expect(row.tagName).toBe('BUTTON');
+    expect(host.signOuts + host.toggles + host.abouts + host.closes).toBe(0);
   });
 
   it('emits signOutPressed when sign out is pressed', () => {
@@ -192,7 +202,7 @@ describe('AccountSheet', () => {
     const { root } = create();
     const rows = Array.from(root.querySelectorAll('button[data-row]'));
 
-    expect(rows.length).toBe(5);
+    expect(rows.length).toBe(6);
     expect(rows.every((row) => row.querySelector('ng-icon') !== null)).toBe(true);
   });
 
