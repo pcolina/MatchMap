@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-account-button',
   imports: [NgIcon],
+  host: { '[class.plain]': 'plain()' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<button type="button" class="control" [attr.aria-label]="accountLabel()" [attr.aria-expanded]="accountOpen()" (click)="accountPressed.emit()">
     @if (avatarLoading()) {
@@ -22,6 +23,7 @@ export class AccountButton {
   readonly avatarLoading = input(false);
   readonly accountOpen = input(false);
   readonly pendingCount = input(0);
+  readonly plain = input(false);
   readonly accountPressed = output<void>();
   private readonly translate = inject(TranslateService);
 

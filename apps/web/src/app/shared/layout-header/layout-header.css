@@ -38,7 +38,19 @@
   cursor: pointer;
 }
 
+.control::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--mm-space-8);
+  height: var(--mm-space-8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .control ng-icon {
+  position: relative;
   font-size: 24px;
 }
 
@@ -52,9 +64,9 @@
   top: var(--mm-space-0);
   right: var(--mm-space-0);
   box-sizing: border-box;
-  width: var(--mm-space-4);
-  height: var(--mm-space-4);
-  padding: 2px 0 0;
+  width: var(--mm-space-3);
+  height: var(--mm-space-3);
+  padding: 0;
   border-radius: 50%;
   background: var(--mm-color-danger);
   color: var(--mm-color-onDanger);
@@ -68,4 +80,10 @@
 .layout-header.dark {
   background-color: var(--mm-color-accent);
   --mm-color-text: var(--mm-color-onAccent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .control:hover::before {
+    background: var(--mm-color-accentSubtle);
+  }
 }

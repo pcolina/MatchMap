@@ -78,8 +78,16 @@ describe('LayoutHeader', () => {
     const css = cssOf('account-button/account-button.css');
 
     expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*border:\s*0;/);
-    expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*box-shadow:\s*none;/);
+    expect(css).toMatch(/:host\(:not\(\.plain\)\) \.control\s*\{[^}]*box-shadow:\s*var\(--mm-elevation-card\);/);
     expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*background:\s*transparent;/);
+  });
+
+  it('draws the hover circle smaller than the 44 px button, behind the icon', () => {
+    const css = cssOf('layout-header/layout-header.css');
+
+    expect(css).toMatch(/\.control::before\s*\{[^}]*width:\s*var\(--mm-space-8\);/);
+    expect(css).toMatch(/\.control::before\s*\{[^}]*height:\s*var\(--mm-space-8\);/);
+    expect(css).toMatch(/\.control ng-icon\s*\{[^}]*position:\s*relative;/);
   });
 
   it('uses the accent background and the onAccent text token in the dark scheme', () => {
@@ -152,8 +160,8 @@ describe('LayoutHeader', () => {
 
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*background:\s*var\(--mm-color-danger\);/);
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*border-radius:\s*50%;/);
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*width:\s*var\(--mm-space-4\);/);
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*height:\s*var\(--mm-space-4\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*width:\s*var\(--mm-space-3\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*height:\s*var\(--mm-space-3\);/);
   });
 
   it('shows a 2 px accent outline with a 2 px offset on keyboard focus of the header buttons', () => {

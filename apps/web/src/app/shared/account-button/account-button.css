@@ -10,7 +10,6 @@
   border-radius: 50%;
   border: 1px solid var(--mm-color-borderStrong);
   background: var(--mm-color-surface);
-  box-shadow: var(--mm-elevation-card);
   color: var(--mm-color-text);
   display: inline-flex;
   align-items: center;
@@ -48,4 +47,32 @@
   .control:hover {
     background: var(--mm-color-accentSubtle);
   }
+
+  :host(.plain) .control:hover::before {
+    background: var(--mm-color-accentSubtle);
+  }
+}
+
+:host(.plain) .control {
+  border: 0;
+  background: transparent;
+}
+
+:host(.plain) .control::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--mm-space-8);
+  height: var(--mm-space-8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+:host(.plain) .control ng-icon {
+  position: relative;
+}
+
+:host(:not(.plain)) .control {
+  box-shadow: var(--mm-elevation-card);
 }
