@@ -34,15 +34,19 @@ The laptop layout SHALL show a header at the top of the screen that spans the fu
 
 ### Requirement: Header controls at the right
 
-On the right of the header, from left to right, the header SHALL show a notifications button with a red dot and then a profile button. The notifications button and its red dot are painted only: the dot is always shown and the button does nothing when it is activated. The profile button SHALL open the account sheet and SHALL NOT show the notification dot. Both buttons SHALL be keyboard reachable with a visible focus.
+On the right of the header, from left to right, the header SHALL show a notifications button and then a profile button. While at least one notification is pending, the notifications button SHALL show a red dot with the number of pending notifications inside it, and while none is pending it SHALL show no dot. The notifications button does nothing when it is activated. The profile button SHALL be the same control as the account button of the phone layout (`app-account-button`), with the same style, the same accessible name, the same red dot while notifications are pending, and the same action: it opens the account sheet. Both buttons SHALL be keyboard reachable with a visible focus.
 
 #### Scenario: Bell and profile order
 - **WHEN** the laptop layout is shown
 - **THEN** the notifications button is to the left of the profile button, and both are at the right of the header
 
-#### Scenario: Notifications dot is always painted
-- **WHEN** the laptop layout is shown
-- **THEN** the notifications button shows a red dot, whatever the pending count
+#### Scenario: Notifications dot shows the pending count
+- **WHEN** two notifications are pending and the laptop layout is shown
+- **THEN** the notifications button shows a red dot with the number 2 inside it
+
+#### Scenario: No notifications dot without pending notifications
+- **WHEN** no notification is pending and the laptop layout is shown
+- **THEN** the notifications button shows no dot
 
 #### Scenario: Notifications button does nothing
 - **WHEN** the user activates the notifications button
@@ -50,7 +54,11 @@ On the right of the header, from left to right, the header SHALL show a notifica
 
 #### Scenario: Profile button opens the account sheet
 - **WHEN** the user activates the profile button
-- **THEN** the account sheet opens and the profile button has no notification dot
+- **THEN** the account sheet opens
+
+#### Scenario: Profile button shows the same dot as the phone account button
+- **WHEN** at least one notification is pending
+- **THEN** the profile button shows the same red dot as the account button of the phone layout
 
 #### Scenario: Keyboard focus order
 - **WHEN** the user moves focus with the keyboard through the header
