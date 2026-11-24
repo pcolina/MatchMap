@@ -373,7 +373,7 @@ describe('MainLayout', () => {
     await fixture.whenStable();
 
     const root = fixture.nativeElement as HTMLElement;
-    (root.querySelectorAll<HTMLButtonElement>('.layout-header button')[1]).click();
+    (root.querySelector('.layout-header app-account-button button') as HTMLButtonElement).click();
     fixture.detectChanges();
 
     expect(root.querySelector('app-account-sheet dialog')?.hasAttribute('open')).toBe(true);
