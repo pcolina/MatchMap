@@ -80,6 +80,19 @@
   color: var(--mm-color-textSecondary);
 }
 
+.count {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--mm-space-2);
+  border-radius: var(--mm-radius-pill);
+  background: var(--mm-color-danger);
+  color: var(--mm-color-onDanger);
+  font-size: inherit;
+  line-height: 20px;
+  text-align: center;
+}
+
 .sheet__header {
   display: flex;
   align-items: center;

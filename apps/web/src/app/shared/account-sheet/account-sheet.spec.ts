@@ -21,7 +21,7 @@ import { AccountSheet } from './account-sheet';
 
 @Component({
   imports: [AccountSheet],
-  template: `<app-account-sheet [open]="open()" [displayName]="name()" [email]="email()" [darkMode]="dark()" (closed)="closes = closes + 1" (signOutPressed)="signOuts = signOuts + 1" (themeToggled)="toggles = toggles + 1" (aboutPressed)="abouts = abouts + 1" />`,
+  template: `<app-account-sheet [open]="open()" [displayName]="name()" [email]="email()" [darkMode]="dark()" [pendingCount]="pending()" (closed)="closes = closes + 1" (signOutPressed)="signOuts = signOuts + 1" (themeToggled)="toggles = toggles + 1" (aboutPressed)="abouts = abouts + 1" />`,
 })
 class Host {
   signOuts = 0;
@@ -31,6 +31,7 @@ class Host {
   readonly name = signal<string | null>('Ana');
   readonly email = signal<string | null>(null);
   readonly dark = signal(false);
+  readonly pending = signal(0);
   closes = 0;
 }
 
@@ -142,6 +143,36 @@ describe('AccountSheet', () => {
   it('shows the username in the accent colour and the email in smaller secondary text', () => {
     expect(css()).toMatch(/\.name\s*\{[^}]*color:\s*var\(--mm-color-accent\)/);
     expect(css()).toMatch(/\.email\s*\{[^}]*color:\s*var\(--mm-color-textSecondary\)[^}]*font-size:/);
+  });
+
+  it('shows a badge with the number of pending notifications at the end of the notifications row', () => {
+    const { fixture, host, root } = create();
+    host.pending.set(2);
+    fixture.detectChanges();
+    const row = root.querySelectorAll<HTMLButtonElement>('button[data-row]')[1];
+    const badge = row.querySelector('[data-testid="notification-count"]') as HTMLElement;
+
+    expect(badge).not.toBeNull();
+    expect(badge.textContent?.trim()).toBe('2');
+    expect(badge.getAttribute('aria-hidden')).toBe('true');
+    expect(row.lastElementChild).toBe(badge);
+  });
+
+  it('names the notifications row with the number of pending notifications', () => {
+    const { fixture, host, root } = create();
+    host.pending.set(2);
+    fixture.detectChanges();
+    const row = root.querySelectorAll<HTMLButtonElement>('button[data-row]')[1];
+
+    expect(row.getAttribute('aria-label')).toBe('Notifications, 2 unread');
+  });
+
+  it('shows no badge and keeps the plain name of the notifications row when nothing is pending', () => {
+    const { root } = create();
+    const row = root.querySelectorAll<HTMLButtonElement>('button[data-row]')[1];
+
+    expect(row.querySelector('[data-testid="notification-count"]')).toBeNull();
+    expect(row.hasAttribute('aria-label')).toBe(false);
   });
 
   it('does nothing when the notifications row is pressed', () => {

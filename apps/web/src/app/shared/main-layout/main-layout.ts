@@ -31,6 +31,7 @@ import { StatsResume } from '../stats-resume/stats-resume';
       [displayName]="account.username()"
       [email]="account.email()"
       [darkMode]="theme.isDark()"
+      [pendingCount]="notifications.count()"
       (closed)="accountOpen.set(false)"
       (signOutPressed)="auth.signOutRemote()"
       (themeToggled)="theme.toggle()"

@@ -11,6 +11,7 @@ Each task names its failing test first, then the code that makes it pass. One ta
 
 - [x] **2.1 Row tests.** In `account-sheet.spec.ts`, add: the rows appear in the order profile, notifications, language, day or night, about, sign out; the notifications row is a button with the name from `account.sheet.notifications`; activating it sends no request and emits no output. Run them and show the failure.
 - [x] **2.2 Row and keys.** Add the notifications row in `account-sheet.ts` after the profile row, and add the key `account.sheet.notifications` to `packages/shared/i18n/en.json` and `es.json`. Make 2.1 pass. Run the `packages/shared` i18n test for matching keys.
+- [x] **2.3 Badge.** Tests first: in `account-sheet.spec.ts`, the notifications row shows a badge with the pending count at its end, its accessible name states the count from `account.sheet.notificationsWithPending`, and no badge or count shows at 0. Then add the `pendingCount` input, the badge (danger token, `--mm-radius-pill`), the key in `en.json` and `es.json`, and pass the count from `main-layout.ts`. Spec: `specs/web-account-sheet/spec.md` delta, approved by the user.
 
 ## 3. Red dot and the accessible name with the count
 
@@ -32,4 +33,5 @@ Each task names its failing test first, then the code that makes it pass. One ta
 ## Translations to review (for the PR)
 
 - `account.sheet.notifications`: en "Notifications", es "Notificaciones".
+- `account.sheet.notificationsWithPending`: en "Notifications, {{count}} unread", es "Notificaciones, {{count}} sin leer".
 - `account.avatar.labelWithPending`: en "Account, {{count}} unread notifications", es "Cuenta, {{count}} notificaciones sin leer".

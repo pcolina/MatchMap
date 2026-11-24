@@ -33,7 +33,7 @@ import { hideDialog, showDialog } from '../native-dialog';
 
     <hr class="divider" />
     <button type="button" class="row" data-row><ng-icon name="tablerUser" />{{ 'account.sheet.profile' | translate }}</button>
-    <button type="button" class="row" data-row><ng-icon name="tablerBell" />{{ 'account.sheet.notifications' | translate }}</button>
+    <button type="button" class="row" data-row [attr.aria-label]="pendingCount() > 0 ? ('account.sheet.notificationsWithPending' | translate: { count: pendingCount() }) : null"><ng-icon name="tablerBell" />{{ 'account.sheet.notifications' | translate }}@if (pendingCount() > 0) {<span class="count" data-testid="notification-count" aria-hidden="true">{{ pendingCount() }}</span>}</button>
     <button type="button" class="row" data-row><ng-icon name="tablerLanguage" />{{ 'account.sheet.language' | translate }}</button>
     <button type="button" class="row" data-row role="switch" [attr.aria-checked]="darkMode()" (click)="themeToggled.emit()"><ng-icon name="tablerSunMoon" />{{ 'account.sheet.theme' | translate }}<span class="track" aria-hidden="true"></span></button>
     <button type="button" class="row" data-row (click)="aboutPressed.emit()"><ng-icon name="tablerInfoCircle" />{{ 'account.sheet.aboutItem' | translate }}</button>
@@ -47,6 +47,7 @@ export class AccountSheet {
   readonly displayName = input<string | null>(null);
   readonly email = input<string | null>(null);
   readonly darkMode = input(false);
+  readonly pendingCount = input(0);
   readonly closed = output<void>();
   readonly signOutPressed = output<void>();
   readonly themeToggled = output<void>();
