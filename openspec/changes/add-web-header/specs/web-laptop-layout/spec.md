@@ -8,9 +8,9 @@ Replaced by "Header shows the brand, the notifications bell and the profile". Th
 
 ## ADDED Requirements
 
-### Requirement: Header shows the brand, the notifications bell and the profile
+### Requirement: Header is a full-width surface bar with the brand on the left
 
-The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, has no scroll, and uses the `surface` colour token as its background. Its height SHALL be 50 px at every laptop width. On the left, the header SHALL show the matchMap horizontal logo lockup with its text: the light-background variant in the light scheme and the dark-background variant in the dark scheme. On the right, from left to right, the header SHALL show a notifications button with a red dot and then a profile button. The notifications button and the red dot are painted only: the dot is always shown and the button does nothing when it is activated. The profile button SHALL open the account sheet and SHALL NOT show the notification dot.
+The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, has no scroll, and uses the `surface` colour token as its background. Its height SHALL be 50 px at every laptop width. The header SHALL show the matchMap horizontal logo lockup with its text on the left: the light-background variant in the light scheme and the dark-background variant in the dark scheme.
 
 #### Scenario: Header is 50 px high at every width
 - **WHEN** the laptop layout is shown at any width from 601 px upwards
@@ -31,6 +31,10 @@ The laptop layout SHALL show a header at the top of the screen that spans the fu
 #### Scenario: Logo has an accessible name
 - **WHEN** the header is read by an accessibility tool
 - **THEN** the logo is announced as an image named matchMap
+
+### Requirement: Header controls at the right
+
+On the right of the header, from left to right, the header SHALL show a notifications button with a red dot and then a profile button. The notifications button and its red dot are painted only: the dot is always shown and the button does nothing when it is activated. The profile button SHALL open the account sheet and SHALL NOT show the notification dot. Both buttons SHALL be keyboard reachable with a visible focus.
 
 #### Scenario: Bell and profile order
 - **WHEN** the laptop layout is shown
