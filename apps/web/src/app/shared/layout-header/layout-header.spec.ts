@@ -86,6 +86,7 @@ describe('LayoutHeader', () => {
     const css = cssOf('layout-header/layout-header.css');
 
     expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*none;/);
+    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*none;/);
     expect(css).toMatch(/\.control:focus-visible::before\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
   });
 
