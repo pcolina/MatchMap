@@ -44,8 +44,8 @@
   position: absolute;
   top: var(--mm-space-0);
   right: var(--mm-space-0);
-  width: var(--mm-space-2);
-  height: var(--mm-space-2);
+  width: var(--mm-space-3);
+  height: var(--mm-space-3);
   border-radius: 50%;
   background: var(--mm-color-danger);
 }
