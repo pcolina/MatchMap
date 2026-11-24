@@ -22,6 +22,7 @@ The web main screen on laptop-sized viewports has a header that is only an empty
 - The footer. It stays an empty placeholder until its own change.
 - The phone layout (`web-mobile-layout`). It has no header and does not change.
 - The tablet (iPad) layout, which needs its own change.
+- The avatar at the top right of the map on laptop. This change only specifies what the header shows; the map controls are not changed here.
 - The mobile app.
 - Any action on the bell, and reading the notification count in the header.
 
@@ -34,8 +35,8 @@ The web main screen on laptop-sized viewports has a header that is only an empty
 ## Decisions
 
 - The header shows the logo at the left and the bell and profile at the right, in that order from the right: profile, then bell.
+- The header keeps the 50 px height at every laptop width, as the current spec says. This is revisited only if the content needs more or less space.
 
 ## Open questions
 
-- [NEEDS CLARIFICATION: does the header keep its 50 px height at every laptop width, as the current spec says?]
-- [NEEDS CLARIFICATION: on laptop, does the avatar at the top right of the map stay, or does the profile button in the header replace it? Both would open the same sheet.]
+- None.
