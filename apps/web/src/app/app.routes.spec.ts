@@ -1,4 +1,4 @@
-import { provideRouter, Router } from '@angular/router';
+﻿import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
@@ -9,6 +9,13 @@ import en from '../../../../packages/shared/i18n/en.json';
 import es from '../../../../packages/shared/i18n/es.json';
 import { routes } from './app.routes';
 import { AuthStore, SIGN_IN_GATEWAY } from './features/auth/state/auth.store';
+
+vi.mock('maplibre-gl', () => ({
+  Map: class {
+    setStyle() {}
+    remove() {}
+  },
+}));
 
 describe('application routes', () => {
   beforeEach(() => {
