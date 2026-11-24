@@ -8,6 +8,17 @@ import { describe, expect, it } from 'vitest';
 import en from '../../../../../../packages/shared/i18n/en.json';
 import { LayoutHeader } from './layout-header';
 
+type NodeProcess = {
+  cwd(): string;
+  getBuiltinModule(id: 'node:fs'): { readFileSync(path: string, encoding: 'utf8'): string };
+  getBuiltinModule(id: 'node:path'): { resolve(...paths: string[]): string };
+};
+
+const nodeProcess = (globalThis as unknown as { process: NodeProcess }).process;
+const { readFileSync } = nodeProcess.getBuiltinModule('node:fs');
+const { resolve } = nodeProcess.getBuiltinModule('node:path');
+const css = () => readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'layout-header', 'layout-header.css'), 'utf8');
+
 @Component({
   imports: [LayoutHeader],
   template: `<app-layout-header [darkMode]="dark()" (accountPressed)="accounts = accounts + 1" />`,
@@ -83,5 +94,16 @@ describe('LayoutHeader', () => {
     const profile = root.querySelectorAll<HTMLButtonElement>('.layout-header button')[1];
 
     expect(profile.querySelector('.notification-dot')).toBeNull();
+  });
+
+  it('is 50 px high with the surface background and no scroll', () => {
+    expect(css()).toMatch(/\.layout-header\s*\{[^}]*height:\s*50px;/);
+    expect(css()).toMatch(/\.layout-header\s*\{[^}]*background-color:\s*var\(--mm-color-surface\);/);
+    expect(css()).toMatch(/\.layout-header\s*\{[^}]*overflow:\s*hidden;/);
+  });
+
+  it('shows a 2 px accent outline with a 2 px offset on keyboard focus', () => {
+    expect(css()).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--mm-color-accent\);/);
+    expect(css()).toMatch(/\.control:focus-visible\s*\{[^}]*outline-offset:\s*2px;/);
   });
 });
