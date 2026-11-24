@@ -33,16 +33,16 @@ None. The brand name `matchMap` is not translated, and the labels use keys that 
 
 ## 6. Changes approved on review: pending count in the bell, shared account button
 
-- [ ] **6.1 Account button tests.** New `apps/web/src/app/shared/account-button/account-button.spec.ts`: the button is named "Account" with no pending notification and "Account, 2 unread notifications" with 2 pending; with pending notifications a `notification-dot` marked `aria-hidden="true"` is shown; with none no dot; while loading a skeleton replaces the icon; `aria-expanded` follows `accountOpen`; a click emits `accountPressed` once. Run them and show the failure.
-- [ ] **6.2 Account button.** Create `app-account-button` (`account-button.ts` and `account-button.css`) from the account button of `map-top-controls`, with the inputs `avatarLoading`, `accountOpen`, `pendingCount` and the output `accountPressed`. `MapTopControls` uses it. Make 6.1 pass, and keep the `map-top-controls` tests green.
-- [ ] **6.3 Header tests.** In `layout-header.spec.ts`, replace the dot tests with: the bell shows the pending count inside the red dot when `pendingCount` is 2 (text "2", `aria-hidden="true"`); no dot when it is 0; the profile button is the `app-account-button` and shows its dot while notifications are pending. Run them and show the failure.
-- [ ] **6.4 Header.** Add the `pendingCount` input to `LayoutHeader`; the bell shows the count in its dot; the profile is `<app-account-button>`. `MainLayout` passes `[pendingCount]="notifications.count()"` to the header. Make 6.3 pass, with the main layout tests green.
-- [ ] **6.5 Full check.** `pnpm check` and `pnpm build:web`, with the summary in the PR.
-- Note from review: the notifications button is removed from the desktop header. Tasks 6.3 and 6.4 apply to the profile button only, and the bell count is not built.
+- [x] **6.1 Account button tests.** New `apps/web/src/app/shared/account-button/account-button.spec.ts`: the button is named "Account" with no pending notification and "Account, 2 unread notifications" with 2 pending; with pending notifications a `notification-dot` marked `aria-hidden="true"` is shown; with none no dot; while loading a skeleton replaces the icon; `aria-expanded` follows `accountOpen`; a click emits `accountPressed` once. Run them and show the failure.
+- [x] **6.2 Account button.** Create `app-account-button` (`account-button.ts` and `account-button.css`) from the account button of `map-top-controls`, with the inputs `avatarLoading`, `accountOpen`, `pendingCount` and the output `accountPressed`. `MapTopControls` uses it. Make 6.1 pass, and keep the `map-top-controls` tests green.
+- [x] **6.3 Header tests.** In `layout-header.spec.ts`, replace the dot tests with: the bell shows the pending count inside the red dot when `pendingCount` is 2 (text "2", `aria-hidden="true"`); no dot when it is 0; the profile button is the `app-account-button` and shows its dot while notifications are pending. Run them and show the failure.
+- [x] **6.4 Header.** Add the `pendingCount` input to `LayoutHeader`; the bell shows the count in its dot; the profile is `<app-account-button>`. `MainLayout` passes `[pendingCount]="notifications.count()"` to the header. Make 6.3 pass, with the main layout tests green.
+- [x] **6.5 Full check.** `pnpm check` and `pnpm build:web`, with the summary in the PR.
+- Note from review: the notifications button is removed from the desktop header, then brought back with its count (task 7). The desktop profile button shows no dot.
 
 ## 7. Desktop notifications button back, notifications row only on phone
 
-- [ ] **7.1 Header tests.** In `layout-header.spec.ts`: the notifications button is before the profile button; it is named with `account.sheet.notifications`; with 2 pending its red dot holds the text "2" and is `aria-hidden="true"`; with none there is no dot; activating it emits nothing. Run them and show the failure.
-- [ ] **7.2 Header.** Add the notifications button with its count dot back to `layout-header.ts`, and its `pendingCount` use. Make 7.1 pass.
-- [ ] **7.3 Sheet tests.** In `account-sheet.spec.ts` (CSS read from disk): the notifications row has the class `notifications-row`, and a media query for `min-width: 601px` sets it to `display: none`. Run them and show the failure.
-- [ ] **7.4 Sheet.** Add the class `notifications-row` and the media rule in `account-sheet.css`. Make 7.3 pass.
+- [x] **7.1 Header tests.** In `layout-header.spec.ts`: the notifications button is before the profile button; it is named with `account.sheet.notifications`; with 2 pending its red dot holds the text "2" and is `aria-hidden="true"`; with none there is no dot; activating it emits nothing. Run them and show the failure.
+- [x] **7.2 Header.** Add the notifications button with its count dot back to `layout-header.ts`, and its `pendingCount` use. Make 7.1 pass.
+- [x] **7.3 Sheet tests.** In `account-sheet.spec.ts` (CSS read from disk): the notifications row has the class `notifications-row`, and a media query for `min-width: 601px` sets it to `display: none`. Run them and show the failure.
+- [x] **7.4 Sheet.** Add the class `notifications-row` and the media rule in `account-sheet.css`. Make 7.3 pass.
