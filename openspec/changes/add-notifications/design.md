@@ -23,7 +23,7 @@ The pending count is stored on the device under the key `matchmap.notifications.
 
 - The dot is a decorative element with `aria-hidden="true"`. The accessible name of the avatar carries the count, so the dot is never the only cue (`docs/design.md` section 10).
 - Colour: the `danger` token (`colors.light.danger` `#B91C1C`, dark `#F87171`). The palette has one accent, and the dot is an alert, not the accent. Contrast of the dot against the avatar surface must meet 3:1 for a graphical element (WCAG 1.4.11). The check is part of task 4 of `tasks.md` before the change is closed.
-- Position: on the top-right edge of the avatar circle, clear of the initials. Its size and offset are not set here; they are checked on screen in the visual check of the tasks, and any value not in `docs/design.md` is asked for before it is used.
+- Position: at the top-right of the avatar, as the user asked. It sits on the edge of the avatar circle, clear of the initials. Its size and offset are not set here; they are checked on screen in the visual check of the tasks, and any value not in `docs/design.md` is asked for before it is used.
 
 ### 4. Accessible name with the count
 
