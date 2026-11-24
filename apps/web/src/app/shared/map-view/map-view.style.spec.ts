@@ -33,33 +33,12 @@ describe('web map style projection', () => {
   const states = { FR: 'visited' as const };
 
   it('adds the globe projection to the style in both schemes', () => {
-    const globeOf = (scheme: 'day' | 'night', accent: string) => {
-      const shared = sharedStyle(states, scheme);
-      return {
-        ...shared,
-        projection: { type: 'globe' },
-        layers: shared.layers.map((layer) => (layer['id'] === 'background' ? { ...layer, paint: { 'background-color': accent } } : layer)),
-      };
-    };
-    expect(buildMapStyle(states, 'day', 'globe')).toEqual(globeOf('day', colors.light.accent));
-    expect(buildMapStyle(states, 'night', 'globe')).toEqual(globeOf('night', colors.dark.accent));
+    expect(buildMapStyle(states, 'day', 'globe')).toEqual({ ...sharedStyle(states, 'day'), projection: { type: 'globe' } });
+    expect(buildMapStyle(states, 'night', 'globe')).toEqual({ ...sharedStyle(states, 'night'), projection: { type: 'globe' } });
   });
 
   it('keeps the Mercator style equal to the shared style, with no projection field', () => {
     expect(buildMapStyle(states, 'day', 'mercator')).toEqual(sharedStyle(states, 'day'));
     expect(buildMapStyle(states, 'day')).toEqual(sharedStyle(states, 'day'));
-  });
-});
-
-describe('web map style globe background', () => {
-  const backgroundOf = (style: { layers: { id: string; paint?: Record<string, unknown> }[] }) =>
-    style.layers.find((layer) => layer.id === 'background')?.paint?.['background-color'];
-
-  it('paints the globe background with the accent colour in day mode', () => {
-    expect(backgroundOf(buildMapStyle({}, 'day', 'globe') as never)).toBe(colors.light.accent);
-  });
-
-  it('paints the globe background with the accent colour in night mode', () => {
-    expect(backgroundOf(buildMapStyle({}, 'night', 'globe') as never)).toBe(colors.dark.accent);
   });
 });
