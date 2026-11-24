@@ -44,4 +44,26 @@ describe('stored mock state', () => {
     expect(storage.getItem(key)).not.toContain('accessToken');
     expect(storage.getItem(key)).not.toContain('mock.');
   });
+
+  it('gives a seeded user the unread notification count of the data file even when the stored state is older', () => {
+    const storage = memoryStorage();
+    const older = createState().users.map(({ unreadNotifications: _unused, ...user }) => user);
+    saveState(storage, key, { ...createState(), users: older });
+
+    const reloaded = loadState(storage, key);
+    const one = reloaded.users.find((user) => user.email === 'one@matchmap.test');
+
+    expect(one?.unreadNotifications).toBe(usersData.find((user) => user.email === 'one@matchmap.test')?.unreadNotifications);
+    expect(one?.unreadNotifications).toBe(1);
+  });
+
+  it('keeps a registered user without a count when the stored state is read again', () => {
+    const storage = memoryStorage();
+    const registered = register(createState(), { email: 'plain@matchmap.test', password: 'Plain-pass1' }, context).state;
+    saveState(storage, key, registered);
+
+    const reloaded = loadState(storage, key);
+
+    expect(reloaded.users.find((user) => user.email === 'plain@matchmap.test')?.unreadNotifications).toBeUndefined();
+  });
 });
