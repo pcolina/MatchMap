@@ -61,4 +61,38 @@ describe('mockHttpInterceptor', () => {
 
     backend.expectOne('/api/other').flush({});
   });
+
+  it('sets the device pending count from the unread notifications of the user who signs in', () => {
+    localStorage.setItem('matchmap.notifications.pending', '5');
+    try {
+      http.post('/api/auth/login', { email: 'one@matchmap.test', password: 'One-pass1' }, { headers: { 'X-Client': 'web' } }).subscribe();
+      backend.verify();
+
+      expect(localStorage.getItem('matchmap.notifications.pending')).toBe('1');
+    } finally {
+      localStorage.removeItem('matchmap.notifications.pending');
+    }
+  });
+
+  it('sets the device pending count to 0 for a user with no unread notification', () => {
+    localStorage.setItem('matchmap.notifications.pending', '5');
+    try {
+      http.post('/api/auth/login', { email: 'two@matchmap.test', password: 'Two-pass2' }, { headers: { 'X-Client': 'web' } }).subscribe();
+
+      expect(localStorage.getItem('matchmap.notifications.pending')).toBe('0');
+    } finally {
+      localStorage.removeItem('matchmap.notifications.pending');
+    }
+  });
+
+  it('keeps the device pending count when the sign-in fails', () => {
+    localStorage.setItem('matchmap.notifications.pending', '5');
+    try {
+      http.post('/api/auth/login', { email: 'one@matchmap.test', password: 'wrong-pass' }, { headers: { 'X-Client': 'web' } }).subscribe({ error: () => undefined });
+
+      expect(localStorage.getItem('matchmap.notifications.pending')).toBe('5');
+    } finally {
+      localStorage.removeItem('matchmap.notifications.pending');
+    }
+  });
 });
