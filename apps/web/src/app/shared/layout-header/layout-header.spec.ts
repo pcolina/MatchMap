@@ -88,13 +88,14 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*none;/);
     expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*none;/);
     expect(css).toMatch(/\.control:focus-visible::before\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
+    expect(css).toMatch(/\.control:focus-visible::before\s*\{[^}]*outline:\s*calc\(var\(--mm-border-width-focus\) \+ 1px\) solid var\(--mm-color-accent\);/);
   });
 
-  it('places the notification count 1 px to the left and 1 px lower than the top right corner', () => {
+  it('places the notification count 4 px in from the top right corner, closer to the bell', () => {
     const css = cssOf('layout-header/layout-header.css');
 
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*top:\s*1px;/);
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*right:\s*1px;/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*top:\s*var\(--mm-space-1\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*right:\s*var\(--mm-space-1\);/);
   });
 
   it('draws the hover circle smaller than the 44 px button, behind the icon', () => {

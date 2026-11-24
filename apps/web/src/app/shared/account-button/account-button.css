@@ -79,6 +79,8 @@
 }
 
 :host(.plain) .control:focus-visible::before {
+  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
   box-shadow: 0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent),
     0 0 var(--mm-space-3) var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 35%, transparent);
 }

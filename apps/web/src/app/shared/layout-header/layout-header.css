@@ -60,14 +60,16 @@
 }
 
 .control:focus-visible::before {
+  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
   box-shadow: 0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent),
     0 0 var(--mm-space-3) var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 35%, transparent);
 }
 
 .notification-dot {
   position: absolute;
-  top: 1px;
-  right: 1px;
+  top: var(--mm-space-1);
+  right: var(--mm-space-1);
   box-sizing: border-box;
   width: var(--mm-space-3);
   height: var(--mm-space-3);
