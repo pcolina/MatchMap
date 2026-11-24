@@ -82,6 +82,12 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*background:\s*transparent;/);
   });
 
+  it('keeps only the 2 px outline on keyboard focus, without the large halo', () => {
+    const css = cssOf('layout-header/layout-header.css');
+
+    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*none;/);
+  });
+
   it('draws the hover circle smaller than the 44 px button, behind the icon', () => {
     const css = cssOf('layout-header/layout-header.css');
 

@@ -73,6 +73,10 @@
   position: relative;
 }
 
+:host(.plain) .control:focus-visible {
+  box-shadow: none;
+}
+
 :host(:not(.plain)) .control {
   box-shadow: var(--mm-elevation-card);
 }
