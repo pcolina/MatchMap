@@ -43,7 +43,7 @@ const create = () => {
 };
 
 describe('LayoutHeader', () => {
-  it('shows the light logo in the light scheme and the dark logo in the dark scheme', () => {
+  it('shows the light-background logo in both schemes', () => {
     const { fixture, host, root } = create();
     const logo = root.querySelector('.layout-header img') as HTMLImageElement;
 
@@ -53,7 +53,40 @@ describe('LayoutHeader', () => {
     host.dark.set(true);
     fixture.detectChanges();
 
-    expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-dark.svg');
+    expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-light.svg');
+  });
+
+  it('marks the header with the dark class in the dark scheme only', () => {
+    const { fixture, host, root } = create();
+    const header = root.querySelector('.layout-header') as HTMLElement;
+
+    expect(header.classList.contains('dark')).toBe(false);
+
+    host.dark.set(true);
+    fixture.detectChanges();
+
+    expect(header.classList.contains('dark')).toBe(true);
+  });
+
+  it('draws the header profile button plain, like the notifications button', () => {
+    const { root } = create();
+
+    expect(root.querySelector('.layout-header app-account-button')?.classList.contains('plain')).toBe(true);
+  });
+
+  it('removes the circle, border and shadow of the account button when it is plain', () => {
+    const css = cssOf('account-button/account-button.css');
+
+    expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*border:\s*0;/);
+    expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*box-shadow:\s*none;/);
+    expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*background:\s*transparent;/);
+  });
+
+  it('uses the accent background and the onAccent text token in the dark scheme', () => {
+    const css = cssOf('layout-header/layout-header.css');
+
+    expect(css).toMatch(/\.layout-header\.dark\s*\{[^}]*background-color:\s*var\(--mm-color-accent\);/);
+    expect(css).toMatch(/\.layout-header\.dark\s*\{[^}]*--mm-color-text:\s*var\(--mm-color-onAccent\);/);
   });
 
   it('shows the notifications button before the profile button', () => {
@@ -114,11 +147,13 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.layout-header\s*\{[^}]*overflow:\s*hidden;/);
   });
 
-  it('shows the notifications dot as a pill at the top right of the bell, using the danger token', () => {
+  it('shows the notifications dot as a perfect circle using the danger token', () => {
     const css = cssOf('layout-header/layout-header.css');
 
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*background:\s*var\(--mm-color-danger\);/);
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*border-radius:\s*var\(--mm-radius-pill\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*border-radius:\s*50%;/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*width:\s*var\(--mm-space-4\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*height:\s*var\(--mm-space-4\);/);
   });
 
   it('shows a 2 px accent outline with a 2 px offset on keyboard focus of the header buttons', () => {
