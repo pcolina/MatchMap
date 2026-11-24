@@ -15,7 +15,7 @@ The web main screen on laptop-sized viewports has a header that is only an empty
 
 ## Capabilities
 
-- **Modified:** `web-laptop-layout`. The requirement "Header is an empty full-width accent bar" becomes the header with the content above. Its scenarios for full width stay.
+- **Modified:** `web-laptop-layout`. The requirement "Header is an empty full-width accent bar" is removed and replaced by "Header shows the brand, the notifications bell and the profile". The header background changes from the accent token to the surface token, in both schemes.
 
 ## Out of scope
 
