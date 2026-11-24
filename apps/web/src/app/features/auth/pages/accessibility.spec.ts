@@ -87,4 +87,19 @@ describe('accessibility of the auth pages', () => {
     expect(element.querySelector('app-about-dialog dialog')?.hasAttribute('open')).toBe(true);
     expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
   });
+
+  it('the main screen with the globe view on has no axe violations', async () => {
+    localStorage.setItem('matchmap.mapProjection', 'globe');
+    try {
+      const element = render(MainLayout);
+      TestBed.inject(ApplicationRef).tick();
+
+      const results = await axe.run(element);
+
+      expect(element.querySelector('app-map-bottom-controls button')?.getAttribute('aria-pressed')).toBe('true');
+      expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
+    } finally {
+      localStorage.removeItem('matchmap.mapProjection');
+    }
+  });
 });
