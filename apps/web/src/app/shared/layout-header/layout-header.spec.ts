@@ -169,7 +169,7 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*border-radius:\s*var\(--mm-radius-pill\);/);
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*min-width:\s*var\(--mm-space-3\);/);
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*height:\s*var\(--mm-space-3\);/);
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*padding:\s*0\s+var\(--mm-space-1\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*padding:\s*1px\s+var\(--mm-space-1\)\s+0;/);
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*font-variant-numeric:\s*tabular-nums;/);
   });
 

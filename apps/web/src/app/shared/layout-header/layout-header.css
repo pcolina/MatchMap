@@ -61,7 +61,7 @@
   box-sizing: border-box;
   min-width: var(--mm-space-3);
   height: var(--mm-space-3);
-  padding: 0 var(--mm-space-1);
+  padding: 1px var(--mm-space-1) 0;
   border-radius: var(--mm-radius-pill);
   background: var(--mm-color-danger);
   color: var(--mm-color-onDanger);
