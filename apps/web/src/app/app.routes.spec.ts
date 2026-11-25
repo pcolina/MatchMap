@@ -57,7 +57,7 @@ describe('application routes', () => {
     expect(TestBed.inject(Router).url).toBe('/login');
   });
 
-  it('renders the main layout at / with no text in this change', async () => {
+  it('renders the main layout at / with no text outside the side menu', async () => {
     TestBed.inject(AuthStore).setAccessToken('token');
     const harness = await RouterTestingHarness.create();
 
@@ -68,6 +68,7 @@ describe('application routes', () => {
     const withoutSheet = layout?.cloneNode(true) as HTMLElement;
     withoutSheet.querySelector('app-account-sheet')?.remove();
     withoutSheet.querySelector('app-about-dialog')?.remove();
+    withoutSheet.querySelector('app-side-menu')?.remove();
     expect(withoutSheet.textContent?.trim()).toBe('');
   });
 });
