@@ -82,15 +82,6 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/:host\(\.plain\) \.control\s*\{[^}]*background:\s*transparent;/);
   });
 
-  it('shows keyboard focus as the hover circle with the narrow halo, without the outline ring', () => {
-    const css = cssOf('layout-header/layout-header.css');
-
-    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*none;/);
-    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*none;/);
-    expect(css).toMatch(/\.control:focus-visible::before\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
-    expect(css).toMatch(/\.control:focus-visible::before\s*\{[^}]*outline:\s*calc\(var\(--mm-border-width-focus\) \+ 1px\) solid var\(--mm-color-accent\);/);
-  });
-
   it('places the notification count 4 px in from the top right corner, closer to the bell', () => {
     const css = cssOf('layout-header/layout-header.css');
 
@@ -171,19 +162,22 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.layout-header\s*\{[^}]*overflow:\s*hidden;/);
   });
 
-  it('shows the notifications dot as a perfect circle using the danger token', () => {
+  it('shows the notifications dot with the danger token, a minimum 12 px height and a pill shape that grows for two digits', () => {
     const css = cssOf('layout-header/layout-header.css');
 
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*background:\s*var\(--mm-color-danger\);/);
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*border-radius:\s*50%;/);
-    expect(css).toMatch(/\.notification-dot\s*\{[^}]*width:\s*var\(--mm-space-3\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*border-radius:\s*var\(--mm-radius-pill\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*min-width:\s*var\(--mm-space-3\);/);
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*height:\s*var\(--mm-space-3\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*padding:\s*0\s+var\(--mm-space-1\);/);
+    expect(css).toMatch(/\.notification-dot\s*\{[^}]*font-variant-numeric:\s*tabular-nums;/);
   });
 
-  it('shows a 2 px accent outline with a 2 px offset on keyboard focus of the header buttons', () => {
-    const css = cssOf('layout-header/layout-header.css') + cssOf('account-button/account-button.css');
+  it('leaves keyboard focus of the header buttons to the global focus style, as on the login page', () => {
+    const header = cssOf('layout-header/layout-header.css');
+    const account = cssOf('account-button/account-button.css');
 
-    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--mm-color-accent\);/);
-    expect(css).toMatch(/\.control:focus-visible\s*\{[^}]*outline-offset:\s*2px;/);
+    expect(header).not.toMatch(/focus-visible/);
+    expect(account).not.toMatch(/:host\(\.plain\) \.control:focus-visible/);
   });
 });

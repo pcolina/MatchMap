@@ -54,34 +54,24 @@
   font-size: 24px;
 }
 
-.control:focus-visible {
-  outline: none;
-  box-shadow: none;
-}
-
-.control:focus-visible::before {
-  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
-  outline-offset: var(--mm-border-width-focus);
-  box-shadow: 0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent),
-    0 0 var(--mm-space-3) var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 35%, transparent);
-}
-
 .notification-dot {
   position: absolute;
   top: var(--mm-space-1);
   right: var(--mm-space-1);
   box-sizing: border-box;
-  width: var(--mm-space-3);
+  min-width: var(--mm-space-3);
   height: var(--mm-space-3);
-  padding: 0;
-  border-radius: 50%;
+  padding: 0 var(--mm-space-1);
+  border-radius: var(--mm-radius-pill);
   background: var(--mm-color-danger);
   color: var(--mm-color-onDanger);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75em;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .layout-header.dark {
