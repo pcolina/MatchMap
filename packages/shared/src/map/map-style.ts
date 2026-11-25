@@ -16,7 +16,10 @@ export type BuildMapStyleInput = {
   palette: MapPalette;
   text: string;
   sources: { countries: GeoSource; capitals: GeoSource };
+  excludeAntarctica?: boolean;
 };
+
+const antarcticaFilter = ['!=', ['get', 'iso_a2'], 'AQ'];
 
 export type MapStyle = {
   version: 8;
@@ -24,7 +27,8 @@ export type MapStyle = {
   layers: Array<Record<string, unknown>>;
 };
 
-export const buildMapStyle = ({ states, palette, text, sources }: BuildMapStyleInput): MapStyle => {
+export const buildMapStyle = ({ states, palette, text, sources, excludeAntarctica = false }: BuildMapStyleInput): MapStyle => {
+  const countryFilter = excludeAntarctica ? { filter: antarcticaFilter } : {};
   const stateColors = Object.entries(states).flatMap(([countryCode, state]) => [countryCode, palette[state]]);
   const fillColor = stateColors.length === 0 ? palette.land : ['match', ['get', 'iso_a2'], ...stateColors, palette.land];
 
@@ -36,11 +40,12 @@ export const buildMapStyle = ({ states, palette, text, sources }: BuildMapStyleI
     },
     layers: [
       { id: 'background', type: 'background', paint: { 'background-color': palette.ocean } },
-      { id: 'countries-fill', type: 'fill', source: 'countries', paint: { 'fill-color': fillColor } },
+      { id: 'countries-fill', type: 'fill', source: 'countries', ...countryFilter, paint: { 'fill-color': fillColor } },
       {
         id: 'countries-border',
         type: 'line',
         source: 'countries',
+        ...countryFilter,
         paint: { 'line-color': palette.countryBorder, 'line-width': 0.5 },
       },
       {
@@ -50,7 +55,12 @@ export const buildMapStyle = ({ states, palette, text, sources }: BuildMapStyleI
         filter: ['in', ['get', 'iso_a2'], ['literal', Object.keys(states)]],
         paint: { 'line-color': text, 'line-width': 1.5 },
       },
-      { id: 'capitals-point', type: 'circle', source: 'capitals', paint: { 'circle-color': text } },
+      {
+        id: 'capitals-point',
+        type: 'circle',
+        source: 'capitals',
+        paint: { 'circle-color': text, 'circle-radius': ['step', ['zoom'], 2, 6, 3, 9, 4, 12, 5] },
+      },
     ],
   };
 };

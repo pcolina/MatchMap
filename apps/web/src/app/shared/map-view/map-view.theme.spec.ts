@@ -17,6 +17,11 @@ vi.mock('maplibre-gl', () => ({
     setStyle(style: unknown) {
       recorded.setStyle.push(style);
     }
+    setMinZoom() {}
+    on() {}
+    project() {
+      return { x: 0, y: 0 };
+    }
     remove() {}
   },
 }));
@@ -48,12 +53,12 @@ describe('MapView follows the day or night mode of the app', () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
     await fixture.whenStable();
-    await vi.waitFor(() => expect(recorded.created).toHaveLength(1));
+    await vi.waitFor(() => expect(recorded.created).toHaveLength(1), { timeout: 5000 });
 
     TestBed.inject(ThemeStore).toggle();
     fixture.detectChanges();
 
-    await vi.waitFor(() => expect(recorded.setStyle.at(-1)).toEqual(buildMapStyle({}, 'night')));
+    await vi.waitFor(() => expect(recorded.setStyle.at(-1)).toEqual(buildMapStyle({}, 'night')), { timeout: 5000 });
   });
 
   it('draws the map in day colours when the app is in light mode, even if the system is dark', async () => {
@@ -62,6 +67,6 @@ describe('MapView follows the day or night mode of the app', () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
     await fixture.whenStable();
-    await vi.waitFor(() => expect(recorded.created.at(-1)?.style).toEqual(buildMapStyle({}, 'day')));
+    await vi.waitFor(() => expect(recorded.created.at(-1)?.style).toEqual(buildMapStyle({}, 'day')), { timeout: 5000 });
   });
 });

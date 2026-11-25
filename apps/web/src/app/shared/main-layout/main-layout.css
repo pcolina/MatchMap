@@ -33,8 +33,8 @@ app-stats-resume {
   flex: 0 0 var(--stats-height);
 }
 
-.main-layout > app-map-bottom-controls {
-  bottom: calc(var(--stats-height) + 16px + env(safe-area-inset-bottom));
+.map-area > app-map-bottom-controls {
+  bottom: calc(16px + env(safe-area-inset-bottom));
 }
 
 @media (max-width: 600px) {
@@ -50,8 +50,7 @@ app-stats-resume {
     flex: 0 0 auto;
   }
 
-  app-map-top-controls,
-  app-map-bottom-controls {
+  app-map-top-controls {
     display: none;
   }
 

@@ -15,6 +15,11 @@ import { MainLayout } from './main-layout';
 vi.mock('maplibre-gl', () => ({
   Map: class {
     setStyle() {}
+    setMinZoom() {}
+    on() {}
+    project() {
+      return { x: 0, y: 0 };
+    }
     remove() {}
   },
 }));
@@ -79,7 +84,6 @@ describe('MainLayout', () => {
       'app-layout-header',
       'div',
       'app-stats-resume',
-      'app-map-bottom-controls',
       'app-layout-footer',
       'app-account-sheet',
       'app-about-dialog',
@@ -135,6 +139,7 @@ describe('MainLayout', () => {
     expect(Array.from(mapArea?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual([
       'app-map-top-controls',
       'app-map-view',
+      'app-map-bottom-controls',
     ]);
   });
 
@@ -144,11 +149,17 @@ describe('MainLayout', () => {
     expect(css).toMatch(/\.map-area\s*\{[^}]*position:\s*relative;/);
   });
 
-  it('defines the stats panel height once and uses it to place the bottom controls', () => {
+  it('defines the stats panel height once and places the bottom controls inside the map area', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
     expect(css).toMatch(/--stats-height:\s*250px;/);
-    expect(css).toMatch(/app-map-bottom-controls\s*\{[^}]*bottom:\s*calc\(var\(--stats-height\)\s*\+\s*16px\s*\+\s*env\(safe-area-inset-bottom\)\)/);
+    expect(css).toMatch(/\.map-area\s*>\s*app-map-bottom-controls\s*\{[^}]*bottom:\s*calc\(16px\s*\+\s*env\(safe-area-inset-bottom\)\)/);
+  });
+
+  it('shows the projection toggle on laptop widths', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).not.toMatch(/app-map-bottom-controls\s*\{\s*display:\s*none;/);
   });
 
   it('gives the layout the full viewport height', () => {

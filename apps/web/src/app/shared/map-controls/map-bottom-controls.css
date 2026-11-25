@@ -9,6 +9,7 @@
 }
 
 .control {
+  position: relative;
   width: 44px;
   height: 44px;
   padding: 0;
@@ -24,12 +25,29 @@
 }
 
 .control ng-icon {
+  position: relative;
   font-size: 24px;
 }
 
+.control::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--mm-space-8);
+  height: var(--mm-space-8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .control:focus-visible {
-  outline: 2px solid var(--mm-color-accent);
-  outline-offset: 2px;
+  outline: none;
+}
+
+.control:focus-visible::before {
+  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
+  box-shadow: var(--mm-focus-halo);
 }
 
 @media (hover: hover) and (pointer: fine) {

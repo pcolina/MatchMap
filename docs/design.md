@@ -63,7 +63,7 @@ The map colours are **muted** (ocean and land), so the accent stands out only wh
 | Token | Day | Night | Use | Extra cue (colour blindness) |
 |---|---|---|---|---|
 | `map.ocean` | `#CCD7E6` | `#0A1324` | Water | — |
-| `map.land` | `#E8ECF2` | `#1D2638` | Country without a pin («to discover») | — |
+| `map.land` | `#E8ECF2` | `#4B5873` | Country without a pin («to discover») | — |
 | `map.countryBorder` | `#FFFFFF` | `#0A1324` | Borders, 0.5–1 px | — |
 | **Personal map** | | | | |
 | `map.visited` | `#0F7C80` | `#2DD4BF` | `VISITED` | Solid fill |

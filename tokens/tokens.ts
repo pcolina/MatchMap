@@ -44,7 +44,7 @@ export const mapColors = {
   light: {
     ocean: '#CCD7E6',
     land: '#E8ECF2',
-    countryBorder: '#FFFFFF',
+    countryBorder: '#6B7485',
     visited: '#0F7C80',
     lived: '#0A5458',
     wantToGo: '#E3F4F2',
@@ -60,8 +60,8 @@ export const mapColors = {
   },
   dark: {
     ocean: '#0A1324',
-    land: '#1D2638',
-    countryBorder: '#0A1324',
+    land: '#4B5873',
+    countryBorder: '#9AA6BA',
     visited: '#2DD4BF',
     lived: '#99F6E4',
     wantToGo: '#0C3432',

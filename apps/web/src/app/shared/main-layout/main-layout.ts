@@ -22,9 +22,9 @@ import { StatsResume } from '../stats-resume/stats-resume';
     <div class="map-area" [class.globe]="projection.globe()">
       <app-map-top-controls [accountOpen]="accountOpen()" [pendingCount]="notifications.count()" (accountPressed)="accountOpen.set(true)" />
       <app-map-view [projection]="projection.projection()" />
+      <app-map-bottom-controls [globeActive]="projection.globe()" (pressed)="projection.toggle()" />
     </div>
     <app-stats-resume />
-    <app-map-bottom-controls [globeActive]="projection.globe()" (pressed)="projection.toggle()" />
     <app-layout-footer />
     <app-account-sheet
       [open]="accountOpen()"
