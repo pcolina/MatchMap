@@ -59,12 +59,28 @@ export class MapView {
           this.correcting = false;
         }
       });
+      const resizeObserver = new ResizeObserver(() => this.applyMinZoom());
+      resizeObserver.observe(this.container().nativeElement);
+      this.destroyRef.onDestroy(() => resizeObserver.disconnect());
     });
 
     effect(() => {
       const style = buildMapStyle(this.states(), this.scheme(), this.projection());
       this.map?.setStyle(style);
+      this.applyMinZoom();
     });
+  }
+
+  private applyMinZoom(): void {
+    if (!this.map) {
+      return;
+    }
+    if (this.projection() !== 'globe') {
+      this.map.setMinZoom(-2);
+      return;
+    }
+    const width = this.container().nativeElement.clientWidth;
+    this.map.setMinZoom(Math.max(0, Math.log2((Math.max(width - 8, 1) * Math.PI) / 512)));
   }
 
   private keepAboveAntarctica(): void {

@@ -1,44 +1,49 @@
 # Tasks: update-map-style
 
-Each task names its failing test first, then the code that makes it pass. One task is one commit, with `Task: x.x` in the body.
+Each task names its failing test first, then the code that makes it pass. One task is one commit, with `Task: x.x` in the body. Tasks marked done were committed before this list was rewritten; their commits are listed.
 
 ## 1. Shared style
 
-- [ ] **1.1 Style tests.** In `packages/shared`, add: the capital layer's `circle-radius` is 2 at zoom 3, 3 at zoom 6, 4 at zoom 9 and 5 at zoom 12 and above; the `countryBorder` colour of the day palette is `#6B7485` and of the night palette is `#9AA6BA`. Run them and show the failure.
-- [ ] **1.2 Style.** In `map-style.ts`, add the step expression `['step', ['zoom'], 2, 6, 3, 9, 4, 12, 5]` to the capital layer. In `tokens/tokens.json`, set `map.countryBorder` to `#6B7485` (light) and `#9AA6BA` (dark). Run `pnpm codegen`. Make 1.1 pass.
+- [x] **1.1 Style tests.** Done in `packages/shared/test/map-style.spec.ts`: capital radius steps, day border `#6B7485`, night border `#9AA6BA`.
+- [x] **1.2 Style.** Done: capital step expression, token copies in `tokens/tokens.json`, `tokens.ts`, `tokens.css` and mobile `tokens.ts`. Commits `c28f8fa`, `852ef25`.
 
 ## 2. Spike: the two unverified assumptions
 
-- [x] **2.1 Globe formula test.** Verified in the source of maplibre-gl 6.16.0: the globe radius is `worldSize / (2π · cos(lat))`, so at the centre latitude 0 the diameter is `512 · 2^zoom / π`, as the formula assumes. At other centre latitudes the globe is larger, never smaller, so the width constraint holds. Checked in source, not in a browser.
-- [!] **2.2 ng-native options test.** BLOCKED, owner to decide. In `@maplibre/maplibre-react-native` 11.5.1, `minZoom` and `maxBounds` are props of `Camera`, not of `MapView`. The mobile map is `maplibre-map` (MapView) and has no `Camera` in its template, so the options cannot be added to `mapViewProps` alone. Options: add a `Camera` child to the mobile map template, or leave the mobile limits out of this change.
+- [x] **2.1 Globe formula test.** Verified in the source of maplibre-gl 6.16.0: the globe radius is `worldSize / (2π · cos(lat))`, so at the centre latitude 0 the diameter is `512 · 2^zoom / π`. Checked in source, not in a browser.
+- [!] **2.2 ng-native options test.** BLOCKED, owner to decide. In `@maplibre/maplibre-react-native` 11.5.1, `minZoom` and `maxBounds` are props of `Camera`, not of `MapView`. The mobile map has no `Camera` in its template. Options: add a `Camera` child to the mobile map template, or leave the mobile limits out of this change.
+- **Rollback record:** the earlier `maxBounds` approach crashed MapLibre (`Cannot read properties of null (reading '0')`) and was reverted in `6b3f40d`. The approach now in use is described in section 3.
 
-- **Rollback:** the Mercator and globe limits (tasks 3 and 4) were applied and removed again. Applying `maplibre-gl` 6.16 limits in the web map view made the map crash: `Cannot read properties of null (reading '0')` in MapLibre (`setMaxBounds` in the globe, then `maxBounds` in the constructor). Tasks 3 and 4 are open again and must be redone with a test that runs the real map in a browser before they are checked.
+## 3. Web: Mercator view
 
-## 3. Web: Mercator limits
-
-- [ ] **3.1 Mercator tests.** In the web map view, add: in Mercator the map is created with `minZoom` 3 and `maxBounds` `[[-180, -60], [180, 85]]`; zooming out stops at zoom 3; panning south stops at latitude -60. Run them and show the failure.
-- [ ] **3.2 Mercator limits.** In `map-view.ts`, set `minZoom` and `maxBounds` when the projection is Mercator. Make 3.1 pass.
+- [x] **3.1 Start view and limits.** Centre `[0, 42]`, `minZoom` -2, `zoom` -2 and `renderWorldCopies` false, with tests in `map-view.center.spec.ts` and `map-view.bounds.spec.ts`. Commits `88bce31`, `651c317`, `6ab49cb`, `a17654f`, `67ee022`, `729d04f`, `54c771e`.
+- [x] **3.2 Antarctica in the style.** Mercator-only filter `iso_a2 != AQ` in the shared style, with parity tests in `map-view.style.spec.ts`. Commit `852ef25`.
+- [x] **3.3 Pan limit at -60.** After a `moveend`, the map eases north when the visible bottom is south of -60, ignoring the `moveend` of its own animation and resetting on a user gesture. Tests in `map-view.bounds.spec.ts`. Commit `fdde8ae`.
 
 ## 4. Web: globe minimum zoom
 
-- [ ] **4.1 Globe tests.** In the web map view, add: in globe with a 390 px container the minimum zoom is about 1.23; in a 1024 px container it is about 2.64; a resize updates it; switching back to Mercator restores `minZoom` 3 and the bounds; a container of 8 px or less gives a minimum of 0. Run them and show the failure.
-- [ ] **4.2 Globe minimum zoom.** In `map-view.ts`, use a `ResizeObserver` on the map element to set `minZoom` to `log2((W − 8) · π / 512)` for the globe, clamped at 0. Make 4.1 pass.
+- [x] **4.1 Globe tests.** In `map-view.globe-zoom.spec.ts`. Shown failing before the change. In `map-view.bounds.spec.ts` or a new spec: in globe with a 390 px container the minimum zoom is about 1.23; in a 1024 px container it is about 2.64; a resize updates it; a container of 8 px or less gives a minimum of 0. Run them and show the failure.
+- [x] **4.2 Globe minimum zoom.** Done in `map-view.ts` (`applyMinZoom`, a `ResizeObserver`, also reapplied on projection change). Browser check still open, see 8.2. In `map-view.ts`, use a `ResizeObserver` on the map element to set `minZoom` to `log2((W − 8) · π / 512)` for the globe, clamped at 0. Make 4.1 pass. Then check in a browser that the globe does not get smaller than the container.
 
-## 5. Mobile
+## 5. Web: laptop view toggle
 
-- [ ] **5.1 Mobile props tests.** In `apps/mobile/src/app/shared/map-view/map-view.props.test.ts`, add: the props contain `minZoom` 3 and the `maxBounds` of section 3. Run them and show the failure.
-- [ ] **5.2 Mobile props.** In `map-view.props.ts`, add the two options with the names recorded in 2.2. Make 5.1 pass.
+- [x] **5.1 Toggle visibility test.** In `main-layout.spec.ts`, the stylesheet does not hide `app-map-bottom-controls` at the desktop breakpoint. Shown failing before the change. Commit `9f9f086`.
+- Follow-up (owner request, same change): the toggle moves into `.map-area` in `main-layout.ts`, with `bottom: calc(16px + env(safe-area-inset-bottom))`, so it sits inside the map on laptop and at the same place on phones. This changes the focus order: the toggle comes after the map and before the stats panel. The focus-order and placement specs in `main-layout.spec.ts` are updated.
+- [x] **5.2 Show the toggle.** In `main-layout.css`, the `display: none` rule now lists only `app-map-top-controls`. The base position rule stays, so the toggle sits where it sits on phones. Commit `9f9f086`.
 
-## 6. Borders in the map
+## 6. Mobile
 
-- [ ] **6.1 Visual check tests.** The map style tests of section 1 already cover the colours. Add in the web map view a test that the map is built with the night palette border colour after the scheme changes. Run it and show the failure.
-- [ ] **6.2 Check.** Make 6.1 pass with the existing wiring.
+- [ ] **6.1 Mobile props tests.** In `apps/mobile/src/app/shared/map-view/map-view.props.test.ts`, add: the props contain `minZoom` -2 and the Antarctica limit. Run them and show the failure. Blocked until 2.2 is decided.
+- [ ] **6.2 Mobile props.** In `map-view.props.ts`, add the options with the names recorded in 2.2. Make 6.1 pass. Blocked until 2.2 is decided.
 
-## 7. Full check
+## 7. Borders in the map
 
-- [ ] **7.1 Full check.** Run `pnpm check` and `pnpm build:web` and paste the summary in the PR.
-- [ ] **7.2 Screen check.** The owner checks the capitals, the Antarctic strip, the borders and the globe width in Chrome and on a phone, in light and dark mode. Done by the owner, with the steps in the PR.
+- [x] **7.1 Border tests and wiring.** The colours are covered by section 1 tests and the map uses the night palette after the scheme changes.
+
+## 8. Full check
+
+- [ ] **8.1 Full check.** Run `pnpm check` and `pnpm build:web` and paste the summary in the PR. The intermittent timing failures in `map-view.center.spec.ts` and `map-view.theme.spec.ts` must be fixed or explained before this passes.
+- [ ] **8.2 Screen check.** The owner checks the capitals, the Antarctic strip, the borders, the laptop toggle and the globe width in Chrome and on a phone, in light and dark mode. Done by the owner, with the steps in the PR.
 
 ## Translations to review (for the PR)
 
-None. The change adds no user-facing text.
+None. The change adds no user-facing text; the toggle uses its existing i18n key.

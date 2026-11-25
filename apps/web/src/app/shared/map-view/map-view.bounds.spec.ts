@@ -18,6 +18,7 @@ const mapLibre = vi.hoisted(() => {
 
   class FakeMap {
     setStyle = vi.fn();
+    setMinZoom = vi.fn();
     remove = vi.fn();
     on = vi.fn();
     project = vi.fn(() => ({ x: 0, y: 0 }));
