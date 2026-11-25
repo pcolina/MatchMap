@@ -106,19 +106,12 @@ describe('MapView keeps the view above latitude -60', () => {
     expect(mapLibre.instances[0].options.renderWorldCopies).toBe(false);
   });
 
-  it('starts the Mercator map at the zoom that fits the width and the band from -60 to 85 in the container', async () => {
-    const width = vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(1000);
-    const height = vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(700);
-    try {
-      const fixture = TestBed.createComponent(MapView);
-      fixture.detectChanges();
-      await settle(fixture);
+  it('starts the Mercator map at the smallest zoom', async () => {
+    const fixture = TestBed.createComponent(MapView);
+    fixture.detectChanges();
+    await settle(fixture);
 
-      expect(mapLibre.instances[0].options.zoom).toBeCloseTo(Math.log2((0.6 * 700) / 363.3), 2);
-    } finally {
-      width.mockRestore();
-      height.mockRestore();
-    }
+    expect(mapLibre.instances[0].options.zoom).toBe(-4);
   });
 
   it('lets the Mercator map zoom out below zoom 0', async () => {
