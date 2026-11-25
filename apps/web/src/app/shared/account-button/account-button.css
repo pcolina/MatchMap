@@ -84,10 +84,11 @@
 }
 
 :host(.plain) .control:focus-visible::before {
-  outline: var(--mm-border-width-focus) solid var(--mm-color-accent);
-  outline-offset: 0;
-  box-shadow: 0 0 var(--mm-space-2) color-mix(in srgb, var(--mm-color-accent) 35%, transparent);
+  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
+  box-shadow: var(--mm-focus-halo);
 }
+
 :host(:not(.plain)) .control {
   box-shadow: var(--mm-elevation-card);
 }
