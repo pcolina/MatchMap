@@ -151,6 +151,12 @@ describe('MainLayout', () => {
     expect(css).toMatch(/app-map-bottom-controls\s*\{[^}]*bottom:\s*calc\(var\(--stats-height\)\s*\+\s*16px\s*\+\s*env\(safe-area-inset-bottom\)\)/);
   });
 
+  it('shows the projection toggle on laptop widths', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).not.toMatch(/app-map-bottom-controls\s*\{\s*display:\s*none;/);
+  });
+
   it('gives the layout the full viewport height', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 

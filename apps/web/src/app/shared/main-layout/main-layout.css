@@ -50,8 +50,7 @@ app-stats-resume {
     flex: 0 0 auto;
   }
 
-  app-map-top-controls,
-  app-map-bottom-controls {
+  app-map-top-controls {
     display: none;
   }
 
