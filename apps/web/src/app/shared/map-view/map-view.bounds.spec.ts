@@ -106,12 +106,12 @@ describe('MapView keeps the view above latitude -60', () => {
     expect(mapLibre.instances[0].options.renderWorldCopies).toBe(false);
   });
 
-  it('starts the Mercator map at the smallest zoom', async () => {
+  it('starts the Mercator map at the smallest zoom MapLibre allows', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
     await settle(fixture);
 
-    expect(mapLibre.instances[0].options.zoom).toBe(-4);
+    expect(mapLibre.instances[0].options.zoom).toBe(-2);
   });
 
   it('lets the Mercator map zoom out below zoom 0', async () => {
@@ -119,7 +119,7 @@ describe('MapView keeps the view above latitude -60', () => {
     fixture.detectChanges();
     await settle(fixture);
 
-    expect(mapLibre.instances[0].options.minZoom).toBe(-4);
+    expect(mapLibre.instances[0].options.minZoom).toBe(-2);
   });
 
   it('does nothing while the visible bottom stays above latitude -60', async () => {

@@ -18,8 +18,8 @@ import { MapScheme, MapState, buildMapStyle } from './map-view.style';
 
 const mercatorOptions = {
   center: [0, 42] as [number, number],
-  minZoom: -4,
-  zoom: -4,
+  minZoom: -2,
+  zoom: -2,
   renderWorldCopies: false,
 };
 
