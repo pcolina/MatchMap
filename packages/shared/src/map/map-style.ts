@@ -50,7 +50,12 @@ export const buildMapStyle = ({ states, palette, text, sources }: BuildMapStyleI
         filter: ['in', ['get', 'iso_a2'], ['literal', Object.keys(states)]],
         paint: { 'line-color': text, 'line-width': 1.5 },
       },
-      { id: 'capitals-point', type: 'circle', source: 'capitals', paint: { 'circle-color': text } },
+      {
+        id: 'capitals-point',
+        type: 'circle',
+        source: 'capitals',
+        paint: { 'circle-color': text, 'circle-radius': ['step', ['zoom'], 2, 6, 3, 9, 4, 12, 5] },
+      },
     ],
   };
 };

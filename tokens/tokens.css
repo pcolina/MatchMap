@@ -19,7 +19,7 @@
   --mm-color-info: #1D4ED8;
   --mm-map-ocean: #CCD7E6;
   --mm-map-land: #E8ECF2;
-  --mm-map-countryBorder: #FFFFFF;
+  --mm-map-countryBorder: #6B7485;
   --mm-map-visited: #0F7C80;
   --mm-map-lived: #0A5458;
   --mm-map-wantToGo: #E3F4F2;
@@ -107,7 +107,7 @@
     --mm-color-info: #60A5FA;
     --mm-map-ocean: #0A1324;
     --mm-map-land: #1D2638;
-    --mm-map-countryBorder: #0A1324;
+    --mm-map-countryBorder: #9AA6BA;
     --mm-map-visited: #2DD4BF;
     --mm-map-lived: #99F6E4;
     --mm-map-wantToGo: #0C3432;
@@ -144,7 +144,7 @@
   --mm-color-info: #60A5FA;
   --mm-map-ocean: #0A1324;
   --mm-map-land: #1D2638;
-  --mm-map-countryBorder: #0A1324;
+  --mm-map-countryBorder: #9AA6BA;
   --mm-map-visited: #2DD4BF;
   --mm-map-lived: #99F6E4;
   --mm-map-wantToGo: #0C3432;
