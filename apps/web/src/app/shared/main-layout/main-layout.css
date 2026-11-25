@@ -33,6 +33,10 @@ app-stats-resume {
   flex: 0 0 var(--stats-height);
 }
 
+app-side-menu {
+  display: none;
+}
+
 .map-area > app-map-bottom-controls {
   bottom: calc(16px + env(safe-area-inset-bottom));
 }
@@ -44,6 +48,20 @@ app-stats-resume {
 }
 
 @media (min-width: 601px) {
+  .main-layout {
+    padding-left: 200px;
+  }
+
+  app-side-menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 200px;
+    height: 100dvh;
+  }
+
   app-layout-header,
   app-layout-footer {
     display: block;

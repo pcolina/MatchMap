@@ -80,4 +80,23 @@ describe('SideMenu', () => {
     expect(css).toMatch(/\.add-place\s+ng-icon\s*\{[^}]*color:\s*var\(--mm-color-accent\);/);
     expect(css).toMatch(/\.friends\s+ng-icon\s*\{[^}]*color:\s*var\(--mm-color-textSecondary\);/);
   });
+
+  it('draws the keyboard focus ring on items and the skip link like the header buttons', () => {
+    const css = readCss();
+
+    expect(css).toMatch(/\.item:focus-visible\s*\{[^}]*box-shadow:\s*var\(--mm-focus-halo\);/);
+    expect(css).toMatch(/\.item:focus-visible,\s*\.skip:focus-visible\s*\{[^}]*outline:\s*calc\(var\(--mm-border-width-focus\)\s*\+\s*1px\)\s*solid\s*var\(--mm-color-accent\);/);
+  });
+
+  it('changes the item background on hover only for pointer devices', () => {
+    const css = readCss();
+
+    expect(css).toMatch(/@media \(hover: hover\) and \(pointer: fine\)\s*\{\s*\.item:hover\s*\{[^}]*background-color:\s*var\(--mm-color-surfaceRaised\);/);
+  });
+
+  it('hides the skip link until it receives focus', () => {
+    const css = readCss();
+
+    expect(css).toMatch(/\.skip:not\(:focus-visible\)\s*\{[^}]*position:\s*absolute;/);
+  });
 });
