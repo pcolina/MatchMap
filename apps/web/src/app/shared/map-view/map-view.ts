@@ -43,7 +43,7 @@ export class MapView {
         container: this.container().nativeElement,
         style: buildMapStyle(this.states(), this.scheme(), this.projection()),
         attributionControl: false,
-        ...(this.projection() === 'mercator' ? { center: [0, 12.5] as [number, number] } : {}),
+        ...(this.projection() === 'mercator' ? { center: [0, 42] as [number, number] } : {}),
       });
     });
 
