@@ -32,6 +32,7 @@ export class MapView {
   private readonly theme = inject(ThemeStore);
   private readonly scheme = computed<MapScheme>(() => (this.theme.isDark() ? 'night' : 'day'));
   private map?: MapLibreMap;
+  private correcting = false;
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -46,6 +47,11 @@ export class MapView {
         ...(this.projection() === 'mercator' ? { center: [0, 42] as [number, number], renderWorldCopies: false } : {}),
       });
       this.map.on('moveend', () => this.keepAboveAntarctica());
+      this.map.on('movestart', (event: { originalEvent?: unknown }) => {
+        if (event.originalEvent) {
+          this.correcting = false;
+        }
+      });
     });
 
     effect(() => {
@@ -55,6 +61,10 @@ export class MapView {
   }
 
   private keepAboveAntarctica(): void {
+    if (this.correcting) {
+      this.correcting = false;
+      return;
+    }
     if (!this.map || this.projection() !== 'mercator') {
       return;
     }
@@ -64,6 +74,7 @@ export class MapView {
       return;
     }
     const center = this.map.getCenter();
+    this.correcting = true;
     this.map.easeTo({ center: [center.lng, center.lat + shift], duration: 300 });
   }
 }

@@ -72,6 +72,32 @@ describe('MapView keeps the view above latitude -60', () => {
     expect(mapLibre.instances[0].easeTo).toHaveBeenCalledWith(expect.objectContaining({ center: [0, 52] }));
   });
 
+  it('does not start a second correction for the moveend that ends its own animation', async () => {
+    const fixture = TestBed.createComponent(MapView);
+    fixture.detectChanges();
+    await settle(fixture);
+
+    const map = mapLibre.instances[0];
+    moveEndListener(map)();
+    moveEndListener(map)();
+
+    expect(map.easeTo).toHaveBeenCalledTimes(1);
+  });
+
+  it('corrects again after the user starts a new gesture during a correction', async () => {
+    const fixture = TestBed.createComponent(MapView);
+    fixture.detectChanges();
+    await settle(fixture);
+
+    const map = mapLibre.instances[0];
+    moveEndListener(map)();
+    const movestart = map.on.mock.calls.find(([event]) => event === 'movestart')?.[1] as (event: { originalEvent?: unknown }) => void;
+    movestart({ originalEvent: {} });
+    moveEndListener(map)();
+
+    expect(map.easeTo).toHaveBeenCalledTimes(2);
+  });
+
   it('does not repeat the world horizontally in Mercator', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
