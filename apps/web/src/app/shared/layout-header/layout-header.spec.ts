@@ -184,14 +184,15 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*font-variant-numeric:\s*tabular-nums;/);
   });
 
-  it('keeps the keyboard focus ring of the header buttons inside the 50 px bar', () => {
+  it('shows keyboard focus as a 32 px disc with a 2 px accent ring and a soft glow inside the 50 px bar', () => {
     const header = cssOf('layout-header/layout-header.css');
     const account = cssOf('account-button/account-button.css');
 
-    expect(header).toMatch(/\.control:focus-visible\s*\{[^}]*outline-offset:\s*0;/);
-    expect(header).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
-    expect(header).not.toMatch(/--mm-focus-halo/);
-    expect(account).toMatch(/:host\(\.plain\) \.control:focus-visible\s*\{[^}]*outline-offset:\s*0;/);
-    expect(account).toMatch(/:host\(\.plain\) \.control:focus-visible\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
+    expect(header).toMatch(/\.control:focus-visible\s*\{[^}]*outline:\s*none;/);
+    expect(header).toMatch(/\.control:focus-visible::before\s*\{[^}]*outline:\s*var\(--mm-border-width-focus\) solid var\(--mm-color-accent\);/);
+    expect(header).toMatch(/\.control:focus-visible::before\s*\{[^}]*outline-offset:\s*0;/);
+    expect(header).toMatch(/\.control:focus-visible::before\s*\{[^}]*box-shadow:\s*0 0 var\(--mm-space-2\)/);
+    expect(account).toMatch(/:host\(\.plain\) \.control:focus-visible::before\s*\{[^}]*outline:\s*var\(--mm-border-width-focus\) solid var\(--mm-color-accent\);/);
+    expect(account).toMatch(/:host\(\.plain\) \.control:focus-visible::before\s*\{[^}]*box-shadow:\s*0 0 var\(--mm-space-2\)/);
   });
 });
