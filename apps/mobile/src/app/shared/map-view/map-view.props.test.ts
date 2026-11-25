@@ -10,6 +10,7 @@ const expectedStyle = (states: Record<string, 'visited' | 'lived' | 'wantToGo'>,
     states,
     palette: scheme === 'day' ? mapColors.light : mapColors.dark,
     text: scheme === 'day' ? colors.light.text : colors.dark.text,
+    excludeAntarctica: true,
     sources: { countries, capitals },
   });
 

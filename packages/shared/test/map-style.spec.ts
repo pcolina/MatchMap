@@ -44,4 +44,21 @@ describe('map style', () => {
     const border = night.layers.find((layer) => layer.id === 'countries-border');
     expect((border?.paint as Record<string, unknown>)['line-color']).toBe('#9AA6BA');
   });
+
+  it('draws no Antarctica when excludeAntarctica is set, and keeps it otherwise', () => {
+    const without = style().layers.find((layer) => layer.id === 'countries-fill');
+    expect(without?.filter).toBeUndefined();
+
+    const withExclusion = buildMapStyle({
+      states: {},
+      palette,
+      text: '#111827',
+      sources: { countries: 'countries.json', capitals: 'capitals.json' },
+      excludeAntarctica: true,
+    });
+    const fill = withExclusion.layers.find((layer) => layer.id === 'countries-fill');
+    const border = withExclusion.layers.find((layer) => layer.id === 'countries-border');
+    expect(fill?.filter).toEqual(['!=', ['get', 'iso_a2'], 'AQ']);
+    expect(border?.filter).toEqual(['!=', ['get', 'iso_a2'], 'AQ']);
+  });
 });

@@ -18,6 +18,7 @@ export const buildMapStyle = (
     states,
     palette,
     text,
+    excludeAntarctica: projection !== 'globe',
     sources: {
       countries: new URL('/geo/countries.json', window.location.origin).href,
       capitals: new URL('/geo/capitals.json', window.location.origin).href,

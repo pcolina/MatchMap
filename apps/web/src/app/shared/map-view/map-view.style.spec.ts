@@ -5,7 +5,11 @@ import { buildMapStyle } from './map-view.style';
 
 const urlOf = (path: string) => new URL(path, window.location.origin).href;
 
-const sharedStyle = (states: Record<string, 'visited' | 'lived' | 'wantToGo'>, scheme: 'day' | 'night') => {
+const sharedStyle = (
+  states: Record<string, 'visited' | 'lived' | 'wantToGo'>,
+  scheme: 'day' | 'night',
+  excludeAntarctica = true,
+) => {
   const palette = scheme === 'day' ? mapColors.light : mapColors.dark;
   const text = scheme === 'day' ? colors.light.text : colors.dark.text;
 
@@ -13,6 +17,7 @@ const sharedStyle = (states: Record<string, 'visited' | 'lived' | 'wantToGo'>, s
     states,
     palette,
     text,
+    excludeAntarctica,
     sources: { countries: urlOf('/geo/countries.json'), capitals: urlOf('/geo/capitals.json') },
   });
 };
@@ -29,12 +34,22 @@ describe('web map style parity with the shared style', () => {
   });
 });
 
+describe('web map style Antarctica', () => {
+  it('leaves Antarctica out in Mercator and keeps it on the globe', () => {
+    expect(buildMapStyle({}, 'day', 'mercator')).toEqual(sharedStyle({}, 'day', true));
+    expect(buildMapStyle({}, 'day', 'globe')).toEqual({
+      ...sharedStyle({}, 'day', false),
+      projection: { type: 'globe' },
+    });
+  });
+});
+
 describe('web map style projection', () => {
   const states = { FR: 'visited' as const };
 
   it('adds the globe projection to the style in both schemes', () => {
-    expect(buildMapStyle(states, 'day', 'globe')).toEqual({ ...sharedStyle(states, 'day'), projection: { type: 'globe' } });
-    expect(buildMapStyle(states, 'night', 'globe')).toEqual({ ...sharedStyle(states, 'night'), projection: { type: 'globe' } });
+    expect(buildMapStyle(states, 'day', 'globe')).toEqual({ ...sharedStyle(states, 'day', false), projection: { type: 'globe' } });
+    expect(buildMapStyle(states, 'night', 'globe')).toEqual({ ...sharedStyle(states, 'night', false), projection: { type: 'globe' } });
   });
 
   it('keeps the Mercator style equal to the shared style, with no projection field', () => {
