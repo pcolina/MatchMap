@@ -63,11 +63,15 @@ The header of the account sheet SHALL show the username of the signed-in user in
 
 ### Requirement: Rows form one list in order
 
-The account sheet SHALL show its rows as one list, with no group headings, in this order: view profile, notifications, language, day or night mode, about, and sign out. A divider SHALL separate sign out from the rows above it. The day or night mode row SHALL be a switch that exposes whether dark mode is on. Each row SHALL be a button with an accessible name.
+The account sheet SHALL show its rows as one list, with no group headings, in this order: view profile, notifications, language, day or night mode, about, and sign out. The notifications row SHALL be shown on phone-sized viewports (600 px and narrower) and SHALL be hidden on laptop-sized viewports (601 px and wider), where the notifications button is in the header. A divider SHALL separate sign out from the rows above it. The day or night mode row SHALL be a switch that exposes whether dark mode is on. Each row SHALL be a button with an accessible name.
 
 #### Scenario: Rows appear in order
-- **WHEN** the account sheet is open
+- **WHEN** the account sheet is open on a phone-sized viewport
 - **THEN** the rows appear in the order view profile, notifications, language, day or night mode, about, sign out
+
+#### Scenario: Notifications row is hidden on laptop
+- **WHEN** the account sheet is open on a laptop-sized viewport of 601 px or wider
+- **THEN** the notifications row is not shown and the other rows keep their order
 
 #### Scenario: Sign out is last
 - **WHEN** the account sheet is open
