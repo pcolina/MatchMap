@@ -10,6 +10,8 @@ const mapLibre = vi.hoisted(() => {
   class FakeMap {
     setStyle = vi.fn();
     remove = vi.fn();
+    on = vi.fn();
+    project = vi.fn(() => ({ x: 0, y: 0 }));
 
     constructor(public options: { center?: [number, number] }) {
       instances.push(this as unknown as FakeMapInstance);
@@ -42,12 +44,12 @@ describe('MapView centre', () => {
     vi.unstubAllGlobals();
   });
 
-  it('centres the Mercator map on latitude 12.5, the middle of the visible band from -60 to 85', async () => {
+  it('centres the Mercator map on latitude 42', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
     await settle(fixture);
 
-    expect(mapLibre.instances[0].options.center).toEqual([0, 12.5]);
+    expect(mapLibre.instances[0].options.center).toEqual([0, 42]);
   });
 
   it('keeps the default centre on the globe', async () => {
