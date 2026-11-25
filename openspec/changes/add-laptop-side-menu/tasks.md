@@ -9,7 +9,7 @@ Each task names its failing test first. One task is one commit, with `Task: x.x`
 
 ## 2. Laptop layout
 
-- [ ] **2.1 Layout tests.** In `main-layout.spec.ts`: the side menu is a child of the layout directly after the header; the stylesheet hides the menu below 601 px and offsets the layout by 200 px from 601 px. Run them and show the failure.
+- [ ] **2.1 Layout tests.** In `main-layout.spec.ts`: the side menu is a child of the layout directly after the header; the stylesheet hides the menu below 601 px and offsets the layout by 300 px from 601 px. Run them and show the failure.
 - [ ] **2.2 Layout.** Add the menu to `main-layout.ts` and the rules to `main-layout.css`. Make 2.1 pass.
 
 ## 3. Styles and accessibility

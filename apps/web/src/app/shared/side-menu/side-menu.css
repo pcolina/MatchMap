@@ -7,7 +7,7 @@
   flex-direction: column;
   gap: var(--mm-space-2);
   box-sizing: border-box;
-  width: 200px;
+  width: 300px;
   height: 100%;
   padding: var(--mm-space-4) var(--mm-space-3);
   background-color: var(--mm-color-accentSubtle);

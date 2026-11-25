@@ -4,11 +4,11 @@
 
 ### Requirement: Side menu on laptop
 
-The web laptop layout SHALL show a side menu on the left, 200 px wide and as high as the viewport, with the header background colour. The menu SHALL have two items: add a place, with a plus icon in the accent colour, and friends, with a users icon in the `textSecondary` colour. The menu SHALL be a navigation landmark with an accessible name from an i18n key.
+The web laptop layout SHALL show a side menu on the left, 300 px wide and as high as the viewport, with the header background colour. The menu SHALL have two items: add a place, with a plus icon in the accent colour, and friends, with a users icon in the `textSecondary` colour. The menu SHALL be a navigation landmark with an accessible name from an i18n key.
 
 #### Scenario: Menu is shown on laptop
 - **WHEN** the viewport is 601 px or wider
-- **THEN** the header spans the full width of the viewport, and the side menu is shown on the left, 200 px wide, from the bottom of the header to the bottom of the viewport; the map and the stats panel start to the right of the menu
+- **THEN** the header spans the full width of the viewport, and the side menu is shown on the left, 300 px wide, from the bottom of the header to the bottom of the viewport; the map and the stats panel start to the right of the menu
 
 #### Scenario: Menu is hidden on phones
 - **WHEN** the viewport is narrower than 601 px

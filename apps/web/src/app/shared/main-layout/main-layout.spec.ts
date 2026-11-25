@@ -108,13 +108,13 @@ describe('MainLayout', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
     expect(css).toMatch(/app-side-menu\s*\{\s*display:\s*none;/);
-    expect(css).toMatch(/@media \(min-width: 601px\)\s*\{[\s\S]*app-side-menu\s*\{[^}]*position:\s*fixed;[^}]*top:\s*50px;[^}]*width:\s*200px;[^}]*height:\s*calc\(100dvh\s*-\s*50px\);/);
+    expect(css).toMatch(/@media \(min-width: 601px\)\s*\{[\s\S]*app-side-menu\s*\{[^}]*position:\s*fixed;[^}]*top:\s*50px;[^}]*width:\s*300px;[^}]*height:\s*calc\(100dvh\s*-\s*50px\);/);
   });
 
   it('offsets the content by the menu width and leaves the header full width', () => {
     const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
 
-    expect(css).toMatch(/@media \(min-width: 601px\)\s*\{[\s\S]*\.main-layout > \.map-area[\s\S]*margin-left:\s*200px;/);
+    expect(css).toMatch(/@media \(min-width: 601px\)\s*\{[\s\S]*\.main-layout > \.map-area[\s\S]*margin-left:\s*300px;/);
     expect(css).not.toMatch(/\.main-layout\s*\{[^}]*padding-left:\s*200px;/);
   });
 

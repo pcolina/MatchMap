@@ -54,7 +54,7 @@ app-side-menu {
     top: 50px;
     left: 0;
     z-index: 3;
-    width: 200px;
+    width: 300px;
     height: calc(100dvh - 50px);
   }
 
@@ -67,7 +67,7 @@ app-side-menu {
   .main-layout > .map-area,
   .main-layout > app-stats-resume,
   .main-layout > app-layout-footer {
-    margin-left: 200px;
+    margin-left: 300px;
   }
 
   app-map-top-controls {
