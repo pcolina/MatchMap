@@ -9,18 +9,20 @@ Each task names its failing test first, then the code that makes it pass. One ta
 
 ## 2. Spike: the two unverified assumptions
 
-- [x] **2.1 Globe formula test.** Verified in the source of maplibre-gl 6.16.0: the globe radius is `worldSize / (2π · cos(lat))`, so at the centre latitude 0 the diameter is `512 · 2^zoom / π`, as the formula assumes. At other centre latitudes the globe is larger, never smaller, so the width constraint holds. Checked in source, not in a browser. In `apps/web`, a test renders the MapLibre globe in a container of 390, 1024 and 1440 px and checks that at `log2((W − 8) · π / 512)` the globe diameter in pixels is W − 8 within 1 px. Run it and show the result. If the diameter differs, stop and propose the new formula before going on.
-- [!] **2.2 ng-native options test.** BLOCKED, owner to decide. In `@maplibre/maplibre-react-native` 11.5.1, `minZoom` and `maxBounds` are props of `Camera`, not of `MapView`. The mobile map is `maplibre-map` (MapView) and has no `Camera` in its template, so the options cannot be added to `mapViewProps` alone. Options: add a `Camera` child to the mobile map template, or leave the mobile limits out of this change. Read the documentation of the ng-native map module for `minZoom` and `maxBounds`. Record the names and the source in the PR. If the module does not support them, stop and ask the owner, as `CLAUDE.md` §12 asks.
+- [x] **2.1 Globe formula test.** Verified in the source of maplibre-gl 6.16.0: the globe radius is `worldSize / (2π · cos(lat))`, so at the centre latitude 0 the diameter is `512 · 2^zoom / π`, as the formula assumes. At other centre latitudes the globe is larger, never smaller, so the width constraint holds. Checked in source, not in a browser.
+- [!] **2.2 ng-native options test.** BLOCKED, owner to decide. In `@maplibre/maplibre-react-native` 11.5.1, `minZoom` and `maxBounds` are props of `Camera`, not of `MapView`. The mobile map is `maplibre-map` (MapView) and has no `Camera` in its template, so the options cannot be added to `mapViewProps` alone. Options: add a `Camera` child to the mobile map template, or leave the mobile limits out of this change.
+
+- **Rollback:** the Mercator and globe limits (tasks 3 and 4) were applied and removed again. Applying `maplibre-gl` 6.16 limits in the web map view made the map crash: `Cannot read properties of null (reading '0')` in MapLibre (`setMaxBounds` in the globe, then `maxBounds` in the constructor). Tasks 3 and 4 are open again and must be redone with a test that runs the real map in a browser before they are checked.
 
 ## 3. Web: Mercator limits
 
-- [x] **3.1 Mercator tests.** In the web map view, add: in Mercator the map is created with `minZoom` 3 and `maxBounds` `[[-180, -60], [180, 85]]`; zooming out stops at zoom 3; panning south stops at latitude -60. Run them and show the failure.
-- [x] **3.2 Mercator limits.** In `map-view.ts`, set `minZoom` and `maxBounds` when the projection is Mercator. Make 3.1 pass.
+- [ ] **3.1 Mercator tests.** In the web map view, add: in Mercator the map is created with `minZoom` 3 and `maxBounds` `[[-180, -60], [180, 85]]`; zooming out stops at zoom 3; panning south stops at latitude -60. Run them and show the failure.
+- [ ] **3.2 Mercator limits.** In `map-view.ts`, set `minZoom` and `maxBounds` when the projection is Mercator. Make 3.1 pass.
 
 ## 4. Web: globe minimum zoom
 
-- [x] **4.1 Globe tests.** In the web map view, add: in globe with a 390 px container the minimum zoom is about 1.23; in a 1024 px container it is about 2.64; a resize updates it; switching back to Mercator restores `minZoom` 3 and the bounds; a container of 8 px or less gives a minimum of 0. Run them and show the failure.
-- [x] **4.2 Globe minimum zoom.** In `map-view.ts`, use a `ResizeObserver` on the map element to set `minZoom` to `log2((W − 8) · π / 512)` for the globe, clamped at 0. Make 4.1 pass.
+- [ ] **4.1 Globe tests.** In the web map view, add: in globe with a 390 px container the minimum zoom is about 1.23; in a 1024 px container it is about 2.64; a resize updates it; switching back to Mercator restores `minZoom` 3 and the bounds; a container of 8 px or less gives a minimum of 0. Run them and show the failure.
+- [ ] **4.2 Globe minimum zoom.** In `map-view.ts`, use a `ResizeObserver` on the map element to set `minZoom` to `log2((W − 8) · π / 512)` for the globe, clamped at 0. Make 4.1 pass.
 
 ## 5. Mobile
 

@@ -35,5 +35,13 @@ describe('map style', () => {
 
   it('draws the night country borders in the textSecondary colour of the map tokens', () => {
     expect(tokens.map.countryBorder.dark).toBe('#9AA6BA');
+    const night = buildMapStyle({
+      states: {},
+      palette: { ...palette, countryBorder: tokens.map.countryBorder.dark },
+      text: '#EEF2F8',
+      sources: { countries: 'countries.json', capitals: 'capitals.json' },
+    });
+    const border = night.layers.find((layer) => layer.id === 'countries-border');
+    expect((border?.paint as Record<string, unknown>)['line-color']).toBe('#9AA6BA');
   });
 });
