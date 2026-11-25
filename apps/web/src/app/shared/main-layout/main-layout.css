@@ -33,6 +33,10 @@ app-stats-resume {
   flex: 0 0 var(--stats-height);
 }
 
+app-side-menu {
+  display: none;
+}
+
 .map-area > app-map-bottom-controls {
   bottom: calc(16px + env(safe-area-inset-bottom));
 }
@@ -44,10 +48,26 @@ app-stats-resume {
 }
 
 @media (min-width: 601px) {
+  app-side-menu {
+    display: block;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    z-index: 3;
+    width: 300px;
+    height: calc(100dvh - 50px);
+  }
+
   app-layout-header,
   app-layout-footer {
     display: block;
     flex: 0 0 auto;
+  }
+
+  .main-layout > .map-area,
+  .main-layout > app-stats-resume,
+  .main-layout > app-layout-footer {
+    margin-left: 300px;
   }
 
   app-map-top-controls {

@@ -13,13 +13,15 @@ import { MapBottomControls } from '../map-controls/map-bottom-controls';
 import { MapTopControls } from '../map-controls/map-top-controls';
 import { MapView } from '../map-view/map-view';
 import { StatsResume } from '../stats-resume/stats-resume';
+import { SideMenu } from '../side-menu/side-menu';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [LayoutHeader, MapView, MapTopControls, MapBottomControls, StatsResume, LayoutFooter, AccountSheet, AboutDialog],
+  imports: [LayoutHeader, MapView, MapTopControls, MapBottomControls, StatsResume, LayoutFooter, AccountSheet, AboutDialog, SideMenu],
   template: `<section class="main-layout">
     <app-layout-header [darkMode]="theme.isDark()" [pendingCount]="notifications.count()" (accountPressed)="accountOpen.set(true)" />
-    <div class="map-area" [class.globe]="projection.globe()">
+    <app-side-menu />
+    <div id="main-content" tabindex="-1" class="map-area" [class.globe]="projection.globe()">
       <app-map-top-controls [accountOpen]="accountOpen()" [pendingCount]="notifications.count()" (accountPressed)="accountOpen.set(true)" />
       <app-map-view [projection]="projection.projection()" />
       <app-map-bottom-controls [globeActive]="projection.globe()" (pressed)="projection.toggle()" />

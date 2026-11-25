@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import en from '../../../../../../packages/shared/i18n/en.json';
 import { mapControlIcons } from '../map-controls/map-icons';
+import { tablerCirclePlusFill, tablerUserFill } from '@ng-icons/tabler-icons/fill';
 import { provideIcons } from '@ng-icons/core';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
@@ -54,6 +55,8 @@ describe('MainLayout', () => {
           tablerUser,
           tablerUsers,
           tablerX,
+          tablerCirclePlusFill,
+          tablerUserFill,
           ...mapControlIcons,
         }),
       ],
@@ -82,12 +85,37 @@ describe('MainLayout', () => {
     const section = (fixture.nativeElement as HTMLElement).querySelector('section.main-layout');
     expect(Array.from(section?.children ?? []).map((child) => child.tagName.toLowerCase())).toEqual([
       'app-layout-header',
+      'app-side-menu',
       'div',
       'app-stats-resume',
       'app-layout-footer',
       'app-account-sheet',
       'app-about-dialog',
     ]);
+  });
+
+  it('makes the map area the target of the side menu skip link', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const mapArea = (fixture.nativeElement as HTMLElement).querySelector('#main-content');
+    expect(mapArea?.classList.contains('map-area')).toBe(true);
+    expect(mapArea?.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('shows the side menu only from 601 px, below the full-width header', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/app-side-menu\s*\{\s*display:\s*none;/);
+    expect(css).toMatch(/@media \(min-width: 601px\)\s*\{[\s\S]*app-side-menu\s*\{[^}]*position:\s*fixed;[^}]*top:\s*50px;[^}]*width:\s*300px;[^}]*height:\s*calc\(100dvh\s*-\s*50px\);/);
+  });
+
+  it('offsets the content by the menu width and leaves the header full width', () => {
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'main-layout', 'main-layout.css'), 'utf8');
+
+    expect(css).toMatch(/@media \(min-width: 601px\)\s*\{[\s\S]*\.main-layout > \.map-area[\s\S]*margin-left:\s*300px;/);
+    expect(css).not.toMatch(/\.main-layout\s*\{[^}]*padding-left:\s*200px;/);
   });
 
   it('opens the account sheet when the account button is pressed', async () => {
