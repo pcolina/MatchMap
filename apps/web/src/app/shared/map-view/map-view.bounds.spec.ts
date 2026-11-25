@@ -4,7 +4,7 @@ import { MapView } from './map-view';
 
 type Listener = () => void;
 type FakeMapInstance = {
-  options: { renderWorldCopies?: boolean; minZoom?: number };
+  options: { renderWorldCopies?: boolean; minZoom?: number; zoom?: number };
   on: ReturnType<typeof vi.fn>;
   getBounds: ReturnType<typeof vi.fn>;
   getCenter: ReturnType<typeof vi.fn>;
@@ -25,7 +25,7 @@ const mapLibre = vi.hoisted(() => {
     getCenter = vi.fn(() => ({ lng: 0, lat: 42 }));
     easeTo = vi.fn();
 
-    constructor(public options: { renderWorldCopies?: boolean; minZoom?: number }) {
+    constructor(public options: { renderWorldCopies?: boolean; minZoom?: number; zoom?: number }) {
       instances.push(this as unknown as FakeMapInstance);
     }
   }
@@ -104,6 +104,21 @@ describe('MapView keeps the view above latitude -60', () => {
     await settle(fixture);
 
     expect(mapLibre.instances[0].options.renderWorldCopies).toBe(false);
+  });
+
+  it('starts the Mercator map at the zoom that fits the width and the band from -60 to 85 in the container', async () => {
+    const width = vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(1000);
+    const height = vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(700);
+    try {
+      const fixture = TestBed.createComponent(MapView);
+      fixture.detectChanges();
+      await settle(fixture);
+
+      expect(mapLibre.instances[0].options.zoom).toBeCloseTo(Math.log2(700 / 363.3), 2);
+    } finally {
+      width.mockRestore();
+      height.mockRestore();
+    }
   });
 
   it('lets the Mercator map zoom out below zoom 0', async () => {

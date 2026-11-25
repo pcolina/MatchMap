@@ -16,6 +16,20 @@ import type { MapProjection } from '../../core/map-projection/map-projection.sto
 import { ThemeStore } from '../../core/theme/theme.store';
 import { MapScheme, MapState, buildMapStyle } from './map-view.style';
 
+const bandHeightAtZoomZero = 363.3;
+
+const mercatorOptions = (element: HTMLElement) => {
+  const width = element.clientWidth;
+  const height = element.clientHeight;
+  const fit = width > 0 && height > 0 ? Math.min(Math.log2(width / 512), Math.log2(height / bandHeightAtZoomZero)) : undefined;
+  return {
+    center: [0, 42] as [number, number],
+    renderWorldCopies: false,
+    minZoom: -2,
+    ...(fit === undefined ? {} : { zoom: fit }),
+  };
+};
+
 @Component({
   selector: 'app-map-view',
   imports: [TranslatePipe],
@@ -44,7 +58,7 @@ export class MapView {
         container: this.container().nativeElement,
         style: buildMapStyle(this.states(), this.scheme(), this.projection()),
         attributionControl: false,
-        ...(this.projection() === 'mercator' ? { center: [0, 42] as [number, number], renderWorldCopies: false, minZoom: -2 } : {}),
+        ...(this.projection() === 'mercator' ? mercatorOptions(this.container().nativeElement) : {}),
       });
       this.map.on('moveend', () => this.keepAboveAntarctica());
       this.map.on('movestart', (event: { originalEvent?: unknown }) => {
