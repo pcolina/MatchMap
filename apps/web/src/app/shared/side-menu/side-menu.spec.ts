@@ -1,7 +1,7 @@
 import '@angular/compiler';
 import { TestBed } from '@angular/core/testing';
 import { provideIcons } from '@ng-icons/core';
-import { tablerPlus, tablerUsers } from '@ng-icons/tabler-icons';
+import { tablerCirclePlusFill, tablerUserFill } from '@ng-icons/tabler-icons/fill';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { describe, expect, it } from 'vitest';
 import en from '../../../../../../packages/shared/i18n/en.json';
@@ -22,7 +22,7 @@ const readCss = () => readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'sha
 const create = () => {
   TestBed.configureTestingModule({
     imports: [SideMenu],
-    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerPlus, tablerUsers })],
+    providers: [provideTranslateService({ fallbackLang: 'en' }), provideIcons({ tablerCirclePlusFill, tablerUserFill })],
   });
   const translate = TestBed.inject(TranslateService);
   translate.setTranslation('en', en);
@@ -45,6 +45,13 @@ describe('SideMenu', () => {
     const buttons = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('nav button'));
 
     expect(buttons.map((button) => button.textContent?.trim())).toEqual(['Add place', 'Friends']);
+  });
+
+  it('uses the filled plus-in-circle and user icons', () => {
+    const fixture = create();
+    const icons = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('nav ng-icon'));
+
+    expect(icons.map((icon) => icon.getAttribute('name'))).toEqual(['tablerCirclePlusFill', 'tablerUserFill']);
   });
 
   it('ends with a skip link to the main content', () => {

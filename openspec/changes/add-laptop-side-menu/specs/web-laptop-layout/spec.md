@@ -8,7 +8,7 @@ The web laptop layout SHALL show a side menu on the left, 200 px wide and as hig
 
 #### Scenario: Menu is shown on laptop
 - **WHEN** the viewport is 601 px or wider
-- **THEN** the side menu is shown on the left, 200 px wide and the full viewport height, and the header and the map start to the right of it
+- **THEN** the header spans the full width of the viewport, and the side menu is shown on the left, 200 px wide, from the bottom of the header to the bottom of the viewport; the map and the stats panel start to the right of the menu
 
 #### Scenario: Menu is hidden on phones
 - **WHEN** the viewport is narrower than 601 px

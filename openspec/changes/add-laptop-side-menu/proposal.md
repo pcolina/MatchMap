@@ -6,7 +6,7 @@ On laptop the web layout has no navigation for the two main actions of the app: 
 
 ## What Changes
 
-- A side menu on the left of the laptop layout, 200 px wide and as high as the viewport (100 % of the viewport height).
+- A side menu on the left of the laptop layout, 200 px wide. It starts under the header and runs to the bottom of the viewport. The header spans the full width of the viewport.
 - Background: the header background token (`accentSubtle`).
 - Two items:
   1. **Add place** (`map.controls.addPlace`), with a plus icon in the accent colour.

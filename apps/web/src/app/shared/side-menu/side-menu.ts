@@ -7,11 +7,11 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [NgIcon, TranslatePipe],
   template: `<nav class="side-menu" [attr.aria-label]="'map.sideMenu.label' | translate">
     <button type="button" class="item add-place" (click)="addPlacePressed.emit()">
-      <ng-icon name="tablerPlus" />
+      <ng-icon name="tablerCirclePlusFill" />
       <span>{{ 'map.controls.addPlace' | translate }}</span>
     </button>
     <button type="button" class="item friends" (click)="friendsPressed.emit()">
-      <ng-icon name="tablerUsers" />
+      <ng-icon name="tablerUserFill" />
       <span>{{ 'map.controls.friends' | translate }}</span>
     </button>
     <a class="skip" href="#main-content">{{ 'map.sideMenu.skip' | translate }}</a>
