@@ -16,7 +16,7 @@ The world map is the main screen of the app. Its styling is defined in the share
 
 The map style is shared: `apps/mobile` also builds its map with `buildMapStyle` from `packages/shared`. So the capital, border, Antarctica and minimum-zoom changes apply to the mobile app on phone-sized screens too, as well as to the web app. The globe minimum zoom is web only, because the globe is a web-only projection. Per the project rules, phone and web share one spec for this change.
 
-[NEEDS CLARIFICATION: confirm that the Mercator changes also apply to the mobile app on phone-sized screens, as described above. If not, the mobile app needs its own style and this change is split.]
+Confirmed by the owner: the Mercator changes also apply to the mobile app on phone-sized screens.
 
 ## Capabilities
 
