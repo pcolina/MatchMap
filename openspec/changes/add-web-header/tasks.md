@@ -21,7 +21,7 @@ Each task names its failing test first, then the code that makes it pass. One ta
 
 - [x] **4.1 Axe test.** In `apps/web/src/app/features/auth/pages/accessibility.spec.ts`, add: the main screen at laptop width has no axe violations, in light and in dark mode.
 - [x] **4.2 Contrast check.** Measured: icons 17.74:1 in day and 15.47:1 at night; dot 6.47:1 in day and 6.28:1 at night. Measure the contrast of the button icons (`--mm-color-text`) against the surface, and of the red dot (`--mm-color-danger`) against the surface, in both modes. The icons must be at least 4.5:1 and the dot at least 3:1 (WCAG 1.4.11). Record the values in the PR. If one is below its minimum, stop and ask.
-- [ ] **4.3 Browser check.** In Chrome, at 601, 1024 and 1440 px, in light and dark mode: the logo variant matches the mode, the header is 50 px high, the bell is left of the profile, Tab moves bell then profile with a visible focus, and the profile button opens the account sheet. Done by the owner, with the steps in the PR.
+- [x] **4.3 Browser check.** Confirmed by the owner in Chrome, in light and dark mode. In Chrome, at 601, 1024 and 1440 px, in light and dark mode: the logo variant matches the mode, the header is 50 px high, the bell is left of the profile, Tab moves bell then profile with a visible focus, and the profile button opens the account sheet. Done by the owner, with the steps in the PR.
 
 ## 5. Full check
 
@@ -51,7 +51,7 @@ None. The brand name `matchMap` is not translated, and the labels use keys that 
 
 - [x] **8.1 Header tests.** In `layout-header.spec.ts`: the logo is the light-background variant in both schemes; the header has the class `dark` when `darkMode` is true; the CSS gives `.layout-header.dark` the `accent` background and sets `--mm-color-text` to `var(--mm-color-onAccent)`. Run them and show the failure.
 - [x] **8.2 Header.** In `layout-header.ts`, the logo is always the light-background variant and the host has the `dark` class from `darkMode`; in `layout-header.css`, `.layout-header.dark` sets the accent background and the `onAccent` text token. Make 8.1 pass.
-- [ ] **8.3 Contrast check.** Measure `onAccent` (`#04201C`) against `accent` (`#2DD4BF`) in the dark scheme, and the logo against the accent. Record the values in the PR. Stop and ask if one is below 4.5:1.
+- [x] **8.3 Contrast check.** Superseded: the dark header no longer uses the accent (commit 28e233a). Last measured: onAccent #04201C on accent #2DD4BF, 9.18:1, before the change. Header on surfaceRaised #18223A: text #EEF2F8 14.07:1. Measure `onAccent` (`#04201C`) against `accent` (`#2DD4BF`) in the dark scheme, and the logo against the accent. Record the values in the PR. Stop and ask if one is below 4.5:1.
 - [x] **8.4 Full check.** `pnpm check` and `pnpm build:web`, with the summary in the PR.
 - [x] **8.5 Plain profile button.** Tests first: in `layout-header.spec.ts`, the header's `app-account-button` has the class `plain`; `account-button.css` gives `:host(.plain) .control` no border, no shadow and a transparent background. Run them and show the failure. Then add the `plain` input to `AccountButton` with the host class, and use it in the header. Make the tests pass.
 - [x] **8.6 Header polish from review.** The desktop bell and profile share the hover (`accentSubtle`) and the keyboard focus halo of the global focus style; the profile button no longer removes the halo. The dot is 12 px (`--mm-space-3`), with its number centred.
