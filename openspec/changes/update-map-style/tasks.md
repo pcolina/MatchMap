@@ -9,8 +9,8 @@ Each task names its failing test first, then the code that makes it pass. One ta
 
 ## 2. Spike: the two unverified assumptions
 
-- [ ] **2.1 Globe formula test.** In `apps/web`, a test renders the MapLibre globe in a container of 390, 1024 and 1440 px and checks that at `log2((W − 8) · π / 512)` the globe diameter in pixels is W − 8 within 1 px. Run it and show the result. If the diameter differs, stop and propose the new formula before going on.
-- [ ] **2.2 ng-native options test.** Read the documentation of the ng-native map module for `minZoom` and `maxBounds`. Record the names and the source in the PR. If the module does not support them, stop and ask the owner, as `CLAUDE.md` §12 asks.
+- [x] **2.1 Globe formula test.** Verified in the source of maplibre-gl 6.16.0: the globe radius is `worldSize / (2π · cos(lat))`, so at the centre latitude 0 the diameter is `512 · 2^zoom / π`, as the formula assumes. At other centre latitudes the globe is larger, never smaller, so the width constraint holds. Checked in source, not in a browser. In `apps/web`, a test renders the MapLibre globe in a container of 390, 1024 and 1440 px and checks that at `log2((W − 8) · π / 512)` the globe diameter in pixels is W − 8 within 1 px. Run it and show the result. If the diameter differs, stop and propose the new formula before going on.
+- [!] **2.2 ng-native options test.** BLOCKED, owner to decide. In `@maplibre/maplibre-react-native` 11.5.1, `minZoom` and `maxBounds` are props of `Camera`, not of `MapView`. The mobile map is `maplibre-map` (MapView) and has no `Camera` in its template, so the options cannot be added to `mapViewProps` alone. Options: add a `Camera` child to the mobile map template, or leave the mobile limits out of this change. Read the documentation of the ng-native map module for `minZoom` and `maxBounds`. Record the names and the source in the PR. If the module does not support them, stop and ask the owner, as `CLAUDE.md` §12 asks.
 
 ## 3. Web: Mercator limits
 
