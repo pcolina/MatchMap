@@ -338,6 +338,47 @@ describe('MainLayout', () => {
       localStorage.removeItem('matchmap.notifications.pending');
     }
   });
+
+  it('shows the dark-background logo in the header when the dark scheme is saved', async () => {
+    localStorage.setItem('matchmap.theme', 'dark');
+    try {
+      const fixture = TestBed.createComponent(MainLayout);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const logo = (fixture.nativeElement as HTMLElement).querySelector('.layout-header img') as HTMLImageElement;
+      expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-dark.svg');
+    } finally {
+      localStorage.removeItem('matchmap.theme');
+    }
+  });
+
+  it('shows the light logo in the header when the light scheme is saved', async () => {
+    localStorage.setItem('matchmap.theme', 'light');
+    try {
+      const fixture = TestBed.createComponent(MainLayout);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const logo = (fixture.nativeElement as HTMLElement).querySelector('.layout-header img') as HTMLImageElement;
+      expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-light.svg');
+    } finally {
+      localStorage.removeItem('matchmap.theme');
+    }
+  });
+
+  it('opens the account sheet from the profile button in the header', async () => {
+    const fixture = TestBed.createComponent(MainLayout);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    (root.querySelector('.layout-header app-account-button button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(root.querySelector('app-account-sheet dialog')?.hasAttribute('open')).toBe(true);
+  });
+
 });
 
 describe('map view page size', () => {

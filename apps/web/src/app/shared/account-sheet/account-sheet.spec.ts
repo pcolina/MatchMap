@@ -265,4 +265,15 @@ describe('AccountSheet', () => {
   it('removes the transition when reduced motion is requested', () => {
     expect(css()).toMatch(/@media \(prefers-reduced-motion: reduce\)\s*\{[\s\S]*\.sheet[\s\S]*transition:\s*none/);
   });
+
+  it('hides the notifications row on laptop-sized viewports, from 601 px', () => {
+    expect(css()).toMatch(/@media \(min-width:\s*601px\)\s*\{[^}]*\.notifications-row\s*\{[^}]*display:\s*none;/);
+  });
+
+  it('marks the notifications row so the laptop rule can target it', () => {
+    const { root } = create();
+    const row = root.querySelectorAll<HTMLButtonElement>('button[data-row]')[1];
+
+    expect(row.classList.contains('notifications-row')).toBe(true);
+  });
 });

@@ -1,6 +1,100 @@
 .layout-header {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
   width: 100%;
   height: 50px;
-  background-color: var(--mm-color-accent);
+  padding: 0 var(--mm-space-4);
+  overflow: hidden;
+  background-color: var(--mm-color-accentSubtle);
+  color: var(--mm-color-text);
+}
+
+.logo {
+  display: block;
+  height: var(--mm-space-6);
+  width: auto;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+}
+
+.control {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mm-color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.control::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--mm-space-8);
+  height: var(--mm-space-8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.control ng-icon {
+  position: relative;
+  font-size: 24px;
+}
+
+.control:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.control:focus-visible::before {
+  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
+  box-shadow: var(--mm-focus-halo);
+}
+
+.notification-dot {
+  position: absolute;
+  top: var(--mm-space-1);
+  right: var(--mm-space-1);
+  box-sizing: border-box;
+  min-width: var(--mm-space-3);
+  height: var(--mm-space-3);
+  padding: 1px var(--mm-space-1) 0;
+  border-radius: var(--mm-radius-pill);
+  background: var(--mm-color-danger);
+  color: var(--mm-color-onDanger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.layout-header.dark {
+  background-color: var(--mm-color-surfaceRaised);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .control:hover {
+    color: var(--mm-color-onAccent);
+  }
+
+  .control:hover::before {
+    background: var(--mm-color-accent);
+  }
 }

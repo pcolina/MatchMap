@@ -105,6 +105,21 @@ describe('accessibility of the auth pages', () => {
     }
   });
 
+  it.each(['light', 'dark'])('the main screen with the web header has no axe violations in %s mode', async (mode) => {
+    localStorage.setItem('matchmap.theme', mode);
+    try {
+      const element = render(MainLayout);
+      TestBed.inject(ApplicationRef).tick();
+
+      const results = await axe.run(element);
+
+      expect(element.querySelector('.layout-header img')?.getAttribute('alt')).toBe('matchMap');
+      expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
+    } finally {
+      localStorage.removeItem('matchmap.theme');
+    }
+  });
+
   it('the main screen with the globe view on has no axe violations', async () => {
     localStorage.setItem('matchmap.mapProjection', 'globe');
     try {

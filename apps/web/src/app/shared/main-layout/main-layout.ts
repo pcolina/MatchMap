@@ -18,7 +18,7 @@ import { StatsResume } from '../stats-resume/stats-resume';
   selector: 'app-main-layout',
   imports: [LayoutHeader, MapView, MapTopControls, MapBottomControls, StatsResume, LayoutFooter, AccountSheet, AboutDialog],
   template: `<section class="main-layout">
-    <app-layout-header />
+    <app-layout-header [darkMode]="theme.isDark()" [pendingCount]="notifications.count()" (accountPressed)="accountOpen.set(true)" />
     <div class="map-area" [class.globe]="projection.globe()">
       <app-map-top-controls [accountOpen]="accountOpen()" [pendingCount]="notifications.count()" (accountPressed)="accountOpen.set(true)" />
       <app-map-view [projection]="projection.projection()" />
