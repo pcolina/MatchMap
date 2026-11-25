@@ -59,9 +59,11 @@ export class MapView {
           this.correcting = false;
         }
       });
-      const resizeObserver = new ResizeObserver(() => this.applyMinZoom());
-      resizeObserver.observe(this.container().nativeElement);
-      this.destroyRef.onDestroy(() => resizeObserver.disconnect());
+      if (typeof ResizeObserver !== 'undefined') {
+        const resizeObserver = new ResizeObserver(() => this.applyMinZoom());
+        resizeObserver.observe(this.container().nativeElement);
+        this.destroyRef.onDestroy(() => resizeObserver.disconnect());
+      }
     });
 
     effect(() => {
