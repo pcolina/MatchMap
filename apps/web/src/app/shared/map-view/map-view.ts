@@ -43,13 +43,27 @@ export class MapView {
         container: this.container().nativeElement,
         style: buildMapStyle(this.states(), this.scheme(), this.projection()),
         attributionControl: false,
-        ...(this.projection() === 'mercator' ? { center: [0, 42] as [number, number] } : {}),
+        ...(this.projection() === 'mercator' ? { center: [0, 42] as [number, number], renderWorldCopies: false } : {}),
       });
+      this.map.on('moveend', () => this.keepAboveAntarctica());
     });
 
     effect(() => {
       const style = buildMapStyle(this.states(), this.scheme(), this.projection());
       this.map?.setStyle(style);
     });
+  }
+
+  private keepAboveAntarctica(): void {
+    if (!this.map || this.projection() !== 'mercator') {
+      return;
+    }
+    const south = this.map.getBounds().getSouth();
+    const shift = -60 - south;
+    if (shift < 0.05) {
+      return;
+    }
+    const center = this.map.getCenter();
+    this.map.easeTo({ center: [center.lng, center.lat + shift], duration: 300 });
   }
 }
