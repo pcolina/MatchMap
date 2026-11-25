@@ -1,5 +1,19 @@
 # web-laptop-layout Delta
 
+## MODIFIED Requirements
+
+### Requirement: Footer is an empty full-width bar
+
+The laptop layout SHALL show a footer at the bottom of the screen. The footer SHALL span the viewport width minus the width of the side menu, so that it starts to the right of the menu. It SHALL use the `surfaceRaised` colour token as its background and SHALL have no content. Its height is not fixed by this spec; it is set during the visual check.
+
+#### Scenario: Footer spans the width beside the menu at the bottom
+- **WHEN** the laptop layout is shown
+- **THEN** the footer is at the bottom of the screen, starts at the right edge of the side menu and extends to the right edge of the viewport
+
+#### Scenario: Footer has the surfaceRaised background
+- **WHEN** the laptop layout is shown in the light and in the dark scheme
+- **THEN** the footer background is the `surfaceRaised` token of that scheme
+
 ## ADDED Requirements
 
 ### Requirement: Side menu on laptop
