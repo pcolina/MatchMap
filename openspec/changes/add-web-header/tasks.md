@@ -55,3 +55,11 @@ None. The brand name `matchMap` is not translated, and the labels use keys that 
 - [x] **8.4 Full check.** `pnpm check` and `pnpm build:web`, with the summary in the PR.
 - [x] **8.5 Plain profile button.** Tests first: in `layout-header.spec.ts`, the header's `app-account-button` has the class `plain`; `account-button.css` gives `:host(.plain) .control` no border, no shadow and a transparent background. Run them and show the failure. Then add the `plain` input to `AccountButton` with the host class, and use it in the header. Make the tests pass.
 - [x] **8.6 Header polish from review.** The desktop bell and profile share the hover (`accentSubtle`) and the keyboard focus halo of the global focus style; the profile button no longer removes the halo. The dot is 12 px (`--mm-space-3`), with its number centred.
+
+## 9. Visual corrections approved by the owner
+
+- [x] **9.1 Header focus.** Keyboard focus on the header buttons uses the global focus style of the app, as on the sign-in page. Commit 43d27bd.
+- [x] **9.2 Count dot.** The pending count is a pill that grows for two digits, centred, and moved 0.5 px down. Commits 43d27bd and 55f45bd.
+- [x] **9.3 Light header.** The light header background is `accentSubtle`, the light green of the login gradient. Commit 23a6467.
+- [x] **9.4 Dark header.** The dark header background is `surfaceRaised` and the logo is the dark-background variant. Commit 28e233a.
+- [x] **9.5 Spec and design.** `specs/web-laptop-layout/spec.md` and `design.md` describe 9.1 to 9.4.

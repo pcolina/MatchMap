@@ -10,7 +10,7 @@ Replaced by "Header shows the brand, the notifications bell and the profile". Th
 
 ### Requirement: Header is a full-width bar with the brand on the left
 
-The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, has no scroll, and uses the `surface` colour token as its background in the light scheme and the `accent` colour token in the dark scheme, with the `onAccent` colour token for its text and icons in the dark scheme. Its height SHALL be 50 px at every laptop width. The header SHALL show the matchMap horizontal logo lockup with its text on the left, always the light-background variant, which reads on both the surface and the accent background.
+The laptop layout SHALL show a header at the top of the screen that spans the full viewport width, has no scroll, and uses the `accentSubtle` colour token (the light green of the login gradient) as its background in the light scheme and the `surfaceRaised` colour token in the dark scheme, with the text and icons in the theme text colour. Its height SHALL be 50 px at every laptop width. The header SHALL show the matchMap horizontal logo lockup with its text on the left: the light-background variant in the light scheme and the dark-background variant in the dark scheme.
 
 #### Scenario: Header is 50 px high at every width
 - **WHEN** the laptop layout is shown at any width from 601 px upwards
@@ -20,17 +20,19 @@ The laptop layout SHALL show a header at the top of the screen that spans the fu
 - **WHEN** the laptop layout is shown
 - **THEN** the header is at the top of the screen and its width equals the viewport width
 
-#### Scenario: Header has the surface background in light
+#### Scenario: Header has the login green background in light
 - **WHEN** the laptop layout is shown in the light scheme
-- **THEN** the header background is the `surface` token
+- **THEN** the header background is the `accentSubtle` token
 
-#### Scenario: Header has the accent background in dark
+#### Scenario: Header has the surfaceRaised background in dark
 - **WHEN** the laptop layout is shown in the dark scheme
-- **THEN** the header background is the `accent` token and its icons use the `onAccent` token
+- **THEN** the header background is the `surfaceRaised` token and its icons use the theme text colour
 
-#### Scenario: Logo is the same in both schemes
-- **WHEN** the laptop layout is shown in the light or in the dark scheme
+#### Scenario: Logo follows the scheme
+- **WHEN** the laptop layout is shown in the light scheme
 - **THEN** the logo is the light-background variant
+- **AND WHEN** the laptop layout is shown in the dark scheme
+- **THEN** the logo is the dark-background variant
 
 #### Scenario: Logo has an accessible name
 - **WHEN** the header is read by an accessibility tool
@@ -66,4 +68,4 @@ On the right of the header the header SHALL show two buttons from left to right:
 
 #### Scenario: Keyboard focus is visible
 - **WHEN** a header button has keyboard focus
-- **THEN** the focus is shown as the 32 px hover circle behind the icon, with the narrow accent halo of the focus style, and no outline ring
+- **THEN** the button shows the global focus style of the app (the accent outline with the focus halo on the button itself, as on the sign-in page), and the hover circle is not drawn

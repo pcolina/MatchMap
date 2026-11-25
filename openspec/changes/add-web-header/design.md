@@ -26,7 +26,7 @@ The header renders one `<img>` with `src` picked from `darkMode`, and `alt="matc
 
 ### 3. Background and layout from the tokens
 
-- The header uses `background: var(--mm-color-surface)`, height `50px`, width `100%`, `display: flex`, `justify-content: space-between`, `align-items: center`, and horizontal padding `var(--mm-space-4)`.
+- The header uses `background: var(--mm-color-accentSubtle)` in the light scheme and `var(--mm-color-surfaceRaised)` in the dark scheme (class `dark`), height `50px`, width `100%`, `display: flex`, `justify-content: space-between`, `align-items: center`, and horizontal padding `var(--mm-space-4)`.
 - The header does not scroll (`overflow: hidden`).
 - The `50px` height is the value the spec sets. It is the only size in this design that is not a token; it comes from the spec.
 
@@ -35,12 +35,12 @@ The header renders one `<img>` with `src` picked from `darkMode`, and `alt="matc
 - Both buttons are native `<button type="button">` with a 44 px touch target, as the controls of `web-mobile-layout` already use.
 - Icons: `tablerBell` for notifications and `tablerUser` for the profile. Both icons are already registered in `app.config.ts`.
 - Accessible names: the bell is named with `account.sheet.notifications`, the profile with `map.controls.account`, both through the translate pipe.
-- Focus: `:focus-visible { outline: 2px solid var(--mm-color-accent); outline-offset: 2px; }`, the same as the map controls.
+- Focus: the header buttons take the global `:focus-visible` style of the app (outline `calc(var(--mm-border-width-focus) + 1px)` in `var(--mm-color-accent)`, offset `var(--mm-border-width-focus)`, and the `--mm-focus-halo` shadow), the same as the sign-in page. The header adds no focus rule of its own, and the hover circle is not drawn on focus.
 - Order in the DOM: bell, then profile, so Tab reaches the bell first.
 
 ### 5. The dot
 
-The dot on the bell is a `<span aria-hidden="true">` with `background: var(--mm-color-danger)` and size `var(--mm-space-3)`, the same size as the map avatar dot (`map-top-controls.css`). It is always rendered, with no binding to the notifications store.
+The dot on the bell is a `<span aria-hidden="true">` with `background: var(--mm-color-danger)`, a minimum size of `var(--mm-space-3)` high, a pill shape (`--mm-radius-pill`) that grows to fit two digits, and the pending count centred inside it. It is shown only while the count is above 0. The count comes from the notifications store.
 
 ### 6. What stays unchanged
 
