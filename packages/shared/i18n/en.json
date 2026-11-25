@@ -44,6 +44,10 @@
     "world": {
       "label": "World map"
     },
+    "sideMenu": {
+      "label": "Main menu",
+      "skip": "Skip menu"
+    },
     "controls": {
       "addPlace": "Add place",
       "friends": "Friends",

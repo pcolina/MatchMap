@@ -1,0 +1,78 @@
+:host {
+  display: block;
+}
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-2);
+  box-sizing: border-box;
+  width: 200px;
+  height: 100%;
+  padding: var(--mm-space-4) var(--mm-space-3);
+  background-color: var(--mm-color-accentSubtle);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-3);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--mm-space-3);
+  border: 0;
+  border-radius: var(--mm-radius-md);
+  background: transparent;
+  color: var(--mm-color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.item ng-icon {
+  position: relative;
+  flex: 0 0 auto;
+  font-size: 24px;
+}
+
+.add-place ng-icon {
+  color: var(--mm-color-accent);
+}
+
+.friends ng-icon {
+  color: var(--mm-color-textSecondary);
+}
+
+.item:focus-visible {
+  outline: none;
+  box-shadow: var(--mm-focus-halo);
+}
+
+.item:focus-visible,
+.skip:focus-visible {
+  outline: calc(var(--mm-border-width-focus) + 1px) solid var(--mm-color-accent);
+  outline-offset: var(--mm-border-width-focus);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item:hover {
+    background-color: var(--mm-color-surfaceRaised);
+  }
+}
+
+.skip:not(:focus-visible) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip {
+  display: block;
+  padding: var(--mm-space-2) var(--mm-space-3);
+  border-radius: var(--mm-radius-md);
+  color: var(--mm-color-textSecondary);
+}
