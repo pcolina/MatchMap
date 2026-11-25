@@ -100,18 +100,18 @@ The map SHALL draw the country borders in a colour that stands out from the land
 - **WHEN** the map is shown in night mode
 - **THEN** the country borders use the `textSecondary` token
 
-### Requirement: Globe minimum zoom fits the container width
+### Requirement: Globe minimum zoom fits the container
 
-The web app's globe projection SHALL NOT zoom out below the zoom at which the globe fills the width of its container with a 4 px gap on each side. That zoom SHALL be log2((W − 8) · π / 512), where W is the width of the container in pixels.
+The web app's globe projection SHALL NOT be smaller than its container in either direction. The globe SHALL NOT zoom out below the zoom at which its diameter, with a 4 px gap on each side, equals the smaller of the container width and height. That zoom SHALL be log2((S − 8) · π / 512), where S is the smaller of the width W and the height H of the container, in pixels.
 
 #### Scenario: Globe on a phone width
-- **WHEN** the globe is shown in a container 390 px wide
+- **WHEN** the globe is shown in a container 390 px wide and 844 px high
 - **THEN** the minimum zoom is about 1.23 and the globe does not get smaller than 382 px
 
-#### Scenario: Globe on a laptop width
-- **WHEN** the globe is shown in a container 1024 px wide
-- **THEN** the minimum zoom is about 2.64 and the globe does not get smaller than 1016 px
+#### Scenario: Globe limited by the height
+- **WHEN** the globe is shown in a container 1024 px wide and 700 px high
+- **THEN** the minimum zoom is about 2.09 and the globe does not get smaller than 692 px
 
 #### Scenario: Globe cannot zoom out further
 - **WHEN** the user zooms out a globe that is at its minimum zoom
-- **THEN** the zoom stays at the minimum zoom for the container width
+- **THEN** the zoom stays at the minimum zoom for the container

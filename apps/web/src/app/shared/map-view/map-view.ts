@@ -79,8 +79,9 @@ export class MapView {
       this.map.setMinZoom(-2);
       return;
     }
-    const width = this.container().nativeElement.clientWidth;
-    this.map.setMinZoom(Math.max(0, Math.log2((Math.max(width - 8, 1) * Math.PI) / 512)));
+    const { clientWidth, clientHeight } = this.container().nativeElement;
+    const side = Math.min(clientWidth, clientHeight);
+    this.map.setMinZoom(Math.max(0, Math.log2((Math.max(side - 8, 1) * Math.PI) / 512)));
   }
 
   private keepAboveAntarctica(): void {

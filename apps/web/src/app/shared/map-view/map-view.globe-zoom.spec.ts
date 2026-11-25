@@ -56,6 +56,7 @@ describe('MapView globe minimum zoom', () => {
     mapLibre.instances.length = 0;
     resizeCallbacks.length = 0;
     vi.stubGlobal('ResizeObserver', FakeResizeObserver);
+    vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(2000);
     vi.stubGlobal(
       'matchMedia',
       vi.fn(() => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() })),
@@ -104,6 +105,20 @@ describe('MapView globe minimum zoom', () => {
     resizeCallbacks[0]();
 
     expect(mapLibre.instances[0].setMinZoom).toHaveBeenLastCalledWith(expect.closeTo(globeMinZoomFor(1024), 5));
+  });
+
+  it('is limited by the height when the container is shorter than it is wide', async () => {
+    containerWidth(1024);
+    vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(700);
+    const fixture = TestBed.createComponent(MapView);
+    fixture.componentRef.setInput('projection', 'globe');
+    fixture.detectChanges();
+    await settle(fixture);
+
+    resizeCallbacks[0]();
+
+    expect(mapLibre.instances[0].setMinZoom).toHaveBeenLastCalledWith(expect.closeTo(globeMinZoomFor(700), 5));
+    expect(globeMinZoomFor(700)).toBeCloseTo(2.09, 2);
   });
 
   it('never goes below zoom 0 for a container of 8 px or less', async () => {

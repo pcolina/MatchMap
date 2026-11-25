@@ -8,7 +8,7 @@ The world map is the main screen of the app. Its styling is defined in the share
 
 - **Minimum zoom, Mercator.** The Mercator map cannot be zoomed out below zoom -2, the lowest zoom MapLibre allows. It starts at that zoom, centred on latitude 42, so the map shows as much of the world as possible.
 - **World shown once.** The Mercator map does not repeat the world horizontally.
-- **Minimum zoom, globe.** The globe cannot be zoomed out further than the zoom at which it fills the width of its container with a 4 px gap on each side. The minimum is log2((W − 8) · π / 512), where W is the container width. Examples: about 1.23 at 390 px, about 2.64 at 1024 px and about 3.14 at 1440 px.
+- **Minimum zoom, globe.** The globe cannot be zoomed out further than the zoom at which it fills the smaller of the width and height of its container with a 4 px gap on each side. The minimum is log2((S − 8) · π / 512), where S is the smaller of the container width W and height H. Examples: about 1.23 at 390 × 844 px, about 2.09 at 1024 × 700 px.
 - **Capital points grow with the zoom.** At the minimum zoom a capital point has a radius of 2 px. Every three zoom levels the radius grows by 1 px, so it reaches 3 px at zoom 6, 4 px at zoom 9 and 5 px at zoom 12. From there it stays at 5 px. A capital point is always visible.
 - **No Antarctica in Mercator.** The Mercator map does not draw Antarctica, and the visible area cannot go south of latitude -60: when the bottom goes below it, the map moves north. The globe keeps Antarctica and is not limited.
 - **Laptop view toggle.** The globe/Mercator toggle that the phone layout shows is also visible on laptop, in the same position. Its hiding rule in `main-layout.css` is removed.
