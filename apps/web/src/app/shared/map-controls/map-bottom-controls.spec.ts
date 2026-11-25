@@ -23,6 +23,22 @@ const create = (globeActive: boolean) => {
 };
 
 describe('MapBottomControls', () => {
+  it('draws the keyboard focus ring like the header buttons', () => {
+    const nodeProcess = (globalThis as unknown as {
+      process: {
+        cwd(): string;
+        getBuiltinModule(id: 'node:fs'): { readFileSync(path: string, encoding: 'utf8'): string };
+        getBuiltinModule(id: 'node:path'): { resolve(...paths: string[]): string };
+      };
+    }).process;
+    const { readFileSync } = nodeProcess.getBuiltinModule('node:fs');
+    const { resolve } = nodeProcess.getBuiltinModule('node:path');
+    const css = readFileSync(resolve(nodeProcess.cwd(), 'src', 'app', 'shared', 'map-controls', 'map-bottom-controls.css'), 'utf8');
+
+    expect(css).toMatch(/\.control:focus-visible\s*\{\s*outline:\s*none;/);
+    expect(css).toMatch(/\.control:focus-visible::before\s*\{[^}]*box-shadow:\s*var\(--mm-focus-halo\);/);
+  });
+
   it('shows only the view toggle, with no attribution button', () => {
     const root = create(false);
     const buttons = Array.from(root.querySelectorAll('button'));
