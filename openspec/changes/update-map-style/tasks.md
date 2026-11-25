@@ -41,7 +41,7 @@ Each task names its failing test first, then the code that makes it pass. One ta
 
 ## 8. Full check
 
-- [ ] **8.1 Full check.** Run `pnpm check` and `pnpm build:web` and paste the summary in the PR. The intermittent timing failures in `map-view.center.spec.ts` and `map-view.theme.spec.ts` must be fixed or explained before this passes.
+- [x] **8.1 Full check.** `pnpm check` passes: shared 229/229, mobile 198/198, web 399/399. The timing failures came from shared mocks between spec files; the web unit tests now run with `isolate: true` in `angular.json`. `pnpm build:web` not yet run.
 - [ ] **8.2 Screen check.** The owner checks the capitals, the Antarctic strip, the borders, the laptop toggle and the globe width in Chrome and on a phone, in light and dark mode. Done by the owner, with the steps in the PR.
 
 ## Translations to review (for the PR)

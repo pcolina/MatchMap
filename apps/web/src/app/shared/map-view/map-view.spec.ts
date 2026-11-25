@@ -28,6 +28,11 @@ vi.mock('maplibre-gl', () => ({
   Map: mapLibre.FakeMap,
 }));
 
+const settle = async (fixture: { whenStable: () => Promise<unknown> }) => {
+  await fixture.whenStable();
+  await vi.waitFor(() => expect(mapLibre.instances.length).toBeGreaterThan(0));
+};
+
 describe('MapView', () => {
   let darkListener: ((event: { matches: boolean }) => void) | undefined;
 
@@ -52,7 +57,7 @@ describe('MapView', () => {
   it('creates the map once with the day style', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await settle(fixture);
 
     expect(mapLibre.instances).toHaveLength(1);
     const background = mapLibre.instances[0].options.style.layers.find((layer) => layer.id === 'background');
@@ -62,7 +67,7 @@ describe('MapView', () => {
   it('creates the map without the MapLibre attribution control, so the logo is not shown', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await settle(fixture);
 
     expect(mapLibre.instances[0].options.attributionControl).toBe(false);
   });
@@ -70,7 +75,7 @@ describe('MapView', () => {
   it('rebuilds the style with the night colours when the system scheme changes', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await settle(fixture);
 
     darkListener?.({ matches: true });
     fixture.detectChanges();
@@ -88,7 +93,7 @@ describe('MapView', () => {
     translate.use('en');
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await settle(fixture);
 
     const image = (fixture.nativeElement as HTMLElement).querySelector('[role="img"]');
     expect(image?.getAttribute('aria-label')).toBe('World map');
@@ -97,7 +102,7 @@ describe('MapView', () => {
   it('removes the map when it is destroyed', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
-    await fixture.whenStable();
+    await settle(fixture);
 
     fixture.destroy();
 
@@ -108,7 +113,7 @@ describe('MapView', () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.componentRef.setInput('projection', 'globe');
     fixture.detectChanges();
-    await fixture.whenStable();
+    await settle(fixture);
 
     expect((mapLibre.instances[0].options.style as { projection?: unknown }).projection).toEqual({ type: 'globe' });
   });
@@ -117,7 +122,7 @@ describe('MapView', () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.componentRef.setInput('states', { FR: 'visited' });
     fixture.detectChanges();
-    await fixture.whenStable();
+    await settle(fixture);
 
     fixture.componentRef.setInput('projection', 'globe');
     fixture.detectChanges();
