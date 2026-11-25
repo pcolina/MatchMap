@@ -24,7 +24,6 @@ const mercatorOptions = (element: HTMLElement) => {
   const fit = width > 0 && height > 0 ? Math.min(Math.log2(width / 512), Math.log2(height / bandHeightAtZoomZero)) : undefined;
   return {
     center: [0, 42] as [number, number],
-    renderWorldCopies: false,
     minZoom: -4,
     ...(fit === undefined ? {} : { zoom: fit }),
   };
