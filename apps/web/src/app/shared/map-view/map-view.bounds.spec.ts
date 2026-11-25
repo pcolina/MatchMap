@@ -126,7 +126,7 @@ describe('MapView keeps the view above latitude -60', () => {
     fixture.detectChanges();
     await settle(fixture);
 
-    expect(mapLibre.instances[0].options.minZoom).toBe(-2);
+    expect(mapLibre.instances[0].options.minZoom).toBe(-4);
   });
 
   it('does nothing while the visible bottom stays above latitude -60', async () => {
