@@ -339,7 +339,7 @@ describe('MainLayout', () => {
     }
   });
 
-  it('keeps the light-background logo in the header when the dark scheme is saved', async () => {
+  it('shows the dark-background logo in the header when the dark scheme is saved', async () => {
     localStorage.setItem('matchmap.theme', 'dark');
     try {
       const fixture = TestBed.createComponent(MainLayout);
@@ -347,7 +347,7 @@ describe('MainLayout', () => {
       await fixture.whenStable();
 
       const logo = (fixture.nativeElement as HTMLElement).querySelector('.layout-header img') as HTMLImageElement;
-      expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-light.svg');
+      expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-dark.svg');
     } finally {
       localStorage.removeItem('matchmap.theme');
     }

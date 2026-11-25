@@ -43,7 +43,7 @@ const create = () => {
 };
 
 describe('LayoutHeader', () => {
-  it('shows the light-background logo in both schemes', () => {
+  it('shows the light-background logo in the light scheme and the dark-background logo in the dark scheme', () => {
     const { fixture, host, root } = create();
     const logo = root.querySelector('.layout-header img') as HTMLImageElement;
 
@@ -53,7 +53,7 @@ describe('LayoutHeader', () => {
     host.dark.set(true);
     fixture.detectChanges();
 
-    expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-light.svg');
+    expect(logo.getAttribute('src')).toBe('/brand/horizontal-on-dark.svg');
   });
 
   it('marks the header with the dark class in the dark scheme only', () => {
@@ -97,11 +97,11 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.control ng-icon\s*\{[^}]*position:\s*relative;/);
   });
 
-  it('uses the accent background and the onAccent text token in the dark scheme', () => {
+  it('uses the surfaceRaised background in the dark scheme and keeps the dark theme text colour', () => {
     const css = cssOf('layout-header/layout-header.css');
 
-    expect(css).toMatch(/\.layout-header\.dark\s*\{[^}]*background-color:\s*var\(--mm-color-accent\);/);
-    expect(css).toMatch(/\.layout-header\.dark\s*\{[^}]*--mm-color-text:\s*var\(--mm-color-onAccent\);/);
+    expect(css).toMatch(/\.layout-header\.dark\s*\{[^}]*background-color:\s*var\(--mm-color-surfaceRaised\);/);
+    expect(css).not.toMatch(/onAccent/);
   });
 
   it('shows the notifications button before the profile button', () => {
