@@ -2,20 +2,20 @@
 
 ## Why
 
-The world map is the main screen of the app. Its styling is defined in the shared map style (`packages/shared/src/map/map-style.ts`) and in the map view component. Four things are hard to read or get in the way today: the capital points are too large when the map is zoomed out, the Antarctic strip shows at the bottom, the white country borders are hard to see in light mode, and they are hard to see in dark mode too.
+The world map is the main screen of the app. Its styling is defined in the shared map style (`packages/shared/src/map/map-style.ts`) and in the map view component. Four things are hard to read or get in the way today: the capital points are too large when the map is zoomed out, the Antarctic strip shows at the bottom, the white country borders almost disappear on the light land colour, and they are hard to see in dark mode too.
 
 ## What Changes
 
-- **Capital points grow with the zoom.** The point size follows the zoom level: small when the map is zoomed out, and growing to the size it has today at the largest zoom. A capital point is always visible, with a minimum size. [NEEDS CLARIFICATION: the zoom level at which the point reaches today's size (today's size is a fixed radius of 5 px), and the minimum radius in px that keeps it visible.]
-- **Minimum zoom.** The map cannot be zoomed out further than three zoom levels below today's minimum. [NEEDS CLARIFICATION: today the style sets no minimum zoom, so the default is 0. Confirm that the new minimum is 3.]
-- **Antarctica is not shown.** The map cannot be panned to show the Antarctic strip at the bottom. [NEEDS CLARIFICATION: the southern latitude limit of the visible area, and the northern limit. Confirm that the same limit applies in Mercator and in the globe view.]
-- **Country borders are visible in light and in dark mode.** Today the border colour is white in light mode (`countryBorder` light `#FFFFFF`) and `#0A1324` in dark mode. [NEEDS CLARIFICATION: the exact grey for each mode, as a hex value or as a token. The change does not pick a colour on its own.]
+- **Minimum zoom.** The map cannot be zoomed out further than three zoom levels below today's smallest view. Today the style sets no minimum, so the smallest view is zoom 0 and the new minimum is zoom 3.
+- **Capital points grow with the zoom.** At the minimum zoom a capital point has a radius of 2 px. Every three zoom levels the radius grows by 1 px, so it reaches 3 px at zoom 6, 4 px at zoom 9 and 5 px at zoom 12. From there it stays at 5 px, which is today's size. A capital point is always visible.
+- **No Antarctica.** The map cannot be panned south of latitude -60, so the Antarctic strip is not shown at the bottom. The northern limit stays as the map has it today. The same limit applies in the Mercator view. The globe view is not limited, see the open questions.
+- **Country borders are visible in both modes.** In light mode the border colour is the `borderInput` token (`#6B7485`, 3.97:1 against the light land colour `#E8ECF2`), instead of white. In dark mode it is the `textSecondary` token (`#9AA6BA`, 6.16:1 against the dark land colour `#1D2638`), instead of `#0A1324`. Both are existing tokens, so no new colour is added.
 
 ## Capabilities
 
 ### Modified Capabilities
 
-- `world-map`: the requirements about capital points, the map background, the projection and the country colours are updated, and a requirement about the zoom and pan limits and the border visibility is added.
+- `world-map`: the requirements about the capital points, the map background and the country colours are updated, and new requirements are added for the zoom limit, the pan limit and the border colour.
 
 ## Out of scope
 
@@ -30,4 +30,6 @@ The world map is the main screen of the app. Its styling is defined in the share
 
 ## Open questions
 
-- All the `[NEEDS CLARIFICATION]` markers above. The change cannot move to specs until none is left.
+- **Globe view:** the pan limit is a Mercator limit. Should the globe be limited too, or left free so the user can rotate it to any place?
+- **Southern limit:** -60 is my choice, so the Antarctic strip is out of sight at the minimum zoom. It has to be checked on the phone and laptop sizes before it is approved.
+- **Radius steps:** the steps of 1 px every 3 zoom levels are yours. Confirm them.
