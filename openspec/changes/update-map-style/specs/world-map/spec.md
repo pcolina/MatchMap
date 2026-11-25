@@ -11,7 +11,7 @@ The map SHALL show one point at the capital of each country, from the bundled Na
 - **THEN** each country with a capital in the dataset has one point at that capital
 
 #### Scenario: Smallest point at the minimum zoom
-- **WHEN** the map is shown at the minimum zoom of 3
+- **WHEN** the map is shown at the minimum zoom of -2
 - **THEN** each capital point has a radius of 2 px
 
 #### Scenario: Point grows every three zoom levels
@@ -28,7 +28,7 @@ The map SHALL show one point at the capital of each country, from the bundled Na
 
 ### Requirement: Pan and zoom on phones
 
-The mobile app on phone-sized screens SHALL let the user pan the map with one finger and zoom it with a pinch gesture. The gestures SHALL move and scale the map from bundled data only. The Mercator map SHALL NOT zoom out below zoom 3, SHALL NOT pan south of latitude -60, so that Antarctica is not shown, and SHALL keep the default maximum zoom of the MapLibre map view.
+The mobile app on phone-sized screens SHALL let the user pan the map with one finger and zoom it with a pinch gesture. The gestures SHALL move and scale the map from bundled data only. The Mercator map SHALL NOT zoom out below zoom -2, which is the lowest zoom MapLibre allows, and SHALL keep the default maximum zoom of the MapLibre map view.
 
 #### Scenario: Pan with one finger
 - **WHEN** the user drags one finger across the map on a phone-sized screen
@@ -36,17 +36,57 @@ The mobile app on phone-sized screens SHALL let the user pan the map with one fi
 
 #### Scenario: Zoom with a pinch
 - **WHEN** the user pinches on the map on a phone-sized screen
-- **THEN** the map zooms in or out around the point between the fingers, and never below zoom 3
-
-#### Scenario: Antarctica is not shown
-- **WHEN** the user pans the map south
-- **THEN** the view stops at latitude -60 and the Antarctic strip is not shown
+- **THEN** the map zooms in or out around the point between the fingers, and never below zoom -2
 
 #### Scenario: Gestures need no network service
 - **WHEN** the user pans or zooms the map
 - **THEN** no tile request is sent to an external service
 
 ## ADDED Requirements
+
+### Requirement: Antarctica is not shown in Mercator
+
+The Mercator map SHALL NOT draw Antarctica and SHALL NOT let the visible area go south of latitude -60. When the visible bottom of the map goes south of latitude -60, the map SHALL move north until the bottom is at latitude -60. The globe SHALL keep Antarctica and SHALL NOT be limited.
+
+#### Scenario: Antarctica is hidden in Mercator
+- **WHEN** the map is shown in Mercator
+- **THEN** the Antarctica country area is not drawn
+
+#### Scenario: The view stops at latitude -60
+- **WHEN** the user pans the Mercator map so that the visible bottom is south of latitude -60
+- **THEN** the map moves north until the visible bottom is at latitude -60
+
+#### Scenario: Globe keeps Antarctica
+- **WHEN** the map is shown as a globe
+- **THEN** Antarctica is drawn and the view is not limited
+
+### Requirement: Mercator starts centred on latitude 42
+
+The web Mercator map SHALL start at the smallest zoom it allows, centred on longitude 0 and latitude 42, and SHALL show the world once horizontally.
+
+#### Scenario: Start view
+- **WHEN** the Mercator map is first shown
+- **THEN** the map is centred on latitude 42 at zoom -2
+
+#### Scenario: World shown once
+- **WHEN** the user pans the Mercator map sideways
+- **THEN** the world does not repeat horizontally
+
+### Requirement: Laptop view toggle
+
+The web laptop layout SHALL show the globe/Mercator toggle in the same position and with the same behaviour as on phone-sized screens.
+
+#### Scenario: Toggle visible on laptop
+- **WHEN** the viewport is 601 px or wider
+- **THEN** the globe/Mercator toggle is visible above the stats bar
+
+#### Scenario: Toggle switches the projection
+- **WHEN** the user presses the toggle
+- **THEN** the map switches from Mercator to globe, or from globe to Mercator
+
+#### Scenario: Toggle is reachable by keyboard
+- **WHEN** the user moves through the page with Tab
+- **THEN** the toggle receives focus and has an accessible name from an i18n key
 
 ### Requirement: Country borders are visible in both schemes
 
