@@ -7,7 +7,7 @@
   height: 50px;
   padding: 0 var(--mm-space-4);
   overflow: hidden;
-  background-color: var(--mm-color-surface);
+  background-color: var(--mm-color-accentSubtle);
   color: var(--mm-color-text);
 }
 

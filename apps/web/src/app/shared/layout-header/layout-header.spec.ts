@@ -154,11 +154,11 @@ describe('LayoutHeader', () => {
     expect(host.accounts).toBe(1);
   });
 
-  it('is 50 px high with the surface background and no scroll', () => {
+  it('is 50 px high with the login green background and no scroll', () => {
     const css = cssOf('layout-header/layout-header.css');
 
     expect(css).toMatch(/\.layout-header\s*\{[^}]*height:\s*50px;/);
-    expect(css).toMatch(/\.layout-header\s*\{[^}]*background-color:\s*var\(--mm-color-surface\);/);
+    expect(css).toMatch(/\.layout-header\s*\{[^}]*background-color:\s*var\(--mm-color-accentSubtle\);/);
     expect(css).toMatch(/\.layout-header\s*\{[^}]*overflow:\s*hidden;/);
   });
 
