@@ -12,6 +12,12 @@ The world map is the main screen of the app. Its styling is defined in the share
 - **No Antarctica.** The map cannot be panned south of latitude -60, so the Antarctic strip is not shown at the bottom. The northern limit stays as the map has it today. The same limit applies in the Mercator view. The globe view is not limited, see the open questions.
 - **Country borders are visible in both modes.** In light mode the border colour is the `borderInput` token (`#6B7485`, 3.97:1 against the light land colour `#E8ECF2`), instead of white. In dark mode it is the `textSecondary` token (`#9AA6BA`, 6.16:1 against the dark land colour `#1D2638`), instead of `#0A1324`. Both are existing tokens, so no new colour is added.
 
+## Scope across apps
+
+The map style is shared: `apps/mobile` also builds its map with `buildMapStyle` from `packages/shared`. So the capital, border, Antarctica and minimum-zoom changes apply to the mobile app on phone-sized screens too, as well as to the web app. The globe minimum zoom is web only, because the globe is a web-only projection. Per the project rules, phone and web share one spec for this change.
+
+[NEEDS CLARIFICATION: confirm that the Mercator changes also apply to the mobile app on phone-sized screens, as described above. If not, the mobile app needs its own style and this change is split.]
+
 ## Capabilities
 
 ### Modified Capabilities
