@@ -12,7 +12,8 @@ The world map is the main screen of the app. Its styling is defined in the share
 - **Capital points grow with the zoom.** At the minimum zoom a capital point has a radius of 2 px. Every three zoom levels the radius grows by 1 px, so it reaches 3 px at zoom 6, 4 px at zoom 9 and 5 px at zoom 12. From there it stays at 5 px. A capital point is always visible.
 - **No Antarctica in Mercator.** The Mercator map does not draw Antarctica, and the visible area cannot go south of latitude -60: when the bottom goes below it, the map moves north. The globe keeps Antarctica and is not limited.
 - **Laptop view toggle.** The globe/Mercator toggle that the phone layout shows is also visible on laptop, in the same position. Its hiding rule in `main-layout.css` is removed.
-- **Country borders are visible in both modes.** In light mode the border colour is the `borderInput` token (`#6B7485`, 3.97:1 against the light land colour `#E8ECF2`), instead of white. In dark mode it is the `textSecondary` token (`#9AA6BA`, 6.16:1 against the dark land colour `#1D2638`), instead of `#0A1324`. Both are existing tokens, so no new colour is added.
+- **Country borders are visible in both modes.** In light mode the border colour is the `borderInput` token (`#6B7485`, 3.97:1 against the light land colour `#E8ECF2`), instead of white. In dark mode it is the `textSecondary` token (`#9AA6BA`, about 3.1:1 against the dark land colour `#4B5873`), instead of `#0A1324`. Both are existing tokens, so no new colour is added.
+- **Dark land colour.** In dark mode the land colour is `#4B5873` instead of `#1D2638`, so countries separate from the water (`#0A1324`) at about 2.5:1. The light mode is unchanged. This is a new value in the design palette, approved by the owner.
 
 ## Scope across apps
 

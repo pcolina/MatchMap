@@ -58,7 +58,7 @@ export const mapColors = {
   },
   dark: {
     ocean: '#0A1324',
-    land: '#1D2638',
+    land: '#4B5873',
     countryBorder: '#9AA6BA',
     visited: '#2DD4BF',
     lived: '#99F6E4',

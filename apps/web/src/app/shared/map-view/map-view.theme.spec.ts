@@ -17,6 +17,7 @@ vi.mock('maplibre-gl', () => ({
     setStyle(style: unknown) {
       recorded.setStyle.push(style);
     }
+    setMinZoom() {}
     remove() {}
   },
 }));
