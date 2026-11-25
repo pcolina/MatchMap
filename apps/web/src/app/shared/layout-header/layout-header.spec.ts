@@ -97,11 +97,22 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.control ng-icon\s*\{[^}]*position:\s*relative;/);
   });
 
+  it('draws the hover as an accent disc with the onAccent icon, in the header and on the profile button', () => {
+    const header = cssOf('layout-header/layout-header.css');
+    const account = cssOf('account-button/account-button.css');
+
+    expect(header).toMatch(/\.control:hover::before\s*\{\s*background:\s*var\(--mm-color-accent\);/);
+    expect(header).toMatch(/\.control:hover\s*\{\s*color:\s*var\(--mm-color-onAccent\);/);
+    expect(account).toMatch(/:host\(\.plain\) \.control:hover\s*\{[^}]*background:\s*transparent;/);
+    expect(account).toMatch(/:host\(\.plain\) \.control:hover\s*\{[^}]*color:\s*var\(--mm-color-onAccent\);/);
+    expect(account).toMatch(/:host\(\.plain\) \.control:hover::before\s*\{\s*background:\s*var\(--mm-color-accent\);/);
+  });
+
   it('uses the surfaceRaised background in the dark scheme and keeps the dark theme text colour', () => {
     const css = cssOf('layout-header/layout-header.css');
 
     expect(css).toMatch(/\.layout-header\.dark\s*\{[^}]*background-color:\s*var\(--mm-color-surfaceRaised\);/);
-    expect(css).not.toMatch(/onAccent/);
+    expect(css).not.toMatch(/\.layout-header\.dark\s*\{[^}]*onAccent/);
   });
 
   it('shows the notifications button before the profile button', () => {
@@ -173,11 +184,14 @@ describe('LayoutHeader', () => {
     expect(css).toMatch(/\.notification-dot\s*\{[^}]*font-variant-numeric:\s*tabular-nums;/);
   });
 
-  it('leaves keyboard focus of the header buttons to the global focus style, as on the login page', () => {
+  it('keeps the keyboard focus ring of the header buttons inside the 50 px bar', () => {
     const header = cssOf('layout-header/layout-header.css');
     const account = cssOf('account-button/account-button.css');
 
-    expect(header).not.toMatch(/focus-visible/);
-    expect(account).not.toMatch(/:host\(\.plain\) \.control:focus-visible/);
+    expect(header).toMatch(/\.control:focus-visible\s*\{[^}]*outline-offset:\s*0;/);
+    expect(header).toMatch(/\.control:focus-visible\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
+    expect(header).not.toMatch(/--mm-focus-halo/);
+    expect(account).toMatch(/:host\(\.plain\) \.control:focus-visible\s*\{[^}]*outline-offset:\s*0;/);
+    expect(account).toMatch(/:host\(\.plain\) \.control:focus-visible\s*\{[^}]*box-shadow:\s*0 0 0 var\(--mm-space-1\)/);
   });
 });

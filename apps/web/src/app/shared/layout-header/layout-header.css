@@ -54,6 +54,11 @@
   font-size: 24px;
 }
 
+.control:focus-visible {
+  outline-offset: 0;
+  box-shadow: 0 0 0 var(--mm-space-1) color-mix(in srgb, var(--mm-color-accent) 45%, transparent);
+}
+
 .notification-dot {
   position: absolute;
   top: var(--mm-space-1);
@@ -79,7 +84,11 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .control:hover {
+    color: var(--mm-color-onAccent);
+  }
+
   .control:hover::before {
-    background: var(--mm-color-accentSubtle);
+    background: var(--mm-color-accent);
   }
 }
