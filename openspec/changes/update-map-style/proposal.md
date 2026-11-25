@@ -6,7 +6,8 @@ The world map is the main screen of the app. Its styling is defined in the share
 
 ## What Changes
 
-- **Minimum zoom.** The map cannot be zoomed out further than three zoom levels below today's smallest view. Today the style sets no minimum, so the smallest view is zoom 0 and the new minimum is zoom 3.
+- **Minimum zoom, Mercator.** The map cannot be zoomed out further than three zoom levels below today's smallest view. Today the style sets no minimum, so the smallest view is zoom 0 and the new minimum is zoom 3.
+- **Minimum zoom, globe.** The globe cannot be zoomed out further than the zoom at which it fills the width of its container with a 4 px gap on each side. This zoom depends on the container width: the globe diameter in pixels is 512 · 2^zoom / π, so the minimum is log2((W − 8) · π / 512), where W is the container width. Examples: about 1.24 at 390 px, about 2.64 at 1024 px and about 3.14 at 1440 px.
 - **Capital points grow with the zoom.** At the minimum zoom a capital point has a radius of 2 px. Every three zoom levels the radius grows by 1 px, so it reaches 3 px at zoom 6, 4 px at zoom 9 and 5 px at zoom 12. From there it stays at 5 px, which is today's size. A capital point is always visible.
 - **No Antarctica.** The map cannot be panned south of latitude -60, so the Antarctic strip is not shown at the bottom. The northern limit stays as the map has it today. The same limit applies in the Mercator view. The globe view is not limited, see the open questions.
 - **Country borders are visible in both modes.** In light mode the border colour is the `borderInput` token (`#6B7485`, 3.97:1 against the light land colour `#E8ECF2`), instead of white. In dark mode it is the `textSecondary` token (`#9AA6BA`, 6.16:1 against the dark land colour `#1D2638`), instead of `#0A1324`. Both are existing tokens, so no new colour is added.
@@ -30,6 +31,6 @@ The world map is the main screen of the app. Its styling is defined in the share
 
 ## Open questions
 
-- **Globe view:** the pan limit is a Mercator limit. Should the globe be limited too, or left free so the user can rotate it to any place?
+- **Globe gap:** the 4 px gap is taken on each side of the globe. Confirm, or say if the 4 px is the total gap.
 - **Southern limit:** -60 is my choice, so the Antarctic strip is out of sight at the minimum zoom. It has to be checked on the phone and laptop sizes before it is approved.
 - **Radius steps:** the steps of 1 px every 3 zoom levels are yours. Confirm them.
