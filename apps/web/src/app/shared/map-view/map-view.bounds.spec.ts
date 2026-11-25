@@ -4,7 +4,7 @@ import { MapView } from './map-view';
 
 type Listener = () => void;
 type FakeMapInstance = {
-  options: { renderWorldCopies?: boolean };
+  options: { renderWorldCopies?: boolean; minZoom?: number };
   on: ReturnType<typeof vi.fn>;
   getBounds: ReturnType<typeof vi.fn>;
   getCenter: ReturnType<typeof vi.fn>;
@@ -25,7 +25,7 @@ const mapLibre = vi.hoisted(() => {
     getCenter = vi.fn(() => ({ lng: 0, lat: 42 }));
     easeTo = vi.fn();
 
-    constructor(public options: { renderWorldCopies?: boolean }) {
+    constructor(public options: { renderWorldCopies?: boolean; minZoom?: number }) {
       instances.push(this as unknown as FakeMapInstance);
     }
   }
@@ -104,6 +104,14 @@ describe('MapView keeps the view above latitude -60', () => {
     await settle(fixture);
 
     expect(mapLibre.instances[0].options.renderWorldCopies).toBe(false);
+  });
+
+  it('lets the Mercator map zoom out below zoom 0', async () => {
+    const fixture = TestBed.createComponent(MapView);
+    fixture.detectChanges();
+    await settle(fixture);
+
+    expect(mapLibre.instances[0].options.minZoom).toBe(-2);
   });
 
   it('does nothing while the visible bottom stays above latitude -60', async () => {

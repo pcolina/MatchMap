@@ -44,7 +44,7 @@ export class MapView {
         container: this.container().nativeElement,
         style: buildMapStyle(this.states(), this.scheme(), this.projection()),
         attributionControl: false,
-        ...(this.projection() === 'mercator' ? { center: [0, 42] as [number, number], renderWorldCopies: false } : {}),
+        ...(this.projection() === 'mercator' ? { center: [0, 42] as [number, number], renderWorldCopies: false, minZoom: -2 } : {}),
       });
       this.map.on('moveend', () => this.keepAboveAntarctica());
       this.map.on('movestart', (event: { originalEvent?: unknown }) => {
