@@ -14,13 +14,13 @@ Each task names its failing test first, then the code that makes it pass. One ta
 
 ## 3. Web: Mercator limits
 
-- [ ] **3.1 Mercator tests.** In the web map view, add: in Mercator the map is created with `minZoom` 3 and `maxBounds` `[[-180, -60], [180, 85]]`; zooming out stops at zoom 3; panning south stops at latitude -60. Run them and show the failure.
-- [ ] **3.2 Mercator limits.** In `map-view.ts`, set `minZoom` and `maxBounds` when the projection is Mercator. Make 3.1 pass.
+- [x] **3.1 Mercator tests.** In the web map view, add: in Mercator the map is created with `minZoom` 3 and `maxBounds` `[[-180, -60], [180, 85]]`; zooming out stops at zoom 3; panning south stops at latitude -60. Run them and show the failure.
+- [x] **3.2 Mercator limits.** In `map-view.ts`, set `minZoom` and `maxBounds` when the projection is Mercator. Make 3.1 pass.
 
 ## 4. Web: globe minimum zoom
 
-- [ ] **4.1 Globe tests.** In the web map view, add: in globe with a 390 px container the minimum zoom is about 1.24; in a 1024 px container it is about 2.64; a resize updates it; switching back to Mercator restores `minZoom` 3 and the bounds; a container of 8 px or less gives a minimum of 0. Run them and show the failure.
-- [ ] **4.2 Globe minimum zoom.** In `map-view.ts`, use a `ResizeObserver` on the map element to set `minZoom` to `log2((W − 8) · π / 512)` for the globe, clamped at 0. Make 4.1 pass.
+- [x] **4.1 Globe tests.** In the web map view, add: in globe with a 390 px container the minimum zoom is about 1.23; in a 1024 px container it is about 2.64; a resize updates it; switching back to Mercator restores `minZoom` 3 and the bounds; a container of 8 px or less gives a minimum of 0. Run them and show the failure.
+- [x] **4.2 Globe minimum zoom.** In `map-view.ts`, use a `ResizeObserver` on the map element to set `minZoom` to `log2((W − 8) · π / 512)` for the globe, clamped at 0. Make 4.1 pass.
 
 ## 5. Mobile
 

@@ -12,6 +12,8 @@ const mapLibre = vi.hoisted(() => {
 
   class FakeMap {
     setStyle = vi.fn();
+    setMinZoom = vi.fn();
+    setMaxBounds = vi.fn();
     remove = vi.fn();
 
     constructor(public options: { style: FakeStyle }) {

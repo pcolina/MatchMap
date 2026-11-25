@@ -66,7 +66,7 @@ The web app's globe projection SHALL NOT zoom out below the zoom at which the gl
 
 #### Scenario: Globe on a phone width
 - **WHEN** the globe is shown in a container 390 px wide
-- **THEN** the minimum zoom is about 1.24 and the globe does not get smaller than 382 px
+- **THEN** the minimum zoom is about 1.23 and the globe does not get smaller than 382 px
 
 #### Scenario: Globe on a laptop width
 - **WHEN** the globe is shown in a container 1024 px wide
