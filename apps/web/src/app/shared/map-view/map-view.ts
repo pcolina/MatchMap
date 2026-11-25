@@ -21,7 +21,7 @@ const bandHeightAtZoomZero = 363.3;
 const mercatorOptions = (element: HTMLElement) => {
   const width = element.clientWidth;
   const height = element.clientHeight;
-  const fit = width > 0 && height > 0 ? Math.min(Math.log2(width / 512), Math.log2(height / bandHeightAtZoomZero)) : undefined;
+  const fit = width > 0 && height > 0 ? Math.min(Math.log2(width / 512), Math.log2((0.8 * height) / bandHeightAtZoomZero)) : undefined;
   return {
     center: [0, 42] as [number, number],
     minZoom: -4,

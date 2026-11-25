@@ -114,7 +114,7 @@ describe('MapView keeps the view above latitude -60', () => {
       fixture.detectChanges();
       await settle(fixture);
 
-      expect(mapLibre.instances[0].options.zoom).toBeCloseTo(Math.log2(700 / 363.3), 2);
+      expect(mapLibre.instances[0].options.zoom).toBeCloseTo(Math.log2((0.8 * 700) / 363.3), 2);
     } finally {
       width.mockRestore();
       height.mockRestore();
