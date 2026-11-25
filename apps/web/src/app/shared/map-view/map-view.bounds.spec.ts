@@ -98,12 +98,12 @@ describe('MapView keeps the view above latitude -60', () => {
     expect(map.easeTo).toHaveBeenCalledTimes(2);
   });
 
-  it('repeats the world horizontally in Mercator, the MapLibre default', async () => {
+  it('shows the world once horizontally in Mercator', async () => {
     const fixture = TestBed.createComponent(MapView);
     fixture.detectChanges();
     await settle(fixture);
 
-    expect(mapLibre.instances[0].options.renderWorldCopies).toBeUndefined();
+    expect(mapLibre.instances[0].options.renderWorldCopies).toBe(false);
   });
 
   it('starts the Mercator map at the zoom that fits the width and the band from -60 to 85 in the container', async () => {
@@ -114,7 +114,7 @@ describe('MapView keeps the view above latitude -60', () => {
       fixture.detectChanges();
       await settle(fixture);
 
-      expect(mapLibre.instances[0].options.zoom).toBeCloseTo(Math.log2((0.8 * 700) / 363.3), 2);
+      expect(mapLibre.instances[0].options.zoom).toBeCloseTo(Math.log2((0.6 * 700) / 363.3), 2);
     } finally {
       width.mockRestore();
       height.mockRestore();
