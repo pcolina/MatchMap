@@ -179,6 +179,15 @@ test.each([
   expect(screen.getByText(message)).toBeTruthy();
 });
 
+test('Email already registered: shows the taken message and the link to sign in', async () => {
+  const store = fakeStore();
+  store.failure.set('emailTaken');
+  await setup(store);
+
+  expect(screen.getByText('You already have an account with this email.')).toBeTruthy();
+  expect(screen.getByRole('link', { name: en.login.register.goToSignIn })).toBeTruthy();
+});
+
 test('keeps the typed values after a failed registration', async () => {
   const store = fakeStore();
   const { user } = await setup(store);
