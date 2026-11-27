@@ -254,7 +254,7 @@ describe('RegisterPage', () => {
     expect(navigate).toHaveBeenCalledWith('/');
   });
 
-  it('shows the email taken message and keeps the typed values', async () => {
+  it('Email already registered: shows the taken message and the sign-in link, and keeps the typed values', async () => {
     const { fixture, element, navigate } = setup({ ...successGateway(), register: vi.fn(() => throwError(() => 'emailTaken')) });
 
     await typeInto(element, fixture, 'email', 'user@example.com');
@@ -262,7 +262,10 @@ describe('RegisterPage', () => {
     await typeInto(element, fixture, 'repeat-password', 'Abc!12');
     await submit(element, fixture);
 
-    expect(errorText(element)).toContain('An account with this email already exists.');
+    expect(errorText(element)).toContain('You already have an account with this email.');
+    const signInLink = element.querySelector<HTMLAnchorElement>('a.login-link');
+    expect(signInLink?.textContent?.trim()).toBe('Already have an account? Sign in');
+    expect(signInLink?.getAttribute('href')).toBe('/login');
     expect(field(element, 'email').value).toBe('user@example.com');
     expect(field(element, 'password').value).toBe('Abc!12');
     expect(navigate).not.toHaveBeenCalled();

@@ -32,8 +32,8 @@ const approvedCopy: Record<string, { en: string; es: string }> = {
     es: '¿Ya tienes cuenta? Iniciar sesión',
   },
   'login.register.errorEmailTaken': {
-    en: 'An account with this email already exists.',
-    es: 'Ya existe una cuenta con este email.',
+    en: 'You already have an account with this email.',
+    es: 'Ya tienes una cuenta con este email.',
   },
   'login.register.errorPasswordInvalid': {
     en: 'Use 6 to 20 characters, with a lowercase letter, an uppercase letter and a special character.',
