@@ -123,11 +123,11 @@ The registration form SHALL use Signal Forms (`@angular/forms/signals`) on web, 
 
 ### Requirement: Registration errors
 
-The registration page SHALL show the translated message for each error case, and keep the values the user typed.
+The registration page SHALL show the translated message for each error case, and keep the values the user typed. When the email is already registered, the page SHALL show the link to sign in, which is the existing link `login.register.goToSignIn`.
 
 #### Scenario: Email already registered
 - **WHEN** the API returns the stable error code for a registered email
-- **THEN** the page shows the text of `login.register.errorEmailTaken`
+- **THEN** the page shows the text of `login.register.errorEmailTaken`, and the link `login.register.goToSignIn` is visible and leads to the sign-in page
 
 #### Scenario: Network failure
 - **WHEN** the request fails because there is no network connection
